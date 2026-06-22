@@ -11,6 +11,7 @@ use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\GearId;
+use App\Domain\Gear\ImportedGear\ImportedGearConfig;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
@@ -171,6 +172,7 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
         $ImportGearCommandHandler = new ImportGearCommandHandler(
             $this->getContainer()->get(Strava::class),
             $this->getContainer()->get(ImportedGearRepository::class),
+            $this->getContainer()->get(ImportedGearConfig::class),
             $this->getContainer()->get(CustomGearRepository::class),
             CustomGearConfig::fromArray(Yaml::parse(<<<YML
 enabled: true

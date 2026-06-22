@@ -79,6 +79,7 @@ class ImportedGear implements Gear
         Meter $elevation,
         int $numberOfActivities,
         int $totalCalories,
+        ?Money $purchasePrice,
     ): static {
         return new static(
             gearId: $gearId,
@@ -92,7 +93,7 @@ class ImportedGear implements Gear
             numberOfActivities: $numberOfActivities,
             totalCalories: $totalCalories,
             activityTypes: ActivityTypes::empty(),
-            purchasePrice: null,
+            purchasePrice: $purchasePrice,
         );
     }
 

@@ -9,6 +9,7 @@ use App\Domain\Gear\ImportedGear\ImportedGear;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use Money\Money;
 
 final class ImportedGearBuilder
 {
@@ -21,6 +22,7 @@ final class ImportedGearBuilder
     private Meter $elevation;
     private int $numberOfActivities = 0;
     private int $totalCalories = 0;
+    private ?Money $purchasePrice = null;
 
     private function __construct()
     {
@@ -48,7 +50,15 @@ final class ImportedGearBuilder
             elevation: $this->elevation,
             numberOfActivities: $this->numberOfActivities,
             totalCalories: $this->totalCalories,
+            purchasePrice: $this->purchasePrice,
         );
+    }
+
+    public function withPurchasePrice(?Money $purchasePrice): self
+    {
+        $this->purchasePrice = $purchasePrice;
+
+        return $this;
     }
 
     public function withMovingTime(Seconds $movingTime): self

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Gear\ImportedGear;
 
+use App\Domain\Gear\GearId;
 use Money\Currency;
 use Money\Money;
 
@@ -43,19 +44,19 @@ final readonly class ImportedGearConfig
         return new self($config);
     }
 
-    public function enrichGearWithCustomData(ImportedGear $gear): ImportedGear
+    public function getPurchasePrice(GearId $gearId): ?Money
     {
-        if (!$configForGear = array_find($this->config, fn (array $gearConfig): bool => $gearConfig['gearId'] === $gear->getId()->toUnprefixedString())) {
-            return $gear;
+        if (!$configForGear = array_find($this->config, fn (array $gearConfig): bool => $gearConfig['gearId'] === $gearId->toUnprefixedString())) {
+            return null;
         }
 
         if (empty($configForGear['purchasePrice'])) {
-            return $gear;
+            return null;
         }
 
-        return $gear->withPurchasePrice(new Money(
+        return new Money(
             amount: $configForGear['purchasePrice']['amountInCents'],
             currency: new Currency($configForGear['purchasePrice']['currency'])
-        ));
+        );
     }
 }

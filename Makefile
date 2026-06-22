@@ -33,10 +33,10 @@ composer:
 	@make dcr cmd="composer $(arg)"
 
 download-database:
-	scp $(user)@$(server):/home/docker/stacks/strava-statistics/storage/database/strava.db ./storage/database/dreeve.db
+	scp $(user)@$(server):/home/docker/stacks/dreeve/storage/database/dreeve.db ./storage/database/dreeve.db
 
 download-assets:
-	scp -r $(user)@$(server):/home/docker/stacks/strava-statistics/storage/files ./storage/
+	scp -r $(user)@$(server):/home/docker/stacks/dreeve/storage/files ./storage/
 
 # Database migration helpers.
 migrate-diff:

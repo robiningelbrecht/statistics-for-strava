@@ -137,19 +137,9 @@ final readonly class CustomGearConfig
 
     public function enrichGearWithCustomData(CustomGear $gear): CustomGear
     {
-        $gear = $gear->withFullTag(Tag::fromTags(
+        return $gear->withFullTag(Tag::fromTags(
             (string) $this->getHashtagPrefix(),
             $gear->getId()->toUnprefixedString()
         ));
-
-        if (!$configuredCustomGear = array_find($this->customGears->toArray(), fn (CustomGear $customGear): bool => $customGear->getId()->toUnprefixedString() === $gear->getId()->toUnprefixedString())) {
-            return $gear;
-        }
-
-        if (!$configuredCustomGear->getPurchasePrice()) {
-            return $gear;
-        }
-
-        return $gear->withPurchasePrice($configuredCustomGear->getPurchasePrice());
     }
 }
