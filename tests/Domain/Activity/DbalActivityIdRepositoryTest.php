@@ -97,12 +97,12 @@ class DbalActivityIdRepositoryTest extends ContainerTestCase
 
     public function testFindAllWithoutStravaGear(): void
     {
-        $this->getContainer()->get(GearRepository::class)->save(
+        $this->getContainer()->get(GearRepository::class)->add(
             GearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed('imported'))
                 ->build()
         );
-        $this->getContainer()->get(GearRepository::class)->save(
+        $this->getContainer()->get(GearRepository::class)->add(
             GearBuilder::fromDefaults()
                 ->withGearType(GearType::CUSTOM)
                 ->withGearId(GearId::fromUnprefixed('custom'))

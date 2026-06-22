@@ -4,17 +4,17 @@
         "createdOn": "2023-10-10 00:00:00",
         "name": "Existing gear",
         "isRetired": 0,
+        "type": "imported",
         "purchasePriceAmount": null,
-        "purchasePriceCurrency": null,
-        "type": "imported"
+        "purchasePriceCurrency": null
     },
     {
         "gearId": "gear-2",
         "createdOn": "2023-10-10 00:00:00",
         "name": "Existing gear",
         "isRetired": 0,
+        "type": "custom",
         "purchasePriceAmount": null,
-        "purchasePriceCurrency": null,
-        "type": "custom"
+        "purchasePriceCurrency": null
     }
 ]

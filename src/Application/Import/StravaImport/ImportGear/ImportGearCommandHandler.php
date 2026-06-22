@@ -59,6 +59,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
                 $gear = $this->gearRepository->find($gearId)
                     ->withName($stravaGear['name'])
                     ->withIsRetired($stravaGear['retired'] ?? false);
+                $this->gearRepository->update($gear);
             } catch (EntityNotFound) {
                 $gear = Gear::create(
                     gearId: $gearId,
@@ -67,8 +68,8 @@ final readonly class ImportGearCommandHandler implements CommandHandler
                     isRetired: $stravaGear['retired'] ?? false,
                     type: GearType::IMPORTED,
                 );
+                $this->gearRepository->add($gear);
             }
-            $this->gearRepository->save($gear);
             $command->getOutput()->writeln(sprintf('  => Imported gear "%s"', $gear->getName()));
         }
     }

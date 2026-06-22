@@ -27,10 +27,10 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
         $gear = GearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed('g10130856'))
             ->build();
-        $this->getContainer()->get(GearRepository::class)->save($gear);
+        $this->getContainer()->get(GearRepository::class)->add($gear);
 
         $this->getContainer()->get(
-            GearRepository::class)->save(GearBuilder::fromDefaults()
+            GearRepository::class)->add(GearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed('retired'))
             ->withIsRetired(true)
             ->build()

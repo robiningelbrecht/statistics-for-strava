@@ -44,7 +44,7 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
                 ->withGearId(GearId::fromUnprefixed(4))
                 ->build(), []
         ));
-        $this->getContainer()->get(GearRepository::class)->save(
+        $this->getContainer()->get(GearRepository::class)->add(
             GearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed(4))
                 ->build()

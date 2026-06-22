@@ -27,7 +27,7 @@ class DbalGearRepositoryTest extends ContainerTestCase
 
     private GearRepository $gearRepository;
 
-    public function testFindAndSave(): void
+    public function testFindAndAdd(): void
     {
         $activityRepository = $this->getContainer()->get(ActivityRepository::class);
 
@@ -36,7 +36,7 @@ class DbalGearRepositoryTest extends ContainerTestCase
             ->withGearId(GearId::fromUnprefixed(1))
             ->withDistanceInMeter(Meter::from(1230))
             ->build();
-        $this->gearRepository->save($gear);
+        $this->gearRepository->add($gear);
 
         $activityRepository->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
@@ -62,7 +62,7 @@ class DbalGearRepositoryTest extends ContainerTestCase
             ->withGearId(GearId::fromUnprefixed(1))
             ->withPurchasePrice(Money::EUR(150000))
             ->build();
-        $this->gearRepository->save($gear);
+        $this->gearRepository->add($gear);
 
         $this->assertEquals(
             Money::EUR(150000),
@@ -76,14 +76,14 @@ class DbalGearRepositoryTest extends ContainerTestCase
         $this->gearRepository->find(GearId::fromUnprefixed('1'));
     }
 
-    public function testSavePersistsType(): void
+    public function testAddPersistsType(): void
     {
-        $this->gearRepository->save(
+        $this->gearRepository->add(
             GearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed(1))
                 ->build()
         );
-        $this->gearRepository->save(
+        $this->gearRepository->add(
             GearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed(2))
                 ->withGearType(GearType::CUSTOM)
@@ -99,10 +99,14 @@ class DbalGearRepositoryTest extends ContainerTestCase
     {
         $gear = GearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(1))
+            ->withPurchasePrice(Money::EUR(150000))
             ->build();
-        $this->gearRepository->save($gear);
+        $this->gearRepository->add($gear);
 
-        $this->gearRepository->save($gear->withName('Updated gear')->withIsRetired(true));
+        $this->gearRepository->update(
+            $gear->withName('Updated gear')
+                ->withIsRetired(true)
+        );
 
         $this->assertMatchesJsonSnapshot(
             $this->getConnection()->executeQuery('SELECT * FROM Gear')->fetchAllAssociative()
@@ -117,25 +121,25 @@ class DbalGearRepositoryTest extends ContainerTestCase
             ->withGearId(GearId::fromUnprefixed(1))
             ->withDistanceInMeter(Meter::from(1230))
             ->build();
-        $this->gearRepository->save($gearOne);
+        $this->gearRepository->add($gearOne);
         $gearTwo = GearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(2))
             ->withGearType(GearType::CUSTOM)
             ->withDistanceInMeter(Meter::from(10230))
             ->build();
-        $this->gearRepository->save($gearTwo);
+        $this->gearRepository->add($gearTwo);
         $gearThree = GearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(3))
             ->withDistanceInMeter(Meter::from(230))
             ->build();
-        $this->gearRepository->save($gearThree);
+        $this->gearRepository->add($gearThree);
         $gearFour = GearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(4))
             ->withGearType(GearType::CUSTOM)
             ->withDistanceInMeter(Meter::from(100230))
             ->withIsRetired(true)
             ->build();
-        $this->gearRepository->save($gearFour);
+        $this->gearRepository->add($gearFour);
 
         $activityRepository->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
@@ -215,7 +219,7 @@ class DbalGearRepositoryTest extends ContainerTestCase
             ),
         );
 
-        $this->gearRepository->save(
+        $this->gearRepository->add(
             GearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed(4))
                 ->withDistanceInMeter(Meter::from(100230))
