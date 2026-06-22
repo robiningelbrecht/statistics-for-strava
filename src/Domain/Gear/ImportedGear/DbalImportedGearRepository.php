@@ -24,13 +24,6 @@ final readonly class DbalImportedGearRepository extends DbalRepository implement
         findAllUsed as protected parentFindAllUsed;
     }
 
-    public function __construct(
-        Connection $connection,
-        private ImportedGearConfig $importedGearConfig,
-    ) {
-        parent::__construct($connection);
-    }
-
     protected function getConnection(): Connection
     {
         return $this->connection;
@@ -50,31 +43,16 @@ final readonly class DbalImportedGearRepository extends DbalRepository implement
 
     public function findAll(): Gears
     {
-        $gears = $this->parentFindAll(
+        return $this->parentFindAll(
             gearType: GearType::IMPORTED
         );
-
-        return $this->enrichGears($gears);
     }
 
     public function findAllUsed(): Gears
     {
-        $gears = $this->parentFindAllUsed(
+        return $this->parentFindAllUsed(
             gearType: GearType::IMPORTED
         );
-
-        return $this->enrichGears($gears);
-    }
-
-    private function enrichGears(Gears $gears): Gears
-    {
-        $enrichedGears = Gears::empty();
-        foreach ($gears as $gear) {
-            assert($gear instanceof ImportedGear);
-            $enrichedGears->add($this->importedGearConfig->enrichGearWithCustomData($gear));
-        }
-
-        return $enrichedGears;
     }
 
     public function find(GearId $gearId): ImportedGear

@@ -12,6 +12,8 @@ use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\Connection;
+use Money\Currency;
+use Money\Money;
 
 trait ProvideGearRepositoryHelpers
 {
@@ -19,15 +21,18 @@ trait ProvideGearRepositoryHelpers
 
     public function save(Gear $gear, GearType $gearType): void
     {
-        $sql = 'REPLACE INTO Gear (gearId, createdOn, name, isRetired, `type`)
-        VALUES (:gearId, :createdOn, :name, :isRetired, :type)';
+        $sql = 'REPLACE INTO Gear (gearId, createdOn, name, isRetired, `type`, purchasePriceAmount, purchasePriceCurrency)
+        VALUES (:gearId, :createdOn, :name, :isRetired, :type, :purchasePriceAmount, :purchasePriceCurrency)';
 
+        $purchasePrice = $gear->getPurchasePrice();
         $this->getConnection()->executeStatement($sql, [
             'gearId' => $gear->getId(),
             'createdOn' => $gear->getCreatedOn(),
             'name' => $gear->getOriginalName(),
             'isRetired' => (int) $gear->isRetired(),
             'type' => $gearType->value,
+            'purchasePriceAmount' => $purchasePrice?->getAmount(),
+            'purchasePriceCurrency' => $purchasePrice?->getCurrency()->getCode(),
         ]);
     }
 
@@ -80,6 +85,16 @@ trait ProvideGearRepositoryHelpers
     private function hydrate(array $result): ImportedGear|CustomGear
     {
         $gearType = GearType::from($result['type']);
+
+        $purchasePrice = null;
+        $purchasePriceCurrency = (string) ($result['purchasePriceCurrency'] ?? '');
+        if (isset($result['purchasePriceAmount']) && '' !== $purchasePriceCurrency) {
+            $purchasePrice = new Money(
+                (int) $result['purchasePriceAmount'],
+                new Currency($purchasePriceCurrency)
+            );
+        }
+
         $args = [
             'gearId' => GearId::fromString($result['gearId']),
             'distanceInMeter' => Meter::from((float) $result['totalDistance']),
@@ -90,6 +105,7 @@ trait ProvideGearRepositoryHelpers
             'elevation' => Meter::from((float) ($result['totalElevation'] ?? 0)),
             'numberOfActivities' => (int) ($result['numberOfActivities'] ?? 0),
             'totalCalories' => (int) ($result['totalCalories'] ?? 0),
+            'purchasePrice' => $purchasePrice,
         ];
 
         $gear = match ($gearType) {

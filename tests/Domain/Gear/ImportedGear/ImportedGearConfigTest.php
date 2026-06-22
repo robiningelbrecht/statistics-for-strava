@@ -14,26 +14,16 @@ class ImportedGearConfigTest extends TestCase
 {
     use MatchesSnapshots;
 
-    public function testWithCustomData(): void
+    public function testGetPurchasePrice(): void
     {
         $config = ImportedGearConfig::fromArray(self::getValidConfig());
 
-        $gear = ImportedGearBuilder::fromDefaults()
-            ->withGearId(GearId::fromUnprefixed('le-id'))
-            ->build();
-        $gear = $config->enrichGearWithCustomData($gear);
-
         $this->assertEquals(
             Money::EUR('1000'),
-            $gear->getPurchasePrice(),
+            $config->getPurchasePrice(GearId::fromUnprefixed('le-id')),
         );
-        $this->assertNull(ImportedGearBuilder::fromDefaults()->build()->getPurchasePrice());
-
-        $gear = ImportedGearBuilder::fromDefaults()
-            ->withGearId(GearId::fromUnprefixed('le-id-not'))
-            ->build();
-        $config->enrichGearWithCustomData($gear);
-        $this->assertNull($gear->getPurchasePrice());
+        $this->assertNull($config->getPurchasePrice(GearId::fromUnprefixed('le-id-not')));
+        $this->assertNull($config->getPurchasePrice(GearId::fromUnprefixed('unknown-id')));
     }
 
     #[DataProvider(methodName: 'provideInvalidConfig')]

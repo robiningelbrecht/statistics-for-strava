@@ -48,6 +48,7 @@ final class CustomGearBuilder
             elevation: $this->elevation,
             numberOfActivities: $this->numberOfActivities,
             totalCalories: $this->totalCalories,
+            purchasePrice: null
         );
     }
 

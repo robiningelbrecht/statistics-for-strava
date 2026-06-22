@@ -2,6 +2,7 @@
 
 namespace App\Tests\Domain\Gear\CustomGear;
 
+use App\Domain\Gear\CustomGear\CustomGear;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\InvalidCustomGearConfig;
 use App\Domain\Gear\GearId;
@@ -51,13 +52,21 @@ class CustomGearConfigTest extends TestCase
 
         $enrichedGear = $customGearConfig->enrichGearWithCustomData($customGear);
 
+        // Enrichment only adds the full tag; the purchase price is persisted to-
+        // and read from the database, so it is not enriched here.
         $this->assertEquals(
             '#sfs-canyon',
             $enrichedGear->getTag(),
         );
+
+        // The configured purchase price lives on the gear built from config,
+        // which is what gets persisted on import.
+        $configuredGear = $customGearConfig->getCustomGears()->filter(
+            fn (CustomGear $gear): bool => 'canyon' === $gear->getId()->toUnprefixedString()
+        )->getFirst();
         $this->assertEquals(
             Money::EUR(100),
-            $enrichedGear->getPurchasePrice(),
+            $configuredGear->getPurchasePrice(),
         );
     }
 

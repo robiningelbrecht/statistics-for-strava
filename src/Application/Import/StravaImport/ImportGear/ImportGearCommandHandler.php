@@ -6,6 +6,7 @@ use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\ImportedGear\ImportedGear;
+use App\Domain\Gear\ImportedGear\ImportedGearConfig;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
@@ -22,6 +23,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
     public function __construct(
         private Strava $strava,
         private ImportedGearRepository $importedGearRepository,
+        private ImportedGearConfig $importedGearConfig,
         private CustomGearRepository $customGearRepository,
         private CustomGearConfig $customGearConfig,
         private Clock $clock,
@@ -86,8 +88,11 @@ final readonly class ImportGearCommandHandler implements CommandHandler
                     gearId: $gearId,
                     createdOn: $this->clock->getCurrentDateTimeImmutable(),
                     name: $stravaGear['name'],
-                    isRetired: $stravaGear['retired'] ?? false
+                    isRetired: $stravaGear['retired'] ?? false,
                 );
+            }
+            if ($purchasePrice = $this->importedGearConfig->getPurchasePrice($gearId)) {
+                $gear = $gear->withPurchasePrice($purchasePrice);
             }
             $this->importedGearRepository->save($gear);
             $command->getOutput()->writeln(sprintf('  => Imported gear "%s"', $gear->getName()));

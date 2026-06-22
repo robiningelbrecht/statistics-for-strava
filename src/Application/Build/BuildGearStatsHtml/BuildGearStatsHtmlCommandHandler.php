@@ -117,6 +117,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
             elevation: $elevation,
             numberOfActivities: $count,
             totalCalories: $totalCalories,
+            purchasePrice: null,
         );
     }
 }

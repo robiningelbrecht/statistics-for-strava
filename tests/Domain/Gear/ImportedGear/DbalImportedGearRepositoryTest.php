@@ -10,7 +10,6 @@ use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\Gears;
 use App\Domain\Gear\ImportedGear\DbalImportedGearRepository;
-use App\Domain\Gear\ImportedGear\ImportedGearConfig;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
@@ -19,6 +18,7 @@ use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Gear\CustomGear\CustomGearBuilder;
+use Money\Money;
 
 class DbalImportedGearRepositoryTest extends ContainerTestCase
 {
@@ -50,6 +50,20 @@ class DbalImportedGearRepositoryTest extends ContainerTestCase
                 ->withDistanceInMeter(Meter::from(5000))
                 ->build(),
             $this->importedGearRepository->find($gear->getId())
+        );
+    }
+
+    public function testItShouldPersistAndReadPurchasePrice(): void
+    {
+        $gear = ImportedGearBuilder::fromDefaults()
+            ->withGearId(GearId::fromUnprefixed(1))
+            ->withPurchasePrice(Money::EUR(150000))
+            ->build();
+        $this->importedGearRepository->save($gear);
+
+        $this->assertEquals(
+            Money::EUR(150000),
+            $this->importedGearRepository->find($gear->getId())->getPurchasePrice()
         );
     }
 
@@ -197,7 +211,6 @@ class DbalImportedGearRepositoryTest extends ContainerTestCase
 
         $this->importedGearRepository = new DbalImportedGearRepository(
             $this->getConnection(),
-            $this->getContainer()->get(ImportedGearConfig::class),
         );
     }
 }
