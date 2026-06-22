@@ -31,6 +31,8 @@ interface Gear extends SupportsAITooling
 
     public function withIsRetired(bool $isRetired): self;
 
+    public function getStatus(): GearStatus;
+
     public function getCreatedOn(): SerializableDateTime;
 
     public function getImageSrc(): ?string;
