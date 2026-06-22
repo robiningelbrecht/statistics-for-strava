@@ -9,7 +9,6 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;
-use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
@@ -17,7 +16,7 @@ use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\Application\BuildAppFilesTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
-use App\Tests\Domain\Gear\ImportedGear\ImportedGearBuilder;
+use App\Tests\Domain\Gear\GearBuilder;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
@@ -25,13 +24,13 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
 {
     public function testHandle(): void
     {
-        $gear = ImportedGearBuilder::fromDefaults()
+        $gear = GearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed('g10130856'))
             ->build();
-        $this->getContainer()->get(ImportedGearRepository::class)->save($gear);
+        $this->getContainer()->get(GearRepository::class)->save($gear);
 
         $this->getContainer()->get(
-            ImportedGearRepository::class)->save(ImportedGearBuilder::fromDefaults()
+            GearRepository::class)->save(GearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed('retired'))
             ->withIsRetired(true)
             ->build()

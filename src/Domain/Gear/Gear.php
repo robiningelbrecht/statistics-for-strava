@@ -1,11 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Domain\Gear;
 
 use App\Domain\Activity\ActivityTypes;
 use App\Domain\Integration\AI\SupportsAITooling;
+use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Hour;
@@ -13,59 +12,265 @@ use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use Doctrine\ORM\Mapping as ORM;
 use Money\Money;
 
-interface Gear extends SupportsAITooling
+#[ORM\Entity]
+#[ORM\Table(name: 'Gear')]
+#[ORM\Index(name: 'Gear_type', columns: ['type'])]
+final readonly class Gear implements SupportsAITooling
 {
-    public function getId(): GearId;
+    use ProvideTimeFormats;
 
-    public function withName(string $name): self;
+    private function __construct(
+        #[ORM\Id, ORM\Column(type: 'string', unique: true)]
+        private GearId $gearId,
+        #[ORM\Column(type: 'datetime_immutable')]
+        private SerializableDateTime $createdOn,
+        private Meter $distanceInMeter,
+        #[ORM\Column(type: 'string')]
+        private string $name,
+        #[ORM\Column(type: 'boolean')]
+        private bool $isRetired,
+        #[ORM\Column(type: 'string', enumType: GearType::class, options: ['default' => GearType::IMPORTED->value])]
+        private GearType $type,
+        private ?string $imageSrc,
+        private Seconds $movingTime,
+        private Meter $elevation,
+        private int $numberOfActivities,
+        private int $totalCalories,
+        private ActivityTypes $activityTypes,
+        #[ORM\Embedded(class: Money::class)]
+        private ?Money $purchasePrice,
+    ) {
+    }
 
-    public function getOriginalName(): string;
+    public static function create(
+        GearId $gearId,
+        SerializableDateTime $createdOn,
+        string $name,
+        bool $isRetired,
+        GearType $type,
+    ): self {
+        return new self(
+            gearId: $gearId,
+            createdOn: $createdOn,
+            distanceInMeter: Meter::zero(),
+            name: $name,
+            isRetired: $isRetired,
+            type: $type,
+            imageSrc: null,
+            movingTime: Seconds::zero(),
+            elevation: Meter::zero(),
+            numberOfActivities: 0,
+            totalCalories: 0,
+            activityTypes: ActivityTypes::empty(),
+            purchasePrice: null,
+        );
+    }
 
-    public function getName(): string;
+    public static function fromState(
+        GearId $gearId,
+        Meter $distanceInMeter,
+        SerializableDateTime $createdOn,
+        string $name,
+        bool $isRetired,
+        GearType $type,
+        Seconds $movingTime,
+        Meter $elevation,
+        int $numberOfActivities,
+        int $totalCalories,
+        ?Money $purchasePrice,
+    ): self {
+        return new self(
+            gearId: $gearId,
+            createdOn: $createdOn,
+            distanceInMeter: $distanceInMeter,
+            name: $name,
+            isRetired: $isRetired,
+            type: $type,
+            imageSrc: null,
+            movingTime: $movingTime,
+            elevation: $elevation,
+            numberOfActivities: $numberOfActivities,
+            totalCalories: $totalCalories,
+            activityTypes: ActivityTypes::empty(),
+            purchasePrice: $purchasePrice,
+        );
+    }
 
-    public function getDistance(): Kilometer;
+    public function getId(): GearId
+    {
+        return $this->gearId;
+    }
 
-    public function isRetired(): bool;
+    public function getType(): GearType
+    {
+        return $this->type;
+    }
 
-    public function withIsRetired(bool $isRetired): self;
+    public function withName(string $name): self
+    {
+        return clone ($this, [
+            'name' => $name,
+        ]);
+    }
 
-    public function getStatus(): GearStatus;
+    public function getOriginalName(): string
+    {
+        return $this->name;
+    }
 
-    public function getCreatedOn(): SerializableDateTime;
+    public function getName(): string
+    {
+        return sprintf('%s%s', $this->name, $this->isRetired() ? ' ☠️' : '');
+    }
 
-    public function getImageSrc(): ?string;
+    public function getDistance(): Kilometer
+    {
+        return $this->distanceInMeter->toKilometer();
+    }
 
-    public function getPurchasePrice(): ?Money;
+    public function getMovingTime(): Seconds
+    {
+        return $this->movingTime;
+    }
 
-    public function getMovingTime(): Seconds;
+    public function getElevation(): Meter
+    {
+        return $this->elevation;
+    }
 
-    public function getElevation(): Meter;
+    public function getNumberOfActivities(): int
+    {
+        return $this->numberOfActivities;
+    }
 
-    public function getNumberOfActivities(): int;
+    public function getTotalCalories(): int
+    {
+        return $this->totalCalories;
+    }
 
-    public function getTotalCalories(): int;
+    public function getMovingTimeFormatted(): string
+    {
+        return $this->formatDurationAsHumanString($this->movingTime->toInt());
+    }
 
-    public function getMovingTimeFormatted(): string;
+    public function getMovingTimeInHours(): Hour
+    {
+        return $this->movingTime->toHour();
+    }
 
-    public function getMovingTimeInHours(): Hour;
+    public function getAverageDistance(): Kilometer
+    {
+        if (0 === $this->numberOfActivities) {
+            return Kilometer::zero();
+        }
 
-    public function getAverageDistance(): Kilometer;
+        return Kilometer::from($this->getDistance()->toFloat() / $this->numberOfActivities);
+    }
 
-    public function getAverageSpeed(): KmPerHour;
+    public function getAverageSpeed(): KmPerHour
+    {
+        $movingTimeInSeconds = $this->movingTime->toFloat();
+        if (0.0 === $movingTimeInSeconds) {
+            return KmPerHour::zero();
+        }
 
-    public function getRelativeCostPerHour(): ?Money;
+        return KmPerHour::from(($this->getDistance()->toFloat() / $movingTimeInSeconds) * 3600);
+    }
 
-    public function getRelativeCostPerWorkout(): ?Money;
+    public function getRelativeCostPerHour(): ?Money
+    {
+        $movingTimeInHours = $this->getMovingTimeInHours()->toInt();
 
-    public function getRelativeCostPerDistanceUnit(UnitSystem $unitSystem): ?Money;
+        return $this->getPurchasePrice()?->divide($movingTimeInHours > 0 ? $movingTimeInHours : 1);
+    }
 
-    public function getActivityTypes(): ActivityTypes;
+    public function getRelativeCostPerWorkout(): ?Money
+    {
+        return $this->getPurchasePrice()?->divide($this->numberOfActivities > 0 ? $this->numberOfActivities : 1);
+    }
 
-    public function withActivityTypes(ActivityTypes $activityTypes): self;
+    public function getRelativeCostPerDistanceUnit(UnitSystem $unitSystem): ?Money
+    {
+        $distance = $this->getDistance()->toUnitSystem($unitSystem)->toInt();
 
-    public function withImageSrc(string $imageSrc): self;
+        return $this->getPurchasePrice()?->divide($distance > 0 ? $distance : 1);
+    }
 
-    public function withPurchasePrice(Money $purchasePrice): self;
+    public function isRetired(): bool
+    {
+        return $this->isRetired;
+    }
+
+    public function withIsRetired(bool $isRetired): self
+    {
+        return clone ($this, [
+            'isRetired' => $isRetired,
+        ]);
+    }
+
+    public function getStatus(): GearStatus
+    {
+        return $this->isRetired() ? GearStatus::RETIRED : GearStatus::ACTIVE;
+    }
+
+    public function getCreatedOn(): SerializableDateTime
+    {
+        return $this->createdOn;
+    }
+
+    public function getImageSrc(): ?string
+    {
+        if (!isset($this->imageSrc)) {
+            return null;
+        }
+
+        return $this->imageSrc;
+    }
+
+    public function withImageSrc(string $imageSrc): self
+    {
+        return clone ($this, [
+            'imageSrc' => $imageSrc,
+        ]);
+    }
+
+    public function getActivityTypes(): ActivityTypes
+    {
+        return $this->activityTypes;
+    }
+
+    public function withActivityTypes(ActivityTypes $activityTypes): self
+    {
+        return clone ($this, [
+            'activityTypes' => $activityTypes,
+        ]);
+    }
+
+    public function getPurchasePrice(): ?Money
+    {
+        return $this->purchasePrice;
+    }
+
+    public function withPurchasePrice(Money $purchasePrice): self
+    {
+        return clone ($this, [
+            'purchasePrice' => $purchasePrice,
+        ]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function exportForAITooling(): array
+    {
+        return [
+            'id' => $this->getId()->toUnprefixedString(),
+            'totalDistanceInKilometer' => $this->getDistance(),
+            'name' => $this->getName(),
+            'isRetired' => $this->isRetired(),
+        ];
+    }
 }

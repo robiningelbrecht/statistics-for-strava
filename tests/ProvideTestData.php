@@ -27,7 +27,7 @@ use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Challenge\ChallengeId;
 use App\Domain\Challenge\ChallengeRepository;
 use App\Domain\Gear\GearId;
-use App\Domain\Gear\ImportedGear\ImportedGearRepository;
+use App\Domain\Gear\GearRepository;
 use App\Domain\Integration\Weather\OpenMeteo\Weather;
 use App\Domain\Segment\SegmentEffort\SegmentEffortId;
 use App\Domain\Segment\SegmentEffort\SegmentEffortRepository;
@@ -51,7 +51,7 @@ use App\Tests\Domain\Activity\Split\ActivitySplitBuilder;
 use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
 use App\Tests\Domain\Activity\Stream\CombinedStream\CombinedActivityStreamBuilder;
 use App\Tests\Domain\Challenge\ChallengeBuilder;
-use App\Tests\Domain\Gear\ImportedGear\ImportedGearBuilder;
+use App\Tests\Domain\Gear\GearBuilder;
 use App\Tests\Domain\Segment\SegmentBuilder;
 use App\Tests\Domain\Segment\SegmentEffort\SegmentEffortBuilder;
 use Symfony\Component\DependencyInjection\Container;
@@ -105,10 +105,10 @@ trait ProvideTestData
 
     protected function addGearFixtures(): void
     {
-        /** @var ImportedGearRepository $gearRepository */
-        $gearRepository = $this->getContainer()->get(ImportedGearRepository::class);
+        /** @var GearRepository $gearRepository */
+        $gearRepository = $this->getContainer()->get(GearRepository::class);
         $gearRepository->save(
-            ImportedGearBuilder::fromDefaults()
+            GearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->withCreatedOn(SerializableDateTime::fromString('2023-06-20 09:04:58'))
                 ->withDistanceInMeter(Meter::from(1450147))
@@ -117,7 +117,7 @@ trait ProvideTestData
                 ->build()
         );
         $gearRepository->save(
-            ImportedGearBuilder::fromDefaults()
+            GearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed('b12659862'))
                 ->withCreatedOn(SerializableDateTime::fromString('2023-06-20 09:04:58'))
                 ->withDistanceInMeter(Meter::from(145014))
@@ -127,7 +127,7 @@ trait ProvideTestData
         );
 
         $gearRepository->save(
-            ImportedGearBuilder::fromDefaults()
+            GearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed('b12659562'))
                 ->withCreatedOn(SerializableDateTime::fromString('2023-06-20 09:04:58'))
                 ->withDistanceInMeter(Meter::from(100000))

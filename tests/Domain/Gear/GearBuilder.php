@@ -2,22 +2,24 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Domain\Gear\ImportedGear;
+namespace App\Tests\Domain\Gear;
 
+use App\Domain\Gear\Gear;
 use App\Domain\Gear\GearId;
-use App\Domain\Gear\ImportedGear\ImportedGear;
+use App\Domain\Gear\GearType;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Money\Money;
 
-final class ImportedGearBuilder
+final class GearBuilder
 {
     private GearId $gearId;
     private SerializableDateTime $createdOn;
     private Meter $distanceInMeter;
     private string $name = 'Existing gear';
     private bool $isRetired = false;
+    private GearType $type = GearType::IMPORTED;
     private Seconds $movingTime;
     private Meter $elevation;
     private int $numberOfActivities = 0;
@@ -38,20 +40,28 @@ final class ImportedGearBuilder
         return new self();
     }
 
-    public function build(): ImportedGear
+    public function build(): Gear
     {
-        return ImportedGear::fromState(
+        return Gear::fromState(
             gearId: $this->gearId,
             distanceInMeter: $this->distanceInMeter,
             createdOn: $this->createdOn,
             name: $this->name,
             isRetired: $this->isRetired,
+            type: $this->type,
             movingTime: $this->movingTime,
             elevation: $this->elevation,
             numberOfActivities: $this->numberOfActivities,
             totalCalories: $this->totalCalories,
             purchasePrice: $this->purchasePrice,
         );
+    }
+
+    public function withGearType(GearType $type): self
+    {
+        $this->type = $type;
+
+        return $this;
     }
 
     public function withPurchasePrice(?Money $purchasePrice): self

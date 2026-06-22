@@ -13,13 +13,13 @@ use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Athlete\Athlete;
 use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Gear\GearId;
-use App\Domain\Gear\ImportedGear\ImportedGearRepository;
+use App\Domain\Gear\GearRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
-use App\Tests\Domain\Gear\ImportedGear\ImportedGearBuilder;
+use App\Tests\Domain\Gear\GearBuilder;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\SpyOutput;
@@ -44,8 +44,8 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
                 ->withGearId(GearId::fromUnprefixed(4))
                 ->build(), []
         ));
-        $this->getContainer()->get(ImportedGearRepository::class)->save(
-            ImportedGearBuilder::fromDefaults()
+        $this->getContainer()->get(GearRepository::class)->save(
+            GearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed(4))
                 ->build()
         );

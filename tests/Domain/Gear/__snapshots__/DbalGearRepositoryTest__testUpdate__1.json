@@ -6,6 +6,6 @@
         "isRetired": 1,
         "purchasePriceAmount": null,
         "purchasePriceCurrency": null,
-        "type": "custom"
+        "type": "imported"
     }
 ]
