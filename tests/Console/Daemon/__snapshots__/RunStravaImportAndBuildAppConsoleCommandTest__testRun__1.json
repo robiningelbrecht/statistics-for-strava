@@ -26,12 +26,6 @@
         }
     },
     {
-        "commandName": "App\\Application\\Import\\StravaImport\\LinkCustomGearToActivities\\LinkCustomGearToActivities",
-        "payload": {
-            "output": {}
-        }
-    },
-    {
         "commandName": "App\\Application\\Import\\StravaImport\\ImportSegments\\ImportSegments",
         "payload": {
             "output": {}

@@ -77,7 +77,6 @@ Cricket: Cricket
 Crossfit: 交叉健身
 'Current Status': 'Current Status'
 'Current streaks': 'Current streaks'
-'Custom gear disabled': 自定义装备已禁用
 Cycling: 骑行
 'Daily TRIMP': 每日TRIMP
 'Daily activities': 每日活动
@@ -150,7 +149,6 @@ Fri.: Fri.
 GAP: GAP
 Gear: 装备
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': '您的维护配置文件中引用了装备"{gearId}"，但该装备尚未从 Strava 导入。请检查该装备是否存在并已正确同步。'
-'Gear details': 装备详情
 'Gear maintenance': 装备维护
 'Gear management': 'Gear management'
 'Gear stats': 装备统计

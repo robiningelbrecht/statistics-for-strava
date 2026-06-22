@@ -77,7 +77,6 @@ Cricket: Cricket
 Crossfit: Crossfit
 'Current Status': 'Aktueller Status'
 'Current streaks': 'Aktuelle Serien'
-'Custom gear disabled': 'Eigene Ausrüstung deaktiviert'
 Cycling: Radfahren
 'Daily TRIMP': 'Täglicher TRIMP'
 'Daily activities': 'Tägliche Aktivitäten'
@@ -150,7 +149,6 @@ Fri.: Fri.
 GAP: GAP
 Gear: Ausrüstung
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'Die Ausrüstung "{gearId}" ist in deiner "gear-maintenance.yaml" referenziert, wurde aber nicht von Strava importiert. Bitte überprüfe, dass die Ausrüstung existiert und korrekt synchronisiert wurde.'
-'Gear details': Ausrüstungsdetails
 'Gear maintenance': Ausrüstungswartung
 'Gear management': 'Gear management'
 'Gear stats': Ausrüstungsstatistiken

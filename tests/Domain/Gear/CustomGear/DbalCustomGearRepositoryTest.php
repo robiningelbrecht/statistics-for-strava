@@ -7,7 +7,6 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\ActivityTypes;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\CustomGear\DbalCustomGearRepository;
 use App\Domain\Gear\GearId;
@@ -16,7 +15,6 @@ use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
-use App\Infrastructure\ValueObject\String\Tag;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Gear\ImportedGear\ImportedGearBuilder;
@@ -97,24 +95,20 @@ class DbalCustomGearRepositoryTest extends ContainerTestCase
                     ->withElevation(Meter::from(400))
                     ->withNumberOfActivities(2)
                     ->build()
-                    ->withFullTag(Tag::fromString('#sfs-2'))
                     ->withActivityTypes(ActivityTypes::fromArray([ActivityType::RIDE])),
                 CustomGearBuilder::fromDefaults()
                     ->withGearId(GearId::fromUnprefixed(1))
                     ->withDistanceInMeter(Meter::zero())
-                    ->build()
-                    ->withFullTag(Tag::fromString('#sfs-1')),
+                    ->build(),
                 CustomGearBuilder::fromDefaults()
                     ->withGearId(GearId::fromUnprefixed(3))
                     ->withDistanceInMeter(Meter::zero())
-                    ->build()
-                    ->withFullTag(Tag::fromString('#sfs-3')),
+                    ->build(),
                 CustomGearBuilder::fromDefaults()
                     ->withGearId(GearId::fromUnprefixed(4))
                     ->withDistanceInMeter(Meter::zero())
                     ->withIsRetired(true)
-                    ->build()
-                    ->withFullTag(Tag::fromString('#sfs-4')),
+                    ->build(),
             ]),
             $this->customGearRepository->findAll()
         );
@@ -165,8 +159,7 @@ class DbalCustomGearRepositoryTest extends ContainerTestCase
         parent::setUp();
 
         $this->customGearRepository = new DbalCustomGearRepository(
-            $this->getConnection(),
-            $this->getContainer()->get(CustomGearConfig::class)
+            $this->getConnection()
         );
     }
 }

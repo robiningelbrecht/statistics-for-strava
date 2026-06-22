@@ -90,8 +90,8 @@ trait ProvideGearRepositoryHelpers
         $purchasePriceCurrency = (string) ($result['purchasePriceCurrency'] ?? '');
         if (isset($result['purchasePriceAmount']) && '' !== $purchasePriceCurrency) {
             $purchasePrice = new Money(
-                (int) $result['purchasePriceAmount'],
-                new Currency($purchasePriceCurrency)
+                amount: (int) $result['purchasePriceAmount'],
+                currency: new Currency($purchasePriceCurrency)
             );
         }
 

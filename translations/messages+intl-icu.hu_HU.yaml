@@ -77,7 +77,6 @@ Cricket: Krikett
 Crossfit: Crossfit
 'Current Status': 'Jelenlegi állapot'
 'Current streaks': 'Aktuális sorozatok'
-'Custom gear disabled': 'Egyedi felszerelés letiltva'
 Cycling: Kerékpározás
 'Daily TRIMP': 'Napi TRIMP'
 'Daily activities': 'Napi tevékenységek'
@@ -150,7 +149,6 @@ Fri.: Fri.
 GAP: GAP
 Gear: Felszerelés
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'A(z) „{gearId}" felszerelés szerepel a karbantartási konfigurációs fájlban, de nem lett importálva a Stravából. Ellenőrizd, hogy a felszerelés létezik és megfelelően szinkronizálva van.'
-'Gear details': 'Felszerelés részletei'
 'Gear maintenance': 'Felszerelés karbantartás'
 'Gear management': 'Gear management'
 'Gear stats': 'Felszerelés statisztikák'

@@ -183,21 +183,6 @@ metrics:
       showInDashboardWidget: false
       sportTypesToInclude: ['Walk', 'Hike']
 gear:
-    # Optional, used to enrich gear with data that cannot be configured in Strava.  
-    stravaGear:
-      # The Strava gear ID.
-      # ⚠️ Do NOT copy the gear ID from the Strava URL, that value will not work.
-      # Instead, open the gear details popup (click the question-mark icon in the top-right corner of the gear page) 
-      # and copy the gear ID shown there.
-      # https://docs.getsfs.app/#/configuration/gear-maintenance?id=strava-gear-ids
-      - gearId: 'g12337767'
-        # Used to calculate the relative cost per workout and hour.
-        purchasePrice:
-          amountInCents: 123456
-          currency: 'EUR'
-    # Optional, this is useful for gear that Strava doesn't allow you to track
-    # Read how to configure on https://docs.getsfs.app/#/configuration/custom-gear      
-    customGear: []
     # Optional, used to enrich recording devices with data that cannot be configured in Strava.  
     recordingDevices:
       # The recording device ID.
