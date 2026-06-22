@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Tests\Controller\Admin;
+namespace App\Tests\Controller\Admin\File;
 
 use App\Domain\Import\FileImportId;
 use App\Domain\Import\FileImportRepository;
 use App\Domain\Import\FileImportStatus;
 use App\Domain\Import\ImportMode;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use App\Tests\Controller\Admin\AdminWebTestCase;
 use App\Tests\Domain\Import\FileImportBuilder;
 
 class FileImportsRequestHandlerTest extends AdminWebTestCase

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin;
+namespace App\Controller\Admin\File;
 
 use App\Domain\Import\FileImportOverviewRepository;
 use App\Infrastructure\Http\Request\PaginationFromRequest;
@@ -26,7 +26,7 @@ final readonly class FileImportsRequestHandler
     #[Route(path: '/admin/file-imports', name: 'admin_file_imports', methods: ['GET'], priority: 10)]
     public function index(Request $request): Response
     {
-        return new Response($this->twig->render('html/admin/page/file-imports.html.twig', [
+        return new Response($this->twig->render('html/admin/page/file/file-imports.html.twig', [
             'overview' => $this->fileImportOverviewRepository->find(
                 $this->paginationFromRequest($request)
             ),

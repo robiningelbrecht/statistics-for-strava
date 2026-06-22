@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin;
+namespace App\Controller\Admin\File;
 
 use App\Domain\Import\SupportedFileExtension;
 use App\Infrastructure\Serialization\Json;
@@ -23,7 +23,7 @@ final readonly class FileUploadRequestHandler
     #[Route(path: '/admin/upload', name: 'admin_file_upload', methods: ['GET'], priority: 10)]
     public function index(): Response
     {
-        return new Response($this->twig->render('html/admin/page/file-upload.html.twig', [
+        return new Response($this->twig->render('html/admin/page/file/file-upload.html.twig', [
             'supportedFileExtensions' => Json::encode(SupportedFileExtension::cases()),
         ]));
     }
