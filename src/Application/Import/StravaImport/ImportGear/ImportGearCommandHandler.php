@@ -16,6 +16,7 @@ use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Time\Clock\Clock;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
+use Money\Money;
 use Psr\Http\Message\ResponseInterface;
 
 final readonly class ImportGearCommandHandler implements CommandHandler
@@ -91,7 +92,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
                     isRetired: $stravaGear['retired'] ?? false,
                 );
             }
-            if ($purchasePrice = $this->importedGearConfig->getPurchasePrice($gearId)) {
+            if (($purchasePrice = $this->importedGearConfig->getPurchasePrice($gearId)) instanceof Money) {
                 $gear = $gear->withPurchasePrice($purchasePrice);
             }
             $this->importedGearRepository->save($gear);
