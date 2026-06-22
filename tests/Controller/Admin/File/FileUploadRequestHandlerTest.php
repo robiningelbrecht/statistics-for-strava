@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Tests\Controller\Admin;
+namespace App\Tests\Controller\Admin\File;
 
 use App\Domain\Import\ImportMode;
+use App\Tests\Controller\Admin\AdminWebTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 class FileUploadRequestHandlerTest extends AdminWebTestCase

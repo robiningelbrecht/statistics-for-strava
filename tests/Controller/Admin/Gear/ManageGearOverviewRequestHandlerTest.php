@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Tests\Controller\Admin;
+namespace App\Tests\Controller\Admin\Gear;
 
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
+use App\Tests\Controller\Admin\AdminWebTestCase;
 use App\Tests\Domain\Gear\GearBuilder;
 
-class ManageGearRequestHandlerTest extends AdminWebTestCase
+class ManageGearOverviewRequestHandlerTest extends AdminWebTestCase
 {
     public function testAnonymousUsersAreRedirectedToTheLoginPage(): void
     {
