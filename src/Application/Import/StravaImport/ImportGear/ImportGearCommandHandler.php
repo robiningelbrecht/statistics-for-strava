@@ -2,8 +2,9 @@
 
 namespace App\Application\Import\StravaImport\ImportGear;
 
-use App\Domain\Gear\ImportedGear\ImportedGear;
-use App\Domain\Gear\ImportedGear\ImportedGearRepository;
+use App\Domain\Gear\Gear;
+use App\Domain\Gear\GearRepository;
+use App\Domain\Gear\GearType;
 use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Command;
@@ -18,7 +19,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
 {
     public function __construct(
         private Strava $strava,
-        private ImportedGearRepository $importedGearRepository,
+        private GearRepository $gearRepository,
         private Clock $clock,
     ) {
     }
@@ -30,10 +31,10 @@ final readonly class ImportGearCommandHandler implements CommandHandler
 
         $this->strava->setConsoleOutput($command->getOutput());
 
-        $stravaGearIdsToImport = $this->importedGearRepository->findUniqueStravaGearIds(null);
+        $stravaGearIdsToImport = $this->gearRepository->findUniqueStravaGearIds(null);
         if ($command->isPartialImport()) {
             // We only want to update gears that are referenced on the activities to be imported.
-            $stravaGearIdsToImport = $this->importedGearRepository->findUniqueStravaGearIds($command->getRestrictToActivityIds());
+            $stravaGearIdsToImport = $this->gearRepository->findUniqueStravaGearIds($command->getRestrictToActivityIds());
         }
 
         foreach ($stravaGearIdsToImport as $gearId) {
@@ -55,18 +56,19 @@ final readonly class ImportGearCommandHandler implements CommandHandler
             }
 
             try {
-                $gear = $this->importedGearRepository->find($gearId)
+                $gear = $this->gearRepository->find($gearId)
                     ->withName($stravaGear['name'])
                     ->withIsRetired($stravaGear['retired'] ?? false);
             } catch (EntityNotFound) {
-                $gear = ImportedGear::create(
+                $gear = Gear::create(
                     gearId: $gearId,
                     createdOn: $this->clock->getCurrentDateTimeImmutable(),
                     name: $stravaGear['name'],
                     isRetired: $stravaGear['retired'] ?? false,
+                    type: GearType::IMPORTED,
                 );
             }
-            $this->importedGearRepository->save($gear);
+            $this->gearRepository->save($gear);
             $command->getOutput()->writeln(sprintf('  => Imported gear "%s"', $gear->getName()));
         }
     }

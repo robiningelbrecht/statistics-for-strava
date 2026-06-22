@@ -1,39 +1,42 @@
 <?php
 
-namespace App\Tests\Domain\Gear\ImportedGear;
+namespace App\Tests\Domain\Gear;
 
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\ActivityTypes;
 use App\Domain\Activity\ActivityWithRawData;
+use App\Domain\Gear\DbalGearRepository;
 use App\Domain\Gear\GearId;
+use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\Gears;
-use App\Domain\Gear\ImportedGear\DbalImportedGearRepository;
-use App\Domain\Gear\ImportedGear\ImportedGearRepository;
+use App\Domain\Gear\GearType;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
-use App\Tests\Domain\Gear\CustomGear\CustomGearBuilder;
 use Money\Money;
+use Spatie\Snapshots\MatchesSnapshots;
 
-class DbalImportedGearRepositoryTest extends ContainerTestCase
+class DbalGearRepositoryTest extends ContainerTestCase
 {
-    private ImportedGearRepository $importedGearRepository;
+    use MatchesSnapshots;
+
+    private GearRepository $gearRepository;
 
     public function testFindAndSave(): void
     {
         $activityRepository = $this->getContainer()->get(ActivityRepository::class);
 
         // The stored column value (1230) must be ignored: distance is derived from activities.
-        $gear = ImportedGearBuilder::fromDefaults()
+        $gear = GearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(1))
             ->withDistanceInMeter(Meter::from(1230))
             ->build();
-        $this->importedGearRepository->save($gear);
+        $this->gearRepository->save($gear);
 
         $activityRepository->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
@@ -45,68 +48,94 @@ class DbalImportedGearRepositoryTest extends ContainerTestCase
         ));
 
         $this->assertEquals(
-            ImportedGearBuilder::fromDefaults()
+            GearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed(1))
                 ->withDistanceInMeter(Meter::from(5000))
                 ->build(),
-            $this->importedGearRepository->find($gear->getId())
+            $this->gearRepository->find($gear->getId())
         );
     }
 
     public function testItShouldPersistAndReadPurchasePrice(): void
     {
-        $gear = ImportedGearBuilder::fromDefaults()
+        $gear = GearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(1))
             ->withPurchasePrice(Money::EUR(150000))
             ->build();
-        $this->importedGearRepository->save($gear);
+        $this->gearRepository->save($gear);
 
         $this->assertEquals(
             Money::EUR(150000),
-            $this->importedGearRepository->find($gear->getId())->getPurchasePrice()
+            $this->gearRepository->find($gear->getId())->getPurchasePrice()
         );
-    }
-
-    public function testItShouldThrowWhenNotImportedGear(): void
-    {
-        $this->expectExceptionObject(
-            new \InvalidArgumentException('Cannot save App\Domain\Gear\CustomGear\CustomGear as ImportedGear')
-        );
-
-        $this->importedGearRepository->save(CustomGearBuilder::fromDefaults()->build());
     }
 
     public function testItShouldThrowWhenNotFound(): void
     {
         $this->expectException(EntityNotFound::class);
-        $this->importedGearRepository->find(GearId::fromUnprefixed('1'));
+        $this->gearRepository->find(GearId::fromUnprefixed('1'));
+    }
+
+    public function testSavePersistsType(): void
+    {
+        $this->gearRepository->save(
+            GearBuilder::fromDefaults()
+                ->withGearId(GearId::fromUnprefixed(1))
+                ->build()
+        );
+        $this->gearRepository->save(
+            GearBuilder::fromDefaults()
+                ->withGearId(GearId::fromUnprefixed(2))
+                ->withGearType(GearType::CUSTOM)
+                ->build()
+        );
+
+        $this->assertMatchesJsonSnapshot(
+            $this->getConnection()->executeQuery('SELECT * FROM Gear ORDER BY gearId')->fetchAllAssociative()
+        );
+    }
+
+    public function testUpdate(): void
+    {
+        $gear = GearBuilder::fromDefaults()
+            ->withGearId(GearId::fromUnprefixed(1))
+            ->build();
+        $this->gearRepository->save($gear);
+
+        $this->gearRepository->save($gear->withName('Updated gear')->withIsRetired(true));
+
+        $this->assertMatchesJsonSnapshot(
+            $this->getConnection()->executeQuery('SELECT * FROM Gear')->fetchAllAssociative()
+        );
     }
 
     public function testFindAll(): void
     {
         $activityRepository = $this->getContainer()->get(ActivityRepository::class);
 
-        $gearOne = ImportedGearBuilder::fromDefaults()
+        $gearOne = GearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(1))
             ->withDistanceInMeter(Meter::from(1230))
             ->build();
-        $this->importedGearRepository->save($gearOne);
-        $gearTwo = ImportedGearBuilder::fromDefaults()
+        $this->gearRepository->save($gearOne);
+        $gearTwo = GearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(2))
+            ->withGearType(GearType::CUSTOM)
             ->withDistanceInMeter(Meter::from(10230))
             ->build();
-        $this->importedGearRepository->save($gearTwo);
-        $gearThree = ImportedGearBuilder::fromDefaults()
+        $this->gearRepository->save($gearTwo);
+        $gearThree = GearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(3))
             ->withDistanceInMeter(Meter::from(230))
             ->build();
-        $this->importedGearRepository->save($gearThree);
-        $gearFour = ImportedGearBuilder::fromDefaults()
+        $this->gearRepository->save($gearThree);
+        $gearFour = GearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(4))
+            ->withGearType(GearType::CUSTOM)
             ->withDistanceInMeter(Meter::from(100230))
             ->withIsRetired(true)
             ->build();
-        $this->importedGearRepository->save($gearFour);
+        $this->gearRepository->save($gearFour);
 
         $activityRepository->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
@@ -139,11 +168,9 @@ class DbalImportedGearRepositoryTest extends ContainerTestCase
             []
         ));
 
-        $result = $this->importedGearRepository->findAll();
-
         $this->assertEquals(
             Gears::fromArray([
-                ImportedGearBuilder::fromDefaults()
+                GearBuilder::fromDefaults()
                     ->withGearId(GearId::fromUnprefixed(1))
                     ->withDistanceInMeter(Meter::from(30000))
                     ->withMovingTime(Seconds::from(10800))
@@ -151,57 +178,52 @@ class DbalImportedGearRepositoryTest extends ContainerTestCase
                     ->withNumberOfActivities(2)
                     ->build()
                     ->withActivityTypes(ActivityTypes::fromArray([ActivityType::RIDE])),
-                ImportedGearBuilder::fromDefaults()
+                GearBuilder::fromDefaults()
                     ->withGearId(GearId::fromUnprefixed(2))
+                    ->withGearType(GearType::CUSTOM)
                     ->withDistanceInMeter(Meter::from(5000))
                     ->withMovingTime(Seconds::from(1800))
                     ->withElevation(Meter::from(50))
                     ->withNumberOfActivities(1)
                     ->build()
                     ->withActivityTypes(ActivityTypes::fromArray([ActivityType::RIDE])),
-                ImportedGearBuilder::fromDefaults()
+                GearBuilder::fromDefaults()
                     ->withGearId(GearId::fromUnprefixed(3))
                     ->withDistanceInMeter(Meter::zero())
                     ->build(),
-                ImportedGearBuilder::fromDefaults()
+                GearBuilder::fromDefaults()
                     ->withGearId(GearId::fromUnprefixed(4))
+                    ->withGearType(GearType::CUSTOM)
                     ->withDistanceInMeter(Meter::zero())
                     ->withIsRetired(true)
                     ->build(),
             ]),
-            $result
+            $this->gearRepository->findAll()
         );
     }
 
-    public function testUpdate(): void
+    public function testHasGear(): void
     {
-        $activityRepository = $this->getContainer()->get(ActivityRepository::class);
+        $this->assertFalse($this->gearRepository->hasGear());
 
-        $gear = ImportedGearBuilder::fromDefaults()
-            ->withGearId(GearId::fromUnprefixed(1))
-            ->withDistanceInMeter(Meter::from(1000))
-            ->build();
-        $this->importedGearRepository->save($gear);
-
-        // Without linked activities the derived distance is zero, regardless of the stored column.
-        $this->assertEquals(
-            0,
-            $this->importedGearRepository->find(GearId::fromUnprefixed(1))->getDistance()->toMeter()->toFloat()
+        $this->getContainer()->get(ActivityRepository::class)->add(
+            ActivityWithRawData::fromState(
+                ActivityBuilder::fromDefaults()
+                    ->withGearId(GearId::fromUnprefixed(4))
+                    ->build(),
+                []
+            ),
         );
 
-        $activityRepository->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('1'))
-                ->withGearId(GearId::fromUnprefixed(1))
-                ->withDistance(Kilometer::from(30))
-                ->build(),
-            []
-        ));
-
-        $this->assertEquals(
-            30000,
-            $this->importedGearRepository->find(GearId::fromUnprefixed(1))->getDistance()->toMeter()->toFloat()
+        $this->gearRepository->save(
+            GearBuilder::fromDefaults()
+                ->withGearId(GearId::fromUnprefixed(4))
+                ->withDistanceInMeter(Meter::from(100230))
+                ->withIsRetired(true)
+                ->build()
         );
+
+        $this->assertTrue($this->gearRepository->hasGear());
     }
 
     #[\Override]
@@ -209,7 +231,7 @@ class DbalImportedGearRepositoryTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->importedGearRepository = new DbalImportedGearRepository(
+        $this->gearRepository = new DbalGearRepository(
             $this->getConnection(),
         );
     }

@@ -3,9 +3,9 @@
 namespace App\Tests\Controller\Admin;
 
 use App\Domain\Gear\GearId;
-use App\Domain\Gear\ImportedGear\ImportedGearRepository;
+use App\Domain\Gear\GearRepository;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
-use App\Tests\Domain\Gear\ImportedGear\ImportedGearBuilder;
+use App\Tests\Domain\Gear\GearBuilder;
 
 class ManageGearRequestHandlerTest extends AdminWebTestCase
 {
@@ -31,11 +31,11 @@ class ManageGearRequestHandlerTest extends AdminWebTestCase
 
     public function testRendersTheTableWithGears(): void
     {
-        $importedGearRepository = static::getContainer()->get(ImportedGearRepository::class);
+        $importedGearRepository = static::getContainer()->get(GearRepository::class);
 
         for ($i = 1; $i <= 3; ++$i) {
             $importedGearRepository->save(
-                ImportedGearBuilder::fromDefaults()
+                GearBuilder::fromDefaults()
                     ->withGearId(GearId::fromUnprefixed((string) $i))
                     ->withName(sprintf('Gear %d', $i))
                     ->withDistanceInMeter(Meter::from(1000 * $i))

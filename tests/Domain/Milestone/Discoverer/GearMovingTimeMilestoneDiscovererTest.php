@@ -6,14 +6,14 @@ use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Gear\GearId;
-use App\Domain\Gear\ImportedGear\ImportedGearRepository;
+use App\Domain\Gear\GearRepository;
 use App\Domain\Milestone\Context\GearMovingTimeContext;
 use App\Domain\Milestone\Discoverer\GearMovingTimeMilestoneDiscoverer;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
-use App\Tests\Domain\Gear\ImportedGear\ImportedGearBuilder;
+use App\Tests\Domain\Gear\GearBuilder;
 use App\Tests\Domain\Milestone\IncrementingMilestoneIdFactory;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -102,8 +102,8 @@ class GearMovingTimeMilestoneDiscovererTest extends ContainerTestCase
 
     private function insertGear(GearId $gearId, string $name): void
     {
-        $this->getContainer()->get(ImportedGearRepository::class)->save(
-            ImportedGearBuilder::fromDefaults()
+        $this->getContainer()->get(GearRepository::class)->save(
+            GearBuilder::fromDefaults()
                 ->withGearId($gearId)
                 ->withName($name)
                 ->build()

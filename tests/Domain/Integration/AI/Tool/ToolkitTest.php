@@ -18,7 +18,7 @@ use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Challenge\ChallengeId;
 use App\Domain\Challenge\ChallengeRepository;
 use App\Domain\Gear\GearId;
-use App\Domain\Gear\ImportedGear\ImportedGearRepository;
+use App\Domain\Gear\GearRepository;
 use App\Domain\Integration\AI\Tool\GetActivity;
 use App\Domain\Integration\AI\Tool\GetActivityLaps;
 use App\Domain\Integration\AI\Tool\GetActivitySegmentEfforts;
@@ -51,7 +51,7 @@ use App\Tests\Domain\Activity\Lap\ActivityLapBuilder;
 use App\Tests\Domain\Activity\Split\ActivitySplitBuilder;
 use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
 use App\Tests\Domain\Challenge\ChallengeBuilder;
-use App\Tests\Domain\Gear\ImportedGear\ImportedGearBuilder;
+use App\Tests\Domain\Gear\GearBuilder;
 use App\Tests\Domain\Segment\SegmentBuilder;
 use App\Tests\Domain\Segment\SegmentEffort\SegmentEffortBuilder;
 use NeuronAI\Tools\Toolkits\ToolkitInterface;
@@ -236,8 +236,8 @@ class ToolkitTest extends ContainerTestCase
             ));
         }
 
-        $this->getContainer()->get(ImportedGearRepository::class)->save(
-            ImportedGearBuilder::fromDefaults()
+        $this->getContainer()->get(GearRepository::class)->save(
+            GearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->withCreatedOn(SerializableDateTime::fromString('2023-06-20 09:04:58'))
                 ->withDistanceInMeter(Meter::from(1450147))
@@ -245,8 +245,8 @@ class ToolkitTest extends ContainerTestCase
                 ->withIsRetired(false)
                 ->build()
         );
-        $this->getContainer()->get(ImportedGearRepository::class)->save(
-            ImportedGearBuilder::fromDefaults()
+        $this->getContainer()->get(GearRepository::class)->save(
+            GearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed('b12659862'))
                 ->withCreatedOn(SerializableDateTime::fromString('2023-06-20 09:04:58'))
                 ->withDistanceInMeter(Meter::from(145014))

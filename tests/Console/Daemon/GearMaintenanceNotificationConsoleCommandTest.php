@@ -8,7 +8,7 @@ use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Gear\GearId;
-use App\Domain\Gear\ImportedGear\ImportedGearRepository;
+use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
@@ -16,7 +16,7 @@ use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\Console\ConsoleCommandTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
-use App\Tests\Domain\Gear\ImportedGear\ImportedGearBuilder;
+use App\Tests\Domain\Gear\GearBuilder;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Command\Command;
@@ -31,10 +31,10 @@ class GearMaintenanceNotificationConsoleCommandTest extends ConsoleCommandTestCa
 
     public function testNotifiesWhenGearMaintenanceIsDue(): void
     {
-        $gear = ImportedGearBuilder::fromDefaults()
+        $gear = GearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed('10130856'))
             ->build();
-        $this->getContainer()->get(ImportedGearRepository::class)->save($gear);
+        $this->getContainer()->get(GearRepository::class)->save($gear);
 
         $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()

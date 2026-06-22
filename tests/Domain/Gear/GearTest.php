@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Domain\Gear\ImportedGear;
+namespace App\Tests\Domain\Gear;
 
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -9,11 +9,11 @@ use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use Money\Money;
 use PHPUnit\Framework\TestCase;
 
-class ImportedGearTest extends TestCase
+class GearTest extends TestCase
 {
     public function testGetMovingTimeFormatted(): void
     {
-        $gear = ImportedGearBuilder::fromDefaults()
+        $gear = GearBuilder::fromDefaults()
             ->withDistanceInMeter(Meter::from(10000))
             ->withMovingTime(Seconds::from(3661))
             ->build();
@@ -23,14 +23,14 @@ class ImportedGearTest extends TestCase
 
     public function testGetMovingTimeFormattedWithZero(): void
     {
-        $gear = ImportedGearBuilder::fromDefaults()->build();
+        $gear = GearBuilder::fromDefaults()->build();
 
         $this->assertEquals('0m', $gear->getMovingTimeFormatted());
     }
 
     public function testGetMovingTimeInHours(): void
     {
-        $gear = ImportedGearBuilder::fromDefaults()
+        $gear = GearBuilder::fromDefaults()
             ->withMovingTime(Seconds::from(7200))
             ->build();
 
@@ -39,7 +39,7 @@ class ImportedGearTest extends TestCase
 
     public function testGetAverageDistance(): void
     {
-        $gear = ImportedGearBuilder::fromDefaults()
+        $gear = GearBuilder::fromDefaults()
             ->withDistanceInMeter(Meter::from(30000))
             ->withNumberOfActivities(3)
             ->build();
@@ -49,7 +49,7 @@ class ImportedGearTest extends TestCase
 
     public function testGetAverageDistanceWithZeroActivities(): void
     {
-        $gear = ImportedGearBuilder::fromDefaults()
+        $gear = GearBuilder::fromDefaults()
             ->withDistanceInMeter(Meter::from(30000))
             ->build();
 
@@ -58,7 +58,7 @@ class ImportedGearTest extends TestCase
 
     public function testGetAverageSpeed(): void
     {
-        $gear = ImportedGearBuilder::fromDefaults()
+        $gear = GearBuilder::fromDefaults()
             ->withDistanceInMeter(Meter::from(10000))
             ->withMovingTime(Seconds::from(3600))
             ->build();
@@ -68,7 +68,7 @@ class ImportedGearTest extends TestCase
 
     public function testGetAverageSpeedWithZeroMovingTime(): void
     {
-        $gear = ImportedGearBuilder::fromDefaults()
+        $gear = GearBuilder::fromDefaults()
             ->withDistanceInMeter(Meter::from(10000))
             ->build();
 
@@ -77,7 +77,7 @@ class ImportedGearTest extends TestCase
 
     public function testGetRelativeCostPerHour(): void
     {
-        $gear = ImportedGearBuilder::fromDefaults()
+        $gear = GearBuilder::fromDefaults()
             ->withMovingTime(Seconds::from(7200))
             ->withPurchasePrice(Money::EUR(10000))
             ->build();
@@ -87,7 +87,7 @@ class ImportedGearTest extends TestCase
 
     public function testGetRelativeCostPerHourWithZeroMovingTime(): void
     {
-        $gear = ImportedGearBuilder::fromDefaults()
+        $gear = GearBuilder::fromDefaults()
             ->withPurchasePrice(Money::EUR(10000))
             ->build();
 
@@ -96,7 +96,7 @@ class ImportedGearTest extends TestCase
 
     public function testGetRelativeCostPerHourWithoutPurchasePrice(): void
     {
-        $gear = ImportedGearBuilder::fromDefaults()
+        $gear = GearBuilder::fromDefaults()
             ->withMovingTime(Seconds::from(7200))
             ->build();
 
@@ -105,7 +105,7 @@ class ImportedGearTest extends TestCase
 
     public function testGetRelativeCostPerWorkout(): void
     {
-        $gear = ImportedGearBuilder::fromDefaults()
+        $gear = GearBuilder::fromDefaults()
             ->withNumberOfActivities(5)
             ->withPurchasePrice(Money::EUR(10000))
             ->build();
@@ -115,7 +115,7 @@ class ImportedGearTest extends TestCase
 
     public function testGetRelativeCostPerWorkoutWithZeroActivities(): void
     {
-        $gear = ImportedGearBuilder::fromDefaults()
+        $gear = GearBuilder::fromDefaults()
             ->withPurchasePrice(Money::EUR(10000))
             ->build();
 
@@ -124,7 +124,7 @@ class ImportedGearTest extends TestCase
 
     public function testGetRelativeCostPerWorkoutWithoutPurchasePrice(): void
     {
-        $gear = ImportedGearBuilder::fromDefaults()
+        $gear = GearBuilder::fromDefaults()
             ->withNumberOfActivities(5)
             ->build();
 

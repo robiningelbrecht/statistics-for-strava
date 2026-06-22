@@ -14,7 +14,7 @@ use App\Domain\Gear\FindGearStatsPerDay\FindGearStatsPerDay;
 use App\Domain\Gear\Gear;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;
-use App\Domain\Gear\ImportedGear\ImportedGear;
+use App\Domain\Gear\GearType;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
@@ -104,12 +104,13 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
         $elevation = Meter::from($activitiesWithoutGear->sum(fn (Activity $activity): float => $activity->getElevation()->toFloat()));
         $totalCalories = (int) $activitiesWithoutGear->sum(fn (Activity $activity): ?int => $activity->getCalories());
 
-        return ImportedGear::fromState(
+        return Gear::fromState(
             gearId: GearId::none(),
             distanceInMeter: $distanceInMeter,
             createdOn: SerializableDateTime::fromString('1970-01-01'),
             name: 'Unspecified',
             isRetired: false,
+            type: GearType::IMPORTED,
             movingTime: Seconds::from($movingTimeInSeconds),
             elevation: $elevation,
             numberOfActivities: $count,
