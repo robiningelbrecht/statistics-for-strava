@@ -12,6 +12,11 @@ enum GearStatus: string implements TranslatableInterface
     case ACTIVE = 'active';
     case RETIRED = 'retired';
 
+    public function isActive(): bool
+    {
+        return self::ACTIVE === $this;
+    }
+
     public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
         return match ($this) {
