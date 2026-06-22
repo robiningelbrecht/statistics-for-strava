@@ -77,7 +77,6 @@ Cricket: Cricket
 Crossfit: Crossfit
 'Current Status': 'Current Status'
 'Current streaks': 'Current streaks'
-'Custom gear disabled': 'Anpassad utrustning är inaktiverad'
 Cycling: Cykling
 'Daily TRIMP': 'Daglig TRIMP'
 'Daily activities': 'Dagliga aktiviteter'
@@ -150,7 +149,6 @@ Fri.: Fri.
 GAP: GAP
 Gear: Utrustning
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'Utrusning "{gearId}" refereras i din underhållskonfigurationsfil, men importerades inte från Strava. Kontrollera att utrustningen finns och är korrekt synkroniserad..'
-'Gear details': 'Utrustning detaljer'
 'Gear maintenance': 'Utrustning underhåll'
 'Gear management': 'Gear management'
 'Gear stats': 'Sammanställning av utrustning'

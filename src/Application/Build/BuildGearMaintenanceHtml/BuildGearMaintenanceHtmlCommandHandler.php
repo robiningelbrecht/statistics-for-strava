@@ -38,12 +38,6 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
         assert($command instanceof BuildGearMaintenanceHtml);
 
         $gears = $this->gearRepository->findAll();
-        $this->buildHtmlStorage->write(
-            'gear/info.html',
-            $this->twig->load('html/gear/gear-info.html.twig')->render([
-                'gears' => $gears,
-            ])
-        );
 
         if (!$this->gearMaintenanceConfig->isFeatureEnabled()) {
             $this->buildHtmlStorage->write(

@@ -8,7 +8,6 @@ use App\Domain\Activity\Activities;
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Calendar\Months;
-use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\DistanceOverTimePerGearChart;
 use App\Domain\Gear\DistancePerMonthPerGearChart;
 use App\Domain\Gear\FindGearStatsPerDay\FindGearStatsPerDay;
@@ -33,7 +32,6 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
         private GearRepository $gearRepository,
-        private CustomGearConfig $customGearConfig,
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
         private EnrichedActivities $enrichedActivities,
         private UnitSystem $unitSystem,
@@ -67,7 +65,6 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
             'gear.html',
             $this->twig->load('html/gear/gear.html.twig')->render([
                 'maintenanceTaskIsDue' => !$this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks()->isEmpty(),
-                'customGearConfig' => $this->customGearConfig,
                 'activeGear' => $activeGear,
                 'retiredGear' => $allUsedGear->filter(fn (Gear $gear): bool => $gear->isRetired()),
                 'unitSystem' => $this->unitSystem,

@@ -35,7 +35,7 @@
 * **Activities** -  Browse a detailed list of everything you've done
 * **Monthly View** - Monthly stats with an interactive calendar
 * **Gear stats** - Track how much you've used each bike, shoe, etc.
-* **Custom gear** - Add custom gear setups  ([instructions](https://docs.getsfs.app/#/configuration/custom-gear))
+* **Track gear** - Track custom gear setups
 * **Maintenance Tracking** - Keep tabs on gear wear and tear ([instructions](https://docs.getsfs.app/#/configuration/gear-maintenance))
 * **Eddington** - For your distance milestones
 * **Segments & Efforts** - Dive into your segment history and times

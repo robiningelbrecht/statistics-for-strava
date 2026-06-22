@@ -35,8 +35,6 @@ class EnrichedActivitiesTest extends ContainerTestCase
             '#sfs-chain-replaced',
             '#sfs-chain-cleaned',
             '#sfs-di-2-charged',
-            '#sfs-peddle-board',
-            '#sfs-workout-shoes',
         ]);
 
         $persisted = $this->enrichedActivities->find($activity->getId());

@@ -15,7 +15,6 @@ use App\Application\Import\StravaImport\ImportAthlete\ImportAthlete;
 use App\Application\Import\StravaImport\ImportChallenges\ImportChallenges;
 use App\Application\Import\StravaImport\ImportGear\ImportGear;
 use App\Application\Import\StravaImport\ImportSegments\ImportSegments;
-use App\Application\Import\StravaImport\LinkCustomGearToActivities\LinkCustomGearToActivities;
 use App\Application\Import\StravaImport\ProcessRawActivityData\ProcessRawActivityData;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
@@ -115,7 +114,6 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
                     restrictToActivityIds: $restrictToActivityIds
                 ));
                 $this->commandBus->dispatch(new ProcessRawActivityData($output));
-                $this->commandBus->dispatch(new LinkCustomGearToActivities($output));
                 $this->commandBus->dispatch(new ImportSegments($output));
                 $this->commandBus->dispatch(new ImportChallenges($output));
                 $this->commandBus->dispatch(new CalculateActivityMetrics($output));
