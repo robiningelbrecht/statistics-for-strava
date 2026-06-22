@@ -48,7 +48,11 @@
                             {% endif %}
                         </td>
                         <td class="whitespace-nowrap">
-                            {{ gear.getStatus()|trans }}
+                            {% set isActive = gear.getStatus().isActive() %}
+                            <span class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium {{ isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600' }}">
+                                <span class="size-1.5 rounded-full {{ isActive ? 'bg-green-500' : 'bg-gray-400' }}"></span>
+                                {{ gear.getStatus()|trans }}
+                            </span>
                         </td>
                         <td class="narrow whitespace-nowrap">
                             <a href="{{ relativeUrl('admin/gear/' ~ gear.getId()) ~ '/edit' }}"
