@@ -42,6 +42,7 @@ class ImportedGear implements Gear
         private readonly int $numberOfActivities,
         private readonly int $totalCalories,
         private readonly ActivityTypes $activityTypes,
+        #[ORM\Embedded(class: Money::class)]
         private readonly ?Money $purchasePrice,
     ) {
     }

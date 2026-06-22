@@ -4,6 +4,8 @@
         "createdOn": "2023-10-10 00:00:00",
         "name": "Existing gear",
         "isRetired": 0,
+        "purchasePriceAmount": null,
+        "purchasePriceCurrency": null,
         "type": "imported"
     },
     {
@@ -11,6 +13,8 @@
         "createdOn": "2023-10-10 00:00:00",
         "name": "Existing gear",
         "isRetired": 0,
+        "purchasePriceAmount": null,
+        "purchasePriceCurrency": null,
         "type": "custom"
     },
     {
@@ -18,6 +22,8 @@
         "createdOn": "2023-10-10 00:00:00",
         "name": "Existing gear",
         "isRetired": 0,
+        "purchasePriceAmount": null,
+        "purchasePriceCurrency": null,
         "type": "imported"
     },
     {
@@ -25,6 +31,8 @@
         "createdOn": "2023-10-10 00:00:00",
         "name": "Existing gear",
         "isRetired": 1,
+        "purchasePriceAmount": null,
+        "purchasePriceCurrency": null,
         "type": "custom"
     }
 ]
