@@ -124,7 +124,7 @@ class GearDistanceMilestoneDiscovererTest extends ContainerTestCase
 
     private function insertGear(GearId $gearId, string $name): void
     {
-        $this->getContainer()->get(GearRepository::class)->save(
+        $this->getContainer()->get(GearRepository::class)->add(
             GearBuilder::fromDefaults()
                 ->withGearId($gearId)
                 ->withName($name)

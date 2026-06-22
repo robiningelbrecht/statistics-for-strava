@@ -18,15 +18,36 @@ use Money\Money;
 
 final readonly class DbalGearRepository extends DbalRepository implements GearRepository
 {
-    public function save(Gear $gear): void
+    public function add(Gear $gear): void
     {
-        $sql = 'REPLACE INTO Gear (gearId, createdOn, name, isRetired, `type`, purchasePriceAmount, purchasePriceCurrency)
+        $sql = 'INSERT INTO Gear (gearId, createdOn, name, isRetired, `type`, purchasePriceAmount, purchasePriceCurrency)
         VALUES (:gearId, :createdOn, :name, :isRetired, :type, :purchasePriceAmount, :purchasePriceCurrency)';
 
         $purchasePrice = $gear->getPurchasePrice();
         $this->connection->executeStatement($sql, [
             'gearId' => $gear->getId(),
             'createdOn' => $gear->getCreatedOn(),
+            'name' => $gear->getOriginalName(),
+            'isRetired' => (int) $gear->isRetired(),
+            'type' => $gear->getType()->value,
+            'purchasePriceAmount' => $purchasePrice?->getAmount(),
+            'purchasePriceCurrency' => $purchasePrice?->getCurrency()->getCode(),
+        ]);
+    }
+
+    public function update(Gear $gear): void
+    {
+        $sql = 'UPDATE Gear SET
+                    name = :name,
+                    isRetired = :isRetired,
+                    `type` = :type,
+                    purchasePriceAmount = :purchasePriceAmount,
+                    purchasePriceCurrency = :purchasePriceCurrency
+                    WHERE gearId = :gearId';
+
+        $purchasePrice = $gear->getPurchasePrice();
+        $this->connection->executeStatement($sql, [
+            'gearId' => $gear->getId(),
             'name' => $gear->getOriginalName(),
             'isRetired' => (int) $gear->isRetired(),
             'type' => $gear->getType()->value,

@@ -8,7 +8,9 @@ use App\Domain\Activity\ActivityIds;
 
 interface GearRepository
 {
-    public function save(Gear $gear): void;
+    public function add(Gear $gear): void;
+
+    public function update(Gear $gear): void;
 
     public function findAll(): Gears;
 

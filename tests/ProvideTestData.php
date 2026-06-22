@@ -107,7 +107,7 @@ trait ProvideTestData
     {
         /** @var GearRepository $gearRepository */
         $gearRepository = $this->getContainer()->get(GearRepository::class);
-        $gearRepository->save(
+        $gearRepository->add(
             GearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->withCreatedOn(SerializableDateTime::fromString('2023-06-20 09:04:58'))
@@ -116,7 +116,7 @@ trait ProvideTestData
                 ->withIsRetired(false)
                 ->build()
         );
-        $gearRepository->save(
+        $gearRepository->add(
             GearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed('b12659862'))
                 ->withCreatedOn(SerializableDateTime::fromString('2023-06-20 09:04:58'))
@@ -126,7 +126,7 @@ trait ProvideTestData
                 ->build()
         );
 
-        $gearRepository->save(
+        $gearRepository->add(
             GearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed('b12659562'))
                 ->withCreatedOn(SerializableDateTime::fromString('2023-06-20 09:04:58'))

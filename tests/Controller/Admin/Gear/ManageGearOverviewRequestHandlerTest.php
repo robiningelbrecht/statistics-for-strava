@@ -35,7 +35,7 @@ class ManageGearOverviewRequestHandlerTest extends AdminWebTestCase
         $importedGearRepository = static::getContainer()->get(GearRepository::class);
 
         for ($i = 1; $i <= 3; ++$i) {
-            $importedGearRepository->save(
+            $importedGearRepository->add(
                 GearBuilder::fromDefaults()
                     ->withGearId(GearId::fromUnprefixed((string) $i))
                     ->withName(sprintf('Gear %d', $i))

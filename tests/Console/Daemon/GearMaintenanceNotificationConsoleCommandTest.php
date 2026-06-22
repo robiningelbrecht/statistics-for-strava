@@ -34,7 +34,7 @@ class GearMaintenanceNotificationConsoleCommandTest extends ConsoleCommandTestCa
         $gear = GearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed('10130856'))
             ->build();
-        $this->getContainer()->get(GearRepository::class)->save($gear);
+        $this->getContainer()->get(GearRepository::class)->add($gear);
 
         $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()

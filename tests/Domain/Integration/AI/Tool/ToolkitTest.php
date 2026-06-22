@@ -236,7 +236,7 @@ class ToolkitTest extends ContainerTestCase
             ));
         }
 
-        $this->getContainer()->get(GearRepository::class)->save(
+        $this->getContainer()->get(GearRepository::class)->add(
             GearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->withCreatedOn(SerializableDateTime::fromString('2023-06-20 09:04:58'))
@@ -245,7 +245,7 @@ class ToolkitTest extends ContainerTestCase
                 ->withIsRetired(false)
                 ->build()
         );
-        $this->getContainer()->get(GearRepository::class)->save(
+        $this->getContainer()->get(GearRepository::class)->add(
             GearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed('b12659862'))
                 ->withCreatedOn(SerializableDateTime::fromString('2023-06-20 09:04:58'))
