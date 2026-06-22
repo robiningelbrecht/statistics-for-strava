@@ -13,6 +13,11 @@ gear:
       purchasePrice:
         amountInCents: 29950
         currency: EUR
+  stravaGear:
+    - gearId: b12659861
+      purchasePrice:
+        amountInCents: 49900
+        currency: EUR
   customGear:
     enabled: true
     hashtagPrefix: sfs
