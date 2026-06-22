@@ -10,6 +10,7 @@
 'A:C optimal in': 'A:C ottimale tra'
 'ATL (Fatigue)': 'ATL (Fatica)'
 'Accumulated fatigue': 'Fatica accumulata'
+Active: Active
 'Active days': 'Giornate attive'
 Activities: Attività
 Activity: Attività
@@ -108,6 +109,7 @@ Duration: Duration
 Eddington: Eddington
 'Eddington number': 'Eddington number'
 'Eddington over time': 'Eddington over time'
+Edit: Edit
 'Effort vs heart rate': 'Sforzo vs frequenza cardiaca'
 'Elapsed time': 'Elapsed time'
 Elev: Disl.
@@ -150,9 +152,11 @@ Gear: Attrezzatura
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'L''attrezzatura "{gearId}" è presente nel tuo file di configurazione della manutenzione, ma non è stata importata da Strava. Verifica che esista e sia sincronizzata correttamente.'
 'Gear details': 'Dettagli attrezzatura'
 'Gear maintenance': 'Manutenzione attrezzatura'
+'Gear management': 'Gear management'
 'Gear stats': 'Statistiche attrezzatura'
 "Gear that hasn't been used in the last three months, is disabled by default.": 'Attrezzatura che non è stata usata negli ultimi tre mesi, è disabilitata di default.'
 'Gear that is retired is disabled by default.': "L'attrezzatura dismessa è disabilitata di default."
+'Gear will appear here once you add them.': 'Gear will appear here once you add them.'
 'Go to first page': 'Go to first page'
 'Go to last page': 'Go to last page'
 'Go to next page': 'Go to next page'
@@ -264,6 +268,7 @@ Night: Notte
 'No activities': 'Nessuna attività'
 'No data available': 'Nessun dato disponibile'
 'No files imported yet.': 'No files imported yet.'
+'No gears added yet.': 'No gears added yet.'
 'No milestones achieved yet': 'Nessun traguardo raggiunto finora'
 'No other options to compare with': "Nessun'altra opzione con cui confrontare"
 None: Nessuno
@@ -328,6 +333,7 @@ Remove: Remove
 'Rest days': 'Giorni di riposo'
 'Rest days in last 7 days': 'Giorni di riposo negli ultimi 7 giorni'
 'Rest days vs. active days': 'Giorni di riposo vs. giorni attivi'
+Retired: Retired
 'Retired gear': 'Attrezzatura in disuso'
 'Return to app': 'Return to app'
 Rewind: Indietro

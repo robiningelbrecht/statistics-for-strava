@@ -5,6 +5,7 @@ namespace App\Domain\Gear\ImportedGear;
 use App\Domain\Activity\ActivityTypes;
 use App\Domain\Gear\Gear;
 use App\Domain\Gear\GearId;
+use App\Domain\Gear\GearStatus;
 use App\Domain\Gear\GearType;
 use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
@@ -202,6 +203,11 @@ class ImportedGear implements Gear
         return clone ($this, [
             'isRetired' => $isRetired,
         ]);
+    }
+
+    public function getStatus(): GearStatus
+    {
+        return $this->isRetired() ? GearStatus::RETIRED : GearStatus::ACTIVE;
     }
 
     public function getCreatedOn(): SerializableDateTime

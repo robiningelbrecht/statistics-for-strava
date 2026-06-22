@@ -1,0 +1,29 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Controller\Admin;
+
+use App\Domain\Gear\GearRepository;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\Routing\Attribute\Route;
+use Twig\Environment;
+
+#[AsController]
+final readonly class ManageGearRequestHandler
+{
+    public function __construct(
+        private Environment $twig,
+        private GearRepository $gearRepository,
+    ) {
+    }
+
+    #[Route(path: '/admin/gear', name: 'admin_manage_gear', methods: ['GET'], priority: 10)]
+    public function index(): Response
+    {
+        return new Response($this->twig->render('html/admin/page/manage-gear.html.twig', [
+            'gears' => $this->gearRepository->findAll(),
+        ]));
+    }
+}

@@ -10,6 +10,7 @@
 'A:C optimal in': 'A:C optimal in'
 'ATL (Fatigue)': 'ATL (疲劳)'
 'Accumulated fatigue': 'Accumulated fatigue'
+Active: Active
 'Active days': 训练天数
 Activities: 活动
 Activity: 活动
@@ -108,6 +109,7 @@ Duration: Duration
 Eddington: 愛丁頓數
 'Eddington number': 'Eddington number'
 'Eddington over time': 'Eddington over time'
+Edit: Edit
 'Effort vs heart rate': 'Effort vs heart rate'
 'Elapsed time': 'Elapsed time'
 Elev: 海拔
@@ -150,9 +152,11 @@ Gear: 装备
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': '您的维护配置文件中引用了装备"{gearId}"，但该装备尚未从 Strava 导入。请检查该装备是否存在并已正确同步。'
 'Gear details': 装备详情
 'Gear maintenance': 装备维护
+'Gear management': 'Gear management'
 'Gear stats': 装备统计
 "Gear that hasn't been used in the last three months, is disabled by default.": 过去三个月未使用的装备默认禁用。
 'Gear that is retired is disabled by default.': 退役的装备默认禁用。
+'Gear will appear here once you add them.': 'Gear will appear here once you add them.'
 'Go to first page': 'Go to first page'
 'Go to last page': 'Go to last page'
 'Go to next page': 'Go to next page'
@@ -264,6 +268,7 @@ Night: 夜晚
 'No activities': 没有活动
 'No data available': 没有可用数据
 'No files imported yet.': 'No files imported yet.'
+'No gears added yet.': 'No gears added yet.'
 'No milestones achieved yet': 'No milestones achieved yet'
 'No other options to compare with': 无可供比较的其他选项
 None: 无
@@ -328,6 +333,7 @@ Remove: Remove
 'Rest days': 休息日
 'Rest days in last 7 days': 最近7天的休息日
 'Rest days vs. active days': '休息日 训练如 对比'
+Retired: Retired
 'Retired gear': 退役装备
 'Return to app': 'Return to app'
 Rewind: 回顾

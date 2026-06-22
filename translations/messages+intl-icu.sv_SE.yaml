@@ -10,6 +10,7 @@
 'A:C optimal in': 'A:C optimal in'
 'ATL (Fatigue)': 'ATL (Utmattning)'
 'Accumulated fatigue': 'Accumulated fatigue'
+Active: Active
 'Active days': 'Aktiva dagar'
 Activities: Aktiviteter
 Activity: Aktivitet
@@ -108,6 +109,7 @@ Duration: Duration
 Eddington: Eddington
 'Eddington number': 'Eddington number'
 'Eddington over time': 'Eddington over time'
+Edit: Edit
 'Effort vs heart rate': 'Effort vs heart rate'
 'Elapsed time': 'Elapsed time'
 Elev: Höjd
@@ -150,9 +152,11 @@ Gear: Utrustning
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'Utrusning "{gearId}" refereras i din underhållskonfigurationsfil, men importerades inte från Strava. Kontrollera att utrustningen finns och är korrekt synkroniserad..'
 'Gear details': 'Utrustning detaljer'
 'Gear maintenance': 'Utrustning underhåll'
+'Gear management': 'Gear management'
 'Gear stats': 'Sammanställning av utrustning'
 "Gear that hasn't been used in the last three months, is disabled by default.": 'Utrustning som inte har använts under de senaste tre månaderna blir inaktiverad.'
 'Gear that is retired is disabled by default.': 'Utrustning som är avställd blir inaktiverad.'
+'Gear will appear here once you add them.': 'Gear will appear here once you add them.'
 'Go to first page': 'Go to first page'
 'Go to last page': 'Go to last page'
 'Go to next page': 'Go to next page'
@@ -264,6 +268,7 @@ Night: Natt
 'No activities': 'Inga aktivieter'
 'No data available': 'Ingen data tillgänglig'
 'No files imported yet.': 'No files imported yet.'
+'No gears added yet.': 'No gears added yet.'
 'No milestones achieved yet': 'No milestones achieved yet'
 'No other options to compare with': 'Inga andra alternativ att jämföra med'
 None: Inga
@@ -328,6 +333,7 @@ Remove: Remove
 'Rest days': Vilodagar
 'Rest days in last 7 days': 'Vilodagar de senaste 7 dagarna'
 'Rest days vs. active days': 'Vilodagar kontra aktiva dagar'
+Retired: Retired
 'Retired gear': 'Avställd utrustning'
 'Return to app': 'Return to app'
 Rewind: Tillbakablick
