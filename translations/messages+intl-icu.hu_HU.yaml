@@ -13,10 +13,12 @@
 Active: Active
 'Active days': 'Aktív napok'
 Activities: Tevékenységek
+'Activities will appear here once they are imported.': 'Activities will appear here once they are imported.'
 Activity: Tevékenység
 'Activity count': 'Tevékenységek száma'
 'Activity heatmap': 'Tevékenységek hőtérképe'
 'Activity locations': 'Tevékenységek helyszínei'
+'Activity management': 'Activity management'
 'Activity start times': 'Tevékenységek kezdési idői'
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Akut edzésterhelés (Fáradtság) – a napi edzésterhelés 7 napos exponenciálisan súlyozott átlaga. A rövid távú fáradtságot mutatja.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Akut:Krónikus arány – az ATL és CTL aránya. Sérülésveszélyt jelöl.'
@@ -91,6 +93,7 @@ Day: Nap
 'Days needed': 'Szükséges napok'
 'Daytime stats': 'Napszaki statisztikák'
 Dec: Dec
+Delete: Delete
 Density: Sűrűség
 'Detailed instructions are available in the documentation on': 'Részletes utasítások az alábbi dokumentációban találhatók:'
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
@@ -112,6 +115,7 @@ Eddington: Eddington
 'Eddington number': 'Eddington number'
 'Eddington over time': 'Eddington over time'
 Edit: Edit
+'Edit activity': 'Edit activity'
 'Edit gear': 'Edit gear'
 'Effort vs heart rate': 'Erőfeszítés vs pulzus'
 'Elapsed time': 'Elapsed time'
@@ -269,6 +273,7 @@ Neutral: Semleges
 'Next milestone': 'Next milestone'
 Night: Éjjel
 'No activities': 'Nincsenek tevékenységek'
+'No activities imported yet.': 'No activities imported yet.'
 'No data available': 'Nincs elérhető adat'
 'No files imported yet.': 'No files imported yet.'
 'No gears added yet.': 'No gears added yet.'
@@ -377,6 +382,7 @@ Soccer: Labdarúgás
 Source: Source
 Speed: Sebesség
 Splits: Részidők
+'Sport type': 'Sport type'
 'Sport variety': Sporttípus-változatosság
 Squash: Squash
 'Stair Stepper': 'Lépcső szimulátor'

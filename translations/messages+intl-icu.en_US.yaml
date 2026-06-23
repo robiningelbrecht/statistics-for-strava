@@ -13,10 +13,12 @@
 Active: Active
 'Active days': 'Active days'
 Activities: Activities
+'Activities will appear here once they are imported.': 'Activities will appear here once they are imported.'
 Activity: Activity
 'Activity count': 'Activity count'
 'Activity heatmap': 'Activity heatmap'
 'Activity locations': 'Activity locations'
+'Activity management': 'Activity management'
 'Activity start times': 'Activity start times'
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.'
@@ -91,6 +93,7 @@ Day: Day
 'Days needed': 'Days needed'
 'Daytime stats': 'Daytime stats'
 Dec: Dec
+Delete: Delete
 Density: Density
 'Detailed instructions are available in the documentation on': 'Detailed instructions are available in the documentation on'
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
@@ -112,6 +115,7 @@ Eddington: Eddington
 'Eddington number': 'Eddington number'
 'Eddington over time': 'Eddington over time'
 Edit: Edit
+'Edit activity': 'Edit activity'
 'Edit gear': 'Edit gear'
 'Effort vs heart rate': 'Effort vs heart rate'
 'Elapsed time': 'Elapsed time'
@@ -269,6 +273,7 @@ Neutral: Neutral
 'Next milestone': 'Next milestone'
 Night: Night
 'No activities': 'No activities'
+'No activities imported yet.': 'No activities imported yet.'
 'No data available': 'No data available'
 'No files imported yet.': 'No files imported yet.'
 'No gears added yet.': 'No gears added yet.'
@@ -377,6 +382,7 @@ Soccer: Soccer
 Source: Source
 Speed: Speed
 Splits: Splits
+'Sport type': 'Sport type'
 'Sport variety': 'Sport variety'
 Squash: Squash
 'Stair Stepper': 'Stair Stepper'

@@ -13,10 +13,12 @@
 Active: Active
 'Active days': 训练天数
 Activities: 活动
+'Activities will appear here once they are imported.': 'Activities will appear here once they are imported.'
 Activity: 活动
 'Activity count': 活动量
 'Activity heatmap': 活动热图
 'Activity locations': 活动地点
+'Activity management': 'Activity management'
 'Activity start times': 活动开始时间
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': '短期训练负荷（疲劳）– 7天每日训练负荷的指数加权平均值。代表短期疲劳。'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': '短期/长期疲劳比率 – ATL与CTL的比值。表示受伤风险。'
@@ -91,6 +93,7 @@ Day: Day
 'Days needed': 所需天数
 'Daytime stats': 白天统计
 Dec: 十二月
+Delete: Delete
 Density: Density
 'Detailed instructions are available in the documentation on': 详细说明
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
@@ -112,6 +115,7 @@ Eddington: 愛丁頓數
 'Eddington number': 'Eddington number'
 'Eddington over time': 'Eddington over time'
 Edit: Edit
+'Edit activity': 'Edit activity'
 'Edit gear': 'Edit gear'
 'Effort vs heart rate': 'Effort vs heart rate'
 'Elapsed time': 'Elapsed time'
@@ -269,6 +273,7 @@ Neutral: Neutral
 'Next milestone': 'Next milestone'
 Night: 夜晚
 'No activities': 没有活动
+'No activities imported yet.': 'No activities imported yet.'
 'No data available': 没有可用数据
 'No files imported yet.': 'No files imported yet.'
 'No gears added yet.': 'No gears added yet.'
@@ -377,6 +382,7 @@ Soccer: 足球
 Source: Source
 Speed: 速度
 Splits: 分段
+'Sport type': 'Sport type'
 'Sport variety': 'Sport variety'
 Squash: 壁球
 'Stair Stepper': 楼梯机

@@ -11,9 +11,11 @@ use App\Infrastructure\CQRS\Command\Deserialize\CouldNotDeserializeCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\DeserializableCommand;
 use App\Infrastructure\CQRS\Command\DomainCommand;
 
-#[AsDeserializableCommand('update-activity')]
+#[AsDeserializableCommand(UpdateActivity::NAME)]
 final readonly class UpdateActivity extends DomainCommand implements DeserializableCommand
 {
+    public const string NAME = 'update-activity';
+
     private function __construct(
         private ActivityId $activityId,
         private ActivityName $name,
