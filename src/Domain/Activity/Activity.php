@@ -324,11 +324,6 @@ final class Activity implements SupportsAITooling
         ]);
     }
 
-    public function withEmptyGear(): self
-    {
-        return $this->withGear();
-    }
-
     public function getGearName(): ?string
     {
         return $this->gearName;

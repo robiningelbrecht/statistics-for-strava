@@ -20,6 +20,7 @@ use App\Tests\Console\ConsoleCommandTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
 use App\Tests\Infrastructure\FileSystem\SuccessfulPermissionChecker;
+use App\Tests\Infrastructure\FileSystem\UnwritablePermissionChecker;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use Psr\Log\LoggerInterface;
@@ -143,6 +144,31 @@ class RunStravaImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCas
         $commandTester->execute(['command' => $command->getName()]);
     }
 
+    public function testReturnsEarlyWhenAppIsNotReady(): void
+    {
+        $command = $this->buildCommand(
+            commandBus: $this->commandBus,
+            appStatusChecker: new AppStatusChecker(
+                $this->getContainer()->get(AthleteRepository::class),
+                $this->getContainer()->get(ActivityIdRepository::class),
+                new UnwritablePermissionChecker(),
+            ),
+        );
+
+        $application = new Application();
+        $application->addCommand($command);
+
+        $commandTester = new CommandTester($application->find('app:cron:run-strava-import'));
+        $commandTester->execute(['command' => $command->getName()]);
+
+        $this->assertSame(Command::SUCCESS, $commandTester->getStatusCode());
+        $this->assertEmpty($this->commandBus->getDispatchedCommands());
+        $this->assertStringContainsString(
+            'Make sure the container has write permissions to "storage/database" and "storage/files" on the host system',
+            $commandTester->getDisplay(),
+        );
+    }
+
     #[\Override]
     protected function setUp(): void
     {
@@ -166,6 +192,7 @@ class RunStravaImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCas
         CommandBus $commandBus,
         ImportMode $importMode = ImportMode::STRAVA_API,
         ?LoggerInterface $logger = null,
+        ?AppStatusChecker $appStatusChecker = null,
     ): RunStravaImportAndBuildAppConsoleCommand {
         return new RunStravaImportAndBuildAppConsoleCommand(
             commandBus: $commandBus,
@@ -177,7 +204,7 @@ class RunStravaImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCas
                 clock: PausedClock::fromString(self::TODAY),
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             ),
-            appStatusChecker: new AppStatusChecker(
+            appStatusChecker: $appStatusChecker ?? new AppStatusChecker(
                 $this->getContainer()->get(AthleteRepository::class),
                 $this->getContainer()->get(ActivityIdRepository::class),
                 new SuccessfulPermissionChecker(),
