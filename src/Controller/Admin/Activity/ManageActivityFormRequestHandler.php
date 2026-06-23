@@ -6,6 +6,7 @@ namespace App\Controller\Admin\Activity;
 
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\DeleteActivity\DeleteActivity;
 use App\Domain\Activity\UpdateActivity\UpdateActivity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -22,10 +23,19 @@ final readonly class ManageActivityFormRequestHandler
     }
 
     #[Route(path: '/admin/activities/{activityId}/edit', name: 'admin_edit_activity', methods: ['GET'], priority: 10)]
-    public function handle(string $activityId): Response
+    public function handleEdit(string $activityId): Response
     {
         return new Response($this->twig->render('html/admin/page/activity/edit-activity.html.twig', [
             'dispatchCommand' => UpdateActivity::NAME,
+            'activity' => $this->activityRepository->find(ActivityId::fromString($activityId)),
+        ]));
+    }
+
+    #[Route(path: '/admin/activities/{activityId}/delete', name: 'admin_delete_activity', methods: ['GET'], priority: 10)]
+    public function handleDelete(string $activityId): Response
+    {
+        return new Response($this->twig->render('html/admin/page/activity/delete-activity.html.twig', [
+            'dispatchCommand' => DeleteActivity::NAME,
             'activity' => $this->activityRepository->find(ActivityId::fromString($activityId)),
         ]));
     }

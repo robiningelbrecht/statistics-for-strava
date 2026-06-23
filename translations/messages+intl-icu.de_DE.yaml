@@ -32,6 +32,7 @@ All: Alle
 'All time': Gesamtzeit
 'Alpine Ski': 'Ski Alpin'
 Apr: Apr
+'Are you sure you want to delete {name}? This action cannot be undone.': 'Are you sure you want to delete {name}? This action cannot be undone.'
 'Ask Mark something...': 'Frag Mark etwas...'
 'Athlete profile': Sportlerprofil
 Aug: Aug
@@ -94,6 +95,8 @@ Day: Tag
 'Daytime stats': Tageszeitstatistiken
 Dec: Dez
 Delete: Delete
+'Delete activity': 'Delete activity'
+Deleting...: Deleting...
 Density: Dichte
 'Detailed instructions are available in the documentation on': 'Detaillierte Anweisungen findest du in'
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'

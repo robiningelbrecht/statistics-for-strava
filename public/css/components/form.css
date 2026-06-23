@@ -35,6 +35,10 @@
                 @apply gap-0.5 border-0 bg-primary-soft text-primary shadow-none hover:bg-primary hover:text-white;
             }
 
+            &.btn--danger {
+                @apply border-0 bg-red-600 text-white hover:brightness-95;
+            }
+
             &.btn--large {
                 @apply px-5 py-3 text-base rounded-xl;
             }

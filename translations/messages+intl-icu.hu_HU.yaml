@@ -32,6 +32,7 @@ All: Mind
 'All time': Összesített
 'Alpine Ski': 'Alpesi sí'
 Apr: Ápr
+'Are you sure you want to delete {name}? This action cannot be undone.': 'Are you sure you want to delete {name}? This action cannot be undone.'
 'Ask Mark something...': 'Kérdezz Marktól...'
 'Athlete profile': 'Sportoló profil'
 Aug: Aug
@@ -94,6 +95,8 @@ Day: Nap
 'Daytime stats': 'Napszaki statisztikák'
 Dec: Dec
 Delete: Delete
+'Delete activity': 'Delete activity'
+Deleting...: Deleting...
 Density: Sűrűség
 'Detailed instructions are available in the documentation on': 'Részletes utasítások az alábbi dokumentációban találhatók:'
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'

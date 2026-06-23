@@ -32,6 +32,7 @@ All: All
 'All time': 所有时间
 'Alpine Ski': 高山滑雪
 Apr: 四月
+'Are you sure you want to delete {name}? This action cannot be undone.': 'Are you sure you want to delete {name}? This action cannot be undone.'
 'Ask Mark something...': 问问Mark...
 'Athlete profile': 'Athlete profile'
 Aug: 八月
@@ -94,6 +95,8 @@ Day: Day
 'Daytime stats': 白天统计
 Dec: 十二月
 Delete: Delete
+'Delete activity': 'Delete activity'
+Deleting...: Deleting...
 Density: Density
 'Detailed instructions are available in the documentation on': 详细说明
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
