@@ -32,6 +32,7 @@ All: All
 'All time': 'All time'
 'Alpine Ski': 'Alpine Ski'
 Apr: Apr
+'Are you sure you want to delete {name}? This action cannot be undone.': 'Are you sure you want to delete {name}? This action cannot be undone.'
 'Ask Mark something...': 'Ask Mark something...'
 'Athlete profile': 'Athlete profile'
 Aug: Aug
@@ -94,6 +95,8 @@ Day: Day
 'Daytime stats': 'Daytime statistieken'
 Dec: Dec
 Delete: Delete
+'Delete activity': 'Delete activity'
+Deleting...: Deleting...
 Density: Density
 'Detailed instructions are available in the documentation on': 'Detailed instructions are available in the documentation on'
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'

@@ -5739,6 +5739,18 @@ table.data-table {
           }
         }
       }
+      &.btn--danger {
+        border-style: var(--tw-border-style);
+        border-width: 0px;
+        background-color: var(--color-red-600);
+        color: var(--color-white);
+        &:hover {
+          @media (hover: hover) {
+            --tw-brightness: brightness(95%);
+            filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+          }
+        }
+      }
       &.btn--large {
         border-radius: var(--radius-xl);
         padding-inline: calc(var(--spacing) * 5);

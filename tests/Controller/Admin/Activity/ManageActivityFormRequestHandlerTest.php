@@ -17,6 +17,13 @@ class ManageActivityFormRequestHandlerTest extends AdminWebTestCase
         $this->assertResponseRedirects('/admin/login');
     }
 
+    public function testAnonymousUsersAreRedirectedToTheLoginPageOnDelete(): void
+    {
+        $this->client->request('GET', '/admin/activities/'.ActivityId::fromUnprefixed('1').'/delete');
+
+        $this->assertResponseRedirects('/admin/login');
+    }
+
     public function testRendersTheEditFormPrefilledWithTheActivity(): void
     {
         static::getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
@@ -39,5 +46,29 @@ class ManageActivityFormRequestHandlerTest extends AdminWebTestCase
 
         $this->assertSame((string) ActivityId::fromUnprefixed('1'), $form->filter('input[name="activityId"]')->attr('value'));
         $this->assertSame('Morning Run', $form->filter('input[name="name"]')->attr('value'));
+    }
+
+    public function testRendersTheDeleteConfirmationForTheActivity(): void
+    {
+        static::getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('1'))
+                ->withName('Morning Run')
+                ->build(),
+            [],
+        ));
+
+        $this->client->loginUser($this->adminUser());
+
+        $crawler = $this->client->request('GET', '/admin/activities/'.ActivityId::fromUnprefixed('1').'/delete');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertStringContainsString('Delete activity', $crawler->filter('h3')->text());
+        $this->assertStringContainsString('Morning Run', $crawler->filter('body')->text());
+
+        $form = $crawler->filter('form[data-dispatch-command="delete-activity"]');
+        $this->assertCount(1, $form);
+
+        $this->assertSame((string) ActivityId::fromUnprefixed('1'), $form->filter('input[name="activityId"]')->attr('value'));
     }
 }
