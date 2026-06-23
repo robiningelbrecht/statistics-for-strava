@@ -22,7 +22,7 @@ final readonly class ManageGearOverviewRequestHandler
     #[Route(path: '/admin/gear', name: 'admin_manage_gear_overview', methods: ['GET'], priority: 10)]
     public function handle(): Response
     {
-        return new Response($this->twig->render('html/admin/page/gear/manage-gear.html.twig', [
+        return new Response($this->twig->render('html/admin/page/gear/manage-gear-overview.html.twig', [
             'gears' => $this->gearRepository->findAll(),
         ]));
     }

@@ -11,20 +11,20 @@
             <span class="sr-only">{{ "Imported from Strava"|trans }}</span>
         </span>
     {% endset %}
-    <div class="fixed inset-0 z-40 flex items-center justify-center p-4">
-        <div class="w-full max-w-lg max-h-[90vh] overflow-y-auto p-6 bg-white border border-gray-200 rounded-lg shadow-xl">
-        <div class="flex items-center justify-between mb-4">
-            <h3 class="text-lg font-semibold">
-                {{ gear ? "Edit gear"|trans : "Add gear"|trans }}
-            </h3>
-            <a href="{{ relativeUrl(path('admin_manage_gear_overview')) }}" aria-label="{{ "Close"|trans }}"
-               class="grid place-items-center size-8 rounded-lg text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-900">
-                <svg class="size-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
-                </svg>
-            </a>
-        </div>
-        <form data-dispatch-command="{{ dispatchCommand }}" data-redirect="{{ relativeUrl(path('admin_manage_gear_overview')) }}" class="flex flex-col gap-4">
+    <div class="modal-like-form">
+        <div class="w-full max-w-lg overflow-y-auto p-6 bg-white border border-gray-200 rounded-lg shadow-xl">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold">
+                    {{ gear ? "Edit gear"|trans : "Add gear"|trans }}
+                </h3>
+                <a href="{{ relativeUrl(path('admin_manage_gear_overview')) }}" aria-label="{{ "Close"|trans }}"
+                   class="grid place-items-center size-8 rounded-lg text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-900">
+                    <svg class="size-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+                    </svg>
+                </a>
+            </div>
+            <form data-dispatch-command="{{ dispatchCommand }}" data-redirect="{{ relativeUrl(path('admin_manage_gear_overview')) }}" class="flex flex-col gap-4">
             {% if gear %}
                 <input type="hidden" name="gearId" value="{{ gear.getId() }}">
             {% endif %}
@@ -75,7 +75,7 @@
                 </button>
             </div>
         </form>
-    </div>
+        </div>
     </div>
     {% endautoescape %}
 {% endblock main %}
