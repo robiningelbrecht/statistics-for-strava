@@ -1,5 +1,9 @@
 @layer components {
     body.admin {
+        .modal-like-form {
+            @apply flex min-h-[calc(100vh-6rem)] items-center justify-center;
+        }
+
         label {
             @apply block text-sm font-medium text-gray-700;
         }

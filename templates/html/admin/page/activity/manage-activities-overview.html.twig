@@ -1,0 +1,88 @@
+{% extends "html/admin/page/template.html.twig" %}
+{% block main %}
+    {% autoescape false %}
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold">
+                {{ "Activity management"|trans }}
+            </h3>
+        </div>
+        <div class="relative overflow-x-auto">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th scope="col" class="text-left">
+                        {{ "Name"|trans }}
+                    </th>
+                    <th scope="col">
+                        {{ "Sport type"|trans }}
+                    </th>
+                    <th scope="col" class="narrow">
+                        {{ "Date"|trans }}
+                    </th>
+                    <th scope="col" class="narrow">
+                        {{ "Dist."|trans }}
+                    </th>
+                    <th scope="col" class="narrow">
+                        <span class="sr-only">{{ "Edit"|trans }}</span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for activity in overview %}
+                    <tr class="group/row">
+                        <td class="narrow whitespace-nowrap text-left">
+                            {{ activity.getName() }}
+                        </td>
+                        <td class="whitespace-nowrap">
+                            {{ activity.getSportType()|trans }}
+                        </td>
+                        <td class="narrow whitespace-nowrap">
+                            {{ activity.getStartDate()|formatDate() }}
+                        </td>
+                        <td class="whitespace-nowrap">
+                            {% if activity.getDistance().toFloat() > 0 %}
+                                {{ activity.getDistance()|renderMeasurement(0) }}
+                            {% else %}
+                                0<span class="text-xxs ml-px">{{ activity.getDistance().getSymbol() }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="narrow whitespace-nowrap">
+                            <a href="{{ relativeUrl('admin/activities/' ~ activity.getActivityId()) ~ '/edit' }}"
+                               class="inline-flex items-center justify-center text-gray-500 transition-colors hover:text-primary"
+                               title="{{ "Edit"|trans }}">
+                                <span class="sr-only">{{ "Edit"|trans }}</span>
+                                <svg class="size-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                {% if overview.isEmpty() %}
+                    <tr>
+                        <td colspan="5">
+                            <div class="flex flex-col items-center justify-center gap-3 py-12 px-4 text-center">
+                                <span class="grid place-items-center size-12 rounded-full bg-gray-100 text-gray-400" aria-hidden="true">
+                                    <svg class="size-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 9h6m-6 3h6m-6 3h6M6.996 9h.01m-.01 3h.01m-.01 3h.01M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/>
+                                    </svg>
+                                </span>
+                                <div class="flex flex-col gap-1">
+                                    <span class="text-sm font-medium text-gray-800">{{ "No activities imported yet."|trans }}</span>
+                                    <span class="text-xs text-gray-500">{{ "Activities will appear here once they are imported."|trans }}</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+        {% include 'html/admin/component/pagination.html.twig' with {
+            'total': overview.getTotal(),
+            'pagination': overview.getPagination(),
+        } only %}
+    </div>
+    {% endautoescape %}
+{% endblock main %}

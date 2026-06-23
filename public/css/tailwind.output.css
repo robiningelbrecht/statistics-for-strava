@@ -1810,9 +1810,6 @@
   .max-h-125 {
     max-height: calc(var(--spacing) * 125);
   }
-  .max-h-\[90vh\] {
-    max-height: 90vh;
-  }
   .max-h-\[calc\(100vh-165px\)\] {
     max-height: calc(100vh - 165px);
   }
@@ -5586,6 +5583,12 @@ table.data-table {
 }
 @layer components {
   body.admin {
+    .modal-like-form {
+      display: flex;
+      min-height: calc(100vh - 6rem);
+      align-items: center;
+      justify-content: center;
+    }
     label {
       display: block;
       font-size: var(--text-sm);

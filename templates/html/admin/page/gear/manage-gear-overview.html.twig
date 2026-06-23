@@ -19,7 +19,7 @@
             <table class="data-table">
                 <thead>
                 <tr>
-                    <th scope="col">
+                    <th scope="col" class="text-left">
                         {{ "Name"|trans }}
                     </th>
                     <th scope="col" class="narrow">
@@ -39,7 +39,7 @@
                 <tbody>
                 {% for gear in gears %}
                     <tr class="group/row">
-                        <td class="narrow whitespace-nowrap">
+                        <td class="narrow whitespace-nowrap text-left">
                            {{ gear.getOriginalName() }}
                         </td>
                         <td class="whitespace-nowrap">
