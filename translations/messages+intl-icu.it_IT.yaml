@@ -21,6 +21,7 @@ Activity: Attività
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Carico di Allenamento Acuto (Fatica) - media esponenziale a 7 giorni del tuo carico giornaliero. Rappresenta la fatica a breve termine.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Rapporto Acuto:Cronico - Rapporto tra ATL e CTL. Indica il rischio di infortuni.'
 'Adaptive & Inclusive Sports': 'Sport Adattati e Inclusivi'
+'Add gear': 'Add gear'
 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.'
 Admin: Admin
 'Admin panel': 'Admin panel'
@@ -54,6 +55,7 @@ Cal.: Cal.
 Calories: Calorie
 'Calories burned': 'Calorie bruciate'
 'Calories burnt': 'Calories burnt'
+Cancel: Cancel
 Canoeing: Canoa
 'Carbon saved': 'Emissioni di carbonio risparmiate'
 'Challenge consistency': 'Costanza nella sfida'
@@ -62,6 +64,7 @@ Challenges: Sfide
 Clear: Clear
 'Clear all filters': 'Clear all filters'
 'Clear chat': 'Cancella chat'
+Close: Close
 'Close modal': 'Chiudi modale'
 Commutes: 'Spostamenti quotidiani'
 'Commutes only': 'Solo spostamenti quotidiani'
@@ -109,6 +112,7 @@ Eddington: Eddington
 'Eddington number': 'Eddington number'
 'Eddington over time': 'Eddington over time'
 Edit: Edit
+'Edit gear': 'Edit gear'
 'Effort vs heart rate': 'Sforzo vs frequenza cardiaca'
 'Elapsed time': 'Elapsed time'
 Elev: Disl.
@@ -193,6 +197,7 @@ Id: ID
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'L''immagine "{imgSrc}" è referenziata nel tuo file di configurazione della manutenzione, ma non è stata trovata in "storage/gear-maintenance"'
 Imperial: Imperial
 'Imported files will appear here once you upload them.': 'Imported files will appear here once you upload them.'
+'Imported from Strava': 'Imported from Strava'
 'Imported on': 'Imported on'
 "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉."
 'Individual thresholds vary based on fitness level.': 'Le soglie individuali variano in base al livello di forma.'
@@ -346,6 +351,8 @@ Runs: Corse
 Sail: Vela
 Sat: Sab
 Sat.: Sat.
+Save: Save
+Saving...: Saving...
 Search: Cerca
 'Search activity...': 'Cerca attività...'
 'Search segment...': 'Cerca segmento...'
@@ -489,6 +496,7 @@ Thinking...: Elaborazione...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'Questo grafico riassume come ti alleni. Ogni asse riflette una diversa abitudine di allenamento normalizzata, quindi valori più alti indicano un’enfasi maggiore.'
 'This feature is currently disabled': 'Questa funzionalità è attualmente disattivata'
 'This month': 'This month'
+"This value is imported from Strava and can't be edited here.": "This value is imported from Strava and can't be edited here."
 'This week': 'This week'
 Thu: Gio
 Thu.: Thu.

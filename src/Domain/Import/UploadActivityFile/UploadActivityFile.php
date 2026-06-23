@@ -25,18 +25,18 @@ final readonly class UploadActivityFile extends DomainCommand implements Deseria
         if (!isset($payload['filename'], $payload['content'])
             || !is_string($payload['filename'])
             || !is_string($payload['content'])) {
-            throw CouldNotDeserializeCommand::invalidPayload();
+            throw CouldNotDeserializeCommand::invalidPayload('A "filename" and "content" are required.');
         }
 
         $filename = basename($payload['filename']);
 
         if (!SupportedFileExtension::tryFrom(Path::fromString($filename)->getExtension())) {
-            throw CouldNotDeserializeCommand::invalidPayload();
+            throw CouldNotDeserializeCommand::invalidPayload('The file type is not supported.');
         }
 
         $contents = base64_decode($payload['content'], strict: true);
         if (false === $contents || '' === $contents) {
-            throw CouldNotDeserializeCommand::invalidPayload();
+            throw CouldNotDeserializeCommand::invalidPayload('The file content must be valid, non-empty base64.');
         }
 
         return new self(

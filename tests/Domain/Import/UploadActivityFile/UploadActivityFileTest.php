@@ -33,7 +33,7 @@ class UploadActivityFileTest extends TestCase
 
     public function testFromPayloadThrowsOnMissingFilename(): void
     {
-        $this->expectException(CouldNotDeserializeCommand::class);
+        $this->expectExceptionObject(CouldNotDeserializeCommand::invalidPayload('A "filename" and "content" are required.'));
 
         UploadActivityFile::fromPayload([
             'content' => base64_encode('raw-fit-bytes'),
@@ -42,7 +42,7 @@ class UploadActivityFileTest extends TestCase
 
     public function testFromPayloadThrowsOnMissingContent(): void
     {
-        $this->expectException(CouldNotDeserializeCommand::class);
+        $this->expectExceptionObject(CouldNotDeserializeCommand::invalidPayload('A "filename" and "content" are required.'));
 
         UploadActivityFile::fromPayload([
             'filename' => 'ride.fit',
@@ -51,7 +51,7 @@ class UploadActivityFileTest extends TestCase
 
     public function testFromPayloadThrowsOnUnsupportedExtension(): void
     {
-        $this->expectException(CouldNotDeserializeCommand::class);
+        $this->expectExceptionObject(CouldNotDeserializeCommand::invalidPayload('The file type is not supported.'));
 
         UploadActivityFile::fromPayload([
             'filename' => 'notes.txt',
@@ -61,7 +61,7 @@ class UploadActivityFileTest extends TestCase
 
     public function testFromPayloadThrowsOnMalformedContent(): void
     {
-        $this->expectException(CouldNotDeserializeCommand::class);
+        $this->expectExceptionObject(CouldNotDeserializeCommand::invalidPayload('The file content must be valid, non-empty base64.'));
 
         UploadActivityFile::fromPayload([
             'filename' => 'ride.fit',
@@ -71,7 +71,7 @@ class UploadActivityFileTest extends TestCase
 
     public function testFromPayloadThrowsOnEmptyContent(): void
     {
-        $this->expectException(CouldNotDeserializeCommand::class);
+        $this->expectExceptionObject(CouldNotDeserializeCommand::invalidPayload('The file content must be valid, non-empty base64.'));
 
         UploadActivityFile::fromPayload([
             'filename' => 'ride.fit',

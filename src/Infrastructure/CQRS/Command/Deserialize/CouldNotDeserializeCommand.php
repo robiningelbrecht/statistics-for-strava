@@ -6,9 +6,9 @@ namespace App\Infrastructure\CQRS\Command\Deserialize;
 
 final class CouldNotDeserializeCommand extends \RuntimeException
 {
-    public static function invalidPayload(): self
+    public static function invalidPayload(string $message): self
     {
-        return new self('Could not deserialize command, expected a JSON object with a "commandName" and "payload".');
+        return new self($message);
     }
 
     public static function unknownCommand(string $commandName): self

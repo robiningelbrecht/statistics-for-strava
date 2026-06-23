@@ -1,0 +1,42 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Controller\Admin\Gear;
+
+use App\Domain\Gear\GearId;
+use App\Domain\Gear\GearRepository;
+use App\Domain\Gear\GearStatus;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\Routing\Attribute\Route;
+use Twig\Environment;
+
+#[AsController]
+final readonly class ManageGearFormRequestHandler
+{
+    public function __construct(
+        private Environment $twig,
+        private GearRepository $gearRepository,
+    ) {
+    }
+
+    #[Route(path: '/admin/gear/add', name: 'admin_add_gear', methods: ['GET'], priority: 10)]
+    public function handleAdd(): Response
+    {
+        return new Response($this->twig->render('html/admin/page/gear/edit-gear.html.twig', [
+            'dispatchCommand' => 'add-gear',
+            'statuses' => GearStatus::cases(),
+        ]));
+    }
+
+    #[Route(path: '/admin/gear/{gearId}/edit', name: 'admin_edit_gear', methods: ['GET'], priority: 10)]
+    public function handleEdit(string $gearId): Response
+    {
+        return new Response($this->twig->render('html/admin/page/gear/edit-gear.html.twig', [
+            'dispatchCommand' => 'update-gear',
+            'gear' => $this->gearRepository->find(GearId::fromString($gearId)),
+            'statuses' => GearStatus::cases(),
+        ]));
+    }
+}

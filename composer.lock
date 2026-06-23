@@ -1990,16 +1990,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.34.0",
+            "version": "3.35.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "2daaac3b0d4c83ea7ed5d8586e786f5d00f3540e"
+                "reference": "d0a405f03d980461e4b6e08cfed2c162650f9f6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/2daaac3b0d4c83ea7ed5d8586e786f5d00f3540e",
-                "reference": "2daaac3b0d4c83ea7ed5d8586e786f5d00f3540e",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/d0a405f03d980461e4b6e08cfed2c162650f9f6b",
+                "reference": "d0a405f03d980461e4b6e08cfed2c162650f9f6b",
                 "shasum": ""
             },
             "require": {
@@ -2067,9 +2067,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.34.0"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.35.0"
             },
-            "time": "2026-05-14T10:28:08+00:00"
+            "time": "2026-06-22T20:12:06+00:00"
         },
         {
             "name": "league/flysystem-bundle",
@@ -2594,16 +2594,16 @@
         },
         {
             "name": "neuron-core/neuron-ai",
-            "version": "3.15.15",
+            "version": "3.15.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neuron-core/neuron-ai.git",
-                "reference": "a633827abb9034132a1440e6c850be4e4e7bec8f"
+                "reference": "aad4bde1a894a84444562b635bc31d6d3a4f89e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/a633827abb9034132a1440e6c850be4e4e7bec8f",
-                "reference": "a633827abb9034132a1440e6c850be4e4e7bec8f",
+                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/aad4bde1a894a84444562b635bc31d6d3a4f89e3",
+                "reference": "aad4bde1a894a84444562b635bc31d6d3a4f89e3",
                 "shasum": ""
             },
             "require": {
@@ -2654,7 +2654,7 @@
             "description": "The PHP Agentic Framework.",
             "support": {
                 "issues": "https://github.com/neuron-core/neuron-ai/issues",
-                "source": "https://github.com/neuron-core/neuron-ai/tree/3.15.15"
+                "source": "https://github.com/neuron-core/neuron-ai/tree/3.15.16"
             },
             "funding": [
                 {
@@ -2662,7 +2662,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-20T17:35:59+00:00"
+            "time": "2026-06-22T08:02:14+00:00"
         },
         {
             "name": "psr/cache",
@@ -10473,16 +10473,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "2.5.1",
+            "version": "2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "34a9124ece04df818e6b4be4ecd0a4e23f4c0c64"
+                "reference": "49ff6339174bdbdf50b0b35ecbcff14a05ac9e24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/34a9124ece04df818e6b4be4ecd0a4e23f4c0c64",
-                "reference": "34a9124ece04df818e6b4be4ecd0a4e23f4c0c64",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/49ff6339174bdbdf50b0b35ecbcff14a05ac9e24",
+                "reference": "49ff6339174bdbdf50b0b35ecbcff14a05ac9e24",
                 "shasum": ""
             },
             "require": {
@@ -10521,7 +10521,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/2.5.1"
+                "source": "https://github.com/rectorphp/rector/tree/2.5.2"
             },
             "funding": [
                 {
@@ -10529,7 +10529,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-21T10:28:27+00:00"
+            "time": "2026-06-22T11:39:33+00:00"
         },
         {
             "name": "sebastian/cli-parser",

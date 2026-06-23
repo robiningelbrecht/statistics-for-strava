@@ -21,6 +21,7 @@ Activity: 活动
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': '短期训练负荷（疲劳）– 7天每日训练负荷的指数加权平均值。代表短期疲劳。'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': '短期/长期疲劳比率 – ATL与CTL的比值。表示受伤风险。'
 'Adaptive & Inclusive Sports': 适应性和包容性运动
+'Add gear': 'Add gear'
 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.'
 Admin: Admin
 'Admin panel': 'Admin panel'
@@ -54,6 +55,7 @@ Cal.: Cal.
 Calories: 卡路里
 'Calories burned': 燃烧的卡路里
 'Calories burnt': 'Calories burnt'
+Cancel: Cancel
 Canoeing: 划独木舟
 'Carbon saved': 碳减排
 'Challenge consistency': 挑战一致性
@@ -62,6 +64,7 @@ Challenges: 挑战
 Clear: Clear
 'Clear all filters': 'Clear all filters'
 'Clear chat': 'Clear chat'
+Close: Close
 'Close modal': 关闭模态框
 Commutes: 通勤
 'Commutes only': 仅通勤
@@ -109,6 +112,7 @@ Eddington: 愛丁頓數
 'Eddington number': 'Eddington number'
 'Eddington over time': 'Eddington over time'
 Edit: Edit
+'Edit gear': 'Edit gear'
 'Effort vs heart rate': 'Effort vs heart rate'
 'Elapsed time': 'Elapsed time'
 Elev: 海拔
@@ -193,6 +197,7 @@ Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': '您的维护配置文件中引用了图像"{imgSrc}"，但在"storage/gear-maintenance"中未找到该图像。'
 Imperial: Imperial
 'Imported files will appear here once you upload them.': 'Imported files will appear here once you upload them.'
+'Imported from Strava': 'Imported from Strava'
 'Imported on': 'Imported on'
 "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": '在那段时间里，我走了{totalDistance}，相当于环游世界{numberOfTripsAroundTheWorld}次🌍，或者说是到达月球的{numberOfTripsToTheMoonPercent}%🌕，并且攀登了{totalElevation}，相当于珠穆朗玛峰的{timesMountEverest}倍🏔。总而言之，我走了{totalTimeRecorded}的路🎉。'
 'Individual thresholds vary based on fitness level.': 个人阈值因体能水平而异。
@@ -346,6 +351,8 @@ Runs: 跑步
 Sail: 帆船
 Sat: 周六
 Sat.: Sat.
+Save: Save
+Saving...: Saving...
 Search: 搜索
 'Search activity...': 搜索活动...
 'Search segment...': 搜索路段...
@@ -489,6 +496,7 @@ Thinking...: 思考中...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
 'This feature is currently disabled': 功能当前被禁用
 'This month': 'This month'
+"This value is imported from Strava and can't be edited here.": "This value is imported from Strava and can't be edited here."
 'This week': 'This week'
 Thu: 周四
 Thu.: Thu.

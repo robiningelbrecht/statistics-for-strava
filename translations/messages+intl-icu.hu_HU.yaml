@@ -21,6 +21,7 @@ Activity: Tevékenység
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Akut edzésterhelés (Fáradtság) – a napi edzésterhelés 7 napos exponenciálisan súlyozott átlaga. A rövid távú fáradtságot mutatja.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Akut:Krónikus arány – az ATL és CTL aránya. Sérülésveszélyt jelöl.'
 'Adaptive & Inclusive Sports': 'Adaptív és inkluzív sportok'
+'Add gear': 'Add gear'
 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.'
 Admin: Admin
 'Admin panel': 'Admin panel'
@@ -54,6 +55,7 @@ Cal.: Cal.
 Calories: Kalória
 'Calories burned': 'Elégetett kalória'
 'Calories burnt': 'Calories burnt'
+Cancel: Cancel
 Canoeing: Kenuzás
 'Carbon saved': 'Megtakarított szén-dioxid'
 'Challenge consistency': 'Kihívás következetesség'
@@ -62,6 +64,7 @@ Challenges: Kihívások
 Clear: Clear
 'Clear all filters': 'Clear all filters'
 'Clear chat': 'Chat törlése'
+Close: Close
 'Close modal': Bezárás
 Commutes: Ingázások
 'Commutes only': 'Csak ingázások'
@@ -109,6 +112,7 @@ Eddington: Eddington
 'Eddington number': 'Eddington number'
 'Eddington over time': 'Eddington over time'
 Edit: Edit
+'Edit gear': 'Edit gear'
 'Effort vs heart rate': 'Erőfeszítés vs pulzus'
 'Elapsed time': 'Elapsed time'
 Elev: Szintek
@@ -193,6 +197,7 @@ Id: Azonosító
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'A(z) „{imgSrc}" kép szerepel a karbantartási konfigurációs fájlban, de nem található a „storage/gear-maintenance" mappában'
 Imperial: Angolszász
 'Imported files will appear here once you upload them.': 'Imported files will appear here once you upload them.'
+'Imported from Strava': 'Imported from Strava'
 'Imported on': 'Imported on'
 "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": 'Ez idő alatt {totalDistance}-t tettem meg, ami {numberOfTripsAroundTheWorld} körülutazás a Föld körül, vagy {numberOfTripsToTheMoonPercent}% az úton a Hold felé, és {totalElevation} szintemelkedést győztem le, ami {timesMountEverest}-szer a Mount Everest magassága. Összesen {totalTimeRecorded} mozgásban töltött idő.'
 'Individual thresholds vary based on fitness level.': 'Az egyéni küszöbértékek a fitnesz szinttől függően változnak.'
@@ -346,6 +351,8 @@ Runs: Futások
 Sail: Vitorlázás
 Sat: Szo
 Sat.: Sat.
+Save: Save
+Saving...: Saving...
 Search: Keresés
 'Search activity...': 'Tevékenység keresése...'
 'Search segment...': 'Szegmens keresése...'
@@ -489,6 +496,7 @@ Thinking...: Gondolkodás...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'Ez a diagram összefoglalja, hogyan edzel. Minden tengely különböző normalizált edzési szokást tükröz, így a magasabb értékek erősebb hangsúlyt jelentenek.'
 'This feature is currently disabled': 'Ez a funkció jelenleg le van tiltva'
 'This month': 'This month'
+"This value is imported from Strava and can't be edited here.": "This value is imported from Strava and can't be edited here."
 'This week': 'This week'
 Thu: Cs
 Thu.: Thu.

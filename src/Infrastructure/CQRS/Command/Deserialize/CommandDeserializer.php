@@ -22,7 +22,7 @@ final readonly class CommandDeserializer
             || !is_string($decoded['commandName'])
             || !isset($decoded['payload'])
             || !is_array($decoded['payload'])) {
-            throw CouldNotDeserializeCommand::invalidPayload();
+            throw CouldNotDeserializeCommand::invalidPayload('Expected a JSON object with a "commandName" and "payload".');
         }
 
         $commandClass = $this->registry->resolve($decoded['commandName']);
