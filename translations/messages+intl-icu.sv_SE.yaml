@@ -13,10 +13,12 @@
 Active: Active
 'Active days': 'Aktiva dagar'
 Activities: Aktiviteter
+'Activities will appear here once they are imported.': 'Activities will appear here once they are imported.'
 Activity: Aktivitet
 'Activity count': 'Antal aktiviteter'
 'Activity heatmap': Aktivitskarta
 'Activity locations': 'Aktivitet platser'
+'Activity management': 'Activity management'
 'Activity start times': 'Aktivitet starttider'
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Akut träningsbelastning (trötthet) – 7 dagars exponentiellt viktat medelvärde av din dagliga träningsbelastning. Representerar kortvarig utmattning.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Akut:Kronisk Ratio - Ratio av ATL till CTL. Indikerar skaderisk.'
@@ -91,6 +93,7 @@ Day: Day
 'Days needed': 'Dagar saknade'
 'Daytime stats': 'Sammanställning starttider'
 Dec: Dec
+Delete: Delete
 Density: Density
 'Detailed instructions are available in the documentation on': 'Detaljerade instruktioner finns i dokumentationen på'
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
@@ -112,6 +115,7 @@ Eddington: Eddington
 'Eddington number': 'Eddington number'
 'Eddington over time': 'Eddington over time'
 Edit: Edit
+'Edit activity': 'Edit activity'
 'Edit gear': 'Edit gear'
 'Effort vs heart rate': 'Effort vs heart rate'
 'Elapsed time': 'Elapsed time'
@@ -269,6 +273,7 @@ Neutral: Neutral
 'Next milestone': 'Next milestone'
 Night: Natt
 'No activities': 'Inga aktivieter'
+'No activities imported yet.': 'No activities imported yet.'
 'No data available': 'Ingen data tillgänglig'
 'No files imported yet.': 'No files imported yet.'
 'No gears added yet.': 'No gears added yet.'
@@ -377,6 +382,7 @@ Soccer: Fotboll
 Source: Source
 Speed: Fart
 Splits: Delar
+'Sport type': 'Sport type'
 'Sport variety': 'Sport variety'
 Squash: Squash
 'Stair Stepper': Trappmaskin

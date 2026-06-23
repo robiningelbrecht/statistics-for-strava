@@ -13,10 +13,12 @@
 Active: Active
 'Active days': 'Giornate attive'
 Activities: Attività
+'Activities will appear here once they are imported.': 'Activities will appear here once they are imported.'
 Activity: Attività
 'Activity count': 'Conteggio attività'
 'Activity heatmap': 'Mappa di calore delle attività'
 'Activity locations': 'Luoghi attività'
+'Activity management': 'Activity management'
 'Activity start times': 'Inizio attività'
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Carico di Allenamento Acuto (Fatica) - media esponenziale a 7 giorni del tuo carico giornaliero. Rappresenta la fatica a breve termine.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Rapporto Acuto:Cronico - Rapporto tra ATL e CTL. Indica il rischio di infortuni.'
@@ -91,6 +93,7 @@ Day: Day
 'Days needed': 'Giorni necessari'
 'Daytime stats': 'Statistiche giornaliere'
 Dec: Dic
+Delete: Delete
 Density: Density
 'Detailed instructions are available in the documentation on': 'Istruzioni dettagliate sono disponibili nella documentazione su'
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
@@ -112,6 +115,7 @@ Eddington: Eddington
 'Eddington number': 'Eddington number'
 'Eddington over time': 'Eddington over time'
 Edit: Edit
+'Edit activity': 'Edit activity'
 'Edit gear': 'Edit gear'
 'Effort vs heart rate': 'Sforzo vs frequenza cardiaca'
 'Elapsed time': 'Elapsed time'
@@ -269,6 +273,7 @@ Neutral: Neutral
 'Next milestone': 'Next milestone'
 Night: Notte
 'No activities': 'Nessuna attività'
+'No activities imported yet.': 'No activities imported yet.'
 'No data available': 'Nessun dato disponibile'
 'No files imported yet.': 'No files imported yet.'
 'No gears added yet.': 'No gears added yet.'
@@ -377,6 +382,7 @@ Soccer: Calcio
 Source: Source
 Speed: Velocità
 Splits: Intertempi
+'Sport type': 'Sport type'
 'Sport variety': 'Varietà sportiva'
 Squash: Squash
 'Stair Stepper': 'Stepper a gradini'

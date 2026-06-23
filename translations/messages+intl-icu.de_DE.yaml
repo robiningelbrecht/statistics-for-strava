@@ -13,10 +13,12 @@
 Active: Active
 'Active days': 'Aktive Tage'
 Activities: Aktivitäten
+'Activities will appear here once they are imported.': 'Activities will appear here once they are imported.'
 Activity: Aktivität
 'Activity count': 'Anzahl Aktivitäten'
 'Activity heatmap': 'Aktivitäten Heatmap'
 'Activity locations': Orte
+'Activity management': 'Activity management'
 'Activity start times': 'Startzeiten der Aktivitäten'
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Akute Trainingsbelastung (Ermüdung) - 7-tägiger exponentiell gewichteter Durchschnitt deiner täglichen Trainingsbelastung. Stellt die kurzfristige Ermüdung dar.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Aktuelle vs. dauerhafte Trainingsbelastung - Verhältnis von ATL zu CTL. Gibt das Verletzungsrisiko an.'
@@ -91,6 +93,7 @@ Day: Tag
 'Days needed': 'Benötigte Tage'
 'Daytime stats': Tageszeitstatistiken
 Dec: Dez
+Delete: Delete
 Density: Dichte
 'Detailed instructions are available in the documentation on': 'Detaillierte Anweisungen findest du in'
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
@@ -112,6 +115,7 @@ Eddington: Eddington
 'Eddington number': 'Eddington Zahl'
 'Eddington over time': 'Eddington over time'
 Edit: Edit
+'Edit activity': 'Edit activity'
 'Edit gear': 'Edit gear'
 'Effort vs heart rate': 'Anstrengung vs Herzfrequenz'
 'Elapsed time': 'verstrichene Zeit'
@@ -269,6 +273,7 @@ Neutral: Neutral
 'Next milestone': 'Nächster Meilenstein'
 Night: Nacht
 'No activities': 'Keine Aktivitäten'
+'No activities imported yet.': 'No activities imported yet.'
 'No data available': 'Keine Daten verfügbar'
 'No files imported yet.': 'No files imported yet.'
 'No gears added yet.': 'No gears added yet.'
@@ -377,6 +382,7 @@ Soccer: Fußball
 Source: Source
 Speed: Geschwindigkeit
 Splits: Zwischenzeiten
+'Sport type': 'Sport type'
 'Sport variety': Sportvielfalt
 Squash: Squash
 'Stair Stepper': Stufen-Stepper

@@ -12,10 +12,11 @@ use App\Infrastructure\CQRS\Command\Deserialize\DeserializableCommand;
 use App\Infrastructure\CQRS\Command\DomainCommand;
 use Money\Money;
 
-#[AsDeserializableCommand('add-gear')]
+#[AsDeserializableCommand(AddGear::NAME)]
 final readonly class AddGear extends DomainCommand implements DeserializableCommand
 {
     use ProvidePurchasePriceFromPayload;
+    public const string NAME = 'add-gear';
 
     private function __construct(
         private string $name,

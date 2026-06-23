@@ -13,10 +13,12 @@
 Active: Active
 'Active days': 'Jours actifs'
 Activities: Activités
+'Activities will appear here once they are imported.': 'Activities will appear here once they are imported.'
 Activity: Activité
 'Activity count': "Nombre d'activités"
 'Activity heatmap': "Carte thermique de l'activité"
 'Activity locations': "Lieux d'activité"
+'Activity management': 'Activity management'
 'Activity start times': "Heures de début d'activité"
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': "Charge d'Entraînement Aiguë (Fatigue) - Moyenne pondérée exponentiellement sur 7 jours de votre charge d'entraînement quotidienne. Représente la fatigue à court terme."
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Ratio Aiguë:Chronique (A:C) - Rapport entre ATL et CTL. Indique le risque de blessure.'
@@ -91,6 +93,7 @@ Day: Day
 'Days needed': 'Jours nécessaires'
 'Daytime stats': 'Statistiques diurnes'
 Dec: Déc
+Delete: Delete
 Density: Densité
 'Detailed instructions are available in the documentation on': 'Des instructions détaillées sont disponibles dans la documentation sur'
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
@@ -112,6 +115,7 @@ Eddington: Eddington
 'Eddington number': 'Eddington number'
 'Eddington over time': 'Eddington over time'
 Edit: Edit
+'Edit activity': 'Edit activity'
 'Edit gear': 'Edit gear'
 'Effort vs heart rate': 'Effort vs heart rate'
 'Elapsed time': 'Elapsed time'
@@ -269,6 +273,7 @@ Neutral: Neutral
 'Next milestone': 'Next milestone'
 Night: Nuit
 'No activities': 'Aucune activité'
+'No activities imported yet.': 'No activities imported yet.'
 'No data available': 'Aucune donnée disponible'
 'No files imported yet.': 'No files imported yet.'
 'No gears added yet.': 'No gears added yet.'
@@ -377,6 +382,7 @@ Soccer: Football
 Source: Source
 Speed: Vitesse
 Splits: Splits
+'Sport type': 'Sport type'
 'Sport variety': 'Sport variety'
 Squash: Squash
 'Stair Stepper': Steppeur

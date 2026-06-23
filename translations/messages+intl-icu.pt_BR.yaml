@@ -13,10 +13,12 @@
 Active: Active
 'Active days': 'Dias ativos'
 Activities: Atividades
+'Activities will appear here once they are imported.': 'Activities will appear here once they are imported.'
 Activity: Atividade
 'Activity count': 'Contagem de atividades'
 'Activity heatmap': 'Mapa de calor de atividades'
 'Activity locations': 'Locais de atividades'
+'Activity management': 'Activity management'
 'Activity start times': 'Horários de início de atividades'
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Carga de Treinamento Aguda (Fadiga) - Média móvel exponencial de 7 dias da sua carga de treinamento diária. Representa a fadiga de curto prazo.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Razão Aguda:Crônica - Razão entre ATL e CTL. Indica risco de lesão.'
@@ -91,6 +93,7 @@ Day: Dia
 'Days needed': 'Dias necessários'
 'Daytime stats': 'Estatísticas por períodos do dia'
 Dec: Dez
+Delete: Delete
 Density: Densidade
 'Detailed instructions are available in the documentation on': 'Instruções detalhadas estão disponíveis na documentação em'
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
@@ -112,6 +115,7 @@ Eddington: Eddington
 'Eddington number': 'Número de Eddington'
 'Eddington over time': 'Eddington ao longo do tempo'
 Edit: Edit
+'Edit activity': 'Edit activity'
 'Edit gear': 'Edit gear'
 'Effort vs heart rate': 'Esforço vs frequência cardíaca'
 'Elapsed time': 'Tempo decorrido'
@@ -269,6 +273,7 @@ Neutral: Neutro
 'Next milestone': 'Próximo marco'
 Night: Noite
 'No activities': 'Sem atividades'
+'No activities imported yet.': 'No activities imported yet.'
 'No data available': 'Nenhum dado disponível'
 'No files imported yet.': 'No files imported yet.'
 'No gears added yet.': 'No gears added yet.'
@@ -377,6 +382,7 @@ Soccer: Futebol
 Source: Source
 Speed: Velocidade
 Splits: Parciais
+'Sport type': 'Sport type'
 'Sport variety': 'Variedade de esporte'
 Squash: Squash
 'Stair Stepper': 'Subida de Escadas'
