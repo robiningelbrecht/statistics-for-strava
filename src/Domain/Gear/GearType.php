@@ -8,4 +8,9 @@ enum GearType: string
 {
     case IMPORTED = 'imported';
     case CUSTOM = 'custom';
+
+    public function isImported(): bool
+    {
+        return self::IMPORTED === $this;
+    }
 }

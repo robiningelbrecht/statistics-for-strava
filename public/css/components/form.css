@@ -4,21 +4,33 @@
             @apply block text-sm font-medium text-gray-700;
         }
 
+        input:where([type="text"], [type="number"]),
+        select {
+            @apply mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary;
+            @apply disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500;
+        }
+
         input:where([type="radio"], [type="checkbox"]) {
             @apply size-4 rounded border-gray-300 text-primary focus:ring-primary/30;
         }
 
         button:where([type="submit"], [type="button"]),
-        a:where([type="button"]){
+        a:where([type="button"]) {
             @apply rounded-lg px-4 py-2.5 text-sm;
             @apply cursor-pointer inline-flex items-center justify-center gap-2.5 border border-gray-300 font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50;
 
             &.btn--primary {
                 @apply border-0 bg-primary text-white hover:brightness-95;
             }
+
             &.btn--secondary {
                 @apply border-0 bg-transparent font-medium text-gray-500 shadow-none hover:text-gray-700 hover:bg-gray-50;
             }
+
+            &.btn--add {
+                @apply gap-0.5 border-0 bg-primary-soft text-primary shadow-none hover:bg-primary hover:text-white;
+            }
+
             &.btn--large {
                 @apply px-5 py-3 text-base rounded-xl;
             }

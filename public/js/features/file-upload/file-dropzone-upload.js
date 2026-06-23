@@ -21,14 +21,15 @@ export default class FileDropzoneUpload {
         this.clearBtn = rootNode.querySelector('#clear-btn');
         this.form = rootNode.querySelector('#upload-form');
         this.itemTemplate = rootNode.querySelector('#file-item-template');
-        this.supportedFileExtension = JSON.parse(this.form.getAttribute('data-supported-file-extensions'));
-        this.translations = JSON.parse(this.form.getAttribute('data-translations'));
 
         this.files = [];
     }
 
     init() {
         if (!this.dropzone || !this.input || !this.form) return;
+
+        this.supportedFileExtension = JSON.parse(this.form.getAttribute('data-supported-file-extensions'));
+        this.translations = JSON.parse(this.form.getAttribute('data-translations'));
 
         this.list.addEventListener('click', (e) => {
             const btn = e.target.closest('button[data-remove-file]');

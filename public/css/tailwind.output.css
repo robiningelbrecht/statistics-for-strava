@@ -1810,6 +1810,9 @@
   .max-h-125 {
     max-height: calc(var(--spacing) * 125);
   }
+  .max-h-\[90vh\] {
+    max-height: 90vh;
+  }
   .max-h-\[calc\(100vh-165px\)\] {
     max-height: calc(100vh - 165px);
   }
@@ -2024,6 +2027,9 @@
   }
   .max-w-full {
     max-width: 100%;
+  }
+  .max-w-lg {
+    max-width: var(--container-lg);
   }
   .max-w-md {
     max-width: var(--container-md);
@@ -3201,6 +3207,9 @@
   .ps-10 {
     padding-inline-start: calc(var(--spacing) * 10);
   }
+  .pe-7\.5 {
+    padding-inline-end: calc(var(--spacing) * 7.5);
+  }
   .pt-1\.5 {
     padding-top: calc(var(--spacing) * 1.5);
   }
@@ -3639,6 +3648,10 @@
   }
   .shadow-sm {
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .shadow-xl {
+    --tw-shadow: 0 20px 25px -5px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 8px 10px -6px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
   .shadow-xs {
@@ -5581,6 +5594,44 @@ table.data-table {
       font-weight: var(--font-weight-medium);
       color: var(--color-gray-700);
     }
+    input:where([type="text"], [type="number"]), select {
+      margin-top: var(--spacing);
+      display: block;
+      width: 100%;
+      border-radius: var(--radius-lg);
+      border-style: var(--tw-border-style);
+      border-width: 1px;
+      border-color: var(--color-gray-300);
+      padding-inline: calc(var(--spacing) * 3);
+      padding-block: calc(var(--spacing) * 2);
+      font-size: var(--text-sm);
+      line-height: var(--tw-leading, var(--text-sm--line-height));
+      --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+      &:focus {
+        border-color: var(--color-primary);
+      }
+      &:focus {
+        --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
+        box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+      }
+      &:focus {
+        --tw-ring-color: var(--color-primary);
+      }
+      &:focus {
+        --tw-outline-style: none;
+        outline-style: none;
+      }
+      &:disabled {
+        cursor: not-allowed;
+      }
+      &:disabled {
+        background-color: var(--color-gray-100);
+      }
+      &:disabled {
+        color: var(--color-gray-500);
+      }
+    }
     input:where([type="radio"], [type="checkbox"]) {
       width: calc(var(--spacing) * 4);
       height: calc(var(--spacing) * 4);
@@ -5656,6 +5707,25 @@ table.data-table {
         &:hover {
           @media (hover: hover) {
             color: var(--color-gray-700);
+          }
+        }
+      }
+      &.btn--add {
+        gap: calc(var(--spacing) * 0.5);
+        border-style: var(--tw-border-style);
+        border-width: 0px;
+        background-color: var(--color-primary-soft);
+        color: var(--color-primary);
+        --tw-shadow: 0 0 #0000;
+        box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+        &:hover {
+          @media (hover: hover) {
+            background-color: var(--color-primary);
+          }
+        }
+        &:hover {
+          @media (hover: hover) {
+            color: var(--color-white);
           }
         }
       }

@@ -29,7 +29,7 @@ class CommandDeserializerTest extends TestCase
 
     public function testDeserializeWithInvalidPayload(): void
     {
-        $this->expectExceptionObject(CouldNotDeserializeCommand::invalidPayload());
+        $this->expectExceptionObject(CouldNotDeserializeCommand::invalidPayload('Expected a JSON object with a "commandName" and "payload".'));
 
         $this->commandDeserializer->deserialize(Json::encode(['no' => 'command']));
     }

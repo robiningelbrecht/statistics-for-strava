@@ -2,9 +2,19 @@
 {% block main %}
     {% autoescape false %}
     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-        <h3 class="text-lg font-semibold mb-4">
-            {{ "Gear management"|trans }}
-        </h3>
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold">
+                {{ "Gear management"|trans }}
+            </h3>
+            <a href="{{ relativeUrl(path('admin_add_gear')) }}" type="button" class="btn--add">
+                <svg class="size-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
+                </svg>
+                <span>
+                    {{ "Add gear"|trans }}
+                </span>
+            </a>
+        </div>
         <div class="relative overflow-x-auto">
             <table class="data-table">
                 <thead>
