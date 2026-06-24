@@ -5604,7 +5604,7 @@ table.data-table {
       font-weight: var(--font-weight-medium);
       color: var(--color-gray-700);
     }
-    input:where([type="text"], [type="number"]), select {
+    input:where([type="text"], [type="number"]):not(.unstyled), select:not(.unstyled) {
       margin-top: var(--spacing);
       display: block;
       width: 100%;
@@ -5655,7 +5655,7 @@ table.data-table {
         }
       }
     }
-    button:where([type="submit"], [type="button"]), a:where([type="button"]) {
+    button:where([type="submit"], [type="button"]):not(.unstyled), a:where([type="button"]):not(.unstyled) {
       border-radius: var(--radius-lg);
       padding-inline: calc(var(--spacing) * 4);
       padding-block: calc(var(--spacing) * 2.5);

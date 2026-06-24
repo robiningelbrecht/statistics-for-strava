@@ -8,8 +8,8 @@
             @apply block text-sm font-medium text-gray-700;
         }
 
-        input:where([type="text"], [type="number"]),
-        select {
+        input:where([type="text"], [type="number"]):not(.unstyled),
+        select:not(.unstyled) {
             @apply mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary;
             @apply disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500;
         }
@@ -18,8 +18,8 @@
             @apply size-4 rounded border-gray-300 text-primary focus:ring-primary/30;
         }
 
-        button:where([type="submit"], [type="button"]),
-        a:where([type="button"]) {
+        button:where([type="submit"], [type="button"]):not(.unstyled),
+        a:where([type="button"]):not(.unstyled) {
             @apply rounded-lg px-4 py-2.5 text-sm;
             @apply cursor-pointer inline-flex items-center justify-center gap-2.5 border border-gray-300 font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50;
 
