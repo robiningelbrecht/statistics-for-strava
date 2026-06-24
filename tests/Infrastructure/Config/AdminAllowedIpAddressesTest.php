@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Tests\Infrastructure\ValueObject\String;
+namespace App\Tests\Infrastructure\Config;
 
-use App\Infrastructure\ValueObject\String\AllowedIpAddresses;
+use App\Infrastructure\Config\AdminAllowedIpAddresses;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class AllowedIpAddressesTest extends TestCase
+class AdminAllowedIpAddressesTest extends TestCase
 {
     public function testContainsListedIpAddress(): void
     {
-        $allowed = AllowedIpAddresses::fromString('192.168.1.1,10.0.0.1');
+        $allowed = AdminAllowedIpAddresses::fromString('192.168.1.1,10.0.0.1');
 
         $this->assertTrue($allowed->contains('192.168.1.1'));
         $this->assertTrue($allowed->contains('10.0.0.1'));
         $this->assertFalse($allowed->contains('10.0.0.2'));
-        $this->assertFalse(AllowedIpAddresses::fromString('192.168.1.1')->contains(null));
+        $this->assertFalse(AdminAllowedIpAddresses::fromString('192.168.1.1')->contains(null));
     }
 
     public function testTrimsWhitespaceAroundEntries(): void
     {
-        $allowed = AllowedIpAddresses::fromString('  192.168.1.1 ,  10.0.0.1  ');
+        $allowed = AdminAllowedIpAddresses::fromString('  192.168.1.1 ,  10.0.0.1  ');
 
         $this->assertTrue($allowed->contains('192.168.1.1'));
         $this->assertTrue($allowed->contains('10.0.0.1'));
@@ -28,7 +28,7 @@ class AllowedIpAddressesTest extends TestCase
 
     public function testFiltersOutEmptyEntries(): void
     {
-        $allowed = AllowedIpAddresses::fromString('192.168.1.1,,, ,10.0.0.1,');
+        $allowed = AdminAllowedIpAddresses::fromString('192.168.1.1,,, ,10.0.0.1,');
 
         $this->assertFalse($allowed->isEmpty());
         $this->assertTrue($allowed->contains('192.168.1.1'));
@@ -37,7 +37,7 @@ class AllowedIpAddressesTest extends TestCase
 
     public function testSupportsIpv6(): void
     {
-        $allowed = AllowedIpAddresses::fromString('2001:db8::1');
+        $allowed = AdminAllowedIpAddresses::fromString('2001:db8::1');
 
         $this->assertTrue($allowed->contains('2001:db8::1'));
         $this->assertFalse($allowed->contains('2001:db8::2'));
@@ -45,7 +45,7 @@ class AllowedIpAddressesTest extends TestCase
 
     public function testMatchesIpv6AddressesWithinACidrRange(): void
     {
-        $allowed = AllowedIpAddresses::fromString('2a02:a03f:e02e:c301::/64');
+        $allowed = AdminAllowedIpAddresses::fromString('2a02:a03f:e02e:c301::/64');
 
         // Different devices on the same /64 (e.g. laptop and phone on the same home network).
         $this->assertTrue($allowed->contains('2a02:a03f:e02e:c301:d94e:9dce:b47e:2a47'));
@@ -56,7 +56,7 @@ class AllowedIpAddressesTest extends TestCase
 
     public function testMatchesIpv4AddressesWithinACidrRange(): void
     {
-        $allowed = AllowedIpAddresses::fromString('192.168.1.0/24');
+        $allowed = AdminAllowedIpAddresses::fromString('192.168.1.0/24');
 
         $this->assertTrue($allowed->contains('192.168.1.1'));
         $this->assertTrue($allowed->contains('192.168.1.254'));
@@ -65,7 +65,7 @@ class AllowedIpAddressesTest extends TestCase
 
     public function testMixesPlainAddressesAndCidrRanges(): void
     {
-        $allowed = AllowedIpAddresses::fromString('10.0.0.5, 192.168.1.0/24');
+        $allowed = AdminAllowedIpAddresses::fromString('10.0.0.5, 192.168.1.0/24');
 
         $this->assertTrue($allowed->contains('10.0.0.5'));
         $this->assertTrue($allowed->contains('192.168.1.42'));
@@ -74,13 +74,13 @@ class AllowedIpAddressesTest extends TestCase
 
     public function testIsNotEmptyWhenPopulated(): void
     {
-        $this->assertFalse(AllowedIpAddresses::fromString('192.168.1.1')->isEmpty());
+        $this->assertFalse(AdminAllowedIpAddresses::fromString('192.168.1.1')->isEmpty());
     }
 
     #[DataProvider('provideEmptyStrings')]
     public function testIsEmpty(string $string): void
     {
-        $allowed = AllowedIpAddresses::fromString($string);
+        $allowed = AdminAllowedIpAddresses::fromString($string);
 
         $this->assertTrue($allowed->isEmpty());
         $this->assertFalse($allowed->contains('192.168.1.1'));
@@ -100,7 +100,7 @@ class AllowedIpAddressesTest extends TestCase
     {
         $this->expectExceptionObject(new \InvalidArgumentException(sprintf('"%s" is not a valid IP address', $invalidValue)));
 
-        AllowedIpAddresses::fromString($string);
+        AdminAllowedIpAddresses::fromString($string);
     }
 
     public static function provideInvalidIpAddresses(): iterable

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\ValueObject\String;
+namespace App\Infrastructure\Config;
 
 use Symfony\Component\HttpFoundation\IpUtils;
 
-final readonly class AllowedIpAddresses
+final readonly class AdminAllowedIpAddresses
 {
     /**
      * @param string[] $ipAddresses
