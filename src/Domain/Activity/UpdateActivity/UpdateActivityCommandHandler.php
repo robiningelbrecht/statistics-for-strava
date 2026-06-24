@@ -47,7 +47,7 @@ final readonly class UpdateActivityCommandHandler implements CommandHandler
             $isRemoved = static fn (ActivityImagePath $path): bool => in_array($path->toLocalImagePath(), $removedLocalImagePaths, true);
 
             $currentPaths = array_map(
-                static fn (string $path): ActivityImagePath => ActivityImagePath::fromLocalImagePath($path),
+                ActivityImagePath::fromLocalImagePath(...),
                 $activity->getLocalImagePaths()
             );
 
