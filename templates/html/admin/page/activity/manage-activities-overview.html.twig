@@ -21,7 +21,16 @@
                         {{ "Date"|trans }}
                     </th>
                     <th scope="col" class="narrow">
-                        {{ "Dist."|trans }}
+                        {{ "Gear"|trans }}
+                    </th>
+                    <th scope="col" class="narrow">
+                        {{ "Device"|trans }}
+                    </th>
+                    <th scope="col" class="narrow">
+                        {{ "Commute"|trans }}
+                    </th>
+                    <th scope="col" class="narrow">
+                        {{ "Images"|trans }}
                     </th>
                     <th scope="col" class="narrow">
                         <span class="sr-only">{{ "Edit"|trans }}</span>
@@ -40,12 +49,17 @@
                         <td class="narrow whitespace-nowrap">
                             {{ activity.getStartDate()|formatDate() }}
                         </td>
-                        <td class="whitespace-nowrap">
-                            {% if activity.getDistance().toFloat() > 0 %}
-                                {{ activity.getDistance()|renderMeasurement(0) }}
-                            {% else %}
-                                0<span class="text-xxs ml-px">{{ activity.getDistance().getSymbol() }}</span>
-                            {% endif %}
+                        <td class="narrow whitespace-nowrap">
+                            {{ activity.getGearName() ?: '-' }}
+                        </td>
+                        <td class="narrow whitespace-nowrap">
+                            {{ activity.getDeviceName() ?: '-' }}
+                        </td>
+                        <td class="narrow whitespace-nowrap">
+                            {{ (activity.isCommute() ? "Yes" : "No")|trans }}
+                        </td>
+                        <td class="narrow whitespace-nowrap">
+                            {{ activity.getTotalImageCount() }}
                         </td>
                         <td class="narrow whitespace-nowrap">
                             <div class="inline-flex items-center gap-2">
@@ -73,7 +87,7 @@
                 {% endfor %}
                 {% if overview.isEmpty() %}
                     <tr>
-                        <td colspan="5">
+                        <td colspan="8">
                             <div class="flex flex-col items-center justify-center gap-3 py-12 px-4 text-center">
                                 <span class="grid place-items-center size-12 rounded-full bg-gray-100 text-gray-400" aria-hidden="true">
                                     <svg class="size-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

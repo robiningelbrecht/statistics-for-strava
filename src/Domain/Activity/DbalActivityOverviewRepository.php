@@ -8,7 +8,6 @@ use App\Domain\Activity\SportType\SportType;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\Repository\Overview;
 use App\Infrastructure\Repository\Pagination;
-use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final readonly class DbalActivityOverviewRepository extends DbalRepository implements ActivityOverviewRepository
@@ -16,8 +15,18 @@ final readonly class DbalActivityOverviewRepository extends DbalRepository imple
     public function find(Pagination $pagination): Overview
     {
         $results = $this->connection->createQueryBuilder()
-            ->select('a.activityId', 'a.name', 'a.sportType', 'a.startDateTime', 'a.distance')
+            ->select(
+                'a.activityId',
+                'a.name',
+                'a.sportType',
+                'a.startDateTime',
+                'a.deviceName',
+                'a.isCommute',
+                'a.totalImageCount',
+                'g.name AS gearName',
+            )
             ->from('Activity', 'a')
+            ->leftJoin('a', 'Gear', 'g', 'a.gearId = g.gearId')
             ->orderBy('a.startDateTime', 'DESC')
             ->setFirstResult($pagination->getOffset())
             ->setMaxResults($pagination->getLimit())
@@ -50,7 +59,10 @@ final readonly class DbalActivityOverviewRepository extends DbalRepository imple
                 : ActivityName::from($startDate, $sportType),
             sportType: $sportType,
             startDate: $startDate,
-            distance: Meter::from($result['distance'])->toKilometer(),
+            gearName: $result['gearName'] ?? null,
+            deviceName: $result['deviceName'] ?? null,
+            isCommute: (bool) ($result['isCommute'] ?? false),
+            totalImageCount: (int) ($result['totalImageCount'] ?? 0),
         );
     }
 }
