@@ -38,4 +38,13 @@ final readonly class DbalFileImportRepository extends DbalRepository implements 
 
         return (int) $queryBuilder->executeQuery()->fetchOne() > 0;
     }
+
+    public function deleteForActivity(ActivityId $activityId): void
+    {
+        $sql = 'DELETE FROM FileImport WHERE activityId = :activityId';
+
+        $this->connection->executeStatement($sql, [
+            'activityId' => $activityId,
+        ]);
+    }
 }

@@ -6,10 +6,12 @@ namespace App\Domain\Activity\DeleteActivity;
 
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
+use App\Domain\Activity\Image\ImageRepository;
 use App\Domain\Activity\Lap\ActivityLapRepository;
 use App\Domain\Activity\Split\ActivitySplitRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\Metric\ActivityStreamMetricRepository;
+use App\Domain\Import\FileImportRepository;
 use App\Domain\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Segment\SegmentRepository;
 use App\Infrastructure\CQRS\Command\Command;
@@ -26,6 +28,8 @@ final readonly class DeleteActivityCommandHandler implements CommandHandler
         private ActivitySplitRepository $activitySplitRepository,
         private ActivityLapRepository $activityLapRepository,
         private ActivityBestEffortRepository $activityBestEffortRepository,
+        private FileImportRepository $fileImportRepository,
+        private ImageRepository $imageRepository,
     ) {
     }
 
@@ -42,6 +46,8 @@ final readonly class DeleteActivityCommandHandler implements CommandHandler
         $this->activitySplitRepository->deleteForActivity($activityId);
         $this->activityLapRepository->deleteForActivity($activityId);
         $this->activityBestEffortRepository->deleteForActivity($activityId);
+        $this->fileImportRepository->deleteForActivity($activityId);
+        $this->imageRepository->deleteForActivity($activityId);
         $this->activityRepository->delete($activityId);
     }
 }

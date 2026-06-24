@@ -2,6 +2,8 @@
 
 namespace App\Domain\Activity\Image;
 
+use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Infrastructure\Config\Photos\HidePhotosForSportTypes;
@@ -9,11 +11,14 @@ use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use App\Infrastructure\ValueObject\Time\Year;
 use App\Infrastructure\ValueObject\Time\Years;
+use League\Flysystem\FilesystemOperator;
 
 final readonly class ActivityBasedImageRepository implements ImageRepository
 {
     public function __construct(
         private EnrichedActivities $enrichedActivities,
+        private ActivityRepository $activityRepository,
+        private FilesystemOperator $fileStorage,
         private HidePhotosForSportTypes $hidePhotosForSportTypes,
         private KernelProjectDir $kernelProjectDir,
     ) {
@@ -103,5 +108,21 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
         }
 
         return $totalImageCount;
+    }
+
+    public function deleteForActivity(ActivityId $activityId): void
+    {
+        try {
+            $activity = $this->activityRepository->find($activityId);
+        } catch (EntityNotFound) {
+            return;
+        }
+
+        foreach ($activity->getLocalImagePaths() as $localImagePath) {
+            $fileSystemPath = ActivityImagePath::fromLocalImagePath($localImagePath)->toFileSystemPath();
+            if ($this->fileStorage->fileExists($fileSystemPath)) {
+                $this->fileStorage->delete($fileSystemPath);
+            }
+        }
     }
 }
