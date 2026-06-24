@@ -2,7 +2,7 @@
 {% block main %}
     {% autoescape false %}
     {% set gear = gear is defined ? gear : null %}
-    {% set isImportedFromStrava = importMode.isStravaApi() and gear and gear.getType().isImported() %}
+    {% set isReadOnly = gear ? gear.getType().isImported() : false %}
     <div class="modal-like-form">
         <div class="w-full max-w-lg overflow-y-auto p-6 bg-white border border-gray-200 rounded-lg shadow-xl">
             <div class="flex items-center justify-between mb-4">
@@ -22,7 +22,7 @@
             {% endif %}
             <div data-form-error class="hidden rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert"></div>
             {% embed 'html/admin/component/strava-disabled-form-input.html.twig' with {
-                disabled: isImportedFromStrava, label: 'Name'|trans,
+                isReadOnly: isReadOnly, label: 'Name'|trans,
                 for: 'gear-name', name: 'name', value: gear ? gear.getOriginalName(),
             } %}
                 {% block control %}
@@ -44,7 +44,7 @@
             </div>
             {% set currentStatus = gear ? gear.getStatus() : null %}
             {% embed 'html/admin/component/strava-disabled-form-input.html.twig' with {
-                disabled: isImportedFromStrava, label: 'Status'|trans,
+                isReadOnly: isReadOnly, label: 'Status'|trans,
                 for: 'gear-status', name: 'status', value: currentStatus ? currentStatus.value,
             } %}
                 {% block control %}

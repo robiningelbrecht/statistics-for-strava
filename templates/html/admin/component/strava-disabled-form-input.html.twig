@@ -1,4 +1,4 @@
-{% set disabled = disabled ?? false %}
+{% set disabled = importMode.isStravaApi() and (isReadOnly ?? true) %}
 <div>
     <label for="{{ for }}" class="flex items-center gap-1.5">
         {{ label }}
