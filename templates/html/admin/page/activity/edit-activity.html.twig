@@ -21,6 +21,14 @@
                     <label for="activity-name">{{ "Name"|trans }}</label>
                     <input type="text" id="activity-name" name="name" required value="{{ activity.getOriginalName() }}">
                 </div>
+                <div>
+                    <label>{{ "Images"|trans }}</label>
+                    {% set existingImages = [] %}
+                    {% for path in activity.getLocalImagePaths() %}
+                        {% set existingImages = existingImages|merge([{ url: securedImageUrl(path), name: path|split('/')|last, path: path }]) %}
+                    {% endfor %}
+                    {% include 'html/admin/component/image-dropzone-upload.html.twig' with { name: 'images', maxImages: 5, existingImages: existingImages } %}
+                </div>
                 <div class="flex justify-end gap-2 border-t border-gray-200 pt-4">
                     <a href="{{ relativeUrl(path('admin_manage_activity_overview')) }}" type="button" class="btn--secondary">{{ "Cancel"|trans }}</a>
                     <button type="submit" data-has-loading-state class="group btn--primary">

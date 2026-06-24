@@ -41,12 +41,6 @@ export const numberFormat = (number, decimals, decPoint, thousandsSep) => {
     return s.join(dec)
 }
 
-export const formatFileSize = (bytes) => {
-    if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
-}
-
 export const fetchJson = async (url) => {
     const response = await fetch(url);
 
@@ -81,15 +75,4 @@ export const dispatchCommand = async (commandName, payload = {}) => {
         throw new Error(error.error ?? `Failed to dispatch ${commandName}: ${response.status}`);
     }
 }
-
-export const readFileAsBase64 = (file) => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-        const result = reader.result;
-        // result is a data URL like "data:...;base64,AAAA"; keep only the base64 part.
-        resolve(result.slice(result.indexOf(',') + 1));
-    };
-    reader.onerror = () => reject(reader.error ?? new Error('Failed to read file'));
-    reader.readAsDataURL(file);
-});
 
