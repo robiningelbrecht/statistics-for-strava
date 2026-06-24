@@ -143,16 +143,14 @@
                                 <div class="ms-auto peer peer-checked:after:border-buffer relative h-5 w-9 rounded-full bg-gray-200 peer-checked:bg-gray-100 peer-focus:outline-none after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full"></div>
                             </label>
                         </li>
-                        {% if featureFlagIsEnabled('admin') %}
-                            <li>
-                                <a href="{{ relativeUrl('admin') }}" class="inline-flex items-center w-full p-2 hover:bg-gray-50 rounded">
-                                    <svg class="size-4 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20a16.405 16.405 0 0 1-5.092-5.804A16.694 16.694 0 0 1 5 6.666L12 4l7 2.667a16.695 16.695 0 0 1-1.908 7.529A16.406 16.406 0 0 1 12 20Z"/>
-                                    </svg>
-                                    {{ "Admin panel"|trans }}
-                                </a>
-                            </li>
-                        {% endif %}
+                        <li>
+                            <a href="{{ relativeUrl('admin') }}" class="inline-flex items-center w-full p-2 hover:bg-gray-50 rounded">
+                                <svg class="size-4 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20a16.405 16.405 0 0 1-5.092-5.804A16.694 16.694 0 0 1 5 6.666L12 4l7 2.667a16.695 16.695 0 0 1-1.908 7.529A16.406 16.406 0 0 1 12 20Z"/>
+                                </svg>
+                                {{ "Admin panel"|trans }}
+                            </a>
+                        </li>
                     </ul>
                 </div>
             {% endif %}
