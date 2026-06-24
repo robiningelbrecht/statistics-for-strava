@@ -51,7 +51,7 @@ final class ActivityBuilder
     private RouteGeography $routeGeography;
     private readonly ?string $weather;
     private ?GearId $gearId = null;
-    private readonly bool $isCommute;
+    private bool $isCommute;
     private readonly ?WorkoutType $workoutType;
 
     private function __construct()
@@ -211,6 +211,13 @@ final class ActivityBuilder
     public function withoutDeviceName(): self
     {
         $this->deviceName = null;
+
+        return $this;
+    }
+
+    public function withIsCommute(bool $isCommute): self
+    {
+        $this->isCommute = $isCommute;
 
         return $this;
     }

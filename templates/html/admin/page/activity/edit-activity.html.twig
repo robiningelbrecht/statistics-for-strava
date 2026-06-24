@@ -1,8 +1,9 @@
 {% extends "html/admin/page/template.html.twig" %}
 {% block main %}
     {% autoescape false %}
+    {% set isImportedFromStrava = importMode.isStravaApi() %}
     <div class="modal-like-form">
-        <div class="w-full max-w-lg overflow-y-auto p-6 bg-white border border-gray-200 rounded-lg shadow-xl">
+        <div class="w-full max-w-3xl overflow-y-auto p-6 bg-white border border-gray-200 rounded-lg shadow-xl">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-lg font-semibold">
                     {{ "Edit activity"|trans }}
@@ -17,18 +18,71 @@
             <form data-dispatch-command="{{ dispatchCommand }}" data-redirect="{{ relativeUrl(path('admin_manage_activity_overview')) }}" class="flex flex-col gap-4">
                 <input type="hidden" name="activityId" value="{{ activity.getId() }}">
                 <div data-form-error class="hidden rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert"></div>
+                {% embed 'html/admin/component/strava-disabled-form-input.html.twig' with {
+                    disabled: isImportedFromStrava, label: 'Name'|trans,
+                    for: 'activity-name', name: 'name', value: activity.getOriginalName(),
+                } %}
+                    {% block control %}
+                        <input type="text" id="activity-name" name="name" required value="{{ activity.getOriginalName() }}" {{ disabled ? 'disabled' }}>
+                    {% endblock %}
+                {% endembed %}
                 <div>
-                    <label for="activity-name">{{ "Name"|trans }}</label>
-                    <input type="text" id="activity-name" name="name" required value="{{ activity.getOriginalName() }}">
+                    <label for="activity-description">{{ "Description"|trans }}</label>
+                    <textarea id="activity-description" name="description" rows="3">{{ activity.getDescription() }}</textarea>
                 </div>
-                <div>
-                    <label>{{ "Images"|trans }}</label>
-                    {% set existingImages = [] %}
-                    {% for path in activity.getLocalImagePaths() %}
-                        {% set existingImages = existingImages|merge([{ url: securedImageUrl(path), name: path|split('/')|last, path: path }]) %}
-                    {% endfor %}
-                    {% include 'html/admin/component/image-dropzone-upload.html.twig' with { name: 'images', maxImages: 5, existingImages: existingImages } %}
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                    {% embed 'html/admin/component/strava-disabled-form-input.html.twig' with {
+                        disabled: isImportedFromStrava, label: 'Sport type'|trans,
+                        for: 'activity-sport-type', name: 'sportType', value: activity.getSportType().value,
+                    } %}
+                        {% block control %}
+                            <select id="activity-sport-type" name="sportType" required {{ disabled ? 'disabled' }}>
+                                {% for sportType in sportTypes %}
+                                    <option value="{{ sportType.value }}" {{ sportType == activity.getSportType() ? 'selected' }}>{{ sportType|trans }}</option>
+                                {% endfor %}
+                            </select>
+                        {% endblock %}
+                    {% endembed %}
+                    {% embed 'html/admin/component/strava-disabled-form-input.html.twig' with {
+                        disabled: isImportedFromStrava, label: 'Gear'|trans,
+                        for: 'activity-gear', name: 'gearId', value: activity.getGearId(),
+                    } %}
+                        {% block control %}
+                            <select id="activity-gear" name="gearId" {{ disabled ? 'disabled' }}>
+                                <option value="">{{ "None"|trans }}</option>
+                                {% for gear in gears %}
+                                    <option value="{{ gear.getId() }}" {{ activity.getGearId() and gear.getId().matches(activity.getGearId()) ? 'selected' }}>{{ gear.getName() }}</option>
+                                {% endfor %}
+                            </select>
+                        {% endblock %}
+                    {% endembed %}
+                    {% embed 'html/admin/component/strava-disabled-form-input.html.twig' with {
+                        disabled: isImportedFromStrava, label: 'Device name'|trans,
+                        for: 'activity-device-name', name: 'deviceName', value: activity.getDeviceName(),
+                    } %}
+                        {% block control %}
+                            <input type="text" id="activity-device-name" name="deviceName" value="{{ activity.getDeviceName() }}" {{ disabled ? 'disabled' }}>
+                        {% endblock %}
+                    {% endembed %}
                 </div>
+                <div class="flex items-center gap-2">
+                    <input type="hidden" name="isCommute" value="{{ isImportedFromStrava and activity.isCommute() ? 'true' : 'false' }}">
+                    <input type="checkbox" id="activity-is-commute" name="isCommute" value="true" {{ activity.isCommute() ? 'checked' }} {{ isImportedFromStrava ? 'disabled' }}>
+                    <label for="activity-is-commute" class="flex items-center gap-1.5 !mt-0">
+                        {{ "Commute"|trans }}
+                        {% if isImportedFromStrava %}{% include 'html/admin/component/strava-imported-badge.html.twig' %}{% endif %}
+                    </label>
+                </div>
+                {% if not isImportedFromStrava %}
+                    <div>
+                        <label>{{ "Images"|trans }}</label>
+                        {% set existingImages = [] %}
+                        {% for path in activity.getLocalImagePaths() %}
+                            {% set existingImages = existingImages|merge([{ url: securedImageUrl(path), name: path|split('/')|last, path: path }]) %}
+                        {% endfor %}
+                        {% include 'html/admin/component/image-dropzone-upload.html.twig' with { name: 'images', maxImages: 5, existingImages: existingImages } %}
+                    </div>
+                {% endif %}
                 <div class="flex justify-end gap-2 border-t border-gray-200 pt-4">
                     <a href="{{ relativeUrl(path('admin_manage_activity_overview')) }}" type="button" class="btn--secondary">{{ "Cancel"|trans }}</a>
                     <button type="submit" data-has-loading-state class="group btn--primary">

@@ -129,11 +129,13 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
 
     public function update(ActivityWithRawData $activityWithRawData): void
     {
-        $sql = 'UPDATE Activity SET 
-                    name = :name, 
-                    sportType = :sportType, 
-                    activityType = :activityType, 
-                    distance = :distance, 
+        $sql = 'UPDATE Activity SET
+                    name = :name,
+                    description = :description,
+                    deviceName = :deviceName,
+                    sportType = :sportType,
+                    activityType = :activityType,
+                    distance = :distance,
                     averageSpeed = :averageSpeed,
                     maxSpeed = :maxSpeed,
                     movingTimeInSeconds = :movingTimeInSeconds,
@@ -156,6 +158,8 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
             'sportType' => $activity->getSportType()->value,
             'activityType' => $activity->getSportType()->getActivityType()->value,
             'name' => $activity->getOriginalName(),
+            'description' => $activity->getDescription(),
+            'deviceName' => $activity->getDeviceName(),
             'distance' => $activity->getDistance()->toMeter()->toInt(),
             'elevation' => $activity->getElevation()->toInt(),
             'averageSpeed' => $activity->getAverageSpeed()->toFloat(),

@@ -152,6 +152,8 @@ class DbalActivityRepositoryTest extends ContainerTestCase
 
         $activity = $activity
             ->withName(ActivityName::fromString('Updated name'))
+            ->withDescription('Updated description')
+            ->withDeviceName('Updated device')
             ->withSportType(SportType::BADMINTON)
             ->withDistance(Kilometer::from(9.99))
             ->withAverageSpeed(MetersPerSecond::from(19.99)->toKmPerHour())
@@ -181,6 +183,14 @@ class DbalActivityRepositoryTest extends ContainerTestCase
         $this->assertEquals(
             'Updated name',
             $persistedActivity->getName()
+        );
+        $this->assertEquals(
+            'Updated description',
+            $persistedActivity->getDescription()
+        );
+        $this->assertEquals(
+            'Updated device',
+            $persistedActivity->getDeviceName()
         );
         $this->assertEquals(
             Kilometer::from(9.99),

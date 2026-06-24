@@ -139,6 +139,7 @@
     --container-lg: 32rem;
     --container-xl: 36rem;
     --container-2xl: 42rem;
+    --container-3xl: 48rem;
     --container-4xl: 56rem;
     --container-7xl: 80rem;
     --text-xs: 0.75rem;
@@ -1123,6 +1124,9 @@
   .me-3 {
     margin-inline-end: calc(var(--spacing) * 3);
   }
+  .\!mt-0 {
+    margin-top: 0 !important;
+  }
   .-mt-0\.5 {
     margin-top: calc(var(--spacing) * -0.5);
   }
@@ -2012,6 +2016,9 @@
   }
   .max-w-2xl {
     max-width: var(--container-2xl);
+  }
+  .max-w-3xl {
+    max-width: var(--container-3xl);
   }
   .max-w-7xl {
     max-width: var(--container-7xl);
@@ -3203,9 +3210,6 @@
   }
   .ps-10 {
     padding-inline-start: calc(var(--spacing) * 10);
-  }
-  .pe-7\.5 {
-    padding-inline-end: calc(var(--spacing) * 7.5);
   }
   .pt-1\.5 {
     padding-top: calc(var(--spacing) * 1.5);
@@ -5614,7 +5618,7 @@ table.data-table {
       font-weight: var(--font-weight-medium);
       color: var(--color-gray-700);
     }
-    input:where([type="text"], [type="number"]):not(.unstyled), select:not(.unstyled) {
+    input:where([type="text"], [type="number"]):not(.unstyled), textarea:not(.unstyled), select:not(.unstyled) {
       margin-top: var(--spacing);
       display: block;
       width: 100%;
@@ -5652,6 +5656,9 @@ table.data-table {
         color: var(--color-gray-500);
       }
     }
+    select:not(.unstyled) {
+      padding-inline-end: calc(var(--spacing) * 7.5);
+    }
     input:where([type="radio"], [type="checkbox"]) {
       width: calc(var(--spacing) * 4);
       height: calc(var(--spacing) * 4);
@@ -5663,6 +5670,18 @@ table.data-table {
         @supports (color: color-mix(in lab, red, red)) {
           --tw-ring-color: color-mix(in oklab, var(--color-primary) 30%, transparent);
         }
+      }
+      &:disabled {
+        cursor: not-allowed;
+      }
+      &:disabled {
+        border-color: var(--color-gray-300);
+      }
+      &:disabled {
+        background-color: var(--color-gray-100);
+      }
+      &:disabled {
+        color: var(--color-gray-400);
       }
     }
     button:where([type="submit"], [type="button"]):not(.unstyled), a:where([type="button"]):not(.unstyled) {

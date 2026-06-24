@@ -3,14 +3,6 @@
     {% autoescape false %}
     {% set gear = gear is defined ? gear : null %}
     {% set isImportedFromStrava = importMode.isStravaApi() and gear and gear.getType().isImported() %}
-    {% set stravaImportedWarning %}
-        <span class="inline-flex text-amber-500" title="{{ "This value is imported from Strava and can't be edited here."|trans }}">
-            <svg class="size-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m0 4h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/>
-            </svg>
-            <span class="sr-only">{{ "Imported from Strava"|trans }}</span>
-        </span>
-    {% endset %}
     <div class="modal-like-form">
         <div class="w-full max-w-lg overflow-y-auto p-6 bg-white border border-gray-200 rounded-lg shadow-xl">
             <div class="flex items-center justify-between mb-4">
@@ -29,44 +21,40 @@
                 <input type="hidden" name="gearId" value="{{ gear.getId() }}">
             {% endif %}
             <div data-form-error class="hidden rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert"></div>
-            <div>
-                <label for="gear-name" class="flex items-center gap-1.5">
-                    {{ "Name"|trans }}
-                    {% if isImportedFromStrava %}{{ stravaImportedWarning }}{% endif %}
-                </label>
-                <input type="text" id="gear-name" name="name" required value="{{ gear ? gear.getOriginalName() }}" {{ isImportedFromStrava ? 'disabled' }}>
-                {% if isImportedFromStrava %}
-                    <input type="hidden" name="name" value="{{ gear.getOriginalName() }}">
-                {% endif %}
-            </div>
+            {% embed 'html/admin/component/strava-disabled-form-input.html.twig' with {
+                disabled: isImportedFromStrava, label: 'Name'|trans,
+                for: 'gear-name', name: 'name', value: gear ? gear.getOriginalName(),
+            } %}
+                {% block control %}
+                    <input type="text" id="gear-name" name="name" required value="{{ gear ? gear.getOriginalName() }}" {{ disabled ? 'disabled' }}>
+                {% endblock %}
+            {% endembed %}
             <div>
                 <label for="gear-purchase-price">{{ "Purchase price"|trans }}</label>
                 {% set purchasePrice = gear ? gear.getPurchasePrice() : null %}
                 {% set purchasePriceCurrency = purchasePrice ? purchasePrice.getCurrency().getCode() : 'EUR' %}
                 <div class="mt-1 flex gap-2">
                     <input type="number" step="0.01" min="0" id="gear-purchase-price" name="purchasePriceAmount" value="{{ purchasePrice|formatMoneyDecimal }}" placeholder="0.00">
-                    <select name="purchasePriceCurrency" class="w-auto pe-7.5">
+                    <select name="purchasePriceCurrency" class="w-auto">
                         {% for currency in currencies() %}
                             <option value="{{ currency }}" {{ currency == purchasePriceCurrency ? 'selected' }}>{{ currency }}</option>
                         {% endfor %}
                     </select>
                 </div>
             </div>
-            <div>
-                <label for="gear-status" class="flex items-center gap-1.5">
-                    {{ "Status"|trans }}
-                    {% if isImportedFromStrava %}{{ stravaImportedWarning }}{% endif %}
-                </label>
-                {% set currentStatus = gear ? gear.getStatus() : null %}
-                <select id="gear-status" name="status" {{ isImportedFromStrava ? 'disabled' }}>
-                    {% for status in statuses %}
-                        <option value="{{ status.value }}" {{ status == currentStatus ? 'selected' }}>{{ status|trans }}</option>
-                    {% endfor %}
-                </select>
-                {% if isImportedFromStrava %}
-                    <input type="hidden" name="status" value="{{ currentStatus.value }}">
-                {% endif %}
-            </div>
+            {% set currentStatus = gear ? gear.getStatus() : null %}
+            {% embed 'html/admin/component/strava-disabled-form-input.html.twig' with {
+                disabled: isImportedFromStrava, label: 'Status'|trans,
+                for: 'gear-status', name: 'status', value: currentStatus ? currentStatus.value,
+            } %}
+                {% block control %}
+                    <select id="gear-status" name="status" {{ disabled ? 'disabled' }}>
+                        {% for status in statuses %}
+                            <option value="{{ status.value }}" {{ status == currentStatus ? 'selected' }}>{{ status|trans }}</option>
+                        {% endfor %}
+                    </select>
+                {% endblock %}
+            {% endembed %}
             <div class="flex justify-end gap-2 border-t border-gray-200 pt-4">
                 <a href="{{ relativeUrl(path('admin_manage_gear_overview')) }}" type="button" class="btn--secondary">{{ "Cancel"|trans }}</a>
                 <button type="submit" data-has-loading-state class="group btn--primary">

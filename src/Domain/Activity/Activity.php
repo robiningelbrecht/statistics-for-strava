@@ -443,6 +443,13 @@ final class Activity implements SupportsAITooling
         return trim($this->description ?? '');
     }
 
+    public function withDescription(?string $description): self
+    {
+        return clone ($this, [
+            'description' => $description,
+        ]);
+    }
+
     public function getDistance(): Kilometer
     {
         return $this->distance;
@@ -600,6 +607,13 @@ final class Activity implements SupportsAITooling
     public function getDeviceName(): ?string
     {
         return $this->deviceName;
+    }
+
+    public function withDeviceName(?string $deviceName): self
+    {
+        return clone ($this, [
+            'deviceName' => $deviceName,
+        ]);
     }
 
     public function getDeviceId(): string

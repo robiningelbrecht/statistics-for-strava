@@ -23,7 +23,12 @@ final readonly class UpdateActivityCommandHandler implements CommandHandler
         $activityWithRawData = $this->activityRepository->findWithRawData($command->getActivityId());
         $activity = $activityWithRawData
             ->getActivity()
-            ->withName($command->getName());
+            ->withName($command->getName())
+            ->withSportType($command->getSportType())
+            ->withDescription($command->getDescription())
+            ->withDeviceName($command->getDeviceName())
+            ->withGear($command->getGearId())
+            ->withCommute($command->isCommute());
 
         $this->activityRepository->update(ActivityWithRawData::fromState(
             activity: $activity,

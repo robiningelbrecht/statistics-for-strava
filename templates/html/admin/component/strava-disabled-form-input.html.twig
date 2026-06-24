@@ -1,0 +1,9 @@
+{% set disabled = disabled ?? false %}
+<div>
+    <label for="{{ for }}" class="flex items-center gap-1.5">
+        {{ label }}
+        {% if disabled %}{% include 'html/admin/component/strava-imported-badge.html.twig' %}{% endif %}
+    </label>
+    {% block control %}{% endblock %}
+    {% if disabled %}<input type="hidden" name="{{ name }}" value="{{ value }}">{% endif %}
+</div>
