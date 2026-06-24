@@ -8,7 +8,7 @@ parameters:
     env(IMPORT_MODE): 'stravaApi'
     env(LOCK_DSN): 'flock'
     env(TZ): ''
-    env(SECURED_IMAGE_ALLOWED_IPS): ''
+    env(ADMIN_ALLOWED_IPS): ''
     env(DEMO_MODE_IS_ENABLED): 0
     env(DATABASE_DIRECTORY): '%kernel.project_dir%/storage/database'
     env(ADMIN_USERNAME): 'admin'
@@ -89,9 +89,9 @@ services:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['%env(string:TZ)%']
 
-    App\Infrastructure\ValueObject\String\AllowedIpAddresses:
+    App\Infrastructure\Config\AdminAllowedIpAddresses:
         factory: [ null, 'fromString' ]
-        arguments: ['%env(string:SECURED_IMAGE_ALLOWED_IPS)%']
+        arguments: ['%env(string:ADMIN_ALLOWED_IPS)%']
 
     App\Infrastructure\Config\DemoMode:
         factory: [ null, 'fromString' ]
