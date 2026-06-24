@@ -9,6 +9,7 @@ parameters:
     env(LOCK_DSN): 'flock'
     env(TZ): ''
     env(SECURED_IMAGE_ALLOWED_IPS): ''
+    env(DEMO_MODE_IS_ENABLED): 0
     env(DATABASE_DIRECTORY): '%kernel.project_dir%/storage/database'
     env(ADMIN_USERNAME): 'admin'
     env(ADMIN_PASSWORD_HASH): ''
@@ -91,6 +92,10 @@ services:
     App\Infrastructure\ValueObject\String\AllowedIpAddresses:
         factory: [ null, 'fromString' ]
         arguments: ['%env(string:SECURED_IMAGE_ALLOWED_IPS)%']
+
+    App\Infrastructure\Config\DemoMode:
+        factory: [ null, 'fromString' ]
+        arguments: ['%env(string:DEMO_MODE_IS_ENABLED)%']
 
     App\Infrastructure\Security\AdminUserName:
         factory: [ null, 'fromString' ]

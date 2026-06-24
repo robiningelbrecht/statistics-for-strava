@@ -3,28 +3,29 @@
 namespace App\Tests\Controller;
 
 use App\Controller\SecuredImageRequestHandler;
-use App\Infrastructure\ValueObject\String\AllowedIpAddresses;
+use App\Infrastructure\Config\DemoMode;
 use App\Tests\ContainerTestCase;
 use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class SecuredImageRequestHandlerTest extends ContainerTestCase
 {
     // 1x1 transparent PNG.
     private const string PNG_BYTES = "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x06\x00\x00\x00\x1f\x15\xc4\x89\x00\x00\x00\x0bIDATx\xda\x63\xf8\xcf\xc0\xf0\x1f\x00\x05\x05\x02\x00\x4a\xd0\x9d\x6b\x00\x00\x00\x00IEND\xaeB`\x82";
 
-    private SecuredImageRequestHandler $securedImageRequestHandler;
     private FilesystemOperator $fileStorage;
 
-    public function testItServesTheRealImageToATrustedIpAddress(): void
+    public function testItServesTheRealImageToALoggedInUserInDemoMode(): void
     {
         $this->fileStorage->write('activities/photo.png', self::PNG_BYTES);
 
-        $response = $this->securedImageRequestHandler->handle('activities/photo.png', $this->requestFromIp('192.168.1.1'));
+        $handler = $this->handler(demoModeIsEnabled: true, loggedIn: true);
+        $response = $handler->handle('activities/photo.png');
 
         $this->assertInstanceOf(StreamedResponse::class, $response);
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
@@ -32,21 +33,12 @@ class SecuredImageRequestHandlerTest extends ContainerTestCase
         $this->assertEquals(self::PNG_BYTES, $this->captureStreamedContent($response));
     }
 
-    public function testItServesAnAnonymizedImageToAnUntrustedIpAddress(): void
+    public function testItServesAnAnonymizedImageToAnAnonymousUserInDemoMode(): void
     {
         $this->fileStorage->write('activities/photo.png', self::PNG_BYTES, []);
 
-        $response = $this->securedImageRequestHandler->handle('activities/photo.png', $this->requestFromIp('10.0.0.1'));
-
-        $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertStringStartsWith('https://picsum.photos/seed/photo/', $response->getTargetUrl());
-    }
-
-    public function testItServesAnAnonymizedImageWhenThereIsNoClientIpHeader(): void
-    {
-        $this->fileStorage->write('activities/photo.png', self::PNG_BYTES, []);
-
-        $response = $this->securedImageRequestHandler->handle('activities/photo.png', new Request());
+        $handler = $this->handler(demoModeIsEnabled: true, loggedIn: false);
+        $response = $handler->handle('activities/photo.png');
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertStringStartsWith('https://picsum.photos/seed/photo/', $response->getTargetUrl());
@@ -54,20 +46,18 @@ class SecuredImageRequestHandlerTest extends ContainerTestCase
 
     public function testItReturnsNotFoundWhenTheFileDoesNotExist(): void
     {
-        $response = $this->securedImageRequestHandler->handle('activities/missing.png', $this->requestFromIp('192.168.1.1'));
+        $handler = $this->handler(demoModeIsEnabled: true, loggedIn: true);
+        $response = $handler->handle('activities/missing.png');
 
         $this->assertEquals(Response::HTTP_NOT_FOUND, $response->getStatusCode());
     }
 
-    public function testItServesTheRealImageToEveryoneWhenNoAllowListIsConfigured(): void
+    public function testItServesTheRealImageToEveryoneWhenDemoModeIsDisabled(): void
     {
-        $securedImageRequestHandler = new SecuredImageRequestHandler(
-            $this->fileStorage,
-            AllowedIpAddresses::fromString(''),
-        );
         $this->fileStorage->write('activities/photo.png', self::PNG_BYTES, []);
 
-        $response = $securedImageRequestHandler->handle('activities/photo.png', new Request());
+        $handler = $this->handler(demoModeIsEnabled: false, loggedIn: false);
+        $response = $handler->handle('activities/photo.png');
 
         $this->assertInstanceOf(StreamedResponse::class, $response);
         $this->assertEquals(self::PNG_BYTES, $this->captureStreamedContent($response));
@@ -78,7 +68,8 @@ class SecuredImageRequestHandlerTest extends ContainerTestCase
     {
         $this->fileStorage->write('activities/'.$fileName, self::PNG_BYTES, []);
 
-        $response = $this->securedImageRequestHandler->handle('activities/'.$fileName, $this->requestFromIp('10.0.0.1'));
+        $handler = $this->handler(demoModeIsEnabled: true, loggedIn: false);
+        $response = $handler->handle('activities/'.$fileName);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertEquals($expectedUrl, $response->getTargetUrl());
@@ -93,12 +84,16 @@ class SecuredImageRequestHandlerTest extends ContainerTestCase
         yield 'portrait' => ['portrait-photo.png', 'https://picsum.photos/seed/portrait-photo/800/1200'];
     }
 
-    private function requestFromIp(string $ipAddress): Request
+    private function handler(bool $demoModeIsEnabled, bool $loggedIn): SecuredImageRequestHandler
     {
-        $request = new Request();
-        $request->headers->set('CF-Connecting-IP', $ipAddress);
+        $security = $this->createStub(Security::class);
+        $security->method('getUser')->willReturn($loggedIn ? $this->createStub(UserInterface::class) : null);
 
-        return $request;
+        return new SecuredImageRequestHandler(
+            $this->fileStorage,
+            $security,
+            DemoMode::fromString($demoModeIsEnabled ? '1' : '0'),
+        );
     }
 
     private function captureStreamedContent(StreamedResponse $response): string
@@ -114,9 +109,6 @@ class SecuredImageRequestHandlerTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->securedImageRequestHandler = new SecuredImageRequestHandler(
-            $this->fileStorage = $this->getContainer()->get('file.storage'),
-            AllowedIpAddresses::fromString('192.168.1.1'),
-        );
+        $this->fileStorage = $this->getContainer()->get('file.storage');
     }
 }
