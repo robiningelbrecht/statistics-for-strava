@@ -19,7 +19,7 @@
                 <input type="hidden" name="activityId" value="{{ activity.getId() }}">
                 <div data-form-error class="hidden rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert"></div>
                 {% embed 'html/admin/component/strava-disabled-form-input.html.twig' with {
-                    disabled: isImportedFromStrava, label: 'Name'|trans,
+                    label: 'Name'|trans,
                     for: 'activity-name', name: 'name', value: activity.getOriginalName(),
                 } %}
                     {% block control %}
@@ -32,7 +32,7 @@
                 </div>
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                     {% embed 'html/admin/component/strava-disabled-form-input.html.twig' with {
-                        disabled: isImportedFromStrava, label: 'Sport type'|trans,
+                        label: 'Sport type'|trans,
                         for: 'activity-sport-type', name: 'sportType', value: activity.getSportType().value,
                     } %}
                         {% block control %}
@@ -44,7 +44,7 @@
                         {% endblock %}
                     {% endembed %}
                     {% embed 'html/admin/component/strava-disabled-form-input.html.twig' with {
-                        disabled: isImportedFromStrava, label: 'Gear'|trans,
+                        label: 'Gear'|trans,
                         for: 'activity-gear', name: 'gearId', value: activity.getGearId(),
                     } %}
                         {% block control %}
@@ -57,7 +57,7 @@
                         {% endblock %}
                     {% endembed %}
                     {% embed 'html/admin/component/strava-disabled-form-input.html.twig' with {
-                        disabled: isImportedFromStrava, label: 'Device name'|trans,
+                        label: 'Device name'|trans,
                         for: 'activity-device-name', name: 'deviceName', value: activity.getDeviceName(),
                     } %}
                         {% block control %}
@@ -68,7 +68,7 @@
                 <div class="flex items-center gap-2">
                     <input type="hidden" name="isCommute" value="{{ isImportedFromStrava and activity.isCommute() ? 'true' : 'false' }}">
                     <input type="checkbox" id="activity-is-commute" name="isCommute" value="true" {{ activity.isCommute() ? 'checked' }} {{ isImportedFromStrava ? 'disabled' }}>
-                    <label for="activity-is-commute" class="flex items-center gap-1.5 !mt-0">
+                    <label for="activity-is-commute" class="flex items-center gap-1.5 mt-0!">
                         {{ "Commute"|trans }}
                         {% if isImportedFromStrava %}{% include 'html/admin/component/strava-imported-badge.html.twig' %}{% endif %}
                     </label>
