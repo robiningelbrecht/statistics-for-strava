@@ -1,13 +1,5 @@
-import {dispatchCommand, formatFileSize, readFileAsBase64} from "../../utils";
-
-const extensionOf = (name) => name.split('.').pop().toLowerCase();
-
-const Status = {
-    Pending: 'pending',
-    Uploading: 'uploading',
-    Uploaded: 'uploaded',
-    Error: 'error',
-};
+import {dispatchCommand} from "../../utils";
+import {extensionOf, readFileAsBase64, Status, metaFor} from "./upload-utils";
 
 export default class FileDropzoneUpload {
     constructor(rootNode) {
@@ -134,23 +126,9 @@ export default class FileDropzoneUpload {
             if (file.status === Status.Uploading) li.classList.add('is-uploading');
             if (file.status === Status.Uploaded) li.classList.add('is-uploaded');
             li.querySelector('.name').textContent = file.name;
-            li.querySelector('.meta').textContent = this.metaFor(file);
+            li.querySelector('.meta').textContent = metaFor(file, this.translations);
             li.querySelector('[data-remove-file]').dataset.index = index;
             this.list.appendChild(li);
         });
-    }
-
-    metaFor(file) {
-        if (!file.ok) return this.translations.unsupportedFileType;
-        switch (file.status) {
-            case Status.Uploading:
-                return this.translations.uploading;
-            case Status.Uploaded:
-                return this.translations.uploaded;
-            case Status.Error:
-                return file.error || this.translations.uploadFailed;
-            default:
-                return formatFileSize(file.size);
-        }
     }
 }

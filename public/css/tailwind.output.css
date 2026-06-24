@@ -5002,6 +5002,16 @@
       background-color: var(--color-gray-100);
     }
   }
+  .\[\&\.is-disabled\]\:pointer-events-none {
+    &.is-disabled {
+      pointer-events: none;
+    }
+  }
+  .\[\&\.is-disabled\]\:opacity-50 {
+    &.is-disabled {
+      opacity: 50%;
+    }
+  }
   .\[\&\.is-dragging\]\:border-primary {
     &.is-dragging {
       border-color: var(--color-primary);
