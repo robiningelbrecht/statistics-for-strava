@@ -97,8 +97,8 @@ you can use the Task Scheduler to run the import and build commands at regular i
 5. In the Task Settings, in the Run command textbox, enter:
 
 ```bash
-docker exec statistics-for-strava bin/console app:data:import && docker exec statistics-for-strava bin/console app:data:build
+docker exec dreeve bin/console app:data:import && docker exec dreeve bin/console app:data:build
 ```
 
 > [!IMPORTANT]
-> **Important** Make sure to replace the "statistics-for-strava" with the container name you have defined in the container.
+> **Important** Make sure to replace the "dreeve" with the container name you have defined in the container.

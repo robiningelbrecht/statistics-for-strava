@@ -37,7 +37,7 @@ final class AppUpdateAvailableNotificationCronAction extends Command
             title: 'New app version available',
             message: sprintf("We have been busy, %s is finally out! Go see what's new.", $latestRelease),
             tags: ['partying_face'],
-            actionUrl: Url::fromString('https://github.com/robiningelbrecht/statistics-for-strava/releases'),
+            actionUrl: Url::fromString('https://github.com/dreeveapp/dreeve/releases'),
         ));
 
         return Command::SUCCESS;

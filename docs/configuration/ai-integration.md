@@ -1,12 +1,12 @@
 # AI integration
 
-To start using the AI features in **Statistics for Strava**, you first need to properly configure the integration.
+To start using the AI features in **Dreeve**, you first need to properly configure the integration.
 
 > [!WARNING]
 > **Warning** Use caution when enabling this feature if your app is publicly accessible
 
 > [!IMPORTANT]
-> **Important** Statistics for Strava uses the <a href="https://docs.neuron-ai.dev">Neuron AI</a> library to interface with AI models.
+> **Important** Dreeve uses the <a href="https://docs.neuron-ai.dev">Neuron AI</a> library to interface with AI models.
 > Only providers supported by Neuron AI are compatible. See the full list of <a href="https://docs.neuron-ai.dev/providers/ai-provider">supported providers</a>
 
 ## Cloud providers
@@ -37,7 +37,7 @@ You can also run a local model using Ollama. Start by configuring a Docker conta
 services:
     ollama:
         image: ollama/ollama:latest
-        container_name: 'statistics-for-strava-ollama'
+        container_name: 'dreeve-ollama'
         tty: true
         restart: unless-stopped
         volumes:
@@ -49,7 +49,7 @@ services:
         ports:
             - '11434:11434'
         networks:
-            - statistics-for-strava-network
+            - dreeve-network
 ```
 
 > [!TIP]
@@ -114,7 +114,7 @@ This will prompt you with a message like the following:
 
 ### Via the UI
 
-[Virtual AI assistant](https://www.youtube.com/embed/d1r8ISbRL5o ':include :type=iframe width=100% height=400px title="Statistics for Strava" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen')
+[Virtual AI assistant](https://www.youtube.com/embed/d1r8ISbRL5o ':include :type=iframe width=100% height=400px title="Dreeve" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen')
 
 ### Pre-defining chat commands
 

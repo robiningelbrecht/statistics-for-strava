@@ -1,6 +1,6 @@
 # Strava Webhooks Integration
 
-Statistics for Strava supports Strava webhooks to automatically import and build your data when new activities are uploaded. 
+Dreeve supports Strava webhooks to automatically import and build your data when new activities are uploaded. 
 This eliminates the need to manually run import commands or set up cron jobs.
 
 When enabled, your app will receive real-time notifications from Strava whenever:
@@ -12,13 +12,13 @@ When enabled, your app will receive real-time notifications from Strava whenever
 These will trigger the import and build processes in the background. It may take a few minutes for all updates to fully complete.
 
 > [!IMPORTANT]
-> **Important** Your Statistics for Strava instance must be publicly accessible over HTTPS for Strava webhooks to work.
+> **Important** Your Dreeve instance must be publicly accessible over HTTPS for Strava webhooks to work.
 
 > [!IMPORTANT]
 > **Important** Processing Strava webhooks requires the daemon Docker container to be configured. See the compose file [here](/getting-started/installation.md) for information about setting it up. 
 
 > [!TIP]
-> **Tip** If you're hosting your Statistics for Strava instance on Cloudflare, make sure to disable "Bot Fight Mode".
+> **Tip** If you're hosting your Dreeve instance on Cloudflare, make sure to disable "Bot Fight Mode".
 Cloudflare can incorrectly flag Strava’s requests as bot traffic, causing the webhook integration to fail.
 This includes hosting through a Cloudflare Tunnel.
 
@@ -61,7 +61,7 @@ If everything is configured correctly, you should see an output similar to:
 
 ![Strava webhook subscription](../assets/images/strava-webhook-create-subscription.png)
 
-At this point, Strava will begin sending notifications to your Statistics for Strava instance
+At this point, Strava will begin sending notifications to your Dreeve instance
 All incoming webhooks will be logged to a separate log file located at `storage/files/logs`
 
 ## View webhook subscriptions
@@ -115,7 +115,7 @@ If you get the following error when trying to create a webhook subscription
 
 be sure to:
 
-* Check that your Statistics for Strava instance is publicly accessible over the HTTPS
+* Check that your Dreeve instance is publicly accessible over the HTTPS
 * Check if there is already a subscription registered for your app. Check with `docker compose exec app bin/console app:strava:webhooks-view`
 * Validate that your https://your-instance.com/strava/webhook responds with a 200 status to a validation request within 2 seconds. You can issue a request like the following to test (replace the 'test' token value with your configured verifyToken):
 

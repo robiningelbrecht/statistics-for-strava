@@ -1,9 +1,9 @@
 # Community projects
 
-Besides the official Statistics for Strava app, several community members have built their own tools and extensions on top of the project.
+Besides the official Dreeve app, several community members have built their own tools and extensions on top of the project.
 These projects can add extra functionality, provide alternative ways to manage your setup, or help automate certain workflows.
 
-Below is a list of community-made apps that integrate with or complement Statistics for Strava.
+Below is a list of community-made apps that integrate with or complement Dreeve.
 
 > [!NOTE]
 > **Note** These projects are not officially maintained. If you run into issues, please report them in the relevant repository.
@@ -16,13 +16,13 @@ https://github.com/dschoepel/stats-for-strava-config-tool
 
 ## Apple Health to SfS
 
-> Lightweight webserver listening for Apple Health payloads to insert into statistics for strava
+> Lightweight webserver listening for Apple Health payloads to insert into Dreeve
 
 https://github.com/steveredden/health-to-sfs
 
-## Home Assistant - Statistics for Strava
+## Home Assistant - Dreeve
 
-> Single-container Home Assistant add-on draft for statistics-for-strava
+> Single-container Home Assistant add-on draft for dreeve
 
 https://github.com/cgtobi/ha-apps/tree/main/statistics_for_strava
 
@@ -33,7 +33,7 @@ This guide is intended for users who:
 - have a working weight sensor configured in Home Assistant
 
 **Situation**: Home Assistant running as a Docker container with a scale
-**Goal**: Automatically provide weight sensor readings to Statistics for Strava
+**Goal**: Automatically provide weight sensor readings to Dreeve
 
 #### 1. Split SfS-config-file
 

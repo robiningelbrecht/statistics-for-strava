@@ -28,7 +28,7 @@ class AppUpdateAvailableNotificationCronActionTest extends ConsoleCommandTestCas
         $this->client
             ->expects($this->once())
             ->method('request')
-            ->with('GET', 'https://api.github.com/repos/robiningelbrecht/statistics-for-strava/releases/latest')
+            ->with('GET', 'https://api.github.com/repos/dreeveapp/dreeve/releases/latest')
             ->willReturn(new Response(status: 200, body: Json::encode(['name' => 'v3.8.0'])));
 
         $command = $this->getCommandInApplication('app:cron:app-update-available-notification');
@@ -43,7 +43,7 @@ class AppUpdateAvailableNotificationCronActionTest extends ConsoleCommandTestCas
         $this->client
             ->expects($this->once())
             ->method('request')
-            ->with('GET', 'https://api.github.com/repos/robiningelbrecht/statistics-for-strava/releases/latest')
+            ->with('GET', 'https://api.github.com/repos/dreeveapp/dreeve/releases/latest')
             ->willReturn(new Response(status: 200, body: Json::encode(['name' => AppVersion::getSemanticVersion()])));
 
         $command = $this->getCommandInApplication('app:cron:app-update-available-notification');

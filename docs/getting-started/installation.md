@@ -7,8 +7,8 @@ Start off by showing some :heart: and give this repo a star. Then from your comm
 
 ```bash
 # Create a new directory
-> mkdir statistics-for-strava
-> cd statistics-for-strava
+> mkdir dreeve
+> cd dreeve
 
 # Create docker-compose.yml and copy the example contents into it
 > touch docker-compose.yml
@@ -28,10 +28,10 @@ Start off by showing some :heart: and give this repo a star. Then from your comm
 ```yml
 services:
   app:
-    # The Statistics for Strava Docker image is available on Docker Hub and the GitHub Container Registry
-    image: robiningelbrecht/strava-statistics:latest
-    # image: ghcr.io/robiningelbrecht/statistics-for-strava:latest
-    container_name: statistics-for-strava
+    # The Dreeve Docker image is available on Docker Hub and the GitHub Container Registry
+    image: robiningelbrecht/dreeve:latest
+    # image: ghcr.io/dreeveapp/dreeve:latest
+    container_name: dreeve
     restart: unless-stopped
     volumes:
       - ./config:/var/www/config/app
@@ -45,9 +45,9 @@ services:
     ports:
       - 8080:8080
     networks:
-      - statistics-for-strava-network
+      - dreeve-network
 
-  # ⚠️ This container is optional, it is not required to run Statistics for Strava.
+  # ⚠️ This container is optional, it is not required to run Dreeve.
   # Its purpose is to handle recurring background tasks, such as:
   #   - Importing and building Strava data
   #   - Sending notifications when gear maintenance is due
@@ -59,7 +59,7 @@ services:
   # If you prefer to trigger these tasks manually, you can omit this container entirely.
   daemon:
     image: robiningelbrecht/strava-statistics:latest
-    container_name: statistics-for-strava-daemon
+    container_name: dreeve-daemon
     restart: unless-stopped
     volumes:
       - ./config:/var/www/config/app
@@ -72,10 +72,10 @@ services:
       start_period: 5s
     command: ['bin/console', 'app:daemon:run']
     networks:
-      - statistics-for-strava-network
+      - dreeve-network
 
 networks:
-  statistics-for-strava-network:
+  dreeve-network:
 ```
 
 ## .env
@@ -99,10 +99,10 @@ TZ=Etc/GMT
 # PUID=your host UID
 # PGID=your host GID
 
-# !! IMPORTANT If you want to serve Statistics for Strava from a custom domain (not localhost), 
+# !! IMPORTANT If you want to serve Dreeve from a custom domain (not localhost), 
 # uncomment the following lines and configure them accordingly:
 
-# The domain where Statistics for Strava will be available.
+# The domain where Dreeve will be available.
 # PROXY_HOST=https://your-domain.com
 # The port on which the app will be served.
 # PROXY_PORT=8080

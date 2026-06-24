@@ -1,8 +1,8 @@
 {
     "type": "project",
     "license": "GPL-3.0-or-later",
-    "name": "robiningelbrecht/statistics-for-strava",
-    "description": "Statistics for Strava is a self-hosted, open-source dashboard for your Strava data.",
+    "name": "robiningelbrecht/dreeve",
+    "description": "Dreeve is a self-hosted, open-source dashboard for your sports and fitness data.",
     "authors": [
         {
             "name": "Robin Ingelbrecht",
@@ -12,6 +12,8 @@
     "keywords": [
         "PHP",
         "Strava",
+        "health",
+        "statistics",
         "self-hosted"
     ],
     "minimum-stability": "stable",

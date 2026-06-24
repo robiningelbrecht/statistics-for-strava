@@ -2,9 +2,9 @@
 
 > [!NOTE]
 > The HelmForge chart is a third-party Kubernetes installation option maintained by the HelmForge project.
-> The Docker Compose setup remains the primary installation path documented by Statistics for Strava.
+> The Docker Compose setup remains the primary installation path documented by Dreeve.
 
-If you run applications on Kubernetes, you can deploy Statistics for Strava with the community Helm chart provided by
+If you run applications on Kubernetes, you can deploy Dreeve with the community Helm chart provided by
 [HelmForge](https://helmforge.dev/docs/charts/strava-statistics/).
 
 ## Prerequisites
@@ -12,7 +12,7 @@ If you run applications on Kubernetes, you can deploy Statistics for Strava with
 - A working Kubernetes cluster.
 - Helm 3 installed locally.
 - A default `StorageClass` or an existing PersistentVolumeClaim for the SQLite database and generated files.
-- A Strava API application configured with the public URL where Statistics for Strava will be available.
+- A Strava API application configured with the public URL where Dreeve will be available.
 
 ## Add the HelmForge repository
 
@@ -25,7 +25,7 @@ helm repo update
 
 ```yaml
 # values.yaml
-fullnameOverride: statistics-for-strava
+fullnameOverride: dreeve
 
 strava:
   clientId: "YOUR_CLIENT_ID"
@@ -46,7 +46,7 @@ You can also reference an existing Kubernetes Secret instead of storing credenti
 
 ```yaml
 strava:
-  existingSecret: statistics-for-strava-credentials
+  existingSecret: dreeve-credentials
   existingSecretClientIdKey: client-id
   existingSecretClientSecretKey: client-secret
   existingSecretRefreshTokenKey: refresh-token
@@ -55,10 +55,10 @@ strava:
 ## Install the chart
 
 ```bash
-kubectl create namespace statistics-for-strava
+kubectl create namespace dreeve
 
-helm install statistics-for-strava helmforge/strava-statistics \
-  --namespace statistics-for-strava \
+helm install dreeve helmforge/strava-statistics \
+  --namespace dreeve \
   --values values.yaml
 ```
 
@@ -66,8 +66,8 @@ For local access without an Ingress controller:
 
 ```bash
 kubectl port-forward \
-  --namespace statistics-for-strava \
-  svc/statistics-for-strava 8080:80
+  --namespace dreeve \
+  svc/dreeve 8080:80
 ```
 
 Then open `http://localhost:8080/`.
@@ -88,7 +88,7 @@ ingress:
   tls:
     - hosts:
         - strava.example.com
-      secretName: statistics-for-strava-tls
+      secretName: dreeve-tls
 ```
 
 ## Import and build statistics
@@ -97,17 +97,17 @@ After the application is authorized with Strava, you can run the same console co
 
 ```bash
 kubectl exec \
-  --namespace statistics-for-strava \
-  deploy/statistics-for-strava \
+  --namespace dreeve \
+  deploy/dreeve \
   -- bin/console app:data:import
 
 kubectl exec \
-  --namespace statistics-for-strava \
-  deploy/statistics-for-strava \
+  --namespace dreeve \
+  deploy/dreeve \
   -- bin/console app:data:build
 ```
 
 ## More information
 
-- [HelmForge Statistics for Strava chart documentation](https://helmforge.dev/docs/charts/strava-statistics/)
+- [HelmForge Dreeve chart documentation](https://helmforge.dev/docs/charts/strava-statistics/)
 - [HelmForge chart source](https://github.com/helmforgedev/charts/tree/main/charts/strava-statistics)

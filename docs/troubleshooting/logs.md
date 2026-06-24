@@ -1,6 +1,6 @@
 # Logs
 
-In addition to the default Docker logs, Statistics for Strava maintains its own application logs.
+In addition to the default Docker logs, Dreeve maintains its own application logs.
 There are two types of logs, each stored in `storage/files/logs` with a 5-day rotation policy. 
 These logs can help diagnose and troubleshoot issues.
 
@@ -64,7 +64,7 @@ These logs capture all output from the Daemon running recurring background tasks
 ```log
 [2025-11-10T09:28:55.650390+00:00] daemon.INFO:   [] []
 [2025-11-10T09:28:55.654875+00:00] daemon.INFO: <fg=black;bg=green>                                                                                                                        </> [] []
-[2025-11-10T09:28:55.655126+00:00] daemon.INFO: <fg=black;bg=green> Statistics for Strava v3.9.0 | DAEMON                                                                                  </> [] []
+[2025-11-10T09:28:55.655126+00:00] daemon.INFO: <fg=black;bg=green> Dreeve v3.9.0 | DAEMON                                                                                  </> [] []
 [2025-11-10T09:28:55.655243+00:00] daemon.INFO: <fg=black;bg=green>                                                                                                                        </> [] []
 [2025-11-10T09:28:55.655363+00:00] daemon.INFO: <fg=black;bg=green> Started on 10-11-2025 10:28:55                                                                                         </> [] []
 [2025-11-10T09:28:55.655504+00:00] daemon.INFO: <fg=black;bg=green>                                                                                                                        </> [] []
