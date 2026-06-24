@@ -15,7 +15,7 @@ class AdminAllowedIpRequestListenerTest extends TestCase
 {
     public function testItDeniesAdminAccessFromADisallowedIp(): void
     {
-        $this->expectExceptionObject(new NotFoundHttpException());
+        $this->expectExceptionObject(new NotFoundHttpException('Not found'));
 
         $this->dispatch(
             new AdminAllowedIpRequestListener(AdminAllowedIpAddresses::fromString('192.168.1.1')),
@@ -38,7 +38,7 @@ class AdminAllowedIpRequestListenerTest extends TestCase
         $request = $this->adminRequestFromIp('192.168.1.1');
         $request->headers->set('CF-Connecting-IP', '10.0.0.1');
 
-        $this->expectExceptionObject(new NotFoundHttpException());
+        $this->expectExceptionObject(new NotFoundHttpException('Not found'));
 
         $this->dispatch(
             new AdminAllowedIpRequestListener(AdminAllowedIpAddresses::fromString('192.168.1.1')),

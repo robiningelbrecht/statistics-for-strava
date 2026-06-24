@@ -38,7 +38,7 @@ final readonly class AdminAllowedIpRequestListener implements EventSubscriberInt
             return;
         }
 
-        throw new NotFoundHttpException();
+        throw new NotFoundHttpException('Not found');
     }
 
     /**
