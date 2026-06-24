@@ -2,7 +2,7 @@ blank_issues_enabled: false
 contact_links:
   - name: Discord - the community chat
     url: https://discord.gg/p4zpZyCHNc
-    about: Join the Discord community and chat about Statistics for Strava
+    about: Join the Discord community and chat about Dreeve
   - name: Documentation pages
     url: https://docs.getsfs.app/
-    about: Everything you need to setup and configure Statistics for Strava
+    about: Everything you need to setup and configure Dreeve

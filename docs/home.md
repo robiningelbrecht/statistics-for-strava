@@ -1,15 +1,13 @@
 <p class="flex justify-center">
-  <img width="250" src="https://github.com/robiningelbrecht/statistics-for-strava/raw/master/public/assets/images/logo.svg" alt="Logo">
+  <img width="250" src="https://github.com/dreeveapp/dreeve/raw/master/public/assets/images/logo.svg" alt="Logo">
 </p>
 
-<h4 class="text-center">Statistics for Strava is a self-hosted, open-source dashboard for your Strava data.</h4>
+<h4 class="text-center">Dreeve is a self-hosted, open-source dashboard for your sports and fitness data</h4>
 
 <div class="text-center">
-<a href="https://raw.githubusercontent.com/robiningelbrecht/statistics-for-strava/refs/heads/master/LICENSE"><img src="https://img.shields.io/github/license/robiningelbrecht/statistics-for-strava?color=428f7e&logo=open%20source%20initiative&logoColor=white" alt="License"></a>
-<a href="https://hub.docker.com/r/robiningelbrecht/strava-statistics"><img src="https://img.shields.io/docker/image-size/robiningelbrecht/strava-statistics?logo=docker&logoColor=white" alt="Docker Image Size"></a>
-<a href="https://hub.docker.com/r/robiningelbrecht/strava-statistics"><img src="https://img.shields.io/docker/pulls/robiningelbrecht/strava-statistics?logo=docker&logoColor=white&label=docker%20hub%20pulls" alt="Docker Hub pulls"></a>
-<a href="https://github.com/robiningelbrecht/statistics-for-strava/pkgs/container/statistics-for-strava"><img src="https://img.shields.io/badge/dynamic/json?url=https://ghcr-badge.elias.eu.org/api/robiningelbrecht/statistics-for-strava/statistics-for-strava&query=downloadCount&logo=docker&label=github%20cr%20pulls&logoColor=white" alt="GitHub CR pulls"></a>
-<a href="https://hub.docker.com/r/robiningelbrecht/strava-statistics"><img src="https://img.shields.io/docker/v/robiningelbrecht/strava-statistics?sort=semver&logo=docker&logoColor=white" alt="Docker version"></a>
+<a href="https://raw.githubusercontent.com/dreeveapp/dreeve/refs/heads/master/LICENSE"><img src="https://img.shields.io/github/license/dreeveapp/dreeve?color=428f7e&logo=open%20source%20initiative&logoColor=white" alt="License"></a>
+<a href="https://hub.docker.com/r/robiningelbrecht/dreeve"><img src="https://img.shields.io/docker/image-size/robiningelbrecht/dreeve?logo=docker&logoColor=white" alt="Docker Image Size"></a>
+<a href="https://hub.docker.com/r/robiningelbrecht/dreeve"><img src="https://img.shields.io/docker/v/robiningelbrecht/dreeve?sort=semver&logo=docker&logoColor=white" alt="Docker version"></a>
 <a href="https://discord.gg/p4zpZyCHNc"><img src="https://img.shields.io/badge/Statistics%20for%20Strava-%235865F4?logo=discord&logoColor=%23ffffff&label=%20&labelColor=585858" alt="Discord server"></a>  
 </div>
 
@@ -27,7 +25,7 @@
 > [!NOTE]
 > **Note** This app is in no way affiliated with or part of the official Strava software suite.
 
-[Showcase](https://www.youtube.com/embed/UfVLXqAtlX8 ':include :type=iframe width=100% height=400px title="Statistics for Strava" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen')
+[Showcase](https://www.youtube.com/embed/UfVLXqAtlX8 ':include :type=iframe width=100% height=400px title="Dreeve" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen')
 
 ## Key Features
 

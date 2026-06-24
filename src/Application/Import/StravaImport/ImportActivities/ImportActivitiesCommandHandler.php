@@ -94,7 +94,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
         foreach ($stravaActivities as $rawStravaData) {
             if (!SportType::tryFrom($rawStravaData['sport_type'])) {
                 $command->getOutput()->writeln(sprintf(
-                    '  => Sport type "%s" not supported yet. <a href="https://github.com/robiningelbrecht/statistics-for-strava/issues/new?assignees=robiningelbrecht&labels=new+feature&projects=&template=feature_request.md&title=Add+support+for+sport+type+%s>Open a new GitHub issue</a> to if you want support for this sport type',
+                    '  => Sport type "%s" not supported yet. <a href="https://github.com/dreeveapp/dreeve/issues/new?assignees=robiningelbrecht&labels=new+feature&projects=&template=feature_request.md&title=Add+support+for+sport+type+%s>Open a new GitHub issue</a> to if you want support for this sport type',
                     $rawStravaData['sport_type'],
                     $rawStravaData['sport_type']));
                 continue;

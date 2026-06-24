@@ -1,8 +1,8 @@
 {
     "id": "http://localhost:8080/",
-    "name": "Statistics for Strava | Robin Ingelbrecht",
-    "short_name": "Statistics for Strava",
-    "description": "Statistics for Strava is a self-hosted, open-source dashboard for your sports and fitness data.",
+    "name": "Dreeve | Robin Ingelbrecht",
+    "short_name": "Dreeve",
+    "description": "Dreeve is a self-hosted, open-source dashboard for your sports and fitness data.",
     "categories": [
         "sports",
         "health",

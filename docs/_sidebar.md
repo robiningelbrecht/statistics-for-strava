@@ -1,36 +1,36 @@
 - Getting Started
-  - [Prerequisites](getting-started/prerequisites.md "Statistics for Strava | Prerequisites")
-  - [Installation](getting-started/installation.md "Statistics for Strava | Installation")
-  - [Scheduling](getting-started/scheduling.md "Statistics for Strava | Scheduling")
-  - [Challenges and trophies](getting-started/challenges-and-trophies.md "Statistics for Strava | Challenges and trophies")
-  - [Updates](getting-started/updates.md "Statistics for Strava | Updates")
-  - [Proxmox setup](getting-started/proxmox.md "Statistics for Strava | Proxmox setup")
-  - [Kubernetes with HelmForge](getting-started/kubernetes-helmforge.md "Statistics for Strava | Kubernetes with HelmForge")
+  - [Prerequisites](getting-started/prerequisites.md "Dreeve | Prerequisites")
+  - [Installation](getting-started/installation.md "Dreeve | Installation")
+  - [Scheduling](getting-started/scheduling.md "Dreeve | Scheduling")
+  - [Challenges and trophies](getting-started/challenges-and-trophies.md "Dreeve | Challenges and trophies")
+  - [Updates](getting-started/updates.md "Dreeve | Updates")
+  - [Proxmox setup](getting-started/proxmox.md "Dreeve | Proxmox setup")
+  - [Kubernetes with HelmForge](getting-started/kubernetes-helmforge.md "Dreeve | Kubernetes with HelmForge")
 
 - Configuration
 
-  - [Main configuration](configuration/main-configuration.md "Statistics for Strava | Main configuration")
-  - [Dashboard widgets](configuration/dashboard-widgets.md "Statistics for Strava | Dashboard widgets")
-  - [Gear maintenance](configuration/gear-maintenance.md "Statistics for Strava | Gear maintenance")
-  - [Strava webhooks](configuration/strava-webhooks.md "Statistics for Strava | Strava webhooks")
-  - [AI integration](configuration/ai-integration.md "Statistics for Strava | AI integration")
+  - [Main configuration](configuration/main-configuration.md "Dreeve | Main configuration")
+  - [Dashboard widgets](configuration/dashboard-widgets.md "Dreeve | Dashboard widgets")
+  - [Gear maintenance](configuration/gear-maintenance.md "Dreeve | Gear maintenance")
+  - [Strava webhooks](configuration/strava-webhooks.md "Dreeve | Strava webhooks")
+  - [AI integration](configuration/ai-integration.md "Dreeve | AI integration")
   
 - Troubleshooting
 
-  - [Strava API errors](troubleshooting/strava-api-errors.md "Statistics for Strava | Strava API errors")
-  - [Shoutrrr notifications](troubleshooting/shoutrrr-notifications.md "Statistics for Strava | Shoutrrr notifications")
-  - [Import/build fails with syntax error](troubleshooting/import-build-fails.md "Statistics for Strava | Import/build fails with syntax error")
-  - [FAQ](troubleshooting/faq.md "Statistics for Strava | FAQ")
-  - [Logs](troubleshooting/logs.md "Statistics for Strava | Logs")
+  - [Strava API errors](troubleshooting/strava-api-errors.md "Dreeve | Strava API errors")
+  - [Shoutrrr notifications](troubleshooting/shoutrrr-notifications.md "Dreeve | Shoutrrr notifications")
+  - [Import/build fails with syntax error](troubleshooting/import-build-fails.md "Dreeve | Import/build fails with syntax error")
+  - [FAQ](troubleshooting/faq.md "Dreeve | FAQ")
+  - [Logs](troubleshooting/logs.md "Dreeve | Logs")
 
 - Development
 
-  - [Locales and translations](development/locales-and-translations.md "Statistics for Strava | Locales and translations")
-  - [Local development](development/local-development.md "Statistics for Strava | Local development")
+  - [Locales and translations](development/locales-and-translations.md "Dreeve | Locales and translations")
+  - [Local development](development/local-development.md "Dreeve | Local development")
 
 - Community & Contributions
 
-  - [Feature requests](community/feature-requests.md "Statistics for Strava | Feature requests")
-  - [Projects](community/projects.md "Statistics for Strava | Projects")
+  - [Feature requests](community/feature-requests.md "Dreeve | Feature requests")
+  - [Projects](community/projects.md "Dreeve | Projects")
   
-- [Changelog](changelog.md "Statistics for Strava | Changelog")
+- [Changelog](changelog.md "Dreeve | Changelog")

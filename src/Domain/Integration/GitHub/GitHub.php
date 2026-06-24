@@ -18,7 +18,7 @@ final readonly class GitHub
     {
         $response = $this->client->request(
             method: 'GET',
-            uri: 'https://api.github.com/repos/robiningelbrecht/statistics-for-strava/releases/latest'
+            uri: 'https://api.github.com/repos/dreeveapp/dreeve/releases/latest'
         );
 
         $json = $response->getBody()->getContents();

@@ -15,7 +15,7 @@ Keep track of your gear and stay on top of maintenance tasks with our **Gear Mai
 * It then calculates the usage of each attached component and updates the progress automatically.
 * If the Strava activity title contains one of the configured hashtags, the app will reset the maintenance task and counters from the next activity onwards and will start re-tracking from 0 again.
 
-[Gear maintenance](https://www.youtube.com/embed/mYFmIFgUIYU ':include :type=iframe width=100% height=400px title="Statistics for Strava" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen')
+[Gear maintenance](https://www.youtube.com/embed/mYFmIFgUIYU ':include :type=iframe width=100% height=400px title="Dreeve" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen')
 
 ## Setup
 
@@ -25,14 +25,14 @@ Keep track of your gear and stay on top of maintenance tasks with our **Gear Mai
 services:
   app:
     image: robiningelbrecht/strava-statistics:latest
-    container_name: statistics-for-strava
+    container_name: dreeve
     volumes:
       - ./config:/var/www/config/app
       # ...
       - ./storage/gear-maintenance:/var/www/storage/gear-maintenance # Gear maintenance images
   daemon:
     image: robiningelbrecht/strava-statistics:latest
-    container_name: statistics-for-strava-daemon
+    container_name: dreeve-daemon
     volumes:
       - ./config:/var/www/config/app
       # ...

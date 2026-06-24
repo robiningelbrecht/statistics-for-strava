@@ -6,7 +6,7 @@ When configuring Shoutrrr services, you may encounter errors like:
 
 This indicates that Shoutrrr attempted to send a notification to one of your configured services,
 but the request failed most likely due to a misconfiguration on your end. 
-This is not something Statistics for Strava can resolve, you'll need to diagnose the issue.
+This is not something Dreeve can resolve, you'll need to diagnose the issue.
 
 To debug the problem, you can manually test your configuration using:
 

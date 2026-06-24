@@ -1,6 +1,6 @@
 {
     "headers": {
-        "User-Agent": "Statistics for Strava App"
+        "User-Agent": "Dreeve App"
     },
     "query": {
         "lat": 80,

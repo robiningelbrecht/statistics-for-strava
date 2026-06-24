@@ -2,11 +2,11 @@
 
 Several users have reported unexpected "JSON Syntax" errors when importing or building the HTML files:
 
-* https://github.com/robiningelbrecht/statistics-for-strava/issues/1621
-* https://github.com/robiningelbrecht/statistics-for-strava/issues/1623
-* https://github.com/robiningelbrecht/statistics-for-strava/issues/1357
-* https://github.com/robiningelbrecht/statistics-for-strava/issues/1288
-* https://github.com/robiningelbrecht/statistics-for-strava/issues/1180
+* https://github.com/dreeveapp/dreeve/issues/1621
+* https://github.com/dreeveapp/dreeve/issues/1623
+* https://github.com/dreeveapp/dreeve/issues/1357
+* https://github.com/dreeveapp/dreeve/issues/1288
+* https://github.com/dreeveapp/dreeve/issues/1180
 
 ![Import error](../assets/images/troubleshoot-import-error.png ':size=700')
 

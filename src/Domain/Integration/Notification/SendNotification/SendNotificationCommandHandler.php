@@ -28,7 +28,7 @@ final readonly class SendNotificationCommandHandler implements CommandHandler
             $this->shoutrrr->send(
                 shoutrrrUrl: $configuredNotificationService->withParams([
                     'click' => (string) $command->getActionUrl(),
-                    'icon' => 'https://raw.githubusercontent.com/robiningelbrecht/statistics-for-strava/master/public/assets/images/manifest/icon-192.png',
+                    'icon' => 'https://raw.githubusercontent.com/dreeveapp/dreeve/master/public/assets/images/manifest/icon-192.png',
                     'tags' => implode(',', $command->getTags()),
                     'actions' => Json::encode([
                         [
