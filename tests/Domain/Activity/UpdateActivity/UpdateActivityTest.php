@@ -35,6 +35,96 @@ class UpdateActivityTest extends TestCase
         $this->assertTrue($command->isCommute());
     }
 
+    public function testFromPayloadWithoutImagesKeyLeavesImagesUntouched(): void
+    {
+        $command = UpdateActivity::fromPayload([
+            'activityId' => 'activity-1',
+            'name' => 'My custom activity',
+            'sportType' => 'Ride',
+        ]);
+
+        $this->assertSame([], $command->getNewImages());
+        $this->assertSame([], $command->getRemovedImages());
+    }
+
+    public function testFromPayloadWithEmptyImages(): void
+    {
+        $command = UpdateActivity::fromPayload([
+            'activityId' => 'activity-1',
+            'name' => 'My custom activity',
+            'sportType' => 'Ride',
+            'images' => '[]',
+        ]);
+
+        $this->assertSame([], $command->getNewImages());
+        $this->assertSame([], $command->getRemovedImages());
+    }
+
+    public function testFromPayloadParsesNewAndRemovedImagesAndIgnoresUnchanged(): void
+    {
+        $command = UpdateActivity::fromPayload([
+            'activityId' => 'activity-1',
+            'name' => 'My custom activity',
+            'sportType' => 'Ride',
+            'images' => json_encode([
+                ['status' => 'new', 'filename' => 'photo.jpg', 'content' => base64_encode('binary-content')],
+                ['status' => 'unchanged', 'path' => '/files/activities/existing.png'],
+                ['status' => 'removed', 'path' => '/files/activities/gone.png'],
+            ]),
+        ]);
+
+        $newImages = $command->getNewImages();
+        $this->assertCount(1, $newImages);
+        $this->assertSame('jpg', $newImages[0]->getFilename()->getExtension());
+        $this->assertSame('binary-content', $newImages[0]->getContent());
+
+        $removedImages = $command->getRemovedImages();
+        $this->assertCount(1, $removedImages);
+        $this->assertSame('files/activities/gone.png', $removedImages[0]->getPath()->toLocalImagePath());
+    }
+
+    public function testFromPayloadThrowsOnUnsupportedImageType(): void
+    {
+        $this->expectExceptionObject(CouldNotDeserializeCommand::invalidPayload('Unsupported image file type.'));
+
+        UpdateActivity::fromPayload([
+            'activityId' => 'activity-1',
+            'name' => 'My custom activity',
+            'sportType' => 'Ride',
+            'images' => json_encode([
+                ['status' => 'new', 'filename' => 'malware.php', 'content' => base64_encode('binary-content')],
+            ]),
+        ]);
+    }
+
+    public function testFromPayloadThrowsOnInvalidImageContent(): void
+    {
+        $this->expectExceptionObject(CouldNotDeserializeCommand::invalidPayload('A new image has invalid "content".'));
+
+        UpdateActivity::fromPayload([
+            'activityId' => 'activity-1',
+            'name' => 'My custom activity',
+            'sportType' => 'Ride',
+            'images' => json_encode([
+                ['status' => 'new', 'filename' => 'photo.jpg', 'content' => 'not-valid-base64!!!'],
+            ]),
+        ]);
+    }
+
+    public function testFromPayloadThrowsOnUnknownImageStatus(): void
+    {
+        $this->expectExceptionObject(CouldNotDeserializeCommand::invalidPayload('Each image requires a valid "status".'));
+
+        UpdateActivity::fromPayload([
+            'activityId' => 'activity-1',
+            'name' => 'My custom activity',
+            'sportType' => 'Ride',
+            'images' => json_encode([
+                ['status' => 'whatever'],
+            ]),
+        ]);
+    }
+
     public function testFromPayloadWithEmptyOptionalFields(): void
     {
         $command = UpdateActivity::fromPayload([
