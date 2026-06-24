@@ -125,6 +125,58 @@ class UpdateActivityTest extends TestCase
         ]);
     }
 
+    public function testFromPayloadThrowsWhenImagesIsNotAString(): void
+    {
+        $this->expectExceptionObject(CouldNotDeserializeCommand::invalidPayload('The "images" field is invalid.'));
+
+        UpdateActivity::fromPayload([
+            'activityId' => 'activity-1',
+            'name' => 'My custom activity',
+            'sportType' => 'Ride',
+            'images' => ['not', 'a', 'string'],
+        ]);
+    }
+
+    public function testFromPayloadThrowsWhenImagesDoesNotDecodeToAnArray(): void
+    {
+        $this->expectExceptionObject(CouldNotDeserializeCommand::invalidPayload('The "images" field is invalid.'));
+
+        UpdateActivity::fromPayload([
+            'activityId' => 'activity-1',
+            'name' => 'My custom activity',
+            'sportType' => 'Ride',
+            'images' => '123',
+        ]);
+    }
+
+    public function testFromPayloadThrowsWhenNewImageIsMissingFilenameOrContent(): void
+    {
+        $this->expectExceptionObject(CouldNotDeserializeCommand::invalidPayload('A new image requires a "filename" and "content".'));
+
+        UpdateActivity::fromPayload([
+            'activityId' => 'activity-1',
+            'name' => 'My custom activity',
+            'sportType' => 'Ride',
+            'images' => json_encode([
+                ['status' => 'new'],
+            ]),
+        ]);
+    }
+
+    public function testFromPayloadThrowsWhenRemovedImageIsMissingPath(): void
+    {
+        $this->expectExceptionObject(CouldNotDeserializeCommand::invalidPayload('A removed image requires a "path".'));
+
+        UpdateActivity::fromPayload([
+            'activityId' => 'activity-1',
+            'name' => 'My custom activity',
+            'sportType' => 'Ride',
+            'images' => json_encode([
+                ['status' => 'removed'],
+            ]),
+        ]);
+    }
+
     public function testFromPayloadWithEmptyOptionalFields(): void
     {
         $command = UpdateActivity::fromPayload([
