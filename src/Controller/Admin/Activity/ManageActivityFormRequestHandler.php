@@ -7,7 +7,9 @@ namespace App\Controller\Admin\Activity;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\DeleteActivity\DeleteActivity;
+use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\UpdateActivity\UpdateActivity;
+use App\Domain\Gear\GearRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,6 +21,7 @@ final readonly class ManageActivityFormRequestHandler
     public function __construct(
         private Environment $twig,
         private ActivityRepository $activityRepository,
+        private GearRepository $gearRepository,
     ) {
     }
 
@@ -28,6 +31,8 @@ final readonly class ManageActivityFormRequestHandler
         return new Response($this->twig->render('html/admin/page/activity/edit-activity.html.twig', [
             'dispatchCommand' => UpdateActivity::NAME,
             'activity' => $this->activityRepository->find(ActivityId::fromString($activityId)),
+            'sportTypes' => SportType::cases(),
+            'gears' => $this->gearRepository->findAll()->sortByIsRetired(),
         ]));
     }
 

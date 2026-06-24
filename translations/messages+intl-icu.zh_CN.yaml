@@ -69,6 +69,7 @@ Clear: Clear
 'Clear chat': 'Clear chat'
 Close: Close
 'Close modal': 关闭模态框
+Commute: Commute
 Commutes: 通勤
 'Commutes only': 仅通勤
 Compare: 对比
@@ -98,10 +99,12 @@ Delete: Delete
 'Delete activity': 'Delete activity'
 Deleting...: Deleting...
 Density: Density
+Description: Description
 'Detailed instructions are available in the documentation on': 详细说明
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
 Details: 详情
 Device: 设备
+'Device name': 'Device name'
 Dist.: Dist.
 Distance: 距离
 'Distance & Elevation': 'Distance & Elevation'
@@ -138,6 +141,7 @@ Evening: 晚上
 Failed: Failed
 Favourite: 收藏夹
 Feb: 二月
+'File exceeds {max} MB': 'File exceeds {max} MB'
 'File imports': 'File imports'
 'File imports are only available in file import mode': 'File imports are only available in file import mode'
 'File upload': 'File upload'
@@ -202,6 +206,7 @@ History: 历史
 'Ice Skate': 冰刀
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': '您的维护配置文件中引用了图像"{imgSrc}"，但在"storage/gear-maintenance"中未找到该图像。'
+Images: Images
 Imperial: Imperial
 'Imported files will appear here once you upload them.': 'Imported files will appear here once you upload them.'
 'Imported from Strava': 'Imported from Strava'
@@ -360,6 +365,7 @@ Sail: 帆船
 Sat: 周六
 Sat.: Sat.
 Save: Save
+Saved: Saved
 Saving...: Saving...
 Search: 搜索
 'Search activity...': 搜索活动...
@@ -521,6 +527,7 @@ Title: Title
 'Total hours spent per gear': 每种装备总时长
 'Total hours spent per sport type': 每种运动的总时长
 'Total moving time per month': 'Total moving time per month'
+'Total size exceeds {max} MB': 'Total size exceeds {max} MB'
 'Trail Runs': 越野跑
 'Training 4–5 days every week scores higher than doing everything in one or two days.': 'Training 4–5 days every week scores higher than doing everything in one or two days.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': '训练脉冲 - 训练负荷指标，综合考虑强度和持续时间。'
@@ -578,6 +585,7 @@ Yearly: Yearly
 'Yearly stats': 年度统计
 Yoga: 瑜伽
 'You can also copy files straight into the {watchFolder} folder.': 'You can also copy files straight into the {watchFolder} folder.'
+'You can select up to {max} images': 'You can select up to {max} images'
 "You're currently importing from the Strava API. Set {importMode} to upload activity files directly, without depending on Strava's API": "You're currently importing from the Strava API. Set {importMode} to upload activity files directly, without depending on Strava's API"
 'Your PB badge': PB徽章
 'Your Strava badge': Strava徽章
@@ -616,6 +624,7 @@ hours: 小时
 hrs: hrs
 'last {numberOfDays} days': '最近{numberOfDays}天'
 max: max
+'max {max} MB each': 'max {max} MB each'
 min: min
 months: 月
 more: 更多
@@ -634,6 +643,7 @@ weeks: 周
 workouts: 锻炼
 '{count} files ready to upload': '{count} files ready to upload'
 '{count} files uploaded': '{count} files uploaded'
+'{count} images selected': '{count} images selected'
 '{daysSinceLastTagged} days': '{daysSinceLastTagged}天'
 '{days} consecutive days of activity': '{days} consecutive days of activity'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged}小时'
@@ -646,6 +656,7 @@ workouts: 锻炼
 '{numberOfResults} routes': '{numberOfResults} routes'
 '{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
 '{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose files': '{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose files'
+'{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose images': '{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose images'
 '{threshold} hours using {gearName}': '{threshold} hours using {gearName}'
 '{threshold} total distance using {gearName}': '{threshold} total distance using {gearName}'
 '{threshold} total elevation using {gearName}': '{threshold} total elevation using {gearName}'

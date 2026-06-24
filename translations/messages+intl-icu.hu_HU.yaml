@@ -69,6 +69,7 @@ Clear: Clear
 'Clear chat': 'Chat törlése'
 Close: Close
 'Close modal': Bezárás
+Commute: Commute
 Commutes: Ingázások
 'Commutes only': 'Csak ingázások'
 Compare: Összehasonlítás
@@ -98,10 +99,12 @@ Delete: Delete
 'Delete activity': 'Delete activity'
 Deleting...: Deleting...
 Density: Sűrűség
+Description: Description
 'Detailed instructions are available in the documentation on': 'Részletes utasítások az alábbi dokumentációban találhatók:'
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
 Details: Részletek
 Device: Eszköz
+'Device name': 'Device name'
 Dist.: Dist.
 Distance: Távolság
 'Distance & Elevation': 'Távolság & szintemelkedés'
@@ -138,6 +141,7 @@ Evening: Este
 Failed: Failed
 Favourite: Kedvenc
 Feb: Feb
+'File exceeds {max} MB': 'File exceeds {max} MB'
 'File imports': 'File imports'
 'File imports are only available in file import mode': 'File imports are only available in file import mode'
 'File upload': 'File upload'
@@ -202,6 +206,7 @@ History: Előzmények
 'Ice Skate': Jégkorcsolya
 Id: Azonosító
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'A(z) „{imgSrc}" kép szerepel a karbantartási konfigurációs fájlban, de nem található a „storage/gear-maintenance" mappában'
+Images: Images
 Imperial: Angolszász
 'Imported files will appear here once you upload them.': 'Imported files will appear here once you upload them.'
 'Imported from Strava': 'Imported from Strava'
@@ -360,6 +365,7 @@ Sail: Vitorlázás
 Sat: Szo
 Sat.: Sat.
 Save: Save
+Saved: Saved
 Saving...: Saving...
 Search: Keresés
 'Search activity...': 'Tevékenység keresése...'
@@ -521,6 +527,7 @@ Title: Title
 'Total hours spent per gear': 'Összes óra felszerelésenkén'
 'Total hours spent per sport type': 'Összes óra sporttípusonként'
 'Total moving time per month': 'Total moving time per month'
+'Total size exceeds {max} MB': 'Total size exceeds {max} MB'
 'Trail Runs': Terepfutások
 'Training 4–5 days every week scores higher than doing everything in one or two days.': 'A heti 4–5 napos edzés magasabb pontszámot ér el, mint ha mindent egy-két napra zsúfolnak.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Edzési impulzus – az intenzitást és az időtartamot figyelembe vevő edzésterhelési mutató.'
@@ -578,6 +585,7 @@ Yearly: Éves
 'Yearly stats': 'Éves statisztikák'
 Yoga: Jóga
 'You can also copy files straight into the {watchFolder} folder.': 'You can also copy files straight into the {watchFolder} folder.'
+'You can select up to {max} images': 'You can select up to {max} images'
 "You're currently importing from the Strava API. Set {importMode} to upload activity files directly, without depending on Strava's API": "You're currently importing from the Strava API. Set {importMode} to upload activity files directly, without depending on Strava's API"
 'Your PB badge': 'Személyes rekord kitűződ'
 'Your Strava badge': 'Strava kitűződ'
@@ -616,6 +624,7 @@ hours: órák
 hrs: h
 'last {numberOfDays} days': 'utolsó {numberOfDays} nap'
 max: max
+'max {max} MB each': 'max {max} MB each'
 min: min
 months: hónapok
 more: több
@@ -634,6 +643,7 @@ weeks: hetek
 workouts: edzések
 '{count} files ready to upload': '{count} files ready to upload'
 '{count} files uploaded': '{count} files uploaded'
+'{count} images selected': '{count} images selected'
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} nap'
 '{days} consecutive days of activity': '{days} egymást követő aktív nap'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} óra'
@@ -646,6 +656,7 @@ workouts: edzések
 '{numberOfResults} routes': '{numberOfResults} routes'
 '{numberOfWeeks} weeks': '{numberOfWeeks} hét'
 '{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose files': '{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose files'
+'{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose images': '{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose images'
 '{threshold} hours using {gearName}': '{threshold} óra {gearName} felhasználásával'
 '{threshold} total distance using {gearName}': '{threshold} össztávolság {gearName} felhasználásával'
 '{threshold} total elevation using {gearName}': '{threshold} össz szintemelkedés {gearName} felhasználásával'

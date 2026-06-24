@@ -69,6 +69,7 @@ Clear: Clear
 'Clear chat': 'Clear chat'
 Close: Close
 'Close modal': 'Fechar modal'
+Commute: Commute
 Commutes: 'Viagens Escritório'
 'Commutes only': 'Apenas viagens Escritório'
 Compare: Comparar
@@ -98,10 +99,12 @@ Delete: Delete
 'Delete activity': 'Delete activity'
 Deleting...: Deleting...
 Density: Density
+Description: Description
 'Detailed instructions are available in the documentation on': 'Instruções detalhadas disponíveis na documentação em'
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
 Details: Details
 Device: Dispositivo
+'Device name': 'Device name'
 Dist.: Dist.
 Distance: Distância
 'Distance & Elevation': 'Distance & Elevation'
@@ -138,6 +141,7 @@ Evening: 'Fim da tarde'
 Failed: Failed
 Favourite: Favorito
 Feb: Fev
+'File exceeds {max} MB': 'File exceeds {max} MB'
 'File imports': 'File imports'
 'File imports are only available in file import mode': 'File imports are only available in file import mode'
 'File upload': 'File upload'
@@ -202,6 +206,7 @@ History: Histórico
 'Ice Skate': 'Patinagem no Gelo'
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Imagem "{imgSrc}" referenciada no ficheiro de configuração de manutenção, mas não foi encontrado em "storage/gear-maintenance"'
+Images: Images
 Imperial: Imperial
 'Imported files will appear here once you upload them.': 'Imported files will appear here once you upload them.'
 'Imported from Strava': 'Imported from Strava'
@@ -360,6 +365,7 @@ Sail: Vela
 Sat: Sáb
 Sat.: Sat.
 Save: Save
+Saved: Saved
 Saving...: Saving...
 Search: Pesquisar
 'Search activity...': 'Pesquisar atividade...'
@@ -521,6 +527,7 @@ Title: Title
 'Total hours spent per gear': 'Total de horas por equipamento'
 'Total hours spent per sport type': 'Total de horas por desporto'
 'Total moving time per month': 'Total moving time per month'
+'Total size exceeds {max} MB': 'Total size exceeds {max} MB'
 'Trail Runs': 'Corridas de Trilho'
 'Training 4–5 days every week scores higher than doing everything in one or two days.': 'Training 4–5 days every week scores higher than doing everything in one or two days.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Impulso de Treino- Métrica de carga de treino que considera intensidade e duração.'
@@ -578,6 +585,7 @@ Yearly: Yearly
 'Yearly stats': 'Yearly stats'
 Yoga: Yoga
 'You can also copy files straight into the {watchFolder} folder.': 'You can also copy files straight into the {watchFolder} folder.'
+'You can select up to {max} images': 'You can select up to {max} images'
 "You're currently importing from the Strava API. Set {importMode} to upload activity files directly, without depending on Strava's API": "You're currently importing from the Strava API. Set {importMode} to upload activity files directly, without depending on Strava's API"
 'Your PB badge': 'Medalha de Recordes'
 'Your Strava badge': 'O teu emblema do Strava'
@@ -616,6 +624,7 @@ hours: horas
 hrs: hrs
 'last {numberOfDays} days': 'últimos {numberOfDays} dias'
 max: max
+'max {max} MB each': 'max {max} MB each'
 min: min
 months: meses
 more: mais
@@ -634,6 +643,7 @@ weeks: semanas
 workouts: treinos
 '{count} files ready to upload': '{count} files ready to upload'
 '{count} files uploaded': '{count} files uploaded'
+'{count} images selected': '{count} images selected'
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} dias'
 '{days} consecutive days of activity': '{days} consecutive days of activity'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} horas'
@@ -646,6 +656,7 @@ workouts: treinos
 '{numberOfResults} routes': '{numberOfResults} routes'
 '{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
 '{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose files': '{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose files'
+'{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose images': '{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose images'
 '{threshold} hours using {gearName}': '{threshold} hours using {gearName}'
 '{threshold} total distance using {gearName}': '{threshold} total distance using {gearName}'
 '{threshold} total elevation using {gearName}': '{threshold} total elevation using {gearName}'
