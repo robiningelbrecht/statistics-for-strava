@@ -14,13 +14,4 @@ final readonly class AppVersion
     {
         return sprintf('v%d.%d.%d', self::MAJOR, self::MINOR, self::PATCH);
     }
-
-    public static function isAtLeastVersion5(): bool
-    {
-        return version_compare(
-            sprintf('%d.%d.%d', self::MAJOR, self::MINOR, self::PATCH),
-            '5.0.0',
-            '>='
-        );
-    }
 }
