@@ -28,7 +28,7 @@ class ManageActivityOverviewRequestHandlerTest extends AdminWebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertCount(1, $crawler->filter('table.data-table'));
         $this->assertStringContainsString('No activities imported yet.', $crawler->filter('body')->text());
-        $this->assertCount(1, $crawler->filter('table.data-table tbody td[colspan="5"]'));
+        $this->assertCount(1, $crawler->filter('table.data-table tbody td[colspan="8"]'));
         $this->assertCount(0, $crawler->filter('table.data-table tbody a[title="Edit"]'));
         $this->assertCount(0, $crawler->filter('[aria-label="Go to next page"]'));
     }

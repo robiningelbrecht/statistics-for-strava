@@ -13,26 +13,40 @@ use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\DbalActivityOverviewRepository;
 use App\Domain\Activity\DbalActivityRepository;
 use App\Domain\Activity\SportType\SportType;
+use App\Domain\Gear\DbalGearRepository;
+use App\Domain\Gear\GearId;
+use App\Domain\Gear\GearRepository;
 use App\Infrastructure\Repository\Pagination;
-use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
+use App\Tests\Domain\Gear\GearBuilder;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 class DbalActivityOverviewRepositoryTest extends ContainerTestCase
 {
     private ActivityOverviewRepository $activityOverviewRepository;
     private ActivityRepository $activityRepository;
+    private GearRepository $gearRepository;
 
     public function testFindMapsRowToOverviewItem(): void
     {
+        $this->gearRepository->add(
+            GearBuilder::fromDefaults()
+                ->withGearId(GearId::fromUnprefixed('99'))
+                ->withName('Trail Shoes')
+                ->build()
+        );
+
         $this->activityRepository->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('42'))
                 ->withName('Morning Run')
                 ->withSportType(SportType::RUN)
                 ->withStartDateTime(SerializableDateTime::fromString('2026-06-04 10:00:00'))
-                ->withDistance(Kilometer::from(10))
+                ->withGearId(GearId::fromUnprefixed('99'))
+                ->withDeviceName('Garmin Forerunner')
+                ->withIsCommute(true)
+                ->withTotalImageCount(3)
                 ->build(),
             ['raw' => 'data'],
         ));
@@ -46,7 +60,10 @@ class DbalActivityOverviewRepositoryTest extends ContainerTestCase
                     name: ActivityName::fromString('Morning Run'),
                     sportType: SportType::RUN,
                     startDate: SerializableDateTime::fromString('2026-06-04 10:00:00'),
-                    distance: Kilometer::from(10),
+                    gearName: 'Trail Shoes',
+                    deviceName: 'Garmin Forerunner',
+                    isCommute: true,
+                    totalImageCount: 3,
                 ),
             ],
             $overview->getItems()
@@ -148,6 +165,9 @@ class DbalActivityOverviewRepositoryTest extends ContainerTestCase
             $this->getConnection()
         );
         $this->activityOverviewRepository = new DbalActivityOverviewRepository(
+            $this->getConnection()
+        );
+        $this->gearRepository = new DbalGearRepository(
             $this->getConnection()
         );
     }
