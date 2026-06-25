@@ -6,7 +6,8 @@ namespace App\Domain\Activity\UpdateActivity;
 
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\Image\ActivityImagePath;
+use App\Domain\Image\ImagePath;
+use App\Domain\Image\RemovedImage;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\ValueObject\Identifier\UuidFactory;
@@ -41,32 +42,32 @@ final readonly class UpdateActivityCommandHandler implements CommandHandler
         $imagePathsThatNeedRemoval = [];
         if ([] !== $newImages || [] !== $removedImages) {
             $removedLocalImagePaths = array_map(
-                static fn (ActivityRemovedImage $removedImage): string => $removedImage->getPath()->toLocalImagePath(),
+                static fn (RemovedImage $removedImage): string => $removedImage->getPath()->toLocalImagePath(),
                 $removedImages
             );
-            $isRemoved = static fn (ActivityImagePath $path): bool => in_array($path->toLocalImagePath(), $removedLocalImagePaths, true);
+            $isRemoved = static fn (ImagePath $path): bool => in_array($path->toLocalImagePath(), $removedLocalImagePaths, true);
 
             $currentPaths = array_map(
-                ActivityImagePath::fromLocalImagePath(...),
+                ImagePath::fromLocalImagePath(...),
                 $activity->getLocalImagePaths()
             );
 
-            $retainedPaths = array_values(array_filter($currentPaths, static fn (ActivityImagePath $path): bool => !$isRemoved($path)));
+            $retainedPaths = array_values(array_filter($currentPaths, static fn (ImagePath $path): bool => !$isRemoved($path)));
 
             // Only files that were genuinely attached to this activity may be deleted from disk.
             $imagePathsThatNeedRemoval = array_map(
-                static fn (ActivityImagePath $path): string => $path->toFileSystemPath(),
+                static fn (ImagePath $path): string => $path->toFileSystemPath(),
                 array_filter($currentPaths, $isRemoved)
             );
 
             foreach ($newImages as $newImage) {
                 $fileSystemPath = sprintf('activities/%s.%s', $this->uuidFactory->random(), $newImage->getFilename()->getExtension());
                 $this->fileStorage->write($fileSystemPath, $newImage->getContent());
-                $retainedPaths[] = ActivityImagePath::fromFileSystemPath($fileSystemPath);
+                $retainedPaths[] = ImagePath::fromFileSystemPath($fileSystemPath);
             }
 
             $activity = $activity->withLocalImagePaths(array_map(
-                static fn (ActivityImagePath $path): string => $path->toLocalImagePath(),
+                static fn (ImagePath $path): string => $path->toLocalImagePath(),
                 $retainedPaths
             ));
         }

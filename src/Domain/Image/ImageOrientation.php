@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Activity\Image;
+namespace App\Domain\Image;
 
 enum ImageOrientation
 {

@@ -6,6 +6,8 @@ use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\SportType\SportTypes;
+use App\Domain\Image\ImageOrientation;
+use App\Domain\Image\ImagePath;
 use App\Infrastructure\Config\Photos\HidePhotosForSportTypes;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
@@ -119,7 +121,7 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
         }
 
         foreach ($activity->getLocalImagePaths() as $localImagePath) {
-            $fileSystemPath = ActivityImagePath::fromLocalImagePath($localImagePath)->toFileSystemPath();
+            $fileSystemPath = ImagePath::fromLocalImagePath($localImagePath)->toFileSystemPath();
             if ($this->fileStorage->fileExists($fileSystemPath)) {
                 $this->fileStorage->delete($fileSystemPath);
             }

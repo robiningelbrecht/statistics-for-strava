@@ -233,7 +233,7 @@ final readonly class Gear implements SupportsAITooling
         return str_starts_with($this->localImagePath, '/') ? $this->localImagePath : '/'.$this->localImagePath;
     }
 
-    public function withLocalImagePath(string $localImagePath): self
+    public function withLocalImagePath(?string $localImagePath): self
     {
         return clone ($this, [
             'localImagePath' => $localImagePath,

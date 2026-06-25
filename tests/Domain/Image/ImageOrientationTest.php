@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Domain\Activity\Image;
+namespace App\Tests\Domain\Image;
 
-use App\Domain\Activity\Image\ImageOrientation;
+use App\Domain\Image\ImageOrientation;
 use PHPUnit\Framework\TestCase;
 
 class ImageOrientationTest extends TestCase
