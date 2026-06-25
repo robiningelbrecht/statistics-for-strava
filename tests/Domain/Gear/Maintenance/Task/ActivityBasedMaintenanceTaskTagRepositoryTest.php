@@ -12,6 +12,11 @@ use App\Domain\Gear\Maintenance\Task\ActivityBasedMaintenanceTaskTagRepository;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTag;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTags;
+use App\Infrastructure\KeyValue\Key;
+use App\Infrastructure\KeyValue\KeyValue;
+use App\Infrastructure\KeyValue\KeyValueStore;
+use App\Infrastructure\KeyValue\Value;
+use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\String\Tag;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -79,9 +84,16 @@ class ActivityBasedMaintenanceTaskTagRepositoryTest extends ContainerTestCase
     {
         parent::setUp();
 
+        /** @var KeyValueStore $keyValueStore */
+        $keyValueStore = $this->getContainer()->get(KeyValueStore::class);
+        $keyValueStore->save(KeyValue::fromState(
+            key: Key::GEAR_MAINTENANCE,
+            value: Value::fromString(Json::encode($this->getValidYml())),
+        ));
+
         $this->maintenanceTaskTagRepository = new ActivityBasedMaintenanceTaskTagRepository(
             $this->getContainer()->get(EnrichedActivities::class),
-            GearMaintenanceConfig::fromArray($this->getValidYml()),
+            GearMaintenanceConfig::create($keyValueStore),
         );
     }
 

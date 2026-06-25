@@ -9,6 +9,10 @@ use App\Domain\Gear\GearIds;
 use App\Domain\Gear\Maintenance\Task\IntervalUnit;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTask;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTags;
+use App\Infrastructure\Exception\EntityNotFound;
+use App\Infrastructure\KeyValue\Key;
+use App\Infrastructure\KeyValue\KeyValueStore;
+use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\String\HashtagPrefix;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\String\Tag;
@@ -30,12 +34,17 @@ final readonly class GearMaintenanceConfig implements \Stringable
         $this->gearOptions = GearOptions::empty();
     }
 
-    /**
-     * @param array<string, mixed>|null $config
-     */
-    public static function fromArray(
-        ?array $config,
+    public static function create(
+        KeyValueStore $keyValueStore,
     ): self {
+        try {
+            /** @var array<string, mixed>|null $config */
+            $config = Json::decode((string) $keyValueStore->find(Key::GEAR_MAINTENANCE));
+        } catch (EntityNotFound) {
+            // No record: gear maintenance has not been configured.
+            $config = null;
+        }
+
         if (null === $config || [] === $config) {
             return new self(
                 isFeatureEnabled: false,

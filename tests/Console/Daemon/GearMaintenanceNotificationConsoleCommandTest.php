@@ -18,6 +18,7 @@ use App\Tests\Console\ConsoleCommandTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Gear\GearBuilder;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
+use App\Tests\ProvideGearMaintenanceConfig;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -25,6 +26,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 class GearMaintenanceNotificationConsoleCommandTest extends ConsoleCommandTestCase
 {
     use MatchesSnapshots;
+    use ProvideGearMaintenanceConfig;
 
     private GearMaintenanceNotificationConsoleCommand $command;
     private SpyCommandBus $commandBus;
@@ -76,6 +78,8 @@ class GearMaintenanceNotificationConsoleCommandTest extends ConsoleCommandTestCa
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->importGearMaintenanceConfig();
 
         $this->command = new GearMaintenanceNotificationConsoleCommand(
             $this->getContainer()->get(MaintenanceTaskProgressCalculator::class),

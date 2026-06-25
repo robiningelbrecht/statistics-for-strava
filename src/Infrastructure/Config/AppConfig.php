@@ -80,12 +80,6 @@ final class AppConfig
             ymlConfig: $parsedYaml,
             prefix: null
         );
-
-        $pathMaintenanceConfigFile = $basePath.'/gear-maintenance.yaml';
-        if (file_exists($pathMaintenanceConfigFile)) {
-            self::$ymlConfigFiles[] = $pathMaintenanceConfigFile;
-            self::$config['gearMaintenance'] = Yaml::parseFile($pathMaintenanceConfigFile);
-        }
     }
 
     /**

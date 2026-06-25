@@ -12,18 +12,24 @@ use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
+use App\Infrastructure\KeyValue\KeyValueStore;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\Application\BuildAppFilesTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Gear\GearBuilder;
+use App\Tests\ProvideGearMaintenanceConfig;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
 {
+    use ProvideGearMaintenanceConfig;
+
     public function testHandle(): void
     {
+        $this->importGearMaintenanceConfig();
+
         $gear = GearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed('g10130856'))
             ->build();
@@ -95,7 +101,7 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
         $fileStorage = $this->getContainer()->get('build_html.storage');
 
         new BuildGearMaintenanceHtmlCommandHandler(
-            gearMaintenanceConfig: GearMaintenanceConfig::fromArray([]),
+            gearMaintenanceConfig: GearMaintenanceConfig::create($this->getContainer()->get(KeyValueStore::class)),
             maintenanceTaskTagRepository: $this->getContainer()->get(MaintenanceTaskTagRepository::class),
             gearRepository: $this->getContainer()->get(GearRepository::class),
             maintenanceTaskProgressCalculator: $this->getContainer()->get(MaintenanceTaskProgressCalculator::class),

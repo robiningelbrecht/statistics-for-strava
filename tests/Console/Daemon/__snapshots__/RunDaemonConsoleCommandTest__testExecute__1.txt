@@ -13,7 +13,6 @@ Configurationfiles:
 config.yaml
 configathlete.yaml
 configimport.yaml
-gearmaintenance.yaml
 
 
 

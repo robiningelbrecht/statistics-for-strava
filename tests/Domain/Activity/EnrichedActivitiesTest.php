@@ -13,11 +13,13 @@ use App\Domain\Activity\SportType\SportTypes;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
+use App\Tests\ProvideGearMaintenanceConfig;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class EnrichedActivitiesTest extends ContainerTestCase
 {
     use MatchesSnapshots;
+    use ProvideGearMaintenanceConfig;
 
     private EnrichedActivities $enrichedActivities;
     private ActivityRepository $activityRepository;
@@ -164,6 +166,8 @@ class EnrichedActivitiesTest extends ContainerTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->importGearMaintenanceConfig();
 
         $this->enrichedActivities = $this->getContainer()->get(EnrichedActivities::class);
         $this->activityRepository = $this->getContainer()->get(ActivityRepository::class);
