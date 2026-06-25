@@ -28,6 +28,8 @@ use App\Domain\Challenge\ChallengeId;
 use App\Domain\Challenge\ChallengeRepository;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;
+use App\Domain\Gear\RecordingDevice\RecordingDevice;
+use App\Domain\Gear\RecordingDevice\RecordingDeviceRepository;
 use App\Domain\Integration\Weather\OpenMeteo\Weather;
 use App\Domain\Segment\SegmentEffort\SegmentEffortId;
 use App\Domain\Segment\SegmentEffort\SegmentEffortRepository;
@@ -54,6 +56,8 @@ use App\Tests\Domain\Challenge\ChallengeBuilder;
 use App\Tests\Domain\Gear\GearBuilder;
 use App\Tests\Domain\Segment\SegmentBuilder;
 use App\Tests\Domain\Segment\SegmentEffort\SegmentEffortBuilder;
+use Money\Currency;
+use Money\Money;
 use Symfony\Component\DependencyInjection\Container;
 
 trait ProvideTestData
@@ -134,6 +138,15 @@ trait ProvideTestData
                 ->withName('Zwift One')
                 ->withIsRetired(true)
                 ->build()
+        );
+
+        /** @var RecordingDeviceRepository $recordingDeviceRepository */
+        $recordingDeviceRepository = $this->getContainer()->get(RecordingDeviceRepository::class);
+        $recordingDeviceRepository->save(
+            RecordingDevice::create(
+                name: 'Polar Vantage M',
+                purchasePrice: new Money(29950, new Currency('EUR')),
+            )
         );
     }
 

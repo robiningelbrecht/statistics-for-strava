@@ -8,7 +8,6 @@ use App\Application\Countries;
 use App\Domain\Activity\ActivityTotals;
 use App\Domain\Activity\BestEffort\BestEffortsCalculator;
 use App\Domain\Activity\CadenceDistributionChart;
-use App\Domain\Activity\Device\DeviceRepository;
 use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\HeartRateDistributionChart;
 use App\Domain\Activity\Lap\ActivityLapRepository;
@@ -29,6 +28,7 @@ use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Athlete\HeartRateZone\HeartRateZoneConfiguration;
 use App\Domain\Ftp\FtpHistory;
 use App\Domain\Gear\GearRepository;
+use App\Domain\Gear\RecordingDevice\RecordingDeviceRepository;
 use App\Domain\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
@@ -55,7 +55,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         private SportTypeRepository $sportTypeRepository,
         private SegmentEffortRepository $segmentEffortRepository,
         private GearRepository $gearRepository,
-        private DeviceRepository $deviceRepository,
+        private RecordingDeviceRepository $recordingDeviceRepository,
         private FtpHistory $ftpHistory,
         private BestEffortsCalculator $bestEffortsCalculator,
         private HeartRateZoneConfiguration $heartRateZoneConfiguration,
@@ -88,7 +88,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             'activities.html',
             $this->twig->load('html/activity/activities.html.twig')->render([
                 'sportTypes' => $importedSportTypes,
-                'devices' => $this->deviceRepository->findAll(),
+                'devices' => $this->recordingDeviceRepository->findAll(),
                 'activityTotals' => $activityTotals,
                 'countries' => $this->countries->getUsedInActivities(),
                 'gears' => $this->gearRepository->findAllUsed(),

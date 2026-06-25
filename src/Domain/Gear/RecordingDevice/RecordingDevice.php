@@ -10,20 +10,42 @@ use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\String\Name;
+use Doctrine\ORM\Mapping as ORM;
 use Money\Money;
 
+#[ORM\Entity]
+#[ORM\Table(name: 'RecordingDevice')]
 final readonly class RecordingDevice
 {
     use ProvideTimeFormats;
 
     private function __construct(
+        #[ORM\Id, ORM\Column(type: 'string', unique: true)]
+        private string $id,
+        #[ORM\Column(type: 'string')]
         private string $name,
+        #[ORM\Embedded(class: Money::class)]
+        private ?Money $purchasePrice,
         private Seconds $timeTracked,
         private Kilometer $distanceTracked,
         private Meter $elevationTracked,
         private int $numberOfWorkouts,
-        private ?Money $purchasePrice,
     ) {
+    }
+
+    public static function create(
+        string $name,
+        ?Money $purchasePrice,
+    ): self {
+        return new self(
+            id: Name::fromString($name)->kebabCase(),
+            name: $name,
+            purchasePrice: $purchasePrice,
+            timeTracked: Seconds::zero(),
+            distanceTracked: Kilometer::zero(),
+            elevationTracked: Meter::zero(),
+            numberOfWorkouts: 0,
+        );
     }
 
     public static function fromState(
@@ -32,20 +54,22 @@ final readonly class RecordingDevice
         Kilometer $distanceTracked,
         Meter $elevationTracked,
         int $activityCount,
+        ?Money $purchasePrice,
     ): self {
         return new self(
+            id: Name::fromString($name)->kebabCase(),
             name: $name,
+            purchasePrice: $purchasePrice,
             timeTracked: $timeTracked,
             distanceTracked: $distanceTracked,
             elevationTracked: $elevationTracked,
             numberOfWorkouts: $activityCount,
-            purchasePrice: null,
         );
     }
 
     public function getId(): string
     {
-        return Name::fromString($this->getName())->kebabCase();
+        return $this->id;
     }
 
     public function getName(): string
@@ -76,13 +100,6 @@ final readonly class RecordingDevice
     public function getNumberOfWorkouts(): int
     {
         return $this->numberOfWorkouts;
-    }
-
-    public function withPurchasePrice(?Money $purchasePrice): self
-    {
-        return clone ($this, [
-            'purchasePrice' => $purchasePrice,
-        ]);
     }
 
     public function getPurchasePrice(): ?Money

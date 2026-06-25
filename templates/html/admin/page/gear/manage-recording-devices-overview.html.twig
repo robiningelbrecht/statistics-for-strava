@@ -1,0 +1,47 @@
+{% extends "html/admin/page/template.html.twig" %}
+{% block main %}
+    {% autoescape false %}
+    {% include 'html/admin/page/gear/gear-sub-menu.html.twig' with {activeMenuItem: 'recordingDevices'} %}
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold">
+                {{ "Recording device management"|trans }}
+            </h3>
+        </div>
+        <div class="relative overflow-x-auto">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th scope="col" class="text-left">
+                        {{ "Name"|trans }}
+                    </th>
+                    <th scope="col">
+                        {{ "Purchase price"|trans }}
+                    </th>
+                    <th scope="col" class="narrow">
+                        <span class="sr-only">{{ "Edit"|trans }}</span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td colspan="3">
+                        <div class="flex flex-col items-center justify-center gap-3 py-12 px-4 text-center">
+                            <span class="grid place-items-center size-12 rounded-full bg-gray-100 text-gray-400" aria-hidden="true">
+                                <svg class="size-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8Zm4 11h6"/>
+                                </svg>
+                            </span>
+                            <div class="flex flex-col gap-1">
+                                <span class="text-sm font-medium text-gray-800">{{ "No recording devices yet."|trans }}</span>
+                                <span class="text-xs text-gray-500">{{ "Recording devices will appear here once activities have been imported."|trans }}</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endautoescape %}
+{% endblock main %}

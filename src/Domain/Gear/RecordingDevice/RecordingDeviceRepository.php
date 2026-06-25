@@ -7,4 +7,6 @@ namespace App\Domain\Gear\RecordingDevice;
 interface RecordingDeviceRepository
 {
     public function findAll(): RecordingDevices;
+
+    public function save(RecordingDevice $recordingDevice): void;
 }
