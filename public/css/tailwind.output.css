@@ -2008,6 +2008,9 @@
   .w-full {
     width: 100%;
   }
+  .w-px {
+    width: 1px;
+  }
   .max-w-\(--breakpoint-sm\) {
     max-width: var(--breakpoint-sm);
   }
@@ -2037,6 +2040,9 @@
   }
   .max-w-md {
     max-width: var(--container-md);
+  }
+  .max-w-none {
+    max-width: none;
   }
   .max-w-sm {
     max-width: var(--container-sm);

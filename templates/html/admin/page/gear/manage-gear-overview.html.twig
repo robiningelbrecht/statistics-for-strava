@@ -20,6 +20,9 @@
             <table class="data-table">
                 <thead>
                 <tr>
+                    <th scope="col" class="narrow w-px">
+                        <span class="sr-only">{{ "Image"|trans }}</span>
+                    </th>
                     <th scope="col" class="text-left">
                         {{ "Name"|trans }}
                     </th>
@@ -40,6 +43,11 @@
                 <tbody>
                 {% for gear in gears %}
                     <tr class="group/row">
+                        <td class="narrow w-px">
+                            <img class="size-10 max-w-none rounded-md object-cover bg-gray-100"
+                                 src="{{ gear.getLocalImagePath() ?: placeholderImage() }}"
+                                 alt="{{ gear.getName() }}"/>
+                        </td>
                         <td class="narrow whitespace-nowrap text-left">
                            {{ gear.getOriginalName() }}
                         </td>
@@ -79,7 +87,7 @@
                 {% endfor %}
                 {% if gears.isEmpty() %}
                     <tr>
-                        <td colspan="5">
+                        <td colspan="6">
                             <div class="flex flex-col items-center justify-center gap-3 py-12 px-4 text-center">
                                 <span class="grid place-items-center size-12 rounded-full bg-gray-100 text-gray-400" aria-hidden="true">
                                     <svg class="size-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

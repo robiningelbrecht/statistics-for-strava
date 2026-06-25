@@ -26,7 +26,7 @@ class ManageGearOverviewRequestHandlerTest extends AdminWebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertCount(1, $crawler->filter('table.data-table'));
         $this->assertStringContainsString('No gears added yet.', $crawler->filter('body')->text());
-        $this->assertCount(1, $crawler->filter('table.data-table tbody td[colspan="5"]'));
+        $this->assertCount(1, $crawler->filter('table.data-table tbody td[colspan="6"]'));
         $this->assertCount(0, $crawler->filter('table.data-table tbody a[title="Edit"]'));
     }
 
@@ -59,5 +59,36 @@ class ManageGearOverviewRequestHandlerTest extends AdminWebTestCase
             '/admin/gear/'.GearId::fromUnprefixed('1').'/edit',
             $editLinks->first()->attr('href')
         );
+    }
+
+    public function testRendersTheGearImageWithPlaceholderFallback(): void
+    {
+        $gearRepository = static::getContainer()->get(GearRepository::class);
+        $gearRepository->add(
+            GearBuilder::fromDefaults()
+                ->withGearId(GearId::fromUnprefixed('1'))
+                ->withName('Gear with image')
+                ->withLocalImagePath('files/gear/image.jpg')
+                ->build()
+        );
+        $gearRepository->add(
+            GearBuilder::fromDefaults()
+                ->withGearId(GearId::fromUnprefixed('2'))
+                ->withName('Gear without image')
+                ->build()
+        );
+
+        $this->client->loginUser($this->adminUser());
+
+        $crawler = $this->client->request('GET', '/admin/gear');
+
+        $this->assertResponseIsSuccessful();
+        $images = $crawler->filter('table.data-table tbody tr td:first-child img');
+        $this->assertCount(2, $images);
+
+        $sources = $images->each(fn ($img): ?string => $img->attr('src'));
+        $this->assertContains('/files/gear/image.jpg', $sources);
+        $placeholderSources = array_filter($sources, fn (?string $src): bool => str_contains((string) $src, 'placeholder'));
+        $this->assertCount(1, $placeholderSources);
     }
 }
