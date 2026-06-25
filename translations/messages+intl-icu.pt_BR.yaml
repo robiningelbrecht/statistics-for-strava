@@ -205,7 +205,6 @@ History: Histórico
 'How often do you train': 'Com que frequência você treina'
 'Ice Skate': 'Patinação no Gelo'
 Id: ID
-'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'A imagem "{imgSrc}" está referenciada no seu arquivo de configuração de manutenção, mas não foi encontrada em "storage/gear-maintenance"'
 Images: Images
 Imperial: Imperial
 'Imported files will appear here once you upload them.': 'Imported files will appear here once you upload them.'

@@ -5,6 +5,7 @@
         "name": "Existing gear",
         "isRetired": 0,
         "type": "imported",
+        "localImagePath": null,
         "purchasePriceAmount": null,
         "purchasePriceCurrency": null
     },
@@ -14,6 +15,7 @@
         "name": "Existing gear",
         "isRetired": 0,
         "type": "custom",
+        "localImagePath": null,
         "purchasePriceAmount": null,
         "purchasePriceCurrency": null
     }

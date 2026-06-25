@@ -34,7 +34,8 @@ final readonly class Gear implements SupportsAITooling
         private bool $isRetired,
         #[ORM\Column(type: 'string', enumType: GearType::class, options: ['default' => GearType::IMPORTED->value])]
         private GearType $type,
-        private ?string $imageSrc,
+        #[ORM\Column(type: 'string', nullable: true)]
+        private ?string $localImagePath,
         private Seconds $movingTime,
         private Meter $elevation,
         private int $numberOfActivities,
@@ -51,6 +52,7 @@ final readonly class Gear implements SupportsAITooling
         string $name,
         bool $isRetired,
         GearType $type,
+        ?string $localImagePath = null,
     ): self {
         return new self(
             gearId: $gearId,
@@ -59,7 +61,7 @@ final readonly class Gear implements SupportsAITooling
             name: $name,
             isRetired: $isRetired,
             type: $type,
-            imageSrc: null,
+            localImagePath: $localImagePath,
             movingTime: Seconds::zero(),
             elevation: Meter::zero(),
             numberOfActivities: 0,
@@ -76,6 +78,7 @@ final readonly class Gear implements SupportsAITooling
         string $name,
         bool $isRetired,
         GearType $type,
+        ?string $localImagePath,
         Seconds $movingTime,
         Meter $elevation,
         int $numberOfActivities,
@@ -89,7 +92,7 @@ final readonly class Gear implements SupportsAITooling
             name: $name,
             isRetired: $isRetired,
             type: $type,
-            imageSrc: null,
+            localImagePath: $localImagePath,
             movingTime: $movingTime,
             elevation: $elevation,
             numberOfActivities: $numberOfActivities,
@@ -221,19 +224,19 @@ final readonly class Gear implements SupportsAITooling
         return $this->createdOn;
     }
 
-    public function getImageSrc(): ?string
+    public function getLocalImagePath(): ?string
     {
-        if (!isset($this->imageSrc)) {
+        if (!isset($this->localImagePath)) {
             return null;
         }
 
-        return $this->imageSrc;
+        return str_starts_with($this->localImagePath, '/') ? $this->localImagePath : '/'.$this->localImagePath;
     }
 
-    public function withImageSrc(string $imageSrc): self
+    public function withLocalImagePath(string $localImagePath): self
     {
         return clone ($this, [
-            'imageSrc' => $imageSrc,
+            'localImagePath' => $localImagePath,
         ]);
     }
 

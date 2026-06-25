@@ -24,6 +24,7 @@ final class GearBuilder
     private Meter $elevation;
     private int $numberOfActivities = 0;
     private int $totalCalories = 0;
+    private ?string $localImagePath = null;
     private ?Money $purchasePrice = null;
 
     private function __construct()
@@ -49,6 +50,7 @@ final class GearBuilder
             name: $this->name,
             isRetired: $this->isRetired,
             type: $this->type,
+            localImagePath: $this->localImagePath,
             movingTime: $this->movingTime,
             elevation: $this->elevation,
             numberOfActivities: $this->numberOfActivities,
@@ -60,6 +62,13 @@ final class GearBuilder
     public function withGearType(GearType $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function withLocalImagePath(?string $localImagePath): self
+    {
+        $this->localImagePath = $localImagePath;
 
         return $this;
     }

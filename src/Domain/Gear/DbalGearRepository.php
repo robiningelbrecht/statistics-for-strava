@@ -20,8 +20,8 @@ final readonly class DbalGearRepository extends DbalRepository implements GearRe
 {
     public function add(Gear $gear): void
     {
-        $sql = 'INSERT INTO Gear (gearId, createdOn, name, isRetired, `type`, purchasePriceAmount, purchasePriceCurrency)
-        VALUES (:gearId, :createdOn, :name, :isRetired, :type, :purchasePriceAmount, :purchasePriceCurrency)';
+        $sql = 'INSERT INTO Gear (gearId, createdOn, name, isRetired, `type`, localImagePath, purchasePriceAmount, purchasePriceCurrency)
+        VALUES (:gearId, :createdOn, :name, :isRetired, :type, :localImagePath, :purchasePriceAmount, :purchasePriceCurrency)';
 
         $purchasePrice = $gear->getPurchasePrice();
         $this->connection->executeStatement($sql, [
@@ -30,6 +30,7 @@ final readonly class DbalGearRepository extends DbalRepository implements GearRe
             'name' => $gear->getOriginalName(),
             'isRetired' => (int) $gear->isRetired(),
             'type' => $gear->getType()->value,
+            'localImagePath' => $gear->getLocalImagePath(),
             'purchasePriceAmount' => $purchasePrice?->getAmount(),
             'purchasePriceCurrency' => $purchasePrice?->getCurrency()->getCode(),
         ]);
@@ -41,6 +42,7 @@ final readonly class DbalGearRepository extends DbalRepository implements GearRe
                     name = :name,
                     isRetired = :isRetired,
                     `type` = :type,
+                    localImagePath = :localImagePath,
                     purchasePriceAmount = :purchasePriceAmount,
                     purchasePriceCurrency = :purchasePriceCurrency
                     WHERE gearId = :gearId';
@@ -51,6 +53,7 @@ final readonly class DbalGearRepository extends DbalRepository implements GearRe
             'name' => $gear->getOriginalName(),
             'isRetired' => (int) $gear->isRetired(),
             'type' => $gear->getType()->value,
+            'localImagePath' => $gear->getLocalImagePath(),
             'purchasePriceAmount' => $purchasePrice?->getAmount(),
             'purchasePriceCurrency' => $purchasePrice?->getCurrency()->getCode(),
         ]);
@@ -153,6 +156,7 @@ final readonly class DbalGearRepository extends DbalRepository implements GearRe
             name: $result['name'],
             isRetired: (bool) $result['isRetired'],
             type: GearType::from($result['type']),
+            localImagePath: $result['localImagePath'] ?? null,
             movingTime: Seconds::from((float) ($result['totalMovingTime'] ?? 0)),
             elevation: Meter::from((float) ($result['totalElevation'] ?? 0)),
             numberOfActivities: (int) ($result['numberOfActivities'] ?? 0),

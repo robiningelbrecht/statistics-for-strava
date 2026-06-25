@@ -26,7 +26,6 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
         private MaintenanceTaskTagRepository $maintenanceTaskTagRepository,
         private GearRepository $gearRepository,
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
-        private FilesystemOperator $gearMaintenanceStorage,
         private Environment $twig,
         private FilesystemOperator $buildHtmlStorage,
         private TranslatorInterface $translator,
@@ -69,18 +68,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
                 ['{gearId}' => $gearIdInConfig->toUnprefixedString()]
             );
         }
-        // Check if referenced images exist.
         $warnings = [];
-        foreach ($this->gearMaintenanceConfig->getAllReferencedImages() as $imageSrc) {
-            if ($this->gearMaintenanceStorage->fileExists($imageSrc)) {
-                continue;
-            }
-            $warnings[] = $this->translator->trans(
-                'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"',
-                ['{imgSrc}' => $imageSrc]
-            );
-        }
-
         // Check if there are any invalid tags.
         $maintenanceTaskTags = $this->maintenanceTaskTagRepository->findAll();
         /** @var \App\Domain\Gear\Maintenance\Task\MaintenanceTaskTag $maintenanceTaskTag */
@@ -107,11 +95,6 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
                 }
                 if ($gear->isRetired() && $this->gearMaintenanceConfig->ignoreRetiredGear()) {
                     continue;
-                }
-
-                if (($imageSrc = $this->gearMaintenanceConfig->getImageReferenceForGear($gear->getId()))
-                    && $this->gearMaintenanceStorage->fileExists($imageSrc)) {
-                    $gear = $gear->withImageSrc('/gear-maintenance/'.$imageSrc);
                 }
 
                 $gearsThatAreAttachedToComponents->add($gear);

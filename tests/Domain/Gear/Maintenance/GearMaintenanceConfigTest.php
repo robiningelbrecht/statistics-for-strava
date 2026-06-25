@@ -81,7 +81,6 @@ class GearMaintenanceConfigTest extends ContainerTestCase
         $this->assertEquals(
             [
                 'chain.png',
-                'gear1.png',
             ],
             $this->createConfig($yml)->getAllReferencedImages()
         );
