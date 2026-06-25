@@ -236,8 +236,8 @@ services:
         arguments: ['@=app_config("general.athlete.ftpHistory")']
 
     App\Domain\Gear\Maintenance\GearMaintenanceConfig:
-        factory: [ null, 'fromArray' ]
-        arguments: ['@=app_config("gearMaintenance", [])']
+        factory: [ null, 'create' ]
+        arguments: ['@App\Infrastructure\KeyValue\KeyValueStore']
 
     App\Domain\Import\ImportMode:
         public: true

@@ -6,27 +6,47 @@ use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
 use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Gear\Maintenance\InvalidGearMaintenanceConfig;
+use App\Infrastructure\KeyValue\Key;
+use App\Infrastructure\KeyValue\KeyValue;
+use App\Infrastructure\KeyValue\KeyValueStore;
+use App\Infrastructure\KeyValue\Value;
+use App\Infrastructure\Serialization\Json;
+use App\Tests\ContainerTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Yaml\Yaml;
 
-class GearMaintenanceConfigTest extends TestCase
+class GearMaintenanceConfigTest extends ContainerTestCase
 {
     use MatchesSnapshots;
+
+    /**
+     * @param array<string, mixed> $config
+     */
+    private function createConfig(array $config): GearMaintenanceConfig
+    {
+        /** @var KeyValueStore $keyValueStore */
+        $keyValueStore = $this->getContainer()->get(KeyValueStore::class);
+        $keyValueStore->save(KeyValue::fromState(
+            key: Key::GEAR_MAINTENANCE,
+            value: Value::fromString(Json::encode($config)),
+        ));
+
+        return GearMaintenanceConfig::create($keyValueStore);
+    }
 
     public function testFromArrayWhenEmpty(): void
     {
         $this->assertEquals(
             'The gear maintenance feature is disabled.',
-            (string) GearMaintenanceConfig::fromArray([]),
+            (string) $this->createConfig([]),
         );
     }
 
     public function testToString(): void
     {
         $this->assertMatchesTextSnapshot(
-            (string) GearMaintenanceConfig::fromArray(self::getValidYml())
+            (string) $this->createConfig(self::getValidYml())
         );
     }
 
@@ -36,7 +56,7 @@ class GearMaintenanceConfigTest extends TestCase
 
         $this->assertEquals(
             ['#sfs-chain-lubed', '#sfs-chain-cleaned', '#sfs-chain-replaced', '#sfs-chain-two-lubed'],
-            GearMaintenanceConfig::fromArray($yml)->getAllMaintenanceTags()
+            $this->createConfig($yml)->getAllMaintenanceTags()
         );
     }
 
@@ -50,7 +70,7 @@ class GearMaintenanceConfigTest extends TestCase
                 GearId::fromUnprefixed('bike-two-gear-id'),
                 GearId::fromUnprefixed('g12337767'),
             ]),
-            GearMaintenanceConfig::fromArray($yml)->getAllReferencedGearIds()
+            $this->createConfig($yml)->getAllReferencedGearIds()
         );
     }
 
@@ -63,13 +83,13 @@ class GearMaintenanceConfigTest extends TestCase
                 'chain.png',
                 'gear1.png',
             ],
-            GearMaintenanceConfig::fromArray($yml)->getAllReferencedImages()
+            $this->createConfig($yml)->getAllReferencedImages()
         );
     }
 
     public function testNormalizeGearIds(): void
     {
-        $config = GearMaintenanceConfig::fromArray($this->getYmlStringThatNeedsNormalization());
+        $config = $this->createConfig($this->getYmlStringThatNeedsNormalization());
         $config->normalizeGearIds(GearIds::fromArray([GearId::fromUnprefixed('b123456')]));
 
         $this->assertMatchesTextSnapshot((string) $config);
@@ -79,7 +99,7 @@ class GearMaintenanceConfigTest extends TestCase
     public function testFromYmlStringItShouldThrow(array $yml, string $expectedException): void
     {
         $this->expectExceptionObject(new InvalidGearMaintenanceConfig($expectedException));
-        GearMaintenanceConfig::fromArray($yml);
+        $this->createConfig($yml);
     }
 
     public static function provideInvalidConfig(): iterable
