@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Gear\RecordingDevice;
 
+use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
@@ -55,6 +56,19 @@ final readonly class DbalRecordingDeviceRepository extends DbalRepository implem
             },
             $results,
         ));
+    }
+
+    public function find(RecordingDeviceId $recordingDeviceId): RecordingDevice
+    {
+        $recordingDevice = $this->findAll()->find(
+            static fn (RecordingDevice $recordingDevice): bool => (string) $recordingDevice->getId() === (string) $recordingDeviceId
+        );
+
+        if (!$recordingDevice instanceof RecordingDevice) {
+            throw new EntityNotFound(sprintf('RecordingDevice "%s" not found', $recordingDeviceId));
+        }
+
+        return $recordingDevice;
     }
 
     public function save(RecordingDevice $recordingDevice): void
