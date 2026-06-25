@@ -7,6 +7,9 @@ namespace App\Domain\Gear\UpdateGear;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearStatus;
 use App\Domain\Gear\ProvidePurchasePriceFromPayload;
+use App\Domain\Image\NewImage;
+use App\Domain\Image\ProvideLocalImageFromDropZonePayload;
+use App\Domain\Image\RemovedImage;
 use App\Infrastructure\CQRS\Command\Deserialize\AsDeserializableCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\CouldNotDeserializeCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\DeserializableCommand;
@@ -17,6 +20,7 @@ use Money\Money;
 final readonly class UpdateGear extends DomainCommand implements DeserializableCommand
 {
     use ProvidePurchasePriceFromPayload;
+    use ProvideLocalImageFromDropZonePayload;
     public const string NAME = 'update-gear';
 
     private function __construct(
@@ -24,6 +28,8 @@ final readonly class UpdateGear extends DomainCommand implements DeserializableC
         private string $name,
         private bool $isRetired,
         private ?Money $purchasePrice,
+        private ?NewImage $newImage,
+        private ?RemovedImage $removedImage,
     ) {
     }
 
@@ -45,11 +51,15 @@ final readonly class UpdateGear extends DomainCommand implements DeserializableC
             throw CouldNotDeserializeCommand::invalidPayload('The status is invalid.');
         }
 
+        [$newImages, $removedImages] = self::parseImages($payload, 'localImagePath');
+
         return new self(
             gearId: GearId::fromString($payload['gearId']),
             name: $name,
             isRetired: GearStatus::RETIRED === $gearStatus,
             purchasePrice: self::parsePurchasePrice($payload),
+            newImage: $newImages[0] ?? null,
+            removedImage: $removedImages[0] ?? null,
         );
     }
 
@@ -71,5 +81,15 @@ final readonly class UpdateGear extends DomainCommand implements DeserializableC
     public function getPurchasePrice(): ?Money
     {
         return $this->purchasePrice;
+    }
+
+    public function getNewImage(): ?NewImage
+    {
+        return $this->newImage;
+    }
+
+    public function getRemovedImage(): ?RemovedImage
+    {
+        return $this->removedImage;
     }
 }

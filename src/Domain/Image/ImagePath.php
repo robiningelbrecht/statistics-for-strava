@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Activity\Image;
+namespace App\Domain\Image;
 
-final readonly class ActivityImagePath
+final readonly class ImagePath
 {
     private function __construct(
         private string $localImagePath,

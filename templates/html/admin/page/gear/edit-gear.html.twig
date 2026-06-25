@@ -55,6 +55,15 @@
                     </select>
                 {% endblock %}
             {% endembed %}
+            <div>
+                <label>{{ "Image"|trans }}</label>
+                {% set existingImages = [] %}
+                {% if gear and gear.getLocalImagePath() %}
+                    {% set path = gear.getLocalImagePath() %}
+                    {% set existingImages = [{ url: path, name: path|split('/')|last, path: path }] %}
+                {% endif %}
+                {% include 'html/admin/component/image-dropzone-upload.html.twig' with { name: 'localImagePath', maxImages: 1, existingImages: existingImages } %}
+            </div>
             <div class="flex justify-end gap-2 border-t border-gray-200 pt-4">
                 <a href="{{ relativeUrl(path('admin_manage_gear_overview')) }}" type="button" class="btn--secondary">{{ "Cancel"|trans }}</a>
                 <button type="submit" data-has-loading-state class="group btn--primary">

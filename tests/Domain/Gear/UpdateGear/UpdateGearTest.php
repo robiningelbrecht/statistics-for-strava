@@ -37,6 +37,38 @@ class UpdateGearTest extends TestCase
 
         $this->assertFalse($command->isRetired());
         $this->assertNull($command->getPurchasePrice());
+        $this->assertNull($command->getNewImage());
+        $this->assertNull($command->getRemovedImage());
+    }
+
+    public function testFromPayloadWithNewImage(): void
+    {
+        $command = UpdateGear::fromPayload([
+            'gearId' => 'gear-1',
+            'name' => 'My custom gear',
+            'localImagePath' => json_encode([
+                ['status' => 'new', 'filename' => 'gear.png', 'content' => base64_encode('image-content')],
+            ]),
+        ]);
+
+        $this->assertNotNull($command->getNewImage());
+        $this->assertSame('gear.png', (string) $command->getNewImage()->getFilename());
+        $this->assertNull($command->getRemovedImage());
+    }
+
+    public function testFromPayloadWithRemovedImage(): void
+    {
+        $command = UpdateGear::fromPayload([
+            'gearId' => 'gear-1',
+            'name' => 'My custom gear',
+            'localImagePath' => json_encode([
+                ['status' => 'removed', 'path' => '/files/gear/old.jpg'],
+            ]),
+        ]);
+
+        $this->assertNull($command->getNewImage());
+        $this->assertNotNull($command->getRemovedImage());
+        $this->assertSame('files/gear/old.jpg', $command->getRemovedImage()->getPath()->toLocalImagePath());
     }
 
     public function testFromPayloadTrimsName(): void

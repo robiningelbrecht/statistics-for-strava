@@ -6,29 +6,25 @@ namespace App\Domain\Activity\UpdateActivity;
 
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityName;
-use App\Domain\Activity\Image\ImageStatus;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Gear\GearId;
+use App\Domain\Image\NewImage;
+use App\Domain\Image\ProvideLocalImageFromDropZonePayload;
+use App\Domain\Image\RemovedImage;
 use App\Infrastructure\CQRS\Command\Deserialize\AsDeserializableCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\CouldNotDeserializeCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\DeserializableCommand;
 use App\Infrastructure\CQRS\Command\DomainCommand;
-use App\Infrastructure\Serialization\Json;
-use App\Infrastructure\ValueObject\String\Path;
 
 #[AsDeserializableCommand(UpdateActivity::NAME)]
 final readonly class UpdateActivity extends DomainCommand implements DeserializableCommand
 {
+    use ProvideLocalImageFromDropZonePayload;
     public const string NAME = 'update-activity';
 
     /**
-     * @var array<string>
-     */
-    private const array SUPPORTED_IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp'];
-
-    /**
-     * @param array<ActivityNewImage>     $newImages
-     * @param array<ActivityRemovedImage> $removedImages
+     * @param array<NewImage>     $newImages
+     * @param array<RemovedImage> $removedImages
      */
     private function __construct(
         private ActivityId $activityId,
@@ -67,51 +63,7 @@ final readonly class UpdateActivity extends DomainCommand implements Deserializa
             ? GearId::fromString(trim($payload['gearId']))
             : null;
 
-        $newImages = [];
-        $removedImages = [];
-        if (array_key_exists('images', $payload)) {
-            if (!is_string($payload['images'])) {
-                throw CouldNotDeserializeCommand::invalidPayload('The "images" field is invalid.');
-            }
-
-            $decodedImages = Json::decode($payload['images']);
-            if (!is_array($decodedImages)) {
-                throw CouldNotDeserializeCommand::invalidPayload('The "images" field is invalid.');
-            }
-
-            foreach ($decodedImages as $image) {
-                if (!is_array($image) || !isset($image['status']) || !is_string($image['status']) || !$status = ImageStatus::tryFrom($image['status'])) {
-                    throw CouldNotDeserializeCommand::invalidPayload('Each image requires a valid "status".');
-                }
-
-                if (ImageStatus::NEW === $status) {
-                    if (!isset($image['filename'], $image['content']) || !is_string($image['filename']) || !is_string($image['content'])) {
-                        throw CouldNotDeserializeCommand::invalidPayload('A new image requires a "filename" and "content".');
-                    }
-
-                    $filename = Path::fromString(trim($image['filename']));
-                    if (!in_array($filename->getExtension(), self::SUPPORTED_IMAGE_EXTENSIONS, true)) {
-                        throw CouldNotDeserializeCommand::invalidPayload('Unsupported image file type.');
-                    }
-
-                    $content = base64_decode($image['content'], true);
-                    if (false === $content || '' === $content) {
-                        throw CouldNotDeserializeCommand::invalidPayload('A new image has invalid "content".');
-                    }
-
-                    $newImages[] = new ActivityNewImage(
-                        filename: $filename,
-                        content: $content
-                    );
-                }
-                if (ImageStatus::REMOVED === $status) {
-                    if (!isset($image['path']) || !is_string($image['path']) || '' === trim($image['path'])) {
-                        throw CouldNotDeserializeCommand::invalidPayload('A removed image requires a "path".');
-                    }
-                    $removedImages[] = new ActivityRemovedImage(trim($image['path']));
-                }
-            }
-        }
+        [$newImages, $removedImages] = self::parseImages($payload, 'images');
 
         return new self(
             activityId: ActivityId::fromString($payload['activityId']),
@@ -162,7 +114,7 @@ final readonly class UpdateActivity extends DomainCommand implements Deserializa
     }
 
     /**
-     * @return array<ActivityNewImage>
+     * @return array<NewImage>
      */
     public function getNewImages(): array
     {
@@ -170,7 +122,7 @@ final readonly class UpdateActivity extends DomainCommand implements Deserializa
     }
 
     /**
-     * @return array<ActivityRemovedImage>
+     * @return array<RemovedImage>
      */
     public function getRemovedImages(): array
     {

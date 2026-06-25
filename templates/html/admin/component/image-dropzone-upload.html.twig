@@ -1,5 +1,5 @@
 {% autoescape false %}
-    {% set extensions = extensions ?? ['jpg', 'jpeg', 'png', 'webp'] %}
+    {% set extensions = extensions ?? supportedImageExtensions() %}
     {% set maxImages = maxImages ?? 1 %}
     {% set maxFileSize = maxFileSize ?? 5 %}
     {% set maxTotalSize = maxTotalSize ?? 15 %}

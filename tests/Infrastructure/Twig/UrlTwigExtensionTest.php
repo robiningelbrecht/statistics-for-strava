@@ -3,8 +3,8 @@
 namespace App\Tests\Infrastructure\Twig;
 
 use App\Application\AppUrl;
-use App\Domain\Activity\Image\ImageOrientation;
 use App\Domain\Activity\SportType\SportType;
+use App\Domain\Image\ImageOrientation;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Twig\StringTwigExtension;
 use App\Infrastructure\Twig\SvgsTwigExtension;

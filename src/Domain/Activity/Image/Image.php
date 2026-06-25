@@ -4,6 +4,7 @@ namespace App\Domain\Activity\Image;
 
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\SportType\SportType;
+use App\Domain\Image\ImageOrientation;
 
 final readonly class Image
 {

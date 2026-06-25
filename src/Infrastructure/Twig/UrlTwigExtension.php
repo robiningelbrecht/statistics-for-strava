@@ -6,8 +6,8 @@ namespace App\Infrastructure\Twig;
 
 use App\Application\AppUrl;
 use App\Domain\Activity\Activity;
-use App\Domain\Activity\Image\ImageOrientation;
 use App\Domain\Activity\SportType\SportType;
+use App\Domain\Image\ImageOrientation;
 use App\Domain\Segment\Segment;
 use App\Infrastructure\ValueObject\String\RelativeUrl;
 use Twig\Attribute\AsTwigFilter;

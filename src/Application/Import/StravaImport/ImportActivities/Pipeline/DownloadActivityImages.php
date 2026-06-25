@@ -2,7 +2,7 @@
 
 namespace App\Application\Import\StravaImport\ImportActivities\Pipeline;
 
-use App\Domain\Activity\Image\ActivityImagePath;
+use App\Domain\Image\ImagePath;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\ValueObject\Identifier\UuidFactory;
 use App\Infrastructure\ValueObject\String\Path;
@@ -57,7 +57,7 @@ final readonly class DownloadActivityImages implements ActivityImportStep
             }
 
             $activity = $activity->withLocalImagePaths(array_map(
-                fn (string $fileSystemPath): string => ActivityImagePath::fromFileSystemPath($fileSystemPath)->toLocalImagePath(),
+                fn (string $fileSystemPath): string => ImagePath::fromFileSystemPath($fileSystemPath)->toLocalImagePath(),
                 $fileSystemPaths
             ));
         } catch (ClientException|RequestException) {

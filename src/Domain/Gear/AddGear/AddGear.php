@@ -6,6 +6,8 @@ namespace App\Domain\Gear\AddGear;
 
 use App\Domain\Gear\GearStatus;
 use App\Domain\Gear\ProvidePurchasePriceFromPayload;
+use App\Domain\Image\NewImage;
+use App\Domain\Image\ProvideLocalImageFromDropZonePayload;
 use App\Infrastructure\CQRS\Command\Deserialize\AsDeserializableCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\CouldNotDeserializeCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\DeserializableCommand;
@@ -16,12 +18,14 @@ use Money\Money;
 final readonly class AddGear extends DomainCommand implements DeserializableCommand
 {
     use ProvidePurchasePriceFromPayload;
+    use ProvideLocalImageFromDropZonePayload;
     public const string NAME = 'add-gear';
 
     private function __construct(
         private string $name,
         private bool $isRetired,
         private ?Money $purchasePrice,
+        private ?NewImage $newImage,
     ) {
     }
 
@@ -41,10 +45,13 @@ final readonly class AddGear extends DomainCommand implements DeserializableComm
             throw CouldNotDeserializeCommand::invalidPayload('The status is invalid.');
         }
 
+        [$newImages] = self::parseImages($payload, 'localImagePath');
+
         return new self(
             name: $name,
             isRetired: GearStatus::RETIRED === $gearStatus,
             purchasePrice: self::parsePurchasePrice($payload),
+            newImage: $newImages[0] ?? null,
         );
     }
 
@@ -61,5 +68,10 @@ final readonly class AddGear extends DomainCommand implements DeserializableComm
     public function getPurchasePrice(): ?Money
     {
         return $this->purchasePrice;
+    }
+
+    public function getNewImage(): ?NewImage
+    {
+        return $this->newImage;
     }
 }
