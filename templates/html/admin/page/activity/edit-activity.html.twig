@@ -57,11 +57,16 @@
                         {% endblock %}
                     {% endembed %}
                     {% embed 'html/admin/component/strava-disabled-form-input.html.twig' with {
-                        label: 'Device name'|trans,
+                        label: 'Device'|trans,
                         for: 'activity-device-name', name: 'deviceName', value: activity.getDeviceName(),
                     } %}
                         {% block control %}
-                            <input type="text" id="activity-device-name" name="deviceName" value="{{ activity.getDeviceName() }}" {{ disabled ? 'disabled' }}>
+                            <select id="activity-device-name" name="deviceName" {{ disabled ? 'disabled' }}>
+                                <option value="">{{ "None"|trans }}</option>
+                                {% for recordingDevice in recordingDevices %}
+                                    <option value="{{ recordingDevice.getName() }}" {{ activity.getDeviceName() == recordingDevice.getName() ? 'selected' }}>{{ recordingDevice.getName() }}</option>
+                                {% endfor %}
+                            </select>
                         {% endblock %}
                     {% endembed %}
                 </div>

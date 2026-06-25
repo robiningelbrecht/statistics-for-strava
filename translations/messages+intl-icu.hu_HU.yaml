@@ -104,7 +104,6 @@ Description: Description
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
 Details: Részletek
 Device: Eszköz
-'Device name': 'Device name'
 Dist.: Dist.
 Distance: Távolság
 'Distance & Elevation': 'Távolság & szintemelkedés'
@@ -123,6 +122,7 @@ Eddington: Eddington
 Edit: Edit
 'Edit activity': 'Edit activity'
 'Edit gear': 'Edit gear'
+'Edit recording device': 'Edit recording device'
 'Effort vs heart rate': 'Erőfeszítés vs pulzus'
 'Elapsed time': 'Elapsed time'
 Elev: Szintek
@@ -509,6 +509,7 @@ Tennis: Tenisz
 "That's {number} days of at least {distance}": 'Ez {number} nap legalább {distance}-vel'
 "That's {percentage}% of all countries 🌍": "That's {percentage}% of all countries 🌍"
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.'
+"The name is derived from the device recorded on your activities and can't be edited.": "The name is derived from the device recorded on your activities and can't be edited."
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Ezek a kitűzők dinamikusan jönnek létre. Bármely &lt;img&gt; tagben használhatod őket'
 Thinking...: Gondolkodás...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'Ez a diagram összefoglalja, hogyan edzel. Minden tengely különböző normalizált edzési szokást tükröz, így a magasabb értékek erősebb hangsúlyt jelentenek.'

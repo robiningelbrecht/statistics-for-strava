@@ -8,5 +8,7 @@ interface RecordingDeviceRepository
 {
     public function findAll(): RecordingDevices;
 
+    public function find(RecordingDeviceId $recordingDeviceId): RecordingDevice;
+
     public function save(RecordingDevice $recordingDevice): void;
 }

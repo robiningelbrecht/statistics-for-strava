@@ -57,7 +57,7 @@ class ManageActivityFormRequestHandlerTest extends AdminWebTestCase
         $this->assertNotNull($crawler->filter('input#activity-name')->attr('disabled'));
         $this->assertNotNull($crawler->filter('select#activity-sport-type')->attr('disabled'));
         $this->assertNotNull($crawler->filter('select#activity-gear')->attr('disabled'));
-        $this->assertNotNull($crawler->filter('input#activity-device-name')->attr('disabled'));
+        $this->assertNotNull($crawler->filter('select#activity-device-name')->attr('disabled'));
         $this->assertNotNull($crawler->filter('input#activity-is-commute')->attr('disabled'));
 
         // Disabled fields are not submitted, so their values are mirrored into hidden inputs.
@@ -94,7 +94,7 @@ class ManageActivityFormRequestHandlerTest extends AdminWebTestCase
         $this->assertNull($crawler->filter('input#activity-name')->attr('disabled'));
         $this->assertNull($crawler->filter('select#activity-sport-type')->attr('disabled'));
         $this->assertNull($crawler->filter('select#activity-gear')->attr('disabled'));
-        $this->assertNull($crawler->filter('input#activity-device-name')->attr('disabled'));
+        $this->assertNull($crawler->filter('select#activity-device-name')->attr('disabled'));
         $this->assertNull($crawler->filter('input#activity-is-commute')->attr('disabled'));
 
         $this->assertCount(0, $crawler->filter('input[type="hidden"][name="name"]'));

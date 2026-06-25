@@ -104,7 +104,6 @@ Description: Description
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
 Details: Detaljer
 Device: Enhet
-'Device name': 'Device name'
 Dist.: Dist.
 Distance: Distans
 'Distance & Elevation': 'Distance & Elevation'
@@ -123,6 +122,7 @@ Eddington: Eddington
 Edit: Edit
 'Edit activity': 'Edit activity'
 'Edit gear': 'Edit gear'
+'Edit recording device': 'Edit recording device'
 'Effort vs heart rate': 'Effort vs heart rate'
 'Elapsed time': 'Elapsed time'
 Elev: Höjd
@@ -509,6 +509,7 @@ Tennis: Tennis
 "That's {number} days of at least {distance}": "That's {number} days of at least {distance}"
 "That's {percentage}% of all countries 🌍": "That's {percentage}% of all countries 🌍"
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.'
+"The name is derived from the device recorded on your activities and can't be edited.": "The name is derived from the device recorded on your activities and can't be edited."
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Dessa märken skapas dynamiskt. Du kan använda dem i vilken &lt;img&gt; tagg som helst'
 Thinking...: Tänker...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'

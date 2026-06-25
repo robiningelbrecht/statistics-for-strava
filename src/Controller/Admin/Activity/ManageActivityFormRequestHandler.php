@@ -10,6 +10,7 @@ use App\Domain\Activity\DeleteActivity\DeleteActivity;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\UpdateActivity\UpdateActivity;
 use App\Domain\Gear\GearRepository;
+use App\Domain\Gear\RecordingDevice\RecordingDeviceRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
@@ -22,6 +23,7 @@ final readonly class ManageActivityFormRequestHandler
         private Environment $twig,
         private ActivityRepository $activityRepository,
         private GearRepository $gearRepository,
+        private RecordingDeviceRepository $recordingDeviceRepository,
     ) {
     }
 
@@ -33,6 +35,7 @@ final readonly class ManageActivityFormRequestHandler
             'activity' => $this->activityRepository->find(ActivityId::fromString($activityId)),
             'sportTypes' => SportType::cases(),
             'gears' => $this->gearRepository->findAll()->sortByIsRetired(),
+            'recordingDevices' => $this->recordingDeviceRepository->findAll(),
         ]));
     }
 
