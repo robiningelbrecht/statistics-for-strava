@@ -7,46 +7,68 @@ namespace App\Domain\Gear\RecordingDevice;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
-use Doctrine\DBAL\Connection;
+use Money\Currency;
+use Money\Money;
 
 final readonly class DbalRecordingDeviceRepository extends DbalRepository implements RecordingDeviceRepository
 {
-    public function __construct(
-        Connection $connection,
-        private RecordingDevicesConfig $recordingDevicesConfig,
-    ) {
-        parent::__construct($connection);
-    }
-
     public function findAll(): RecordingDevices
     {
         $results = $this->connection->executeQuery(
-            'SELECT DISTINCT deviceName,
-                    SUM(movingTimeInSeconds) as totalMovingTime,
-                    SUM(distance) as totalDistance,
-                    SUM(elevation) as totalElevation,
-                    COUNT(*) as activityCount
+            'SELECT Activity.deviceName,
+                    SUM(Activity.movingTimeInSeconds) as totalMovingTime,
+                    SUM(Activity.distance) as totalDistance,
+                    SUM(Activity.elevation) as totalElevation,
+                    COUNT(*) as activityCount,
+                    RecordingDevice.purchasePriceAmount,
+                    RecordingDevice.purchasePriceCurrency
              FROM Activity
-             WHERE deviceName IS NOT NULL
-             GROUP BY deviceName
+             LEFT JOIN RecordingDevice ON RecordingDevice.name = Activity.deviceName
+             WHERE Activity.deviceName IS NOT NULL
+             GROUP BY Activity.deviceName
              ORDER BY activityCount DESC'
         )->fetchAllAssociative();
 
         return RecordingDevices::fromArray(array_map(
             function (array $result): RecordingDevice {
-                $recordingDevice = RecordingDevice::fromState(
+                $purchasePrice = null;
+                $purchasePriceCurrency = (string) ($result['purchasePriceCurrency'] ?? '');
+                if (isset($result['purchasePriceAmount']) && '' !== $purchasePriceCurrency) {
+                    $purchasePrice = new Money(
+                        amount: (int) $result['purchasePriceAmount'],
+                        currency: new Currency($purchasePriceCurrency)
+                    );
+                }
+
+                return RecordingDevice::fromState(
                     name: $result['deviceName'],
                     timeTracked: Seconds::from((float) $result['totalMovingTime']),
                     distanceTracked: Meter::from((float) $result['totalDistance'])->toKilometer(),
                     elevationTracked: Meter::from((float) $result['totalElevation']),
                     activityCount: (int) $result['activityCount'],
-                );
-
-                return $recordingDevice->withPurchasePrice(
-                    $this->recordingDevicesConfig->getPurchasePrice($recordingDevice->getId())
+                    purchasePrice: $purchasePrice,
                 );
             },
             $results,
         ));
+    }
+
+    public function save(RecordingDevice $recordingDevice): void
+    {
+        $purchasePrice = $recordingDevice->getPurchasePrice();
+        $this->connection->executeStatement(
+            'INSERT INTO RecordingDevice (id, name, purchasePriceAmount, purchasePriceCurrency)
+             VALUES (:id, :name, :purchasePriceAmount, :purchasePriceCurrency)
+             ON CONFLICT (id) DO UPDATE SET
+                name = excluded.name,
+                purchasePriceAmount = excluded.purchasePriceAmount,
+                purchasePriceCurrency = excluded.purchasePriceCurrency',
+            [
+                'id' => $recordingDevice->getId(),
+                'name' => $recordingDevice->getName(),
+                'purchasePriceAmount' => $purchasePrice?->getAmount(),
+                'purchasePriceCurrency' => $purchasePrice?->getCurrency()->getCode(),
+            ]
+        );
     }
 }

@@ -48,7 +48,7 @@ export const updateGithubLatestRelease = async () => {
 
     try {
         const releaseResponse = await fetch(
-            'https://api.github.com/repos/robiningelbrecht/statistics-for-strava/releases/latest',
+            'https://api.github.com/repos/dreeveapp/dreeve/releases/latest',
             { headers: { 'Accept': 'application/vnd.github+json' } }
         );
         if (!releaseResponse.ok) throw new Error('Failed to fetch latest release');
@@ -62,7 +62,7 @@ export const updateGithubLatestRelease = async () => {
 
         // Verify Docker image workflow run success
         const workflowRunsResponse = await fetch(
-            `https://api.github.com/repos/robiningelbrecht/statistics-for-strava/actions/runs?event=push&status=completed&conclusion=success&exclude_pull_requests=true&branch=${latestVersion}`,
+            `https://api.github.com/repos/dreeveapp/dreeve/actions/runs?event=push&status=completed&conclusion=success&exclude_pull_requests=true&branch=${latestVersion}`,
             { headers: { 'Accept': 'application/vnd.github+json' } }
         );
         if (!workflowRunsResponse.ok) throw new Error('Failed to fetch workflow runs');

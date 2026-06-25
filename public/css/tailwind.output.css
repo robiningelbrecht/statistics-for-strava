@@ -1124,11 +1124,11 @@
   .me-3 {
     margin-inline-end: calc(var(--spacing) * 3);
   }
-  .\!mt-0 {
-    margin-top: 0 !important;
-  }
   .-mt-0\.5 {
     margin-top: calc(var(--spacing) * -0.5);
+  }
+  .mt-0\! {
+    margin-top: 0 !important;
   }
   .mt-0\.5 {
     margin-top: calc(var(--spacing) * 0.5);
@@ -5532,7 +5532,6 @@ table.data-table {
     & input:where([type="radio"], [type="checkbox"]) {
       height: calc(var(--spacing) * 4);
       width: calc(var(--spacing) * 4);
-      border-radius: 0.25rem;
       border-color: var(--color-gray-300);
       background-color: var(--color-gray-100);
       color: var(--color-primary);
@@ -5546,6 +5545,9 @@ table.data-table {
           --tw-ring-color: color-mix(in oklab, var(--color-primary) 30%, transparent);
         }
       }
+    }
+    & input:where([type="checkbox"]) {
+      border-radius: 0.25rem;
     }
     & input:where([type="text"], [type="date"], [type="number"]) {
       transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
