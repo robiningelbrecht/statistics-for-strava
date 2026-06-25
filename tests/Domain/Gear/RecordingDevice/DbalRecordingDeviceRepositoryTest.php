@@ -7,6 +7,7 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Gear\RecordingDevice\DbalRecordingDeviceRepository;
 use App\Domain\Gear\RecordingDevice\RecordingDevice;
+use App\Domain\Gear\RecordingDevice\RecordingDeviceId;
 use App\Domain\Gear\RecordingDevice\RecordingDeviceRepository;
 use App\Domain\Gear\RecordingDevice\RecordingDevices;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
@@ -71,6 +72,7 @@ class DbalRecordingDeviceRepositoryTest extends ContainerTestCase
         $this->assertEquals(
             RecordingDevices::fromArray([
                 RecordingDevice::fromState(
+                    id: RecordingDeviceId::fromName('Garmin Edge 530'),
                     name: 'Garmin Edge 530',
                     timeTracked: Seconds::from(10800),
                     distanceTracked: Meter::from(30000)->toKilometer(),
@@ -79,6 +81,7 @@ class DbalRecordingDeviceRepositoryTest extends ContainerTestCase
                     purchasePrice: null,
                 ),
                 RecordingDevice::fromState(
+                    id: RecordingDeviceId::fromName('Garmin Forerunner 945'),
                     name: 'Garmin Forerunner 945',
                     timeTracked: Seconds::from(1800),
                     distanceTracked: Meter::from(5000)->toKilometer(),
@@ -108,12 +111,13 @@ class DbalRecordingDeviceRepositoryTest extends ContainerTestCase
 
         $this->getConnection()->executeStatement(
             "INSERT INTO RecordingDevice (id, name, purchasePriceAmount, purchasePriceCurrency)
-             VALUES ('garmin-edge-530', 'Garmin Edge 530', 29950, 'EUR')"
+             VALUES ('recordingDevice-garmin-edge-530', 'Garmin Edge 530', 29950, 'EUR')"
         );
 
         $this->assertEquals(
             RecordingDevices::fromArray([
                 RecordingDevice::fromState(
+                    id: RecordingDeviceId::fromName('Garmin Edge 530'),
                     name: 'Garmin Edge 530',
                     timeTracked: Seconds::from(3600),
                     distanceTracked: Meter::from(10000)->toKilometer(),
@@ -171,7 +175,7 @@ class DbalRecordingDeviceRepositoryTest extends ContainerTestCase
 
         $this->assertEquals(
             [[
-                'id' => 'garmin-edge-530',
+                'id' => 'recordingDevice-garmin-edge-530',
                 'name' => 'Garmin Edge 530',
                 'purchasePriceAmount' => 29950,
                 'purchasePriceCurrency' => 'EUR',
@@ -193,7 +197,7 @@ class DbalRecordingDeviceRepositoryTest extends ContainerTestCase
 
         $this->assertEquals(
             [[
-                'id' => 'garmin-edge-530',
+                'id' => 'recordingDevice-garmin-edge-530',
                 'name' => 'Garmin Edge 530',
                 'purchasePriceAmount' => null,
                 'purchasePriceCurrency' => null,
@@ -222,7 +226,7 @@ class DbalRecordingDeviceRepositoryTest extends ContainerTestCase
 
         $this->assertEquals(
             [[
-                'id' => 'garmin-edge-530',
+                'id' => 'recordingDevice-garmin-edge-530',
                 'name' => 'Garmin Edge 530',
                 'purchasePriceAmount' => 19950,
                 'purchasePriceCurrency' => 'USD',

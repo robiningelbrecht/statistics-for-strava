@@ -287,6 +287,7 @@ Night: Natt
 'No gears added yet.': 'No gears added yet.'
 'No milestones achieved yet': 'No milestones achieved yet'
 'No other options to compare with': 'Inga andra alternativ att jämföra med'
+'No recording devices yet.': 'No recording devices yet.'
 None: Inga
 'Nordic Ski': 'Telemark skidåkning'
 'Normalized power': 'Normalized power'
@@ -337,8 +338,10 @@ Ranking: Rankning
 'Reached {threshold} total distance': 'Reached {threshold} total distance'
 'Reached {threshold} total elevation': 'Reached {threshold} total elevation'
 'Recent effort': 'Recent effort'
+'Recording device management': 'Recording device management'
 'Recording devices': 'Recording devices'
 'Recording devices details': 'Recording devices details'
+'Recording devices will appear here once activities have been imported.': 'Recording devices will appear here once activities have been imported.'
 'Recovery Timeline': 'Recovery Timeline'
 'Recovery forecast': 'Recovery forecast'
 'Reduced carbon emission by commuting': 'Minskade koldioxidutsläpp tack vare pendling'

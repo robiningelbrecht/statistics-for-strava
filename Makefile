@@ -33,7 +33,9 @@ composer:
 	@make dcr cmd="composer $(arg)"
 
 download-database:
+	@make stop
 	scp $(user)@$(server):/home/docker/stacks/dreeve/storage/database/dreeve.db ./storage/database/dreeve.db
+	@make up
 
 download-assets:
 	scp -r $(user)@$(server):/home/docker/stacks/dreeve/storage/files ./storage/
@@ -41,9 +43,6 @@ download-assets:
 # Database migration helpers.
 migrate-diff:
 	@make console arg="doctrine:migrations:diff"
-
-migrate-run:
-	@make console arg="doctrine:migrations:migrate"
 
 # Translation helpers.
 translation-extract:
@@ -80,12 +79,6 @@ rector:
 	@make dcr cmd="vendor/bin/rector --config rector-tests.php"
 
 # Helpers to build the app.
-app-import-data:
-	docker compose exec app bin/console app:strava:import-data
-
-app-build-files:
-	docker compose exec app bin/console app:strava:build-files
-
 app-build-assets:
 	@make dcr cmd="npx @tailwindcss/cli -i public/css/tailwind.css -o public/css/dist/tailwind.min.css --minify"
 	@make dcr cmd="npx @tailwindcss/cli -i public/css/tailwind.css -o public/css/tailwind.output.css"

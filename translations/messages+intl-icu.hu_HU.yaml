@@ -287,6 +287,7 @@ Night: Éjjel
 'No gears added yet.': 'No gears added yet.'
 'No milestones achieved yet': 'Még nincsenek elért mérföldkövek'
 'No other options to compare with': 'Nincs más összehasonlítási lehetőség'
+'No recording devices yet.': 'No recording devices yet.'
 None: 'Egyik sem'
 'Nordic Ski': Sífutás
 'Normalized power': 'Normalized power'
@@ -337,8 +338,10 @@ Ranking: Ranglista
 'Reached {threshold} total distance': '{threshold} összes távolság elérve'
 'Reached {threshold} total elevation': '{threshold} összes szintemelkedés elérve'
 'Recent effort': 'Közelmúltbeli teljesítmény'
+'Recording device management': 'Recording device management'
 'Recording devices': 'Rögzítő eszközök'
 'Recording devices details': 'Rögzítő eszközök részletei'
+'Recording devices will appear here once activities have been imported.': 'Recording devices will appear here once activities have been imported.'
 'Recovery Timeline': 'Regenerációs idővonal'
 'Recovery forecast': 'Regenerációs előrejelzés'
 'Reduced carbon emission by commuting': 'Csökkentett szén-dioxid kibocsátás ingázással'

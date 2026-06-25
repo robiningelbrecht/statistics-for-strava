@@ -287,6 +287,7 @@ Night: Nuit
 'No gears added yet.': 'No gears added yet.'
 'No milestones achieved yet': 'No milestones achieved yet'
 'No other options to compare with': 'Aucune autre option à comparer'
+'No recording devices yet.': 'No recording devices yet.'
 None: Aucun
 'Nordic Ski': 'Ski nordique'
 'Normalized power': 'Normalized power'
@@ -337,8 +338,10 @@ Ranking: Classement
 'Reached {threshold} total distance': '{threshold} distance au total'
 'Reached {threshold} total elevation': '{threshold} élévation au total'
 'Recent effort': 'Effort récent'
+'Recording device management': 'Recording device management'
 'Recording devices': "Appareils d'enregistrement"
 'Recording devices details': "Détails des appareils d'enregistrement"
+'Recording devices will appear here once activities have been imported.': 'Recording devices will appear here once activities have been imported.'
 'Recovery Timeline': 'Ligne de temps de récupération'
 'Recovery forecast': 'Prévision de récupération'
 'Reduced carbon emission by commuting': 'Réduction des émissions de carbone grâce aux déplacements domicile-travail'

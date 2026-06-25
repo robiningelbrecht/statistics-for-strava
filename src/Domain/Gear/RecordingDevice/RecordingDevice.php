@@ -9,7 +9,6 @@ use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
-use App\Infrastructure\ValueObject\String\Name;
 use Doctrine\ORM\Mapping as ORM;
 use Money\Money;
 
@@ -21,7 +20,7 @@ final readonly class RecordingDevice
 
     private function __construct(
         #[ORM\Id, ORM\Column(type: 'string', unique: true)]
-        private string $id,
+        private RecordingDeviceId $id,
         #[ORM\Column(type: 'string')]
         private string $name,
         #[ORM\Embedded(class: Money::class)]
@@ -38,7 +37,7 @@ final readonly class RecordingDevice
         ?Money $purchasePrice,
     ): self {
         return new self(
-            id: Name::fromString($name)->kebabCase(),
+            id: RecordingDeviceId::fromName($name),
             name: $name,
             purchasePrice: $purchasePrice,
             timeTracked: Seconds::zero(),
@@ -49,6 +48,7 @@ final readonly class RecordingDevice
     }
 
     public static function fromState(
+        RecordingDeviceId $id,
         string $name,
         Seconds $timeTracked,
         Kilometer $distanceTracked,
@@ -57,7 +57,7 @@ final readonly class RecordingDevice
         ?Money $purchasePrice,
     ): self {
         return new self(
-            id: Name::fromString($name)->kebabCase(),
+            id: $id,
             name: $name,
             purchasePrice: $purchasePrice,
             timeTracked: $timeTracked,
@@ -67,7 +67,7 @@ final readonly class RecordingDevice
         );
     }
 
-    public function getId(): string
+    public function getId(): RecordingDeviceId
     {
         return $this->id;
     }
