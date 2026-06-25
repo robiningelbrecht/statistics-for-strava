@@ -111,6 +111,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
             name: 'Unspecified',
             isRetired: false,
             type: GearType::IMPORTED,
+            localImagePath: null,
             movingTime: Seconds::from($movingTimeInSeconds),
             elevation: $elevation,
             numberOfActivities: $count,

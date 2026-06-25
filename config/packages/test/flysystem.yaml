@@ -3,9 +3,6 @@ flysystem:
         default.storage:
             adapter: 'memory'
 
-        gear_maintenance.storage:
-            adapter: 'memory'
-
         file.storage:
             adapter: 'memory'
 

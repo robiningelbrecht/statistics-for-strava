@@ -105,7 +105,6 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
             maintenanceTaskTagRepository: $this->getContainer()->get(MaintenanceTaskTagRepository::class),
             gearRepository: $this->getContainer()->get(GearRepository::class),
             maintenanceTaskProgressCalculator: $this->getContainer()->get(MaintenanceTaskProgressCalculator::class),
-            gearMaintenanceStorage: $fileStorage,
             twig: $this->getContainer()->get(Environment::class),
             buildHtmlStorage: $fileStorage,
             translator: $this->getContainer()->get(TranslatorInterface::class),
