@@ -8,6 +8,7 @@ use App\Domain\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Activity\Stream\PowerOutput;
 use App\Domain\Activity\Stream\PowerOutputs;
 use App\Domain\Gear\GearId;
+use App\Domain\Gear\RecordingDevice\RecordingDeviceId;
 use App\Domain\Integration\AI\SupportsAITooling;
 use App\Domain\Integration\Weather\OpenMeteo\Weather;
 use App\Domain\Zwift\CouldNotDetermineZwiftMap;
@@ -28,7 +29,6 @@ use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPer100Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
 use App\Infrastructure\ValueObject\String\ExternalReferenceId;
-use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\SerializableTimezone;
 use Doctrine\ORM\Mapping as ORM;
@@ -616,9 +616,9 @@ final class Activity implements SupportsAITooling
         ]);
     }
 
-    public function getDeviceId(): string
+    public function getDeviceId(): RecordingDeviceId
     {
-        return Name::fromString($this->getDeviceName() ?? 'device-none')->kebabCase();
+        return RecordingDeviceId::fromName($this->getDeviceName() ?? 'none');
     }
 
     public function isCommute(): bool

@@ -20,6 +20,7 @@ final readonly class DbalRecordingDeviceRepository extends DbalRepository implem
                     SUM(Activity.distance) as totalDistance,
                     SUM(Activity.elevation) as totalElevation,
                     COUNT(*) as activityCount,
+                    RecordingDevice.id,
                     RecordingDevice.purchasePriceAmount,
                     RecordingDevice.purchasePriceCurrency
              FROM Activity
@@ -41,6 +42,9 @@ final readonly class DbalRecordingDeviceRepository extends DbalRepository implem
                 }
 
                 return RecordingDevice::fromState(
+                    // Devices discovered from activities that have no persisted row yet
+                    // fall back to the id derived from their name.
+                    id: RecordingDeviceId::fromOptionalString($result['id']) ?? RecordingDeviceId::fromName($result['deviceName']),
                     name: $result['deviceName'],
                     timeTracked: Seconds::from((float) $result['totalMovingTime']),
                     distanceTracked: Meter::from((float) $result['totalDistance'])->toKilometer(),
