@@ -321,7 +321,6 @@ Photos: Photos
 'Pickle Ball': Pickleball
 Pilates: Pilates
 'Pizza slices': 'Pizza slices'
-'Please address these issues': 'Veuillez résoudre ces problèmes'
 'Polarised training (last 30 days)': 'Entraînement polarisé (30 derniers jours)'
 Power: Puissance
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Alimenté par une estimation de {caloriesBurned} calories, soit environ {numberOfPizzaSlices} parts de pizza 🍕.'
@@ -415,9 +414,8 @@ Swim: Natation
 'TSB (Form)': 'TSB (État de forme)'
 'TSB positive in': 'TSB positive in'
 'Table Tennis': 'Tennis de table'
-Tag: Tag
-'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'L''étiquette "{maintenanceTaskTag}" a été utilisée sur "{activityName}", mais le matériel référencé sur cette activité n''est pas attaché à ce composant.'
 'Taper sweet-spot (+15)': "Zone optimale d'affûtage (+15)"
+Task: Task
 'Team Sports': "Sports d'équipe"
 Tennis: Tennis
 "That's 1.5 times the distance to the edge of space": "That's 1.5 times the distance to the edge of space"

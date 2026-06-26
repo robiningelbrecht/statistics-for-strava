@@ -30,16 +30,6 @@ class GearMaintenanceConfigTest extends ContainerTestCase
         );
     }
 
-    public function testGetAllMaintenanceTags(): void
-    {
-        $yml = $this->getValidYml();
-
-        $this->assertEquals(
-            ['#sfs-chain-lubed', '#sfs-chain-cleaned', '#sfs-chain-replaced', '#sfs-chain-two-lubed'],
-            $this->createConfig($yml)->getAllMaintenanceTags()
-        );
-    }
-
     public function testGetAllReferencedGearIds(): void
     {
         $yml = $this->getValidYml();
@@ -90,10 +80,6 @@ class GearMaintenanceConfigTest extends ContainerTestCase
         yield 'missing "enabled" key' => [$yml, '"enabled" property is required'];
 
         $yml = self::getValidYml();
-        unset($yml['hashtagPrefix']);
-        yield 'missing "hashtagPrefix" key' => [$yml, '"hashtagPrefix" property is required'];
-
-        $yml = self::getValidYml();
         unset($yml['components']);
         yield 'missing "components" key' => [$yml, '"components" property is required'];
 
@@ -106,12 +92,8 @@ class GearMaintenanceConfigTest extends ContainerTestCase
         yield '"components" is empty' => [$yml, 'You must configure at least one component'];
 
         $yml = self::getValidYml();
-        $yml['countersResetMode'] = 'lol';
-        yield '"countersResetMode" is invalid' => [$yml, 'invalid countersResetMode "lol"'];
-
-        $yml = self::getValidYml();
-        unset($yml['components'][0]['tag']);
-        yield 'missing "components[tag]" key' => [$yml, '"tag" property is required for each component'];
+        unset($yml['components'][0]['id']);
+        yield 'missing "components[id]" key' => [$yml, '"id" property is required for each component'];
 
         $yml = self::getValidYml();
         unset($yml['components'][0]['label']);
@@ -154,8 +136,8 @@ class GearMaintenanceConfigTest extends ContainerTestCase
         yield '"components[imgSrc]" is not an string' => [$yml, '"imgSrc" property must be a string'];
 
         $yml = self::getValidYml();
-        unset($yml['components'][0]['maintenance'][0]['tag']);
-        yield 'missing "components[maintenance][tag]" key' => [$yml, '"tag" property is required for each maintenance task'];
+        unset($yml['components'][0]['maintenance'][0]['id']);
+        yield 'missing "components[maintenance][id]" key' => [$yml, '"id" property is required for each maintenance task'];
 
         $yml = self::getValidYml();
         unset($yml['components'][0]['maintenance'][0]['label']);
@@ -178,14 +160,14 @@ class GearMaintenanceConfigTest extends ContainerTestCase
         yield 'invalid "components[maintenance][interval][unit]"' => [$yml, 'invalid interval unit "lol"'];
 
         $yml = self::getValidYml();
-        $yml['components'][0]['maintenance'][0]['tag'] = 'lubed';
-        $yml['components'][0]['maintenance'][1]['tag'] = 'lubed';
-        yield 'duplicate maintenance tags' => [$yml, 'duplicate maintenance tags found for component "Some cool chain:" lubed'];
+        $yml['components'][0]['maintenance'][0]['id'] = 'chain-lubed';
+        $yml['components'][0]['maintenance'][1]['id'] = 'chain-lubed';
+        yield 'duplicate maintenance task ids' => [$yml, 'duplicate maintenance task ids found for component "Some cool chain:" chain-lubed'];
 
         $yml = self::getValidYml();
-        $yml['components'][0]['tag'] = 'chain';
-        $yml['components'][1]['tag'] = 'chain';
-        yield 'duplicate component tags' => [$yml, 'duplicate component tags found: chain'];
+        $yml['components'][0]['id'] = 'chain';
+        $yml['components'][1]['id'] = 'chain';
+        yield 'duplicate component ids' => [$yml, 'duplicate component ids found: chain'];
 
         $yml = self::getValidYml();
         $yml['ignoreRetiredGear'] = 'lol';
@@ -196,38 +178,37 @@ class GearMaintenanceConfigTest extends ContainerTestCase
     {
         return Yaml::parse(<<<YML
 enabled: true
-hashtagPrefix: 'sfs'
 components:
-  - tag: 'chain'
+  - id: 'chain'
     label: 'Some cool chain'
     imgSrc: 'chain.png'
     attachedTo:
       - 'bike-one-gear-id'
       - 'bike-two-gear-id'
     maintenance:
-      - tag: lubed
+      - id: chain-lubed
         label: Lube
         interval:
           value: 500
           unit: km
       - label: Clean
-        tag: cleaned
+        id: chain-cleaned
         interval:
           value: 200
           unit: hours
       - label: Replace
-        tag: replaced
+        id: chain-replaced
         interval:
           value: 500
           unit: days
-  - tag: 'chain-two'
+  - id: 'chain-two'
     label: 'Some cool chain'
     imgSrc: 'chain.png'
     attachedTo:
       - 'bike-one-gear-id'
       - 'bike-two-gear-id'
     maintenance:
-      - tag: lubed
+      - id: chain-two-lubed
         label: Lube
         interval:
           value: 500
@@ -240,36 +221,35 @@ YML
     {
         return Yaml::parse(<<<YML
 enabled: true
-hashtagPrefix: 'sfs'
 components:
-  - tag: 'chain'
+  - id: 'chain'
     label: 'Some cool chain'
     imgSrc: 'chain.png'
     attachedTo:
       - '123456'
     maintenance:
-      - tag: lubed
+      - id: chain-lubed
         label: Lube
         interval:
           value: 500
           unit: km
       - label: Clean
-        tag: cleaned
+        id: chain-cleaned
         interval:
           value: 200
           unit: hours
       - label: Replace
-        tag: replaced
+        id: chain-replaced
         interval:
           value: 500
           unit: days
-  - tag: 'chain-two'
+  - id: 'chain-two'
     label: 'Some cool chain'
     imgSrc: 'chain.png'
     attachedTo:
       - '123456'
     maintenance:
-      - tag: lubed
+      - id: chain-two-lubed
         label: Lube
         interval:
           value: 500

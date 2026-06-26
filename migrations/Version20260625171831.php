@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
+use App\Domain\Gear\Maintenance\History\GearMaintenanceHistoryId;
+use App\Domain\Gear\Maintenance\Task\MaintenanceTaskId;
+use App\Infrastructure\KeyValue\Key;
 use App\Infrastructure\Serialization\Json;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
@@ -28,19 +31,127 @@ final class Version20260625171831 extends AbstractMigration
             'No gear-maintenance.yaml found, nothing to migrate'
         );
 
-        $config = Yaml::parseFile($gearMaintenanceConfigFile);
+        $config = $this->migrateLegacyTagsToIds(Yaml::parseFile($gearMaintenanceConfigFile));
 
         $this->connection->executeStatement(
             'REPLACE INTO KeyValue (`key`, `value`) VALUES (:key, :value)',
             [
-                'key' => 'gearMaintenance',
+                'key' => Key::GEAR_MAINTENANCE->value,
                 'value' => Json::encode($config),
             ]
         );
     }
 
+    /**
+     * @param array<string, mixed> $config
+     *
+     * @return array<string, mixed>
+     */
+    private function migrateLegacyTagsToIds(array $config): array
+    {
+        foreach ($config['components'] ?? [] as $i => $component) {
+            $componentTag = $component['tag'] ?? $component['id'] ?? null;
+            if (null === $componentTag) {
+                continue;
+            }
+
+            $config['components'][$i]['id'] = $componentTag;
+            unset($config['components'][$i]['tag']);
+
+            foreach ($component['maintenance'] ?? [] as $j => $task) {
+                if (!isset($task['tag'])) {
+                    continue;
+                }
+                // The task id stays globally unique by keeping its component as a prefix,
+                // which also matches the "#<prefix>-<component>-<task>" hashtag we backfill from.
+                $config['components'][$i]['maintenance'][$j]['id'] = $componentTag.'-'.$task['tag'];
+                unset($config['components'][$i]['maintenance'][$j]['tag']);
+            }
+        }
+
+        return $config;
+    }
+
+    public function postUp(Schema $schema): void
+    {
+        $rawConfig = $this->connection->fetchOne(
+            'SELECT value FROM KeyValue WHERE `key` = :key',
+            ['key' => Key::GEAR_MAINTENANCE->value]
+        );
+        if (false === $rawConfig) {
+            return;
+        }
+
+        $config = Json::decode($rawConfig);
+        if (empty($config['hashtagPrefix']) || empty($config['components'])) {
+            return;
+        }
+
+        $activities = $this->connection->fetchAllAssociative(
+            'SELECT name, gearId, startDateTime FROM Activity WHERE gearId IS NOT NULL'
+        );
+        if ([] === $activities) {
+            return;
+        }
+
+        // Config gear ids may be copy-pasted unprefixed (e.g. "10130856") while the
+        // database stores them with the Strava "b"/"g" prefix ("gear-g10130856").
+        $normalizeGearId = static function (string $gearId): string {
+            if (str_starts_with($gearId, 'gear-')) {
+                $gearId = substr($gearId, 5);
+            }
+            if (str_starts_with($gearId, 'b') || str_starts_with($gearId, 'g')) {
+                $gearId = substr($gearId, 1);
+            }
+
+            return $gearId;
+        };
+
+        $hashtagPrefix = $config['hashtagPrefix'];
+        foreach ($config['components'] as $component) {
+            if (empty($component['id']) || empty($component['maintenance']) || empty($component['attachedTo'])) {
+                continue;
+            }
+
+            $attachedToGearIds = array_map($normalizeGearId, $component['attachedTo']);
+
+            foreach ($component['maintenance'] as $task) {
+                if (empty($task['id'])) {
+                    continue;
+                }
+
+                // Legacy data was tagged in activity titles as "#<hashtagPrefix>-<component>-<task>",
+                // which is exactly "#<hashtagPrefix>-<task id>" now that the task id keeps its
+                // component as a prefix.
+                $legacyHashtag = '#'.implode('-', [$hashtagPrefix, $task['id']]);
+                $maintenanceTaskId = (string) MaintenanceTaskId::fromUnprefixed($task['id']);
+
+                foreach ($activities as $activity) {
+                    if (!str_contains((string) $activity['name'], $legacyHashtag)) {
+                        continue;
+                    }
+                    if (!in_array($normalizeGearId((string) $activity['gearId']), $attachedToGearIds, true)) {
+                        continue;
+                    }
+
+                    $this->connection->executeStatement(
+                        'INSERT INTO GearMaintenanceHistory (gearMaintenanceHistoryId, gearId, maintenanceTaskId, performedOn)
+                         VALUES (:id, :gearId, :maintenanceTaskId, :performedOn)',
+                        [
+                            'id' => (string) GearMaintenanceHistoryId::random(),
+                            'gearId' => $activity['gearId'],
+                            'maintenanceTaskId' => $maintenanceTaskId,
+                            'performedOn' => $activity['startDateTime'],
+                        ]
+                    );
+                }
+            }
+        }
+    }
+
     public function down(Schema $schema): void
     {
-        $this->addSql('DELETE FROM KeyValue WHERE `key` = :key', ['key' => 'gearMaintenance']);
+        $this->addSql('DELETE FROM KeyValue WHERE `key` = :key', ['key' => Key::GEAR_MAINTENANCE->value]);
+        $this->addSql('DELETE FROM GearMaintenanceHistory');
     }
 }

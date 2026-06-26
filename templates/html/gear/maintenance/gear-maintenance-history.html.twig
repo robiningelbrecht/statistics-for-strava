@@ -25,28 +25,22 @@
                     <th scope="col" class="bg-gray-50 sticky left-0">
                         {{ "Components"|trans }}
                     </th>
-                    <th scope="col" class="text-left">
-                        {{ "Activity"|trans }}
-                    </th>
                     <th scope="col">
-                        {{ "Tag"|trans }}
+                        {{ "Task"|trans }}
                     </th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for maintenanceTaskTag in maintenanceTaskTags %}
+                {% for logEntry in logEntries %}
                     <tr class="group/row">
                         <td class="text-center whitespace-nowrap">
-                            {{ maintenanceTaskTag.getTaggedOn()|formatDate() }}
+                            {{ logEntry.performedOn|formatDate() }}
                         </td>
                         <th scope="row" class="text-left bg-white sticky left-0 font-medium text-gray-900 whitespace-nowrap">
-                            {{ maintenanceTaskTag.getTaggedForGearComponentName() }}
+                            {{ logEntry.component }}
                         </th>
-                        <td class="text-left whitespace-nowrap">
-                            {{ maintenanceTaskTag.getActivityName() }}
-                        </td>
                         <td class="whitespace-nowrap">
-                            {{ maintenanceTaskTag.getTag() }}
+                            {{ logEntry.task }}
                         </td>
                     </tr>
                 {% endfor %}

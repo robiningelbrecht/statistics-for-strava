@@ -6,12 +6,11 @@ namespace App\Domain\Gear\Maintenance;
 
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
+use App\Domain\Gear\Maintenance\History\GearMaintenanceHistories;
 use App\Domain\Gear\Maintenance\Task\IntervalUnit;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTask;
-use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTags;
-use App\Infrastructure\ValueObject\String\HashtagPrefix;
+use App\Domain\Gear\Maintenance\Task\MaintenanceTaskId;
 use App\Infrastructure\ValueObject\String\Name;
-use App\Infrastructure\ValueObject\String\Tag;
 use Money\Currency;
 use Money\Money;
 
@@ -21,7 +20,6 @@ final readonly class GearMaintenanceConfig
 
     private function __construct(
         private bool $isFeatureEnabled,
-        private GearMaintenanceCountersResetMode $resetMode,
         private bool $ignoreRetiredGear,
     ) {
         $this->gearComponents = GearComponents::empty();
@@ -36,12 +34,11 @@ final readonly class GearMaintenanceConfig
         if (null === $config || [] === $config) {
             return new self(
                 isFeatureEnabled: false,
-                resetMode: GearMaintenanceCountersResetMode::NEXT_ACTIVITY_ONWARDS,
                 ignoreRetiredGear: false,
             );
         }
 
-        foreach (['enabled', 'hashtagPrefix', 'components'] as $requiredKey) {
+        foreach (['enabled', 'components'] as $requiredKey) {
             if (array_key_exists($requiredKey, $config)) {
                 continue;
             }
@@ -56,27 +53,17 @@ final readonly class GearMaintenanceConfig
             throw new InvalidGearMaintenanceConfig('You must configure at least one component');
         }
 
-        $resetMode = GearMaintenanceCountersResetMode::NEXT_ACTIVITY_ONWARDS;
-        if (!empty($config['countersResetMode'])) {
-            $resetMode = GearMaintenanceCountersResetMode::tryFrom($config['countersResetMode']);
-            if (is_null($resetMode)) {
-                throw new InvalidGearMaintenanceConfig(sprintf('invalid countersResetMode "%s"', $config['countersResetMode']));
-            }
-        }
-
         if (array_key_exists('ignoreRetiredGear', $config) && !is_bool($config['ignoreRetiredGear'])) {
             throw new InvalidGearMaintenanceConfig('"ignoreRetiredGear" property must be a boolean');
         }
 
-        $hashtagPrefix = HashtagPrefix::fromString($config['hashtagPrefix']);
         $gearMaintenanceConfig = new self(
             isFeatureEnabled: $config['enabled'],
-            resetMode: $resetMode,
             ignoreRetiredGear: !empty($config['ignoreRetiredGear']),
         );
 
         foreach ($config['components'] as $component) {
-            foreach (['tag', 'label', 'attachedTo', 'maintenance'] as $requiredKey) {
+            foreach (['id', 'label', 'attachedTo', 'maintenance'] as $requiredKey) {
                 if (array_key_exists($requiredKey, $component)) {
                     continue;
                 }
@@ -90,7 +77,7 @@ final readonly class GearMaintenanceConfig
                 throw new InvalidGearMaintenanceConfig('"maintenance" property must be an array');
             }
             if (empty($component['maintenance'])) {
-                throw new InvalidGearMaintenanceConfig(sprintf('No maintenance tasks configured for component "%s"', $component['tag']));
+                throw new InvalidGearMaintenanceConfig(sprintf('No maintenance tasks configured for component "%s"', $component['id']));
             }
             if (!is_null($component['imgSrc']) && !is_string($component['imgSrc'])) {
                 throw new InvalidGearMaintenanceConfig('"imgSrc" property must be a string');
@@ -112,7 +99,6 @@ final readonly class GearMaintenanceConfig
                     currency: new Currency($component['purchasePrice']['currency'])
                 );
             }
-            $gearComponentTag = Tag::fromTags((string) $hashtagPrefix, $component['tag']);
             $gearComponent = GearComponent::create(
                 label: Name::fromString($component['label']),
                 attachedTo: GearIds::fromArray(array_map(
@@ -124,7 +110,7 @@ final readonly class GearMaintenanceConfig
             );
 
             foreach ($component['maintenance'] as $task) {
-                foreach (['tag', 'label', 'interval'] as $requiredKey) {
+                foreach (['id', 'label', 'interval'] as $requiredKey) {
                     if (array_key_exists($requiredKey, $task)) {
                         continue;
                     }
@@ -139,24 +125,24 @@ final readonly class GearMaintenanceConfig
                 }
 
                 $gearComponent->addMaintenanceTask(MaintenanceTask::create(
-                    tag: Tag::fromTags((string) $gearComponentTag, $task['tag']),
+                    id: MaintenanceTaskId::fromUnprefixed($task['id']),
                     label: Name::fromString($task['label']),
                     intervalValue: $task['interval']['value'],
                     intervalUnit: $intervalUnit
                 ));
             }
 
-            $maintenanceTags = array_count_values(array_column($component['maintenance'], 'tag'));
-            if ($duplicates = array_keys(array_filter($maintenanceTags, fn (int $count): bool => $count > 1))) {
-                throw new InvalidGearMaintenanceConfig(sprintf('duplicate maintenance tags found for component "%s:" %s', $gearComponent->getLabel(), implode(', ', $duplicates)));
+            $maintenanceTaskIds = array_count_values(array_column($component['maintenance'], 'id'));
+            if ($duplicates = array_keys(array_filter($maintenanceTaskIds, fn (int $count): bool => $count > 1))) {
+                throw new InvalidGearMaintenanceConfig(sprintf('duplicate maintenance task ids found for component "%s:" %s', $gearComponent->getLabel(), implode(', ', $duplicates)));
             }
 
             $gearMaintenanceConfig->addComponent($gearComponent);
         }
 
-        $componentTags = array_count_values(array_column($config['components'], 'tag'));
-        if ($duplicates = array_keys(array_filter($componentTags, fn (int $count): bool => $count > 1))) {
-            throw new InvalidGearMaintenanceConfig(sprintf('duplicate component tags found: %s', implode(', ', $duplicates)));
+        $componentIds = array_count_values(array_column($config['components'], 'id'));
+        if ($duplicates = array_keys(array_filter($componentIds, fn (int $count): bool => $count > 1))) {
+            throw new InvalidGearMaintenanceConfig(sprintf('duplicate component ids found: %s', implode(', ', $duplicates)));
         }
 
         return $gearMaintenanceConfig;
@@ -177,14 +163,40 @@ final readonly class GearMaintenanceConfig
         return $this->gearComponents;
     }
 
-    public function getEnrichedGearComponents(MaintenanceTaskTags $maintenanceTaskTags): GearComponents
+    public function getEnrichedGearComponents(GearMaintenanceHistories $maintenanceHistories): GearComponents
     {
         $enrichedGearComponents = GearComponents::empty();
         foreach ($this->getGearComponents() as $gearComponent) {
-            $enrichedGearComponents->add($gearComponent->withMaintenanceTaskTags($maintenanceTaskTags));
+            $enrichedGearComponents->add($gearComponent->withMaintenanceHistory($maintenanceHistories));
         }
 
         return $enrichedGearComponents;
+    }
+
+    public function findGearComponentForMaintenanceTask(MaintenanceTaskId $maintenanceTaskId): ?GearComponent
+    {
+        foreach ($this->getGearComponents() as $gearComponent) {
+            foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
+                if ($maintenanceTask->getId() == $maintenanceTaskId) {
+                    return $gearComponent;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public function findMaintenanceTask(MaintenanceTaskId $maintenanceTaskId): ?MaintenanceTask
+    {
+        foreach ($this->getGearComponents() as $gearComponent) {
+            foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
+                if ($maintenanceTask->getId() == $maintenanceTaskId) {
+                    return $maintenanceTask;
+                }
+            }
+        }
+
+        return null;
     }
 
     public function normalizeGearIds(GearIds $gearIds): void
@@ -192,14 +204,6 @@ final readonly class GearMaintenanceConfig
         foreach ($this->getGearComponents() as $gearComponent) {
             $gearComponent->normalizeGearIds($gearIds);
         }
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getAllMaintenanceTags(): array
-    {
-        return $this->getGearComponents()->getAllMaintenanceTags();
     }
 
     public function getAllReferencedGearIds(): GearIds
@@ -218,10 +222,5 @@ final readonly class GearMaintenanceConfig
     public function isFeatureEnabled(): bool
     {
         return $this->isFeatureEnabled;
-    }
-
-    public function getResetMode(): GearMaintenanceCountersResetMode
-    {
-        return $this->resetMode;
     }
 }

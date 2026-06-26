@@ -321,7 +321,6 @@ Photos: Fotók
 'Pickle Ball': Pickleball
 Pilates: Pilates
 'Pizza slices': 'Pizza slices'
-'Please address these issues': 'Kérjük, foglalkozz ezekkel a problémákkal'
 'Polarised training (last 30 days)': 'Polarizált edzés (utolsó 30 nap)'
 Power: Teljesítmény
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Ezt becsült {caloriesBurned} kalória hajtotta, ami nagyjából {numberOfPizzaSlices} szelet pizza.'
@@ -415,9 +414,8 @@ Swim: Úszás
 'TSB (Form)': 'TSB (Forma)'
 'TSB positive in': 'TSB pozitív ezután:'
 'Table Tennis': Asztalitenisz
-Tag: Cimke
-'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'A(z) „{maintenanceTaskTag}" cimke a(z) „{activityName}" tevékenységben lett használva, de az ahhoz a tevékenységhez kapcsolódó felszerelés nincs csatolva ehhez a komponenshez.'
 'Taper sweet-spot (+15)': 'Taper édes pont (+15)'
+Task: Task
 'Team Sports': Csapatsportok
 Tennis: Tenisz
 "That's 1.5 times the distance to the edge of space": 'Ez 1,5-szere az űr határáig terjedő távolságnak'

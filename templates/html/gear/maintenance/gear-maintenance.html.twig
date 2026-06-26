@@ -37,24 +37,6 @@
                         </div>
                     </div>
                 {% endif %}
-                {% if warnings is not empty %}
-                    <div class="flex mb-4 p-4 text-sm text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50"
-                         role="alert">
-                        <svg class="shrink-0 inline size-4 me-3 mt-0.5" aria-hidden="true"
-                             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                        </svg>
-                        <span class="sr-only">Info</span>
-                        <div>
-                            <span class="font-medium">{{ "Please address these issues"|trans }}:</span>
-                            <ul class="mt-1.5 list-disc list-inside">
-                                {% for warning in warnings %}
-                                    <li>{{ warning }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                {% endif %}
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-center text-gray-500">
                         <thead class="text-gray-500 text-xxs uppercase font-semibold bg-gray-50">
@@ -145,7 +127,7 @@
                                                     </div>
                                                     <div class="grid grid-cols-1 xl:grid-cols-2 gap-y-4 divide-x *:px-4 -mx-4 font-normal text-gray-700">
                                                         {% for maintenanceTask in gearComponent.getMaintenanceTasks() %}
-                                                            {% set mostRecentTaskTag = maintenanceTask.getMostRecentMaintenanceTaskTag() %}
+                                                            {% set mostRecentMaintenance = maintenanceTask.getMostRecentMaintenance() %}
                                                             <div class="flex flex-col">
                                                                 <div class="flex justify-between">
                                                                     <div>
@@ -154,22 +136,18 @@
                                                                             '{interval}': maintenanceTask.getIntervalValue() ~ ' ' ~ maintenanceTask.getIntervalUnit().value
                                                                         }) }}
                                                                     </div>
-                                                                    <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm">
-                                                                            {{ maintenanceTask.getTag() }}
-                                                                        </span>
                                                                 </div>
                                                                 <span class="text-xs grow">
                                                                         {{ "Last maintenance"|trans }}:
-                                                                        {% if mostRecentTaskTag is not null %}
-                                                                            {{ mostRecentTaskTag.getTaggedOn()|formatDate('normal') }}
+                                                                        {% if mostRecentMaintenance is not null %}
+                                                                            {{ mostRecentMaintenance.getPerformedOn()|formatDate('normal') }}
                                                                         {% else %}
                                                                             {{ "never"|trans }}
                                                                         {% endif %}
                                                                     </span>
                                                                 {% set progress = calculateMaintenanceTaskProgress(
                                                                     gearComponent.getAttachedTo(),
-                                                                    mostRecentTaskTag.getTaggedOnActivityId(),
-                                                                    mostRecentTaskTag.getTaggedOn(),
+                                                                    mostRecentMaintenance is not null ? mostRecentMaintenance.getPerformedOn() : null,
                                                                     maintenanceTask.getIntervalUnit(),
                                                                     maintenanceTask.getIntervalValue()
                                                                 ) %}

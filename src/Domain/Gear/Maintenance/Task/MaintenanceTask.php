@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\Gear\Maintenance\Task;
 
+use App\Domain\Gear\Maintenance\History\GearMaintenanceHistory;
 use App\Infrastructure\ValueObject\String\Name;
-use App\Infrastructure\ValueObject\String\Tag;
 
 final class MaintenanceTask
 {
-    private ?MaintenanceTaskTag $mostRecentMaintenanceTaskTag = null;
+    private ?GearMaintenanceHistory $mostRecentMaintenance = null;
 
     private function __construct(
-        private readonly Tag $tag,
+        private readonly MaintenanceTaskId $id,
         private readonly Name $label,
         private readonly int $intervalValue,
         private readonly IntervalUnit $intervalUnit,
@@ -20,22 +20,22 @@ final class MaintenanceTask
     }
 
     public static function create(
-        Tag $tag,
+        MaintenanceTaskId $id,
         Name $label,
         int $intervalValue,
         IntervalUnit $intervalUnit,
     ): self {
         return new self(
-            tag: $tag,
+            id: $id,
             label: $label,
             intervalValue: $intervalValue,
             intervalUnit: $intervalUnit,
         );
     }
 
-    public function getTag(): Tag
+    public function getId(): MaintenanceTaskId
     {
-        return $this->tag;
+        return $this->id;
     }
 
     public function getLabel(): Name
@@ -53,15 +53,15 @@ final class MaintenanceTask
         return $this->intervalUnit;
     }
 
-    public function withMostRecentMaintenanceTaskTag(?MaintenanceTaskTag $maintenanceTaskTag): self
+    public function withMostRecentMaintenance(?GearMaintenanceHistory $mostRecentMaintenance): self
     {
         return clone ($this, [
-            'mostRecentMaintenanceTaskTag' => $maintenanceTaskTag,
+            'mostRecentMaintenance' => $mostRecentMaintenance,
         ]);
     }
 
-    public function getMostRecentMaintenanceTaskTag(): ?MaintenanceTaskTag
+    public function getMostRecentMaintenance(): ?GearMaintenanceHistory
     {
-        return $this->mostRecentMaintenanceTaskTag;
+        return $this->mostRecentMaintenance;
     }
 }

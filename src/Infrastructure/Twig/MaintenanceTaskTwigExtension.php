@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Twig;
 
-use App\Domain\Activity\ActivityId;
 use App\Domain\Gear\GearIds;
 use App\Domain\Gear\Maintenance\Task\IntervalUnit;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgress;
@@ -23,18 +22,16 @@ final readonly class MaintenanceTaskTwigExtension
     #[AsTwigFunction('calculateMaintenanceTaskProgress')]
     public function calculateProgress(
         GearIds $gearIds,
-        ?ActivityId $lastTaggedOnActivityId,
         ?SerializableDateTime $lastTaggedOn,
         IntervalUnit $intervalUnit,
         int $intervalValue,
     ): MaintenanceTaskProgress {
-        if (!$lastTaggedOnActivityId instanceof ActivityId || !$lastTaggedOn instanceof SerializableDateTime) {
+        if (!$lastTaggedOn instanceof SerializableDateTime) {
             return MaintenanceTaskProgress::from(0, '0');
         }
 
         $context = ProgressCalculationContext::from(
             gearIds: $gearIds,
-            lastTaggedOnActivityId: $lastTaggedOnActivityId,
             lastTaggedOn: $lastTaggedOn,
             intervalUnit: $intervalUnit,
             intervalValue: $intervalValue,

@@ -8,7 +8,6 @@ use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\Metric\ActivityStreamMetricType;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Gear\GearRepository;
-use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -28,7 +27,6 @@ final class EnrichedActivities
         private readonly ActivityTypeRepository $activityTypeRepository,
         private readonly ActivityPowerRepository $activityPowerRepository,
         private readonly GearRepository $gearRepository,
-        private readonly AppConfig $config,
     ) {
     }
 
@@ -44,9 +42,6 @@ final class EnrichedActivities
             return;
         }
 
-        $tags = [
-            ...$this->config->loadGearMaintenance()->getAllMaintenanceTags(),
-        ];
         $gears = $this->gearRepository->findAll();
         $normalizedPowers = $this->fetchNormalizedPowers();
         $maxCadences = $this->fetchMaxCadences();
@@ -67,8 +62,7 @@ final class EnrichedActivities
                 )
                 ->withGearName(
                     $gears->getByGearId($activity->getGearId())?->getName()
-                )
-                ->withTags($tags);
+                );
 
             if (isset($maxCadences[$activityId])) {
                 $activity = $activity->withMaxCadence($maxCadences[$activityId]);

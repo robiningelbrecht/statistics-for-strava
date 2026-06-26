@@ -321,7 +321,6 @@ Photos: 照片
 'Pickle Ball': 匹克球
 Pilates: 普拉提
 'Pizza slices': 'Pizza slices'
-'Please address these issues': 请解决这些问题
 'Polarised training (last 30 days)': 极化训练（过去30天）
 Power: 功率
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': '消耗了约{caloriesBurned}卡路里，或大约{numberOfPizzaSlices}片披萨🍕。'
@@ -415,9 +414,8 @@ Swim: 游泳
 'TSB (Form)': 'TSB (状态)'
 'TSB positive in': 'TSB positive in'
 'Table Tennis': 乒乓球
-Tag: 标签
-'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': '"{maintenanceTaskTag}"标签已在"{activityName}"中使用, 但该活动中引用的装备未附加到此组件。'
 'Taper sweet-spot (+15)': '最佳减量期 (+15)'
+Task: Task
 'Team Sports': 'Team Sports'
 Tennis: 网球
 "That's 1.5 times the distance to the edge of space": "That's 1.5 times the distance to the edge of space"
