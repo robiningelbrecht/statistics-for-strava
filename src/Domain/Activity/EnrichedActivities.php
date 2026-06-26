@@ -8,7 +8,7 @@ use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\Metric\ActivityStreamMetricType;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Gear\GearRepository;
-use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
+use App\Infrastructure\Config\Config;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -28,7 +28,7 @@ final class EnrichedActivities
         private readonly ActivityTypeRepository $activityTypeRepository,
         private readonly ActivityPowerRepository $activityPowerRepository,
         private readonly GearRepository $gearRepository,
-        private readonly GearMaintenanceConfig $gearMaintenanceConfig,
+        private readonly Config $config,
     ) {
     }
 
@@ -45,7 +45,7 @@ final class EnrichedActivities
         }
 
         $tags = [
-            ...$this->gearMaintenanceConfig->getAllMaintenanceTags(),
+            ...$this->config->loadGearMaintenance()->getAllMaintenanceTags(),
         ];
         $gears = $this->gearRepository->findAll();
         $normalizedPowers = $this->fetchNormalizedPowers();

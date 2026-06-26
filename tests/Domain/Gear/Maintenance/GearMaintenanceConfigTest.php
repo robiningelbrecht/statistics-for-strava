@@ -6,11 +6,6 @@ use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
 use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Gear\Maintenance\InvalidGearMaintenanceConfig;
-use App\Infrastructure\KeyValue\Key;
-use App\Infrastructure\KeyValue\KeyValue;
-use App\Infrastructure\KeyValue\KeyValueStore;
-use App\Infrastructure\KeyValue\Value;
-use App\Infrastructure\Serialization\Json;
 use App\Tests\ContainerTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -25,14 +20,7 @@ class GearMaintenanceConfigTest extends ContainerTestCase
      */
     private function createConfig(array $config): GearMaintenanceConfig
     {
-        /** @var KeyValueStore $keyValueStore */
-        $keyValueStore = $this->getContainer()->get(KeyValueStore::class);
-        $keyValueStore->save(KeyValue::fromState(
-            key: Key::GEAR_MAINTENANCE,
-            value: Value::fromString(Json::encode($config)),
-        ));
-
-        return GearMaintenanceConfig::create($keyValueStore);
+        return GearMaintenanceConfig::fromArray($config);
     }
 
     public function testFromArrayWhenEmpty(): void

@@ -7,11 +7,11 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
-use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Gear\Maintenance\Task\IntervalUnit;
 use App\Domain\Gear\Maintenance\Task\Progress\EveryXDaysUsedProgressCalculation;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgress;
 use App\Domain\Gear\Maintenance\Task\Progress\ProgressCalculationContext;
+use App\Infrastructure\Config\Config;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
@@ -105,7 +105,7 @@ class EveryXDaysUsedProgressCalculationTest extends ContainerTestCase
 
         $this->calculation = new EveryXDaysUsedProgressCalculation(
             $this->getContainer()->get(Connection::class),
-            $this->getContainer()->get(GearMaintenanceConfig::class),
+            $this->getContainer()->get(Config::class),
             $this->getContainer()->get(TranslatorInterface::class),
         );
     }

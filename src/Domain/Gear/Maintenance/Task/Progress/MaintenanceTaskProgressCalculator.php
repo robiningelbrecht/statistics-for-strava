@@ -6,8 +6,8 @@ namespace App\Domain\Gear\Maintenance\Task\Progress;
 
 use App\Domain\Gear\GearIds;
 use App\Domain\Gear\GearRepository;
-use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
+use App\Infrastructure\Config\Config;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 final readonly class MaintenanceTaskProgressCalculator
@@ -18,7 +18,7 @@ final readonly class MaintenanceTaskProgressCalculator
     public function __construct(
         #[AutowireIterator('app.maintenance_progress_calculation')]
         private iterable $maintenanceTaskProgressCalculations,
-        private GearMaintenanceConfig $gearMaintenanceConfig,
+        private Config $config,
         private MaintenanceTaskTagRepository $maintenanceTaskTagRepository,
         private GearRepository $gearRepository,
     ) {
@@ -42,13 +42,14 @@ final readonly class MaintenanceTaskProgressCalculator
     public function getGearIdsThatHaveDueTasks(): GearIds
     {
         $gearIdsThatHaveDueTasks = GearIds::empty();
-        if (!$this->gearMaintenanceConfig->isFeatureEnabled()) {
+        $gearMaintenanceConfig = $this->config->loadGearMaintenance();
+        if (!$gearMaintenanceConfig->isFeatureEnabled()) {
             return $gearIdsThatHaveDueTasks;
         }
 
         $allGears = $this->gearRepository->findAll();
         $maintenanceTaskTags = $this->maintenanceTaskTagRepository->findAll()->filterOnValid();
-        $allGearComponents = $this->gearMaintenanceConfig->getEnrichedGearComponents($maintenanceTaskTags);
+        $allGearComponents = $gearMaintenanceConfig->getEnrichedGearComponents($maintenanceTaskTags);
 
         foreach ($allGearComponents as $gearComponent) {
             $gearComponent = $gearComponent->withMaintenanceTaskTags($maintenanceTaskTags);
@@ -69,7 +70,7 @@ final readonly class MaintenanceTaskProgressCalculator
 
                 if ($maintenanceTaskProgress->isDue()) {
                     foreach ($gearComponent->getAttachedTo() as $gearId) {
-                        if ($this->gearMaintenanceConfig->ignoreRetiredGear() && $allGears->getByGearId($gearId)?->isRetired()) {
+                        if ($gearMaintenanceConfig->ignoreRetiredGear() && $allGears->getByGearId($gearId)?->isRetired()) {
                             continue;
                         }
                         $gearIdsThatHaveDueTasks->add($gearId);

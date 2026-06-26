@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Gear\Maintenance\Task\Progress;
 
-use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Gear\Maintenance\GearMaintenanceCountersResetMode;
 use App\Domain\Gear\Maintenance\Task\IntervalUnit;
+use App\Infrastructure\Config\Config;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
@@ -15,7 +15,7 @@ final readonly class EveryXDistanceUsedProgressCalculation implements Maintenanc
 {
     public function __construct(
         private Connection $connection,
-        private GearMaintenanceConfig $config,
+        private Config $config,
     ) {
     }
 
@@ -29,7 +29,8 @@ final readonly class EveryXDistanceUsedProgressCalculation implements Maintenanc
 
     public function calculate(ProgressCalculationContext $context): MaintenanceTaskProgress
     {
-        $operator = GearMaintenanceCountersResetMode::NEXT_ACTIVITY_ONWARDS === $this->config->getResetMode() ? '>' : '>=';
+        $gearMaintenanceConfig = $this->config->loadGearMaintenance();
+        $operator = GearMaintenanceCountersResetMode::NEXT_ACTIVITY_ONWARDS === $gearMaintenanceConfig->getResetMode() ? '>' : '>=';
         $query = '
                 SELECT SUM(distance) AS distance
                 FROM Activity
