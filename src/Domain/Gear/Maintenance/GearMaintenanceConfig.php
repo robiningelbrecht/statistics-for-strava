@@ -6,7 +6,7 @@ namespace App\Domain\Gear\Maintenance;
 
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
-use App\Domain\Gear\Maintenance\History\GearMaintenanceHistories;
+use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogs;
 use App\Domain\Gear\Maintenance\Task\IntervalUnit;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTask;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskId;
@@ -163,11 +163,11 @@ final readonly class GearMaintenanceConfig
         return $this->gearComponents;
     }
 
-    public function getEnrichedGearComponents(GearMaintenanceHistories $maintenanceHistories): GearComponents
+    public function getEnrichedGearComponents(GearMaintenanceLogs $maintenanceLogs): GearComponents
     {
         $enrichedGearComponents = GearComponents::empty();
         foreach ($this->getGearComponents() as $gearComponent) {
-            $enrichedGearComponents->add($gearComponent->withMaintenanceHistory($maintenanceHistories));
+            $enrichedGearComponents->add($gearComponent->withMaintenanceLogs($maintenanceLogs));
         }
 
         return $enrichedGearComponents;

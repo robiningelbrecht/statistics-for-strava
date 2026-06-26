@@ -24,8 +24,8 @@ final class Version20260621191636 extends AbstractMigration
         $this->addSql('ALTER TABLE Gear ADD COLUMN purchasePriceCurrency VARCHAR(3) DEFAULT NULL');
         $this->addSql('ALTER TABLE Gear ADD COLUMN localImagePath VARCHAR(255) DEFAULT NULL');
         $this->addSql('CREATE TABLE RecordingDevice (id VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, purchasePriceAmount BIGINT DEFAULT NULL, purchasePriceCurrency VARCHAR(3) DEFAULT NULL, PRIMARY KEY (id))');
-        $this->addSql('CREATE TABLE GearMaintenanceHistory (gearMaintenanceHistoryId VARCHAR(255) NOT NULL, gearId VARCHAR(255) NOT NULL, maintenanceTaskId VARCHAR(255) NOT NULL, performedOn DATETIME NOT NULL, PRIMARY KEY (gearMaintenanceHistoryId))');
-        $this->addSql('CREATE INDEX GearMaintenanceHistory_gearIndex ON GearMaintenanceHistory (gearId)');
+        $this->addSql('CREATE TABLE GearMaintenanceLog (gearMaintenanceLogId VARCHAR(255) NOT NULL, gearId VARCHAR(255) NOT NULL, maintenanceTaskId VARCHAR(255) NOT NULL, performedOn DATETIME NOT NULL, PRIMARY KEY (gearMaintenanceLogId))');
+        $this->addSql('CREATE INDEX GearMaintenanceLog_gearIndex ON GearMaintenanceLog (gearId)');
     }
 
     public function down(Schema $schema): void
@@ -35,6 +35,6 @@ final class Version20260621191636 extends AbstractMigration
         $this->addSql('ALTER TABLE Gear DROP COLUMN purchasePriceCurrency');
         $this->addSql('ALTER TABLE Gear DROP COLUMN localImagePath');
         $this->addSql('DROP TABLE RecordingDevice');
-        $this->addSql('DROP TABLE GearMaintenanceHistory');
+        $this->addSql('DROP TABLE GearMaintenanceLog');
     }
 }

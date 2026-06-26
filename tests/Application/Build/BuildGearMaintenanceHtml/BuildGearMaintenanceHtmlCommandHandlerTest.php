@@ -9,8 +9,8 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;
-use App\Domain\Gear\Maintenance\History\GearMaintenanceHistory;
-use App\Domain\Gear\Maintenance\History\GearMaintenanceHistoryRepository;
+use App\Domain\Gear\Maintenance\Log\GearMaintenanceLog;
+use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogRepository;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskId;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Infrastructure\Config\AppConfig;
@@ -95,13 +95,13 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
 
         // Maintenance history is now persisted (it used to be derived from the hashtags
         // in the activity titles above). Persist the rows those tags represent.
-        $gearMaintenanceHistoryRepository = $this->getContainer()->get(GearMaintenanceHistoryRepository::class);
-        $gearMaintenanceHistoryRepository->add(GearMaintenanceHistory::create(
+        $gearMaintenanceLogRepository = $this->getContainer()->get(GearMaintenanceLogRepository::class);
+        $gearMaintenanceLogRepository->add(GearMaintenanceLog::create(
             gearId: $gear->getId(),
             maintenanceTaskId: MaintenanceTaskId::fromUnprefixed('chain-lubed'),
             performedOn: SerializableDateTime::fromString('2025-01-01 00:00:00'),
         ));
-        $gearMaintenanceHistoryRepository->add(GearMaintenanceHistory::create(
+        $gearMaintenanceLogRepository->add(GearMaintenanceLog::create(
             gearId: GearId::fromUnprefixed('retired'),
             maintenanceTaskId: MaintenanceTaskId::fromUnprefixed('chain-lubed'),
             performedOn: SerializableDateTime::fromString('2025-01-01 00:00:00'),
@@ -117,7 +117,7 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
 
         new BuildGearMaintenanceHtmlCommandHandler(
             config: $this->getContainer()->get(AppConfig::class),
-            gearMaintenanceHistoryRepository: $this->getContainer()->get(GearMaintenanceHistoryRepository::class),
+            gearMaintenanceLogRepository: $this->getContainer()->get(GearMaintenanceLogRepository::class),
             gearRepository: $this->getContainer()->get(GearRepository::class),
             maintenanceTaskProgressCalculator: $this->getContainer()->get(MaintenanceTaskProgressCalculator::class),
             twig: $this->getContainer()->get(Environment::class),

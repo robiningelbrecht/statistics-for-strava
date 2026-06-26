@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Gear\Maintenance\History;
+namespace App\Domain\Gear\Maintenance\Log;
 
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskId;
@@ -10,13 +10,13 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'GearMaintenanceHistory')]
-#[ORM\Index(name: 'GearMaintenanceHistory_gearIndex', columns: ['gearId'])]
-final readonly class GearMaintenanceHistory
+#[ORM\Table(name: 'GearMaintenanceLog')]
+#[ORM\Index(name: 'GearMaintenanceLog_gearIndex', columns: ['gearId'])]
+final readonly class GearMaintenanceLog
 {
     private function __construct(
         #[ORM\Id, ORM\Column(type: 'string', unique: true)]
-        private GearMaintenanceHistoryId $gearMaintenanceHistoryId,
+        private GearMaintenanceLogId $gearMaintenanceLogId,
         #[ORM\Column(type: 'string')]
         private GearId $gearId,
         #[ORM\Column(type: 'string')]
@@ -32,7 +32,7 @@ final readonly class GearMaintenanceHistory
         SerializableDateTime $performedOn,
     ): self {
         return new self(
-            gearMaintenanceHistoryId: GearMaintenanceHistoryId::random(),
+            gearMaintenanceLogId: GearMaintenanceLogId::random(),
             gearId: $gearId,
             maintenanceTaskId: $maintenanceTaskId,
             performedOn: $performedOn,
@@ -40,22 +40,32 @@ final readonly class GearMaintenanceHistory
     }
 
     public static function fromState(
-        GearMaintenanceHistoryId $gearMaintenanceHistoryId,
+        GearMaintenanceLogId $gearMaintenanceLogId,
         GearId $gearId,
         MaintenanceTaskId $maintenanceTaskId,
         SerializableDateTime $performedOn,
     ): self {
         return new self(
-            gearMaintenanceHistoryId: $gearMaintenanceHistoryId,
+            gearMaintenanceLogId: $gearMaintenanceLogId,
             gearId: $gearId,
             maintenanceTaskId: $maintenanceTaskId,
             performedOn: $performedOn,
         );
     }
 
-    public function getId(): GearMaintenanceHistoryId
+    public function withPerformedOn(SerializableDateTime $performedOn): self
     {
-        return $this->gearMaintenanceHistoryId;
+        return new self(
+            gearMaintenanceLogId: $this->gearMaintenanceLogId,
+            gearId: $this->gearId,
+            maintenanceTaskId: $this->maintenanceTaskId,
+            performedOn: $performedOn,
+        );
+    }
+
+    public function getId(): GearMaintenanceLogId
+    {
+        return $this->gearMaintenanceLogId;
     }
 
     public function getGearId(): GearId

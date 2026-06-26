@@ -9,8 +9,8 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;
-use App\Domain\Gear\Maintenance\History\GearMaintenanceHistory;
-use App\Domain\Gear\Maintenance\History\GearMaintenanceHistoryRepository;
+use App\Domain\Gear\Maintenance\Log\GearMaintenanceLog;
+use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogRepository;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskId;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Infrastructure\Serialization\Json;
@@ -61,7 +61,7 @@ class GearMaintenanceNotificationConsoleCommandTest extends ConsoleCommandTestCa
             []
         ));
 
-        $this->getContainer()->get(GearMaintenanceHistoryRepository::class)->add(GearMaintenanceHistory::create(
+        $this->getContainer()->get(GearMaintenanceLogRepository::class)->add(GearMaintenanceLog::create(
             gearId: $gear->getId(),
             maintenanceTaskId: MaintenanceTaskId::fromUnprefixed('chain-lubed'),
             performedOn: SerializableDateTime::fromString('2025-01-01 00:00:00'),
