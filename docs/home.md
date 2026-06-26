@@ -34,7 +34,7 @@
 * **Monthly View** - Monthly stats with an interactive calendar
 * **Gear stats** - Track how much you've used each bike, shoe, etc.
 * **Track gear** - Track custom gear setups
-* **Maintenance Tracking** - Keep tabs on gear wear and tear ([instructions](https://docs.getsfs.app/#/configuration/gear-maintenance))
+* **Maintenance Tracking** - Keep tabs on gear wear and tear ([instructions](https://docs.dreeve.app/#/configuration/gear-maintenance))
 * **Eddington** - For your distance milestones
 * **Segments & Efforts** - Dive into your segment history and times
 * **Heatmap** - Visualize where you’ve been active the most
