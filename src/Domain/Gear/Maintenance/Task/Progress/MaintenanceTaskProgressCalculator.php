@@ -49,8 +49,8 @@ final readonly class MaintenanceTaskProgressCalculator
         }
 
         $allGears = $this->gearRepository->findAll();
-        $maintenanceHistories = $this->gearMaintenanceHistoryRepository->findAll();
-        $allGearComponents = $gearMaintenanceConfig->getEnrichedGearComponents($maintenanceHistories);
+        $maintenanceHistory = $this->gearMaintenanceHistoryRepository->findAll();
+        $allGearComponents = $gearMaintenanceConfig->getEnrichedGearComponents($maintenanceHistory);
 
         foreach ($allGearComponents as $gearComponent) {
             foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {

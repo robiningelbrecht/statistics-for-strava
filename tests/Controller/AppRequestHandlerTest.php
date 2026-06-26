@@ -3,6 +3,7 @@
 namespace App\Tests\Controller;
 
 use App\Controller\AppRequestHandler;
+use App\Domain\Import\ImportMode;
 use App\Domain\Strava\InvalidStravaAccessToken;
 use App\Domain\Strava\Strava;
 use App\Tests\ContainerTestCase;
@@ -32,7 +33,7 @@ class AppRequestHandlerTest extends ContainerTestCase
         $this->assertMatchesHtmlSnapshot($this->appRequestHandler->handle()->getContent());
     }
 
-    public function testHandleWhenInvalidRefreshToken(): void
+    public function testHandleWhenInvalidRefreshTokenUsingStravaApiImportMode(): void
     {
         $this->strava
             ->expects($this->once())
@@ -47,13 +48,29 @@ class AppRequestHandlerTest extends ContainerTestCase
         );
     }
 
-    public function testHandleWhenValidRefreshTokenButNoBuild(): void
+    public function testHandleWhenValidRefreshTokenButNoBuildUsingStravaApiImportMode(): void
     {
         $this->strava
             ->expects($this->once())
             ->method('verifyAccessToken');
 
         $this->assertMatchesHtmlSnapshot($this->appRequestHandler->handle()->getContent());
+    }
+
+    public function testHandleWhenNoBuildUsingFileImportMode(): void
+    {
+        $this->strava
+            ->expects($this->never())
+            ->method('verifyAccessToken');
+
+        $appRequestHandler = new AppRequestHandler(
+            $this->getContainer()->get('build_html.storage'),
+            $this->strava,
+            $this->getContainer()->get(Environment::class),
+            ImportMode::FILES,
+        );
+
+        $this->assertMatchesHtmlSnapshot($appRequestHandler->handle()->getContent());
     }
 
     #[\Override]
@@ -63,6 +80,7 @@ class AppRequestHandlerTest extends ContainerTestCase
             $this->getContainer()->get('build_html.storage'),
             $this->strava = $this->createMock(Strava::class),
             $this->getContainer()->get(Environment::class),
+            ImportMode::STRAVA_API,
         );
     }
 }

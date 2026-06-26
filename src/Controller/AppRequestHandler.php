@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Domain\Import\ImportMode;
 use App\Domain\Strava\InsufficientStravaAccessTokenScopes;
 use App\Domain\Strava\InvalidStravaAccessToken;
 use App\Domain\Strava\Strava;
@@ -21,6 +22,7 @@ final readonly class AppRequestHandler
         private FilesystemOperator $buildHtmlStorage,
         private Strava $strava,
         private Environment $twig,
+        private ImportMode $importMode,
     ) {
     }
 
@@ -30,11 +32,14 @@ final readonly class AppRequestHandler
         if ($this->buildHtmlStorage->fileExists('index.html')) {
             return new Response($this->buildHtmlStorage->read('index.html'), Response::HTTP_OK);
         }
-        try {
-            $this->strava->verifyAccessToken();
-        } catch (InvalidStravaAccessToken|InsufficientStravaAccessTokenScopes) {
-            // Refresh token has not been set up properly or does not have the required scopes, initialize authorization flow.
-            return new RedirectResponse('/strava-oauth', Response::HTTP_FOUND);
+
+        if ($this->importMode->isStravaApi()) {
+            try {
+                $this->strava->verifyAccessToken();
+            } catch (InvalidStravaAccessToken|InsufficientStravaAccessTokenScopes) {
+                // Refresh token has not been set up properly or does not have the required scopes, initialize authorization flow.
+                return new RedirectResponse('/strava-oauth', Response::HTTP_FOUND);
+            }
         }
 
         return new Response($this->twig->render('html/finish-setup.html.twig'), Response::HTTP_OK);
