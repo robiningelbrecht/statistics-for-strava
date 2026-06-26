@@ -100,7 +100,6 @@ Delete: Delete
 Deleting...: Deleting...
 Density: Density
 Description: Description
-'Detailed instructions are available in the documentation on': 'Instruções detalhadas disponíveis na documentação em'
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
 Details: Details
 Device: Dispositivo
@@ -521,7 +520,7 @@ Time: Hora
 'Time in zone': 'Time in zone'
 'Times completed': 'Vezes concluído'
 Title: Title
-'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'Para activar, configurar {configFile} e recriar os ficheiros para que as mudanças sejam efectivas'
+'To enable it, configure this in the admin panel and rebuild the files for the changes to take effect': 'To enable it, configure this in the admin panel and rebuild the files for the changes to take effect'
 'Toggle sidebar': 'Ativar/desativar barra lateral'
 'Top 10': 'Top 10'
 'Total distance per month': 'Distância total por mês'

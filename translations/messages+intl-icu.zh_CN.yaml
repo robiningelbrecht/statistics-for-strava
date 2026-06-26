@@ -100,7 +100,6 @@ Delete: Delete
 Deleting...: Deleting...
 Density: Density
 Description: Description
-'Detailed instructions are available in the documentation on': 详细说明
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
 Details: 详情
 Device: 设备
@@ -521,7 +520,7 @@ Time: 时间
 'Time in zone': 'Time in zone'
 'Times completed': 完成次数
 Title: Title
-'To enable it, configure {configFile} and rebuild the files for the changes to take effect': '请配置{configFile}并重新构建文件以开启此功能'
+'To enable it, configure this in the admin panel and rebuild the files for the changes to take effect': 'To enable it, configure this in the admin panel and rebuild the files for the changes to take effect'
 'Toggle sidebar': 切换侧边栏
 'Top 10': 前10名
 'Total distance per month': 每月总距离
