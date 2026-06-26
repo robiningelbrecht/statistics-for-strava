@@ -7,6 +7,9 @@ namespace App\Domain\Gear\Maintenance;
 use App\Domain\Gear\GearIds;
 use App\Infrastructure\ValueObject\Collection;
 
+/**
+ * @extends Collection<\App\Domain\Gear\Maintenance\GearComponent>
+ */
 final class GearComponents extends Collection
 {
     public function getItemClassName(): string
@@ -38,7 +41,7 @@ final class GearComponents extends Collection
             }
         }
 
-        return $gearIds;
+        return $gearIds->unique();
     }
 
     /**
