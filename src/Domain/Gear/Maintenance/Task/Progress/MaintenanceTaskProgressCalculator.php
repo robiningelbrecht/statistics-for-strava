@@ -6,6 +6,7 @@ namespace App\Domain\Gear\Maintenance\Task\Progress;
 
 use App\Domain\Gear\GearIds;
 use App\Domain\Gear\GearRepository;
+use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTag;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
 use App\Infrastructure\Config\AppConfig;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
@@ -54,7 +55,7 @@ final readonly class MaintenanceTaskProgressCalculator
         foreach ($allGearComponents as $gearComponent) {
             $gearComponent = $gearComponent->withMaintenanceTaskTags($maintenanceTaskTags);
             foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
-                if (!($mostRecentTag = $maintenanceTask->getMostRecentMaintenanceTaskTag()) instanceof \App\Domain\Gear\Maintenance\Task\MaintenanceTaskTag) {
+                if (!($mostRecentTag = $maintenanceTask->getMostRecentMaintenanceTaskTag()) instanceof MaintenanceTaskTag) {
                     continue;
                 }
 

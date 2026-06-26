@@ -42,7 +42,6 @@ final class AppConfig
             /** @var array<string, mixed>|null $config */
             $config = Json::decode((string) $this->keyValueStore->find(Key::GEAR_MAINTENANCE));
         } catch (EntityNotFound) {
-            // No record: gear maintenance has not been configured.
             $config = null;
         }
 
@@ -137,7 +136,7 @@ final class AppConfig
             foreach ($finder as $file) {
                 self::$yamlConfigFiles[] = $file->getRealPath();
             }
-        } catch (DirectoryNotFoundException) {
+        } catch (DirectoryNotFoundException) { // @codeCoverageIgnore
         }
     }
 
@@ -159,7 +158,7 @@ final class AppConfig
         $parsedYaml = [];
 
         if ([] === self::$yamlConfigFiles) {
-            throw new \RuntimeException('No YAML config files processed yet. AppConfig::setYamlConfigFilesToParse() must be called first.');
+            throw new \RuntimeException('No YAML config files processed yet. AppConfig::setYamlConfigFilesToParse() must be called first.'); // @codeCoverageIgnore
         }
 
         foreach (self::$yamlConfigFiles as $filePath) {

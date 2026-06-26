@@ -171,11 +171,6 @@ final readonly class GearMaintenanceConfig
         $this->gearComponents->add($component);
     }
 
-    public function getHashtagPrefix(): HashtagPrefix
-    {
-        return $this->hashtagPrefix;
-    }
-
     public function ignoreRetiredGear(): bool
     {
         return $this->ignoreRetiredGear;
