@@ -11,7 +11,7 @@ use App\Domain\Gear\Maintenance\Task\ActivityBasedMaintenanceTaskTagRepository;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTag;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTags;
-use App\Infrastructure\Config\Config;
+use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\KeyValue\Key;
 use App\Infrastructure\KeyValue\KeyValue;
 use App\Infrastructure\KeyValue\KeyValueStore;
@@ -93,7 +93,7 @@ class ActivityBasedMaintenanceTaskTagRepositoryTest extends ContainerTestCase
 
         $this->maintenanceTaskTagRepository = new ActivityBasedMaintenanceTaskTagRepository(
             $this->getContainer()->get(EnrichedActivities::class),
-            $this->getContainer()->get(Config::class),
+            $this->getContainer()->get(AppConfig::class),
         );
     }
 

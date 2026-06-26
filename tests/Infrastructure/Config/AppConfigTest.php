@@ -2,70 +2,83 @@
 
 namespace App\Tests\Infrastructure\Config;
 
-use App\Domain\Import\ImportMode;
+use App\Domain\Gear\GearRepository;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Config\CouldNotParseYamlConfig;
 use App\Infrastructure\Config\PlatformEnvironment;
+use App\Infrastructure\KeyValue\KeyValueStore;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
+use App\Tests\ContainerTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
-use Spatie\Snapshots\MatchesSnapshots;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class AppConfigTest extends TestCase
+class AppConfigTest extends ContainerTestCase
 {
-    use MatchesSnapshots;
-
-    private ContainerBuilder $containerBuilder;
-
     #[DataProvider(methodName: 'provideConfig')]
     public function testGet(string $key, mixed $expectedValue, string $dir, PlatformEnvironment $platformEnvironment): void
     {
-        AppConfig::init(
+        AppConfig::setYamlConfigFilesToParse(
             kernelProjectDir: KernelProjectDir::fromString($dir),
-            platformEnvironment: $platformEnvironment,
-            importMode: ImportMode::STRAVA_API
+            platformEnvironment: $platformEnvironment
         );
+
+        $config = new AppConfig(
+            $this->getContainer()->get(KeyValueStore::class),
+            $this->getContainer()->get(GearRepository::class),
+        );
+
         $this->assertEquals(
             $expectedValue,
-            AppConfig::get($key)
+            $config->get($key)
         );
     }
 
     public function testGetWithDefaultValue(): void
     {
-        AppConfig::init(
+        AppConfig::setYamlConfigFilesToParse(
             kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/valid-config'),
-            platformEnvironment: PlatformEnvironment::DEV,
-            importMode: ImportMode::STRAVA_API
+            platformEnvironment: PlatformEnvironment::DEV
         );
+
+        $config = new AppConfig(
+            $this->getContainer()->get(KeyValueStore::class),
+            $this->getContainer()->get(GearRepository::class),
+        );
+
         $default = [];
         $this->assertEquals(
             $default,
-            AppConfig::get('non.existent.key', $default)
+            $config->get('non.existent.key', $default)
         );
     }
 
     public function testGetItShouldThrow(): void
     {
-        AppConfig::init(
+        AppConfig::setYamlConfigFilesToParse(
             kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/valid-config'),
-            platformEnvironment: PlatformEnvironment::DEV,
-            importMode: ImportMode::STRAVA_API
+            platformEnvironment: PlatformEnvironment::DEV
+        );
+
+        $config = new AppConfig(
+            $this->getContainer()->get(KeyValueStore::class),
+            $this->getContainer()->get(GearRepository::class),
         );
 
         $this->expectExceptionObject(new \RuntimeException('Unknown configuration key "non.existent.key"'));
-        AppConfig::get('non.existent.key');
+        $config->get('non.existent.key');
     }
 
     public function testItThrowsExceptionWhenInvalidYmlInMainConfigFile(): void
     {
         $this->expectExceptionObject(CouldNotParseYamlConfig::invalidYml('Malformed unquoted YAML string at line 1 (near "[}").'));
 
-        AppConfig::init(
+        AppConfig::setYamlConfigFilesToParse(
             kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/invalid-config'),
-            platformEnvironment: PlatformEnvironment::DEV,
-            importMode: ImportMode::STRAVA_API
+            platformEnvironment: PlatformEnvironment::DEV
+        );
+
+        new AppConfig(
+            $this->getContainer()->get(KeyValueStore::class),
+            $this->getContainer()->get(GearRepository::class),
         );
     }
 
@@ -73,10 +86,14 @@ class AppConfigTest extends TestCase
     {
         $this->expectExceptionObject(CouldNotParseYamlConfig::invalidYml('Malformed unquoted YAML string at line 1 (near "[}").'));
 
-        AppConfig::init(
+        AppConfig::setYamlConfigFilesToParse(
             kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/invalid-config-sub'),
-            platformEnvironment: PlatformEnvironment::DEV,
-            importMode: ImportMode::STRAVA_API
+            platformEnvironment: PlatformEnvironment::DEV
+        );
+
+        new AppConfig(
+            $this->getContainer()->get(KeyValueStore::class),
+            $this->getContainer()->get(GearRepository::class),
         );
     }
 
@@ -84,10 +101,9 @@ class AppConfigTest extends TestCase
     {
         $this->expectExceptionObject(CouldNotParseYamlConfig::configFileNotFound());
 
-        AppConfig::init(
+        AppConfig::setYamlConfigFilesToParse(
             kernelProjectDir: KernelProjectDir::fromString('lol'),
-            platformEnvironment: PlatformEnvironment::DEV,
-            importMode: ImportMode::STRAVA_API
+            platformEnvironment: PlatformEnvironment::DEV
         );
     }
 

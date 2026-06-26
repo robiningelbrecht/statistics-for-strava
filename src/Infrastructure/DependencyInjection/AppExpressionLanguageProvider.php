@@ -18,8 +18,8 @@ final readonly class AppExpressionLanguageProvider implements ExpressionFunction
         return [
             new ExpressionFunction(
                 name: 'app_config',
-                compiler: fn (string $appConfigKey, mixed $defaultValue = null): string => sprintf('\App\Infrastructure\Config\AppConfig::get(%s, %s)', $appConfigKey, $defaultValue),
-                evaluator: fn (array $variables, string $appConfigKey, mixed $defaultValue = null): mixed => AppConfig::get($appConfigKey, $defaultValue)
+                compiler: fn (string $appConfigKey, mixed $defaultValue = null): string => sprintf('$container->get(\App\Infrastructure\Config\AppConfig::class)->get(%s, %s)', $appConfigKey, $defaultValue),
+                evaluator: fn (array $variables, string $appConfigKey, mixed $defaultValue = null): mixed => $variables['container']->get(AppConfig::class)->get($appConfigKey, $defaultValue)
             ),
         ];
     }

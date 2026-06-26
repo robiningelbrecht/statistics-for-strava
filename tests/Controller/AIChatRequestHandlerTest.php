@@ -6,7 +6,7 @@ use App\Application\AppUrl;
 use App\Controller\AIChatRequestHandler;
 use App\Domain\Athlete\Athlete;
 use App\Domain\Athlete\AthleteRepository;
-use App\Domain\Import\ImportMode;
+use App\Domain\Gear\GearRepository;
 use App\Domain\Integration\AI\Chat\AddChatMessage\AddChatMessage;
 use App\Domain\Integration\AI\Chat\ChatCommands;
 use App\Domain\Integration\AI\Chat\ChatMessage;
@@ -16,6 +16,7 @@ use App\Domain\Integration\AI\Chat\DbalChatRepository;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Config\PlatformEnvironment;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
+use App\Infrastructure\KeyValue\KeyValueStore;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
@@ -222,10 +223,14 @@ class AIChatRequestHandlerTest extends ContainerTestCase
 
     private function buildRequestHandler(KernelProjectDir $kernelProjectDir): AIChatRequestHandler
     {
-        AppConfig::init(
+        AppConfig::setYamlConfigFilesToParse(
             kernelProjectDir: $kernelProjectDir,
             platformEnvironment: PlatformEnvironment::PROD,
-            importMode: ImportMode::STRAVA_API
+        );
+
+        $config = new AppConfig(
+            $this->getContainer()->get(KeyValueStore::class),
+            $this->getContainer()->get(GearRepository::class),
         );
 
         return new AIChatRequestHandler(
@@ -237,6 +242,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
             appUrl: AppUrl::fromString('http://localhost'),
             formFactory: $this->getContainer()->get(FormFactoryInterface::class),
             twig: $this->getContainer()->get(Environment::class),
+            config: $config,
         );
     }
 
@@ -245,10 +251,14 @@ class AIChatRequestHandlerTest extends ContainerTestCase
         AgentInterface $agent,
         CommandBus $commandBus,
     ): AIChatRequestHandler {
-        AppConfig::init(
+        AppConfig::setYamlConfigFilesToParse(
             kernelProjectDir: $this->getContainer()->get(KernelProjectDir::class)->getForTestSuite('app-configs/config-ai-enabled'),
             platformEnvironment: PlatformEnvironment::PROD,
-            importMode: ImportMode::STRAVA_API
+        );
+
+        $config = new AppConfig(
+            $this->getContainer()->get(KeyValueStore::class),
+            $this->getContainer()->get(GearRepository::class),
         );
 
         return new AIChatRequestHandler(
@@ -259,7 +269,8 @@ class AIChatRequestHandlerTest extends ContainerTestCase
             commandBus: $commandBus,
             appUrl: AppUrl::fromString('http://localhost'),
             formFactory: $this->getContainer()->get(FormFactoryInterface::class),
-            twig: $this->getContainer()->get(Environment::class)
+            twig: $this->getContainer()->get(Environment::class),
+            config: $config,
         );
     }
 

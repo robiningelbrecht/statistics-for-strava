@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Domain\Gear\Maintenance\Task;
 
 use App\Domain\Activity\EnrichedActivities;
-use App\Infrastructure\Config\Config;
+use App\Infrastructure\Config\AppConfig;
 
 final readonly class ActivityBasedMaintenanceTaskTagRepository implements MaintenanceTaskTagRepository
 {
     public function __construct(
         private EnrichedActivities $enrichedActivities,
-        private Config $config,
+        private AppConfig $config,
     ) {
     }
 

@@ -42,6 +42,7 @@ final readonly class AIChatRequestHandler
         private AppUrl $appUrl,
         private FormFactoryInterface $formFactory,
         private Environment $twig,
+        private AppConfig $config,
     ) {
     }
 
@@ -51,7 +52,7 @@ final readonly class AIChatRequestHandler
         if (!$this->buildHtmlStorage->fileExists('index.html')) {
             return new RedirectResponse(RelativeUrl::from('/', $this->appUrl)->toRelativeUrl(), Response::HTTP_FOUND);
         }
-        if (!AppConfig::isAIIntegrationWithUIEnabled()) {
+        if (!$this->config->isAIIntegrationWithUIEnabled()) {
             return new Response('UI for AI not enabled', Response::HTTP_OK);
         }
         $formBuilder = $this->formFactory->createBuilder();
@@ -74,7 +75,7 @@ final readonly class AIChatRequestHandler
     #[Route(path: '/chat/clear', methods: ['POST'], priority: 2)]
     public function clearChat(): Response
     {
-        if (!AppConfig::isAIIntegrationWithUIEnabled()) {
+        if (!$this->config->isAIIntegrationWithUIEnabled()) {
             return new Response('UI for AI not enabled', Response::HTTP_OK);
         }
 
@@ -86,7 +87,7 @@ final readonly class AIChatRequestHandler
     #[Route('/chat/sse', methods: ['GET'], priority: 2)]
     public function chatSse(Request $request): Response
     {
-        if (!AppConfig::isAIIntegrationWithUIEnabled()) {
+        if (!$this->config->isAIIntegrationWithUIEnabled()) {
             return new Response('UI for AI not enabled', Response::HTTP_OK);
         }
 

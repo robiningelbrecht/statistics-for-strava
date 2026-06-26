@@ -34,6 +34,9 @@ services:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
 
+    App\Infrastructure\Config\AppConfig:
+        public: true
+
     App\Infrastructure\Config\Leaflet\LeafletConfig:
         factory: [ null, 'create' ]
         arguments: [

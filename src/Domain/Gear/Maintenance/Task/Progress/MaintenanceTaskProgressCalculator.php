@@ -7,7 +7,7 @@ namespace App\Domain\Gear\Maintenance\Task\Progress;
 use App\Domain\Gear\GearIds;
 use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
-use App\Infrastructure\Config\Config;
+use App\Infrastructure\Config\AppConfig;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 final readonly class MaintenanceTaskProgressCalculator
@@ -18,7 +18,7 @@ final readonly class MaintenanceTaskProgressCalculator
     public function __construct(
         #[AutowireIterator('app.maintenance_progress_calculation')]
         private iterable $maintenanceTaskProgressCalculations,
-        private Config $config,
+        private AppConfig $config,
         private MaintenanceTaskTagRepository $maintenanceTaskTagRepository,
         private GearRepository $gearRepository,
     ) {

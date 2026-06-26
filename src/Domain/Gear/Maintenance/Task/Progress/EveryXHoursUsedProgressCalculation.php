@@ -6,7 +6,7 @@ namespace App\Domain\Gear\Maintenance\Task\Progress;
 
 use App\Domain\Gear\Maintenance\GearMaintenanceCountersResetMode;
 use App\Domain\Gear\Maintenance\Task\IntervalUnit;
-use App\Infrastructure\Config\Config;
+use App\Infrastructure\Config\AppConfig;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -15,7 +15,7 @@ final readonly class EveryXHoursUsedProgressCalculation implements MaintenanceTa
 {
     public function __construct(
         private Connection $connection,
-        private Config $config,
+        private AppConfig $config,
         private TranslatorInterface $translator,
     ) {
     }

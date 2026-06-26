@@ -27,6 +27,7 @@ final class AIAgentChatConsoleCommand extends Command
 {
     public function __construct(
         private readonly AgentInterface $agent,
+        private readonly AppConfig $config,
     ) {
         parent::__construct();
     }
@@ -34,7 +35,7 @@ final class AIAgentChatConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        if (!AppConfig::isAIIntegrationEnabled()) {
+        if (!$this->config->isAIIntegrationEnabled()) {
             $io->error('The AI feature is not enabled.');
 
             return Command::SUCCESS;

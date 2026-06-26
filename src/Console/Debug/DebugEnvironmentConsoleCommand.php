@@ -21,6 +21,12 @@ final class DebugEnvironmentConsoleCommand extends Command
 {
     use ProvideConsoleIntro;
 
+    public function __construct(
+        private readonly AppConfig $config,
+    ) {
+        parent::__construct();
+    }
+
     protected function configure(): void
     {
         $this->addOption('redact-sensitive-info', null, InputOption::VALUE_NONE);
@@ -51,7 +57,7 @@ final class DebugEnvironmentConsoleCommand extends Command
             ]);
         $table->render();
 
-        $config = AppConfig::getRoot();
+        $config = $this->config->getRoot();
         if ($autoRedactSensitiveInfo) {
             $config['general']['appUrl'] = $redactedString;
             $config['general']['athlete']['birthday'] = $redactedString;

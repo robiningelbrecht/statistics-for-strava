@@ -8,7 +8,7 @@ use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\Metric\ActivityStreamMetricType;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Gear\GearRepository;
-use App\Infrastructure\Config\Config;
+use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -28,7 +28,7 @@ final class EnrichedActivities
         private readonly ActivityTypeRepository $activityTypeRepository,
         private readonly ActivityPowerRepository $activityPowerRepository,
         private readonly GearRepository $gearRepository,
-        private readonly Config $config,
+        private readonly AppConfig $config,
     ) {
     }
 
