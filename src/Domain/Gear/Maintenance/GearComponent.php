@@ -10,7 +10,6 @@ use App\Domain\Gear\Maintenance\Task\MaintenanceTask;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTasks;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTags;
 use App\Infrastructure\ValueObject\String\Name;
-use App\Infrastructure\ValueObject\String\Tag;
 use Money\Money;
 
 final readonly class GearComponent
@@ -18,7 +17,6 @@ final readonly class GearComponent
     private MaintenanceTasks $maintenanceTasks;
 
     private function __construct(
-        private Tag $tag,
         private Name $label,
         private GearIds $attachedTo,
         private ?string $imgSrc,
@@ -28,14 +26,12 @@ final readonly class GearComponent
     }
 
     public static function create(
-        Tag $tag,
         Name $label,
         GearIds $attachedTo,
         ?string $imgSrc,
         ?Money $purchasePrice,
     ): self {
         return new self(
-            tag: $tag,
             label: $label,
             attachedTo: $attachedTo,
             imgSrc: $imgSrc,

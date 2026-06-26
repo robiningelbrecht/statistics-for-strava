@@ -21,7 +21,6 @@ final readonly class GearMaintenanceConfig
 
     private function __construct(
         private bool $isFeatureEnabled,
-        private HashtagPrefix $hashtagPrefix,
         private GearMaintenanceCountersResetMode $resetMode,
         private bool $ignoreRetiredGear,
     ) {
@@ -37,7 +36,6 @@ final readonly class GearMaintenanceConfig
         if (null === $config || [] === $config) {
             return new self(
                 isFeatureEnabled: false,
-                hashtagPrefix: HashtagPrefix::fromString('dummy'),
                 resetMode: GearMaintenanceCountersResetMode::NEXT_ACTIVITY_ONWARDS,
                 ignoreRetiredGear: false,
             );
@@ -73,7 +71,6 @@ final readonly class GearMaintenanceConfig
         $hashtagPrefix = HashtagPrefix::fromString($config['hashtagPrefix']);
         $gearMaintenanceConfig = new self(
             isFeatureEnabled: $config['enabled'],
-            hashtagPrefix: $hashtagPrefix,
             resetMode: $resetMode,
             ignoreRetiredGear: !empty($config['ignoreRetiredGear']),
         );
@@ -117,7 +114,6 @@ final readonly class GearMaintenanceConfig
             }
             $gearComponentTag = Tag::fromTags((string) $hashtagPrefix, $component['tag']);
             $gearComponent = GearComponent::create(
-                tag: $gearComponentTag,
                 label: Name::fromString($component['label']),
                 attachedTo: GearIds::fromArray(array_map(
                     GearId::fromUnprefixed(...),
