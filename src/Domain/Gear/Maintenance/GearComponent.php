@@ -48,11 +48,6 @@ final readonly class GearComponent
         $this->maintenanceTasks->add($task);
     }
 
-    public function getTag(): Tag
-    {
-        return $this->tag;
-    }
-
     public function getLabel(): Name
     {
         return $this->label;
