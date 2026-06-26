@@ -51,7 +51,7 @@ class AppConfigTest extends ContainerTestCase
         );
     }
 
-    public function testGetItShouldThrow(): void
+    public function testGetItShouldThrowWhenKeyIsMissing(): void
     {
         AppConfig::setYamlConfigFilesToParse(
             kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/valid-config'),

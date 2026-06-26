@@ -158,7 +158,7 @@ final class AppConfig
         $this->config = [];
         $parsedYaml = [];
 
-        if (empty(self::$yamlConfigFiles)) {
+        if ([] === self::$yamlConfigFiles) {
             throw new \RuntimeException('No YAML config files processed yet. AppConfig::setYamlConfigFilesToParse() must be called first.');
         }
 
