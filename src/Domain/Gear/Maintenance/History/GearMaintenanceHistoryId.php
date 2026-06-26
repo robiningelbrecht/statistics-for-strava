@@ -10,6 +10,6 @@ final readonly class GearMaintenanceHistoryId extends Identifier
 {
     public static function getPrefix(): string
     {
-        return 'gear-maintenance-';
+        return 'gearMaintenance-';
     }
 }
