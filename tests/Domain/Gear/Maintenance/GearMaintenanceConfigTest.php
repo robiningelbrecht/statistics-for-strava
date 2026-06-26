@@ -25,16 +25,8 @@ class GearMaintenanceConfigTest extends ContainerTestCase
 
     public function testFromArrayWhenEmpty(): void
     {
-        $this->assertEquals(
-            'The gear maintenance feature is disabled.',
-            (string) $this->createConfig([]),
-        );
-    }
-
-    public function testToString(): void
-    {
-        $this->assertMatchesTextSnapshot(
-            (string) $this->createConfig(self::getValidYml())
+        $this->assertFalse(
+            $this->createConfig([])->isFeatureEnabled(),
         );
     }
 
@@ -56,7 +48,6 @@ class GearMaintenanceConfigTest extends ContainerTestCase
             GearIds::fromArray([
                 GearId::fromUnprefixed('bike-one-gear-id'),
                 GearId::fromUnprefixed('bike-two-gear-id'),
-                GearId::fromUnprefixed('g12337767'),
             ]),
             $this->createConfig($yml)->getAllReferencedGearIds()
         );
@@ -79,7 +70,10 @@ class GearMaintenanceConfigTest extends ContainerTestCase
         $config = $this->createConfig($this->getYmlStringThatNeedsNormalization());
         $config->normalizeGearIds(GearIds::fromArray([GearId::fromUnprefixed('b123456')]));
 
-        $this->assertMatchesTextSnapshot((string) $config);
+        $this->assertEquals(
+            GearId::fromUnprefixed('b123456'),
+            $config->getGearComponents()->getAllReferencedGearIds()->getFirst()
+        );
     }
 
     #[DataProvider(methodName: 'provideInvalidConfig')]
@@ -102,10 +96,6 @@ class GearMaintenanceConfigTest extends ContainerTestCase
         $yml = self::getValidYml();
         unset($yml['components']);
         yield 'missing "components" key' => [$yml, '"components" property is required'];
-
-        $yml = self::getValidYml();
-        unset($yml['gears']);
-        yield 'missing "gears" key' => [$yml, '"gears" property is required'];
 
         $yml = self::getValidYml();
         $yml['components'] = 'string';
@@ -198,18 +188,6 @@ class GearMaintenanceConfigTest extends ContainerTestCase
         yield 'duplicate component tags' => [$yml, 'duplicate component tags found: chain'];
 
         $yml = self::getValidYml();
-        $yml['gears'] = 'string';
-        yield '"gears" is not an array' => [$yml, '"gears" property must be an array'];
-
-        $yml = self::getValidYml();
-        $yml['gears'][0]['gearId'] = '';
-        yield '"gears[gearId]" is empty' => [$yml, '"gearId" property is required for each gear'];
-
-        $yml = self::getValidYml();
-        $yml['gears'][0]['imgSrc'] = '';
-        yield '"gears[imgSrc]" is empty' => [$yml, '"imgSrc" property is required for each gear'];
-
-        $yml = self::getValidYml();
         $yml['ignoreRetiredGear'] = 'lol';
         yield 'ignoreRetiredGear is invalid' => [$yml, '"ignoreRetiredGear" property must be a boolean'];
     }
@@ -254,9 +232,6 @@ components:
         interval:
           value: 500
           unit: km
-gears:
-  - gearId: 'g12337767'
-    imgSrc: 'gear1.png'
 YML
         );
     }
@@ -271,7 +246,7 @@ components:
     label: 'Some cool chain'
     imgSrc: 'chain.png'
     attachedTo:
-      - 'b123456'
+      - '123456'
     maintenance:
       - tag: lubed
         label: Lube
@@ -299,9 +274,6 @@ components:
         interval:
           value: 500
           unit: km
-gears:
-  - gearId: '123456'
-    imgSrc: 'gear1.png'
 YML
         );
     }
