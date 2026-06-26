@@ -12,7 +12,7 @@ use App\Domain\Gear\Gears;
 use App\Domain\Gear\Maintenance\GearComponent;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
-use App\Infrastructure\Config\Config;
+use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use League\Flysystem\FilesystemOperator;
@@ -22,7 +22,7 @@ use Twig\Environment;
 final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
-        private Config $config,
+        private AppConfig $config,
         private MaintenanceTaskTagRepository $maintenanceTaskTagRepository,
         private GearRepository $gearRepository,
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
@@ -48,8 +48,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
             return;
         }
 
-        // Validate that all gear ids are in the DB. The config's gear ids are already
-        // normalized to their Strava-prefixed form by Config::loadGearMaintenance().
+        // Validate that all gear ids are in the DB.
         $gearIdsInDb = GearIds::fromArray($gears->map(fn (Gear $gear): GearId => $gear->getId()));
         $gearIdsInConfig = $gearMaintenanceConfig->getAllReferencedGearIds();
 

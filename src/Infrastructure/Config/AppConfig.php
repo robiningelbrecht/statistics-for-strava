@@ -4,7 +4,16 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Config;
 
+use App\Domain\Gear\Gear;
+use App\Domain\Gear\GearId;
+use App\Domain\Gear\GearIds;
+use App\Domain\Gear\GearRepository;
+use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Import\ImportMode;
+use App\Infrastructure\Exception\EntityNotFound;
+use App\Infrastructure\KeyValue\Key;
+use App\Infrastructure\KeyValue\KeyValueStore;
+use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
@@ -13,49 +22,109 @@ use Symfony\Component\Yaml\Yaml;
 
 final class AppConfig
 {
-    private static ?KernelProjectDir $kernelProjectDir = null;
-    private static ?PlatformEnvironment $platformEnvironment = null;
-    private static ?ImportMode $importMode = null;
-    /** @var non-empty-array<string> */
-    private static array $ymlConfigFiles;
-
     /** @var array<string|int, string|int|float|array<string|int,mixed>|null> */
-    private static array $config = [];
+    private array $config = [];
 
-    public static function init(
-        KernelProjectDir $kernelProjectDir,
-        PlatformEnvironment $platformEnvironment,
-        ImportMode $importMode,
-    ): void {
-        self::$kernelProjectDir = $kernelProjectDir;
-        self::$platformEnvironment = $platformEnvironment;
-        self::$importMode = $importMode;
-        self::buildConfig();
+    private static ?ImportMode $importMode = null;
+    /** @var array<string> */
+    private static array $yamlConfigFiles = [];
+
+    public function __construct(
+        private readonly KeyValueStore $keyValueStore,
+        private readonly GearRepository $gearRepository,
+    ) {
+        $this->buildConfig();
     }
 
-    private static function buildConfig(): void
+    public function loadGearMaintenance(): GearMaintenanceConfig
     {
-        if (!self::$kernelProjectDir instanceof KernelProjectDir) {
-            throw new \RuntimeException('$kernelProjectDir not set. Please call AppConfig::init() before using this method.'); // @codeCoverageIgnore
+        try {
+            /** @var array<string, mixed>|null $config */
+            $config = Json::decode((string) $this->keyValueStore->find(Key::GEAR_MAINTENANCE));
+        } catch (EntityNotFound) {
+            // No record: gear maintenance has not been configured.
+            $config = null;
         }
-        if (!self::$platformEnvironment instanceof PlatformEnvironment) {
-            throw new \RuntimeException('$platformEnvironment not set. Please call AppConfig::init() before using this method.'); // @codeCoverageIgnore
+
+        $gearMaintenanceConfig = GearMaintenanceConfig::fromArray(is_array($config) ? $config : null);
+
+        // The config references gear ids that may be unprefixed (copy-pasted from a gear URL),
+        // while the database stores them with their Strava "b"/"g" prefix. Normalize them here
+        // so every consumer works with ids that match the database.
+        $gearMaintenanceConfig->normalizeGearIds(GearIds::fromArray(
+            $this->gearRepository->findAll()->map(fn (Gear $gear): GearId => $gear->getId())
+        ));
+
+        return $gearMaintenanceConfig;
+    }
+
+    /**
+     * @return string|int|float|array<string|int,mixed>|bool|null
+     */
+    public function get(string $key, mixed $default = null): string|int|float|array|bool|null
+    {
+        if (!array_key_exists($key, $this->config)) {
+            if (null !== $default) {
+                return $default;
+            }
+
+            throw new \RuntimeException(sprintf('Unknown configuration key "%s"', $key));
         }
-        self::$config = [];
-        $isTest = self::$platformEnvironment->isTest();
-        $basePath = $isTest ? self::$kernelProjectDir.'/config/app/test' : self::$kernelProjectDir.'/config/app';
+
+        return $this->config[$key];
+    }
+
+    /**
+     * @return array<string|int, mixed>
+     */
+    public function getRoot(): array
+    {
+        $root = [];
+
+        foreach ($this->config as $name => $value) {
+            if (str_contains((string) $name, '.')) {
+                continue;
+            }
+
+            $root[$name] = $value;
+        }
+
+        return $root;
+    }
+
+    public function isAIIntegrationEnabled(): bool
+    {
+        return !empty($this->get('integrations.ai.enabled', false));
+    }
+
+    public function isAIIntegrationWithUIEnabled(): bool
+    {
+        return $this->isAIIntegrationEnabled() && !empty($this->get('integrations.ai.enableUI', false));
+    }
+
+    public static function setImportMode(ImportMode $importMode): void
+    {
+        self::$importMode = $importMode;
+    }
+
+    public static function getImportMode(): ImportMode
+    {
+        if (!self::$importMode instanceof ImportMode) {
+            throw new \RuntimeException('$importMode not set. Please call AppConfig::setImportMode() before using this method.'); // @codeCoverageIgnore
+        }
+
+        return self::$importMode;
+    }
+
+    public static function setYamlConfigFilesToParse(KernelProjectDir $kernelProjectDir, PlatformEnvironment $platformEnvironment): void
+    {
+        $basePath = $platformEnvironment->isTest() ? $kernelProjectDir.'/config/app/test' : $kernelProjectDir.'/config/app';
 
         $mainConfigFile = $basePath.'/config.yaml';
         if (!file_exists($mainConfigFile)) {
             throw CouldNotParseYamlConfig::configFileNotFound();
         }
-
-        try {
-            $parsedYaml = Yaml::parseFile($mainConfigFile);
-            self::$ymlConfigFiles = [$mainConfigFile];
-        } catch (ParseException $e) {
-            throw CouldNotParseYamlConfig::invalidYml($e->getMessage());
-        }
+        self::$yamlConfigFiles = [$mainConfigFile];
 
         try {
             $finder = Finder::create()
@@ -66,45 +135,9 @@ final class AppConfig
                 ->name('config-*.yaml');
 
             foreach ($finder as $file) {
-                try {
-                    $parsedYaml = array_replace_recursive($parsedYaml, Yaml::parseFile($file->getRealPath()));
-                    self::$ymlConfigFiles[] = $file->getRealPath();
-                } catch (ParseException $e) {
-                    throw CouldNotParseYamlConfig::invalidYml($e->getMessage());
-                }
+                self::$yamlConfigFiles[] = $file->getRealPath();
             }
         } catch (DirectoryNotFoundException) {
-        }
-
-        self::processYamlConfig(
-            ymlConfig: $parsedYaml,
-            prefix: null
-        );
-    }
-
-    /**
-     * @param array<string|int, mixed> $ymlConfig
-     */
-    private static function processYamlConfig(array $ymlConfig, ?string $prefix): void
-    {
-        foreach ($ymlConfig as $key => $value) {
-            if (is_string($key) && str_contains($key, '_')) {
-                // This key is in snake_case, convert it to camelCase to make sure this stays backwards compatible
-                $key = lcfirst(\str_replace('_', '', \ucwords($key, '_')));
-            }
-
-            $fullKey = (string) (null === $prefix ? $key : "$prefix.$key");
-            if (array_key_exists($fullKey, self::$config)) {
-                throw new CouldNotParseYamlConfig(sprintf('Duplicate config key: %s', $fullKey)); // @codeCoverageIgnore
-            }
-            self::$config[$fullKey] = $value;
-
-            if (is_array($value)) {
-                self::processYamlConfig(
-                    ymlConfig: $value,
-                    prefix: $fullKey
-                );
-            }
         }
     }
 
@@ -113,59 +146,59 @@ final class AppConfig
      */
     public static function getYamlFilesToProcess(): array
     {
-        return self::$ymlConfigFiles;
+        if ([] === self::$yamlConfigFiles) {
+            throw new \RuntimeException('No YAML config files processed yet. AppConfig::setYamlConfigFilesToParse() must be called first.'); // @codeCoverageIgnore
+        }
+
+        return self::$yamlConfigFiles;
+    }
+
+    private function buildConfig(): void
+    {
+        $this->config = [];
+        $parsedYaml = [];
+
+        if (empty(self::$yamlConfigFiles)) {
+            throw new \RuntimeException('No YAML config files processed yet. AppConfig::setYamlConfigFilesToParse() must be called first.');
+        }
+
+        foreach (self::$yamlConfigFiles as $filePath) {
+            try {
+                $parsedYaml = array_replace_recursive($parsedYaml, Yaml::parseFile($filePath));
+            } catch (ParseException $e) {
+                throw CouldNotParseYamlConfig::invalidYml($e->getMessage());
+            }
+        }
+
+        $this->processYamlConfig(
+            ymlConfig: $parsedYaml,
+            prefix: null
+        );
     }
 
     /**
-     * @return string|int|float|array<string|int,mixed>|null
+     * @param array<string|int, mixed> $ymlConfig
      */
-    public static function get(string $key, mixed $default = null): string|int|float|array|bool|null
+    private function processYamlConfig(array $ymlConfig, ?string $prefix): void
     {
-        if (!array_key_exists($key, self::$config)) {
-            if (null !== $default) {
-                return $default;
+        foreach ($ymlConfig as $key => $value) {
+            if (is_string($key) && str_contains($key, '_')) {
+                // This key is in snake_case, convert it to camelCase to make sure this stays backwards compatible
+                $key = lcfirst(\str_replace('_', '', \ucwords($key, '_')));
             }
 
-            throw new \RuntimeException(sprintf('Unknown configuration key "%s"', $key));
-        }
-
-        return self::$config[$key];
-    }
-
-    public static function getImportMode(): ImportMode
-    {
-        if (!self::$importMode instanceof ImportMode) {
-            throw new \RuntimeException('$importMode not set. Please call AppConfig::init() before using this method.'); // @codeCoverageIgnore
-        }
-
-        return self::$importMode;
-    }
-
-    public static function isAIIntegrationEnabled(): bool
-    {
-        return !empty(self::get('integrations.ai.enabled', false));
-    }
-
-    public static function isAIIntegrationWithUIEnabled(): bool
-    {
-        return self::isAIIntegrationEnabled() && !empty(self::get('integrations.ai.enableUI', false));
-    }
-
-    /**
-     * @return array<string|int, mixed>
-     */
-    public static function getRoot(): array
-    {
-        $root = [];
-
-        foreach (self::$config as $name => $value) {
-            if (str_contains((string) $name, '.')) {
-                continue;
+            $fullKey = (string) (null === $prefix ? $key : "$prefix.$key");
+            if (array_key_exists($fullKey, $this->config)) {
+                throw new CouldNotParseYamlConfig(sprintf('Duplicate config key: %s', $fullKey)); // @codeCoverageIgnore
             }
+            $this->config[$fullKey] = $value;
 
-            $root[$name] = $value;
+            if (is_array($value)) {
+                $this->processYamlConfig(
+                    ymlConfig: $value,
+                    prefix: $fullKey
+                );
+            }
         }
-
-        return $root;
     }
 }

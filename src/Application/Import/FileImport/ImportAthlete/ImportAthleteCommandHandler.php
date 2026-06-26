@@ -19,13 +19,14 @@ final readonly class ImportAthleteCommandHandler implements CommandHandler
         private AthleteBirthDate $athleteBirthDate,
         private AthleteRepository $athleteRepository,
         private UuidFactory $uuidFactory,
+        private AppConfig $config,
     ) {
     }
 
     public function handle(Command $command): void
     {
         assert($command instanceof ImportAthlete);
-        $athleteConfig = AppConfig::get('general.athlete');
+        $athleteConfig = $this->config->get('general.athlete');
 
         if (empty($athleteConfig['firstName'])) {
             throw new \RuntimeException('general.athlete.firstName configuration is missing');

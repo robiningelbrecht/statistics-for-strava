@@ -45,16 +45,13 @@ class Kernel extends BaseKernel
         assert($keyValueStore instanceof KeyValueStore);
         Theme::setKeyValueStore($keyValueStore);
 
+        $importMode = $this->getContainer()->get(ImportMode::class);
+        assert($importMode instanceof ImportMode);
         $kernelProjectDir = $this->getContainer()->get(KernelProjectDir::class);
         assert($kernelProjectDir instanceof KernelProjectDir);
         $platformEnvironment = $this->getContainer()->get(PlatformEnvironment::class);
         assert($platformEnvironment instanceof PlatformEnvironment);
-        $importMode = $this->getContainer()->get(ImportMode::class);
-        assert($importMode instanceof ImportMode);
-        AppConfig::init(
-            kernelProjectDir: $kernelProjectDir,
-            platformEnvironment: $platformEnvironment,
-            importMode: $importMode,
-        );
+        AppConfig::setImportMode($importMode);
+        AppConfig::setYamlConfigFilesToParse($kernelProjectDir, $platformEnvironment);
     }
 }

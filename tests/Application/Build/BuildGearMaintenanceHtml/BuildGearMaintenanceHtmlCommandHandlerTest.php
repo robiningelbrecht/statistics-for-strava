@@ -11,7 +11,7 @@ use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
-use App\Infrastructure\Config\Config;
+use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\Application\BuildAppFilesTestCase;
@@ -100,7 +100,7 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
         $fileStorage = $this->getContainer()->get('build_html.storage');
 
         new BuildGearMaintenanceHtmlCommandHandler(
-            config: $this->getContainer()->get(Config::class),
+            config: $this->getContainer()->get(AppConfig::class),
             maintenanceTaskTagRepository: $this->getContainer()->get(MaintenanceTaskTagRepository::class),
             gearRepository: $this->getContainer()->get(GearRepository::class),
             maintenanceTaskProgressCalculator: $this->getContainer()->get(MaintenanceTaskProgressCalculator::class),

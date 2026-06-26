@@ -3,6 +3,7 @@
 namespace App\Tests\Console\Debug;
 
 use App\Console\Debug\DebugEnvironmentConsoleCommand;
+use App\Infrastructure\Config\AppConfig;
 use App\Tests\Console\ConsoleCommandTestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Command\Command;
@@ -45,7 +46,9 @@ class DebugEnvironmentConsoleCommandTest extends ConsoleCommandTestCase
     {
         parent::setUp();
 
-        $this->debugEnvironmentConsoleCommand = new DebugEnvironmentConsoleCommand();
+        $this->debugEnvironmentConsoleCommand = new DebugEnvironmentConsoleCommand(
+            $this->getContainer()->get(AppConfig::class),
+        );
     }
 
     protected function getConsoleCommand(): Command
