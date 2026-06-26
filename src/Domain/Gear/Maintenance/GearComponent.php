@@ -6,7 +6,7 @@ namespace App\Domain\Gear\Maintenance;
 
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
-use App\Domain\Gear\Maintenance\History\GearMaintenanceHistories;
+use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogs;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTask;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTasks;
 use App\Infrastructure\ValueObject\String\Name;
@@ -74,11 +74,11 @@ final readonly class GearComponent
         return $this->maintenanceTasks;
     }
 
-    public function withMaintenanceHistory(GearMaintenanceHistories $maintenanceHistories): self
+    public function withMaintenanceLogs(GearMaintenanceLogs $maintenanceLogs): self
     {
         $maintenanceTasks = MaintenanceTasks::empty();
         foreach ($this->maintenanceTasks as $maintenanceTask) {
-            $mostRecentMaintenance = $maintenanceHistories
+            $mostRecentMaintenance = $maintenanceLogs
                 ->filterOnMaintenanceTask($maintenanceTask->getId())
                 ->getMostRecent();
 

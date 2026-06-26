@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Gear\Maintenance\History;
+namespace App\Domain\Gear\Maintenance\Log;
 
 use App\Infrastructure\ValueObject\Identifier\Identifier;
 
-final readonly class GearMaintenanceHistoryId extends Identifier
+final readonly class GearMaintenanceLogId extends Identifier
 {
     public static function getPrefix(): string
     {

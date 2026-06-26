@@ -1,0 +1,90 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Domain\Gear\Maintenance\Log;
+
+use App\Domain\Gear\GearId;
+use App\Domain\Gear\Maintenance\Task\MaintenanceTaskId;
+use App\Infrastructure\Exception\EntityNotFound;
+use App\Infrastructure\Repository\DbalRepository;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+
+final readonly class DbalGearMaintenanceLogRepository extends DbalRepository implements GearMaintenanceLogRepository
+{
+    public function add(GearMaintenanceLog $gearMaintenanceLog): void
+    {
+        $sql = 'INSERT INTO GearMaintenanceLog (gearMaintenanceLogId, gearId, maintenanceTaskId, performedOn)
+        VALUES (:gearMaintenanceLogId, :gearId, :maintenanceTaskId, :performedOn)';
+
+        $this->connection->executeStatement($sql, [
+            'gearMaintenanceLogId' => $gearMaintenanceLog->getId(),
+            'gearId' => $gearMaintenanceLog->getGearId(),
+            'maintenanceTaskId' => $gearMaintenanceLog->getMaintenanceTaskId(),
+            'performedOn' => $gearMaintenanceLog->getPerformedOn(),
+        ]);
+    }
+
+    public function update(GearMaintenanceLog $gearMaintenanceLog): void
+    {
+        $sql = 'UPDATE GearMaintenanceLog SET
+                    gearId = :gearId,
+                    maintenanceTaskId = :maintenanceTaskId,
+                    performedOn = :performedOn
+                    WHERE gearMaintenanceLogId = :gearMaintenanceLogId';
+
+        $this->connection->executeStatement($sql, [
+            'gearMaintenanceLogId' => $gearMaintenanceLog->getId(),
+            'gearId' => $gearMaintenanceLog->getGearId(),
+            'maintenanceTaskId' => $gearMaintenanceLog->getMaintenanceTaskId(),
+            'performedOn' => $gearMaintenanceLog->getPerformedOn(),
+        ]);
+    }
+
+    public function find(GearMaintenanceLogId $gearMaintenanceLogId): GearMaintenanceLog
+    {
+        $result = $this->connection->executeQuery(
+            'SELECT * FROM GearMaintenanceLog WHERE gearMaintenanceLogId = :gearMaintenanceLogId',
+            ['gearMaintenanceLogId' => $gearMaintenanceLogId]
+        )->fetchAssociative();
+
+        if (false === $result) {
+            throw new EntityNotFound(sprintf('GearMaintenanceLog "%s" not found', $gearMaintenanceLogId));
+        }
+
+        return $this->hydrate($result);
+    }
+
+    public function delete(GearMaintenanceLogId $gearMaintenanceLogId): void
+    {
+        $this->connection->executeStatement(
+            'DELETE FROM GearMaintenanceLog WHERE gearMaintenanceLogId = :gearMaintenanceLogId',
+            ['gearMaintenanceLogId' => $gearMaintenanceLogId]
+        );
+    }
+
+    public function findAll(): GearMaintenanceLogs
+    {
+        $results = $this->connection->executeQuery(
+            'SELECT * FROM GearMaintenanceLog ORDER BY performedOn DESC'
+        )->fetchAllAssociative();
+
+        return GearMaintenanceLogs::fromArray(array_map(
+            $this->hydrate(...),
+            $results
+        ));
+    }
+
+    /**
+     * @param array<string, mixed> $result
+     */
+    private function hydrate(array $result): GearMaintenanceLog
+    {
+        return GearMaintenanceLog::fromState(
+            gearMaintenanceLogId: GearMaintenanceLogId::fromString($result['gearMaintenanceLogId']),
+            gearId: GearId::fromString($result['gearId']),
+            maintenanceTaskId: MaintenanceTaskId::fromString($result['maintenanceTaskId']),
+            performedOn: SerializableDateTime::fromString($result['performedOn']),
+        );
+    }
+}

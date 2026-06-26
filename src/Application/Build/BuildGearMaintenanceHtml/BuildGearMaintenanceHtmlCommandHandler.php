@@ -10,7 +10,7 @@ use App\Domain\Gear\GearIds;
 use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\Gears;
 use App\Domain\Gear\Maintenance\GearComponent;
-use App\Domain\Gear\Maintenance\History\GearMaintenanceHistoryRepository;
+use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogRepository;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTask;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Infrastructure\Config\AppConfig;
@@ -24,7 +24,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
 {
     public function __construct(
         private AppConfig $config,
-        private GearMaintenanceHistoryRepository $gearMaintenanceHistoryRepository,
+        private GearMaintenanceLogRepository $gearMaintenanceLogRepository,
         private GearRepository $gearRepository,
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
         private Environment $twig,
@@ -65,7 +65,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
                 ['{gearId}' => $gearIdInConfig->toUnprefixedString()]
             );
         }
-        $maintenanceHistories = $this->gearMaintenanceHistoryRepository->findAll();
+        $maintenanceLogs = $this->gearMaintenanceLogRepository->findAll();
 
         $gearsThatAreAttachedToComponents = Gears::empty();
         $gearIdsThatAreAttachedToComponents = [];
@@ -91,7 +91,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
             $errors[] = $this->translator->trans('It looks like no valid gear is attached to any of the components. Please check your config file.');
         }
 
-        $allGearComponents = $gearMaintenanceConfig->getEnrichedGearComponents($maintenanceHistories);
+        $allGearComponents = $gearMaintenanceConfig->getEnrichedGearComponents($maintenanceLogs);
 
         $this->buildHtmlStorage->write(
             'gear/maintenance.html',
@@ -105,9 +105,9 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
 
         foreach ($gearsThatAreAttachedToComponents as $gear) {
             $logEntries = [];
-            foreach ($maintenanceHistories->filterOnGear($gear->getId())->sortOnDateDesc() as $maintenanceHistory) {
-                $gearComponent = $gearMaintenanceConfig->findGearComponentForMaintenanceTask($maintenanceHistory->getMaintenanceTaskId());
-                $maintenanceTask = $gearMaintenanceConfig->findMaintenanceTask($maintenanceHistory->getMaintenanceTaskId());
+            foreach ($maintenanceLogs->filterOnGear($gear->getId())->sortOnDateDesc() as $maintenanceLog) {
+                $gearComponent = $gearMaintenanceConfig->findGearComponentForMaintenanceTask($maintenanceLog->getMaintenanceTaskId());
+                $maintenanceTask = $gearMaintenanceConfig->findMaintenanceTask($maintenanceLog->getMaintenanceTaskId());
                 if (!$gearComponent instanceof GearComponent) {
                     // History for a task that is no longer part of the config.
                     continue;
@@ -118,7 +118,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
                 }
 
                 $logEntries[] = [
-                    'performedOn' => $maintenanceHistory->getPerformedOn(),
+                    'performedOn' => $maintenanceLog->getPerformedOn(),
                     'component' => $gearComponent->getLabel(),
                     'task' => $maintenanceTask->getLabel(),
                 ];

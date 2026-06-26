@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
-use App\Domain\Gear\Maintenance\History\GearMaintenanceHistoryId;
+use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogId;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskId;
 use App\Infrastructure\KeyValue\Key;
 use App\Infrastructure\Serialization\Json;
@@ -135,10 +135,10 @@ final class Version20260625171831 extends AbstractMigration
                     }
 
                     $this->connection->executeStatement(
-                        'INSERT INTO GearMaintenanceHistory (gearMaintenanceHistoryId, gearId, maintenanceTaskId, performedOn)
+                        'INSERT INTO GearMaintenanceLog (gearMaintenanceLogId, gearId, maintenanceTaskId, performedOn)
                          VALUES (:id, :gearId, :maintenanceTaskId, :performedOn)',
                         [
-                            'id' => (string) GearMaintenanceHistoryId::random(),
+                            'id' => (string) GearMaintenanceLogId::random(),
                             'gearId' => $activity['gearId'],
                             'maintenanceTaskId' => $maintenanceTaskId,
                             'performedOn' => $activity['startDateTime'],
@@ -152,6 +152,6 @@ final class Version20260625171831 extends AbstractMigration
     public function down(Schema $schema): void
     {
         $this->addSql('DELETE FROM KeyValue WHERE `key` = :key', ['key' => Key::GEAR_MAINTENANCE->value]);
-        $this->addSql('DELETE FROM GearMaintenanceHistory');
+        $this->addSql('DELETE FROM GearMaintenanceLog');
     }
 }

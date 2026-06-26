@@ -6,8 +6,8 @@ namespace App\Domain\Gear\Maintenance\Task\Progress;
 
 use App\Domain\Gear\GearIds;
 use App\Domain\Gear\GearRepository;
-use App\Domain\Gear\Maintenance\History\GearMaintenanceHistory;
-use App\Domain\Gear\Maintenance\History\GearMaintenanceHistoryRepository;
+use App\Domain\Gear\Maintenance\Log\GearMaintenanceLog;
+use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogRepository;
 use App\Infrastructure\Config\AppConfig;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
@@ -20,7 +20,7 @@ final readonly class MaintenanceTaskProgressCalculator
         #[AutowireIterator('app.maintenance_progress_calculation')]
         private iterable $maintenanceTaskProgressCalculations,
         private AppConfig $config,
-        private GearMaintenanceHistoryRepository $gearMaintenanceHistoryRepository,
+        private GearMaintenanceLogRepository $gearMaintenanceLogRepository,
         private GearRepository $gearRepository,
     ) {
     }
@@ -49,12 +49,12 @@ final readonly class MaintenanceTaskProgressCalculator
         }
 
         $allGears = $this->gearRepository->findAll();
-        $maintenanceHistory = $this->gearMaintenanceHistoryRepository->findAll();
-        $allGearComponents = $gearMaintenanceConfig->getEnrichedGearComponents($maintenanceHistory);
+        $maintenanceLog = $this->gearMaintenanceLogRepository->findAll();
+        $allGearComponents = $gearMaintenanceConfig->getEnrichedGearComponents($maintenanceLog);
 
         foreach ($allGearComponents as $gearComponent) {
             foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
-                if (!($mostRecentMaintenance = $maintenanceTask->getMostRecentMaintenance()) instanceof GearMaintenanceHistory) {
+                if (!($mostRecentMaintenance = $maintenanceTask->getMostRecentMaintenance()) instanceof GearMaintenanceLog) {
                     continue;
                 }
 
