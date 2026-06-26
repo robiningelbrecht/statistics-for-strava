@@ -100,7 +100,6 @@ Delete: Delete
 Deleting...: Deleting...
 Density: Dichte
 Description: Description
-'Detailed instructions are available in the documentation on': 'Detaillierte Anweisungen findest du in'
 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
 Details: Details
 Device: Gerät
@@ -521,7 +520,7 @@ Time: Zeit
 'Time in zone': 'Zeit in Zone'
 'Times completed': 'Male abgeschlossen'
 Title: Title
-'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'Um es zu aktivieren, passe {configFile} an und builde die Dateien erneut, damit die Änderungen wirksam werden'
+'To enable it, configure this in the admin panel and rebuild the files for the changes to take effect': 'To enable it, configure this in the admin panel and rebuild the files for the changes to take effect'
 'Toggle sidebar': 'Seitenleiste umschalten'
 'Top 10': 'Top 10'
 'Total distance per month': 'Gesamtdistanz pro Monat'
