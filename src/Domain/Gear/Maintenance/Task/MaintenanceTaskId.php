@@ -10,6 +10,6 @@ final readonly class MaintenanceTaskId extends Identifier
 {
     public static function getPrefix(): string
     {
-        return 'maintenance-task-';
+        return 'maintenanceTask-';
     }
 }
