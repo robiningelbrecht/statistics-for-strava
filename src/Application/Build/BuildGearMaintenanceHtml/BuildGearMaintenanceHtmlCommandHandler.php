@@ -10,9 +10,9 @@ use App\Domain\Gear\GearIds;
 use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\Gears;
 use App\Domain\Gear\Maintenance\GearComponent;
-use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
+use App\Infrastructure\Config\Config;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use League\Flysystem\FilesystemOperator;
@@ -22,7 +22,7 @@ use Twig\Environment;
 final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
-        private GearMaintenanceConfig $gearMaintenanceConfig,
+        private Config $config,
         private MaintenanceTaskTagRepository $maintenanceTaskTagRepository,
         private GearRepository $gearRepository,
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
@@ -36,9 +36,10 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
     {
         assert($command instanceof BuildGearMaintenanceHtml);
 
+        $gearMaintenanceConfig = $this->config->loadGearMaintenance();
         $gears = $this->gearRepository->findAll();
 
-        if (!$this->gearMaintenanceConfig->isFeatureEnabled()) {
+        if (!$gearMaintenanceConfig->isFeatureEnabled()) {
             $this->buildHtmlStorage->write(
                 'gear/maintenance.html',
                 $this->twig->load('html/gear/maintenance/gear-maintenance-disabled.html.twig')->render()
@@ -47,14 +48,10 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
             return;
         }
 
-        // Validate that all gear ids are in the DB.
+        // Validate that all gear ids are in the DB. The config's gear ids are already
+        // normalized to their Strava-prefixed form by Config::loadGearMaintenance().
         $gearIdsInDb = GearIds::fromArray($gears->map(fn (Gear $gear): GearId => $gear->getId()));
-        // By default, gear ids are prefixed with "b" or "g" in the Strava API.
-        // But these prefixes are not exposed in the URL of the gear, so users might
-        // copy-paste the gear id from the URL without these prefixes.
-        // We need to account for this.
-        $this->gearMaintenanceConfig->normalizeGearIds($gearIdsInDb);
-        $gearIdsInConfig = $this->gearMaintenanceConfig->getAllReferencedGearIds();
+        $gearIdsInConfig = $gearMaintenanceConfig->getAllReferencedGearIds();
 
         $errors = [];
         /** @var GearId $gearIdInConfig */
@@ -85,7 +82,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
         $gearsThatAreAttachedToComponents = Gears::empty();
         $gearIdsThatAreAttachedToComponents = [];
         /** @var GearComponent $gearComponent */
-        foreach ($this->gearMaintenanceConfig->getGearComponents() as $gearComponent) {
+        foreach ($gearMaintenanceConfig->getGearComponents() as $gearComponent) {
             foreach ($gearComponent->getAttachedTo() as $attachedToGearId) {
                 if (!($gear = $gears->getByGearId($attachedToGearId)) instanceof Gear) {
                     continue;
@@ -93,7 +90,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
                 if (in_array((string) $gear->getId(), $gearIdsThatAreAttachedToComponents)) {
                     continue;
                 }
-                if ($gear->isRetired() && $this->gearMaintenanceConfig->ignoreRetiredGear()) {
+                if ($gear->isRetired() && $gearMaintenanceConfig->ignoreRetiredGear()) {
                     continue;
                 }
 
@@ -107,7 +104,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
         }
 
         $validMaintenanceTaskTags = $maintenanceTaskTags->filterOnValid();
-        $allGearComponents = $this->gearMaintenanceConfig->getEnrichedGearComponents($validMaintenanceTaskTags);
+        $allGearComponents = $gearMaintenanceConfig->getEnrichedGearComponents($validMaintenanceTaskTags);
 
         $this->buildHtmlStorage->write(
             'gear/maintenance.html',

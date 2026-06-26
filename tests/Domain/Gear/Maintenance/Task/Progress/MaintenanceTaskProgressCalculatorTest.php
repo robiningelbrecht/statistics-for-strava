@@ -6,12 +6,12 @@ use App\Domain\Activity\ActivityId;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
 use App\Domain\Gear\GearRepository;
-use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Gear\Maintenance\Task\IntervalUnit;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgress;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Domain\Gear\Maintenance\Task\Progress\ProgressCalculationContext;
+use App\Infrastructure\Config\Config;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 
@@ -25,7 +25,7 @@ class MaintenanceTaskProgressCalculatorTest extends ContainerTestCase
                 new ProgressCalculationOne(),
                 new ProgressCalculationTwo(),
             ],
-                $this->getContainer()->get(GearMaintenanceConfig::class),
+                $this->getContainer()->get(Config::class),
                 $this->getContainer()->get(MaintenanceTaskTagRepository::class),
                 $this->getContainer()->get(GearRepository::class),
             )->calculateProgressFor(
@@ -46,7 +46,7 @@ class MaintenanceTaskProgressCalculatorTest extends ContainerTestCase
 
         new MaintenanceTaskProgressCalculator(
             [],
-            $this->getContainer()->get(GearMaintenanceConfig::class),
+            $this->getContainer()->get(Config::class),
             $this->getContainer()->get(MaintenanceTaskTagRepository::class),
             $this->getContainer()->get(GearRepository::class),
         )->calculateProgressFor(

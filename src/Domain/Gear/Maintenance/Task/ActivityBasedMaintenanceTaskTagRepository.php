@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Domain\Gear\Maintenance\Task;
 
 use App\Domain\Activity\EnrichedActivities;
-use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
+use App\Infrastructure\Config\Config;
 
 final readonly class ActivityBasedMaintenanceTaskTagRepository implements MaintenanceTaskTagRepository
 {
     public function __construct(
         private EnrichedActivities $enrichedActivities,
-        private GearMaintenanceConfig $gearMaintenanceConfig,
+        private Config $config,
     ) {
     }
 
@@ -20,7 +20,8 @@ final readonly class ActivityBasedMaintenanceTaskTagRepository implements Mainte
         $activities = $this->enrichedActivities->findAll();
         $tasks = MaintenanceTaskTags::empty();
 
-        foreach ($this->gearMaintenanceConfig->getGearComponents() as $gearComponent) {
+        $gearMaintenanceConfig = $this->config->loadGearMaintenance();
+        foreach ($gearMaintenanceConfig->getGearComponents() as $gearComponent) {
             foreach ($gearComponent->getMaintenanceTasks() as $task) {
                 foreach ($activities as $activity) {
                     if (!str_contains($activity->getOriginalName(), (string) $task->getTag())) {

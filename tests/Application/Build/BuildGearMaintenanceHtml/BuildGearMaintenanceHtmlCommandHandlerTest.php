@@ -9,10 +9,9 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;
-use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
-use App\Infrastructure\KeyValue\KeyValueStore;
+use App\Infrastructure\Config\Config;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\Application\BuildAppFilesTestCase;
@@ -101,7 +100,7 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
         $fileStorage = $this->getContainer()->get('build_html.storage');
 
         new BuildGearMaintenanceHtmlCommandHandler(
-            gearMaintenanceConfig: GearMaintenanceConfig::create($this->getContainer()->get(KeyValueStore::class)),
+            config: $this->getContainer()->get(Config::class),
             maintenanceTaskTagRepository: $this->getContainer()->get(MaintenanceTaskTagRepository::class),
             gearRepository: $this->getContainer()->get(GearRepository::class),
             maintenanceTaskProgressCalculator: $this->getContainer()->get(MaintenanceTaskProgressCalculator::class),
