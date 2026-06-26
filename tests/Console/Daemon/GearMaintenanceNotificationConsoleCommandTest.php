@@ -9,6 +9,9 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;
+use App\Domain\Gear\Maintenance\History\GearMaintenanceHistory;
+use App\Domain\Gear\Maintenance\History\GearMaintenanceHistoryRepository;
+use App\Domain\Gear\Maintenance\Task\MaintenanceTaskId;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
@@ -41,7 +44,7 @@ class GearMaintenanceNotificationConsoleCommandTest extends ConsoleCommandTestCa
         $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
-                ->withName(Name::fromString('#sfs-chain-lubed'))
+                ->withName(Name::fromString('chain-lubed'))
                 ->withGearId($gear->getId())
                 ->withStartDateTime(SerializableDateTime::fromString('2025-01-01 00:00:00'))
                 ->build(),
@@ -56,6 +59,12 @@ class GearMaintenanceNotificationConsoleCommandTest extends ConsoleCommandTestCa
                 ->withDistance(Kilometer::from(600))
                 ->build(),
             []
+        ));
+
+        $this->getContainer()->get(GearMaintenanceHistoryRepository::class)->add(GearMaintenanceHistory::create(
+            gearId: $gear->getId(),
+            maintenanceTaskId: MaintenanceTaskId::fromUnprefixed('chain-lubed'),
+            performedOn: SerializableDateTime::fromString('2025-01-01 00:00:00'),
         ));
 
         $command = $this->getCommandInApplication('app:cron:gear-maintenance-notification');

@@ -50,8 +50,6 @@ final class Activity implements SupportsAITooling
     private ?PowerOutputs $bestPowerOutputs = null;
     private ?int $normalizedPower = null;
     private ?string $gearName = null;
-    /** @var string[] */
-    private array $tags = [];
 
     #[ORM\Column(type: 'string', nullable: true)]
     // @phpstan-ignore-next-line
@@ -418,12 +416,11 @@ final class Activity implements SupportsAITooling
 
     public function getName(): string
     {
-        $name = trim(str_replace('Zwift - ', '', $this->getOriginalName()));
-        if ([] === $this->tags) {
-            return $name;
-        }
+        $name = str_replace('Zwift - ', '', $this->getOriginalName());
+        // Strip legacy gear-maintenance hashtags (e.g. "#sfs-chain-lubed") from the display name.
+        $name = (string) preg_replace('/\s*#sfs-\S+/', '', $name);
 
-        return trim(str_replace($this->tags, '', $name));
+        return trim($name);
     }
 
     public function getSanitizedName(): string
@@ -702,16 +699,6 @@ final class Activity implements SupportsAITooling
     {
         return clone ($this, [
             'normalizedPower' => $normalizedPower,
-        ]);
-    }
-
-    /**
-     * @param string[] $tags
-     */
-    public function withTags(array $tags): self
-    {
-        return clone ($this, [
-            'tags' => $tags,
         ]);
     }
 

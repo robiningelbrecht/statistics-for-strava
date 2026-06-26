@@ -6,8 +6,8 @@ namespace App\Domain\Gear\Maintenance\Task\Progress;
 
 use App\Domain\Gear\GearIds;
 use App\Domain\Gear\GearRepository;
-use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTag;
-use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
+use App\Domain\Gear\Maintenance\History\GearMaintenanceHistory;
+use App\Domain\Gear\Maintenance\History\GearMaintenanceHistoryRepository;
 use App\Infrastructure\Config\AppConfig;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
@@ -20,7 +20,7 @@ final readonly class MaintenanceTaskProgressCalculator
         #[AutowireIterator('app.maintenance_progress_calculation')]
         private iterable $maintenanceTaskProgressCalculations,
         private AppConfig $config,
-        private MaintenanceTaskTagRepository $maintenanceTaskTagRepository,
+        private GearMaintenanceHistoryRepository $gearMaintenanceHistoryRepository,
         private GearRepository $gearRepository,
     ) {
     }
@@ -49,21 +49,19 @@ final readonly class MaintenanceTaskProgressCalculator
         }
 
         $allGears = $this->gearRepository->findAll();
-        $maintenanceTaskTags = $this->maintenanceTaskTagRepository->findAll()->filterOnValid();
-        $allGearComponents = $gearMaintenanceConfig->getEnrichedGearComponents($maintenanceTaskTags);
+        $maintenanceHistories = $this->gearMaintenanceHistoryRepository->findAll();
+        $allGearComponents = $gearMaintenanceConfig->getEnrichedGearComponents($maintenanceHistories);
 
         foreach ($allGearComponents as $gearComponent) {
-            $gearComponent = $gearComponent->withMaintenanceTaskTags($maintenanceTaskTags);
             foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
-                if (!($mostRecentTag = $maintenanceTask->getMostRecentMaintenanceTaskTag()) instanceof MaintenanceTaskTag) {
+                if (!($mostRecentMaintenance = $maintenanceTask->getMostRecentMaintenance()) instanceof GearMaintenanceHistory) {
                     continue;
                 }
 
                 $maintenanceTaskProgress = $this->calculateProgressFor(
                     ProgressCalculationContext::from(
                         gearIds: $gearComponent->getAttachedTo(),
-                        lastTaggedOnActivityId: $mostRecentTag->getTaggedOnActivityId(),
-                        lastTaggedOn: $mostRecentTag->getTaggedOn(),
+                        lastTaggedOn: $mostRecentMaintenance->getPerformedOn(),
                         intervalUnit: $maintenanceTask->getIntervalUnit(),
                         intervalValue: $maintenanceTask->getIntervalValue(),
                     )

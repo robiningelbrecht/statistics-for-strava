@@ -9,7 +9,9 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;
-use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
+use App\Domain\Gear\Maintenance\History\GearMaintenanceHistory;
+use App\Domain\Gear\Maintenance\History\GearMaintenanceHistoryRepository;
+use App\Domain\Gear\Maintenance\Task\MaintenanceTaskId;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\ValueObject\String\Name;
@@ -91,6 +93,20 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
             []
         ));
 
+        // Maintenance history is now persisted (it used to be derived from the hashtags
+        // in the activity titles above). Persist the rows those tags represent.
+        $gearMaintenanceHistoryRepository = $this->getContainer()->get(GearMaintenanceHistoryRepository::class);
+        $gearMaintenanceHistoryRepository->add(GearMaintenanceHistory::create(
+            gearId: $gear->getId(),
+            maintenanceTaskId: MaintenanceTaskId::fromUnprefixed('chain-lubed'),
+            performedOn: SerializableDateTime::fromString('2025-01-01 00:00:00'),
+        ));
+        $gearMaintenanceHistoryRepository->add(GearMaintenanceHistory::create(
+            gearId: GearId::fromUnprefixed('retired'),
+            maintenanceTaskId: MaintenanceTaskId::fromUnprefixed('chain-lubed'),
+            performedOn: SerializableDateTime::fromString('2025-01-01 00:00:00'),
+        ));
+
         $this->commandBus->dispatch(new BuildGearMaintenanceHtml());
         $this->assertFileSystemWrites($this->getContainer()->get('build_html.storage'));
     }
@@ -101,7 +117,7 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
 
         new BuildGearMaintenanceHtmlCommandHandler(
             config: $this->getContainer()->get(AppConfig::class),
-            maintenanceTaskTagRepository: $this->getContainer()->get(MaintenanceTaskTagRepository::class),
+            gearMaintenanceHistoryRepository: $this->getContainer()->get(GearMaintenanceHistoryRepository::class),
             gearRepository: $this->getContainer()->get(GearRepository::class),
             maintenanceTaskProgressCalculator: $this->getContainer()->get(MaintenanceTaskProgressCalculator::class),
             twig: $this->getContainer()->get(Environment::class),

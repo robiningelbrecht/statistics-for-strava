@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Gear\Maintenance\Task\Progress;
 
-use App\Domain\Gear\Maintenance\GearMaintenanceCountersResetMode;
 use App\Domain\Gear\Maintenance\Task\IntervalUnit;
-use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
@@ -15,7 +13,6 @@ final readonly class EveryXDistanceUsedProgressCalculation implements Maintenanc
 {
     public function __construct(
         private Connection $connection,
-        private AppConfig $config,
     ) {
     }
 
@@ -29,21 +26,15 @@ final readonly class EveryXDistanceUsedProgressCalculation implements Maintenanc
 
     public function calculate(ProgressCalculationContext $context): MaintenanceTaskProgress
     {
-        $gearMaintenanceConfig = $this->config->loadGearMaintenance();
-        $operator = GearMaintenanceCountersResetMode::NEXT_ACTIVITY_ONWARDS === $gearMaintenanceConfig->getResetMode() ? '>' : '>=';
         $query = '
                 SELECT SUM(distance) AS distance
                 FROM Activity
                 WHERE gearId IN (:gearIds)
-                AND startDateTime '.$operator.' (
-                  SELECT startDateTime
-                  FROM Activity
-                  WHERE activityId = :activityId
-              )';
+                AND startDateTime > :lastTaggedOn';
 
         $distanceSinceLastTagged = Meter::from($this->connection->fetchOne($query, [
             'gearIds' => $context->getGearIds()->toArray(),
-            'activityId' => $context->getLastTaggedOnActivityId(),
+            'lastTaggedOn' => (string) $context->getLastTaggedOn(),
         ], [
             'gearIds' => ArrayParameterType::STRING,
         ]) ?? 0)->toKilometer();

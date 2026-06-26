@@ -10,7 +10,8 @@ use App\Domain\Gear\GearIds;
 use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\Gears;
 use App\Domain\Gear\Maintenance\GearComponent;
-use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
+use App\Domain\Gear\Maintenance\History\GearMaintenanceHistoryRepository;
+use App\Domain\Gear\Maintenance\Task\MaintenanceTask;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\CQRS\Command\Command;
@@ -23,7 +24,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
 {
     public function __construct(
         private AppConfig $config,
-        private MaintenanceTaskTagRepository $maintenanceTaskTagRepository,
+        private GearMaintenanceHistoryRepository $gearMaintenanceHistoryRepository,
         private GearRepository $gearRepository,
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
         private Environment $twig,
@@ -64,19 +65,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
                 ['{gearId}' => $gearIdInConfig->toUnprefixedString()]
             );
         }
-        $warnings = [];
-        // Check if there are any invalid tags.
-        $maintenanceTaskTags = $this->maintenanceTaskTagRepository->findAll();
-        /** @var \App\Domain\Gear\Maintenance\Task\MaintenanceTaskTag $maintenanceTaskTag */
-        foreach ($maintenanceTaskTags->filterOnInvalid() as $maintenanceTaskTag) {
-            $warnings[] = $this->translator->trans(
-                'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.',
-                [
-                    '{maintenanceTaskTag}' => $maintenanceTaskTag->getTag(),
-                    '{activityName}' => $maintenanceTaskTag->getActivityName(),
-                ]
-            );
-        }
+        $maintenanceHistories = $this->gearMaintenanceHistoryRepository->findAll();
 
         $gearsThatAreAttachedToComponents = Gears::empty();
         $gearIdsThatAreAttachedToComponents = [];
@@ -102,14 +91,12 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
             $errors[] = $this->translator->trans('It looks like no valid gear is attached to any of the components. Please check your config file.');
         }
 
-        $validMaintenanceTaskTags = $maintenanceTaskTags->filterOnValid();
-        $allGearComponents = $gearMaintenanceConfig->getEnrichedGearComponents($validMaintenanceTaskTags);
+        $allGearComponents = $gearMaintenanceConfig->getEnrichedGearComponents($maintenanceHistories);
 
         $this->buildHtmlStorage->write(
             'gear/maintenance.html',
             $this->twig->load('html/gear/maintenance/gear-maintenance.html.twig')->render([
                 'errors' => $errors,
-                'warnings' => $warnings,
                 'gearsAttachedToComponents' => $gearsThatAreAttachedToComponents,
                 'gearComponents' => $allGearComponents,
                 'gearIdsThatHaveDueTasks' => $this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks(),
@@ -117,11 +104,31 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
         );
 
         foreach ($gearsThatAreAttachedToComponents as $gear) {
+            $logEntries = [];
+            foreach ($maintenanceHistories->filterOnGear($gear->getId())->sortOnDateDesc() as $maintenanceHistory) {
+                $gearComponent = $gearMaintenanceConfig->findGearComponentForMaintenanceTask($maintenanceHistory->getMaintenanceTaskId());
+                $maintenanceTask = $gearMaintenanceConfig->findMaintenanceTask($maintenanceHistory->getMaintenanceTaskId());
+                if (!$gearComponent instanceof GearComponent) {
+                    // History for a task that is no longer part of the config.
+                    continue;
+                }
+                if (!$maintenanceTask instanceof MaintenanceTask) {
+                    // History for a task that is no longer part of the config.
+                    continue;
+                }
+
+                $logEntries[] = [
+                    'performedOn' => $maintenanceHistory->getPerformedOn(),
+                    'component' => $gearComponent->getLabel(),
+                    'task' => $maintenanceTask->getLabel(),
+                ];
+            }
+
             $this->buildHtmlStorage->write(
                 sprintf('gear/maintenance/history/%s.html', $gear->getId()),
                 $this->twig->load('html/gear/maintenance/gear-maintenance-history.html.twig')->render([
                     'gear' => $gear,
-                    'maintenanceTaskTags' => $validMaintenanceTaskTags->filterOnGear($gear->getId())->sortOnDateDesc(),
+                    'logEntries' => $logEntries,
                 ])
             );
         }

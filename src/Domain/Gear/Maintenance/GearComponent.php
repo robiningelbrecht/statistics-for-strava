@@ -6,9 +6,9 @@ namespace App\Domain\Gear\Maintenance;
 
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
+use App\Domain\Gear\Maintenance\History\GearMaintenanceHistories;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTask;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTasks;
-use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTags;
 use App\Infrastructure\ValueObject\String\Name;
 use Money\Money;
 
@@ -74,24 +74,15 @@ final readonly class GearComponent
         return $this->maintenanceTasks;
     }
 
-    public function withMaintenanceTaskTags(MaintenanceTaskTags $maintenanceTaskTags): self
+    public function withMaintenanceHistory(GearMaintenanceHistories $maintenanceHistories): self
     {
         $maintenanceTasks = MaintenanceTasks::empty();
         foreach ($this->maintenanceTasks as $maintenanceTask) {
-            $mostRecentMaintenance = null;
-            foreach ($maintenanceTaskTags as $maintenanceTaskTag) {
-                if ($maintenanceTask->getTag() != $maintenanceTaskTag->getTag()) {
-                    continue;
-                }
+            $mostRecentMaintenance = $maintenanceHistories
+                ->filterOnMaintenanceTask($maintenanceTask->getId())
+                ->getMostRecent();
 
-                if ($mostRecentMaintenance
-                    && $maintenanceTaskTag->getTaggedOn()->isBeforeOrOn($mostRecentMaintenance->getTaggedOn())
-                ) {
-                    continue;
-                }
-                $mostRecentMaintenance = $maintenanceTaskTag;
-            }
-            $maintenanceTasks->add($maintenanceTask->withMostRecentMaintenanceTaskTag($mostRecentMaintenance));
+            $maintenanceTasks->add($maintenanceTask->withMostRecentMaintenance($mostRecentMaintenance));
         }
 
         return clone ($this, [

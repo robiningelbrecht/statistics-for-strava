@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Gear\Maintenance\Task\Progress;
 
-use App\Domain\Activity\ActivityId;
 use App\Domain\Gear\GearIds;
 use App\Domain\Gear\Maintenance\Task\IntervalUnit;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -13,7 +12,6 @@ final readonly class ProgressCalculationContext
 {
     private function __construct(
         private GearIds $gearIds,
-        private ActivityId $lastTaggedOnActivityId,
         private SerializableDateTime $lastTaggedOn,
         private IntervalUnit $intervalUnit,
         private int $intervalValue,
@@ -22,14 +20,12 @@ final readonly class ProgressCalculationContext
 
     public static function from(
         GearIds $gearIds,
-        ActivityId $lastTaggedOnActivityId,
         SerializableDateTime $lastTaggedOn,
         IntervalUnit $intervalUnit,
         int $intervalValue,
     ): self {
         return new self(
             gearIds: $gearIds,
-            lastTaggedOnActivityId: $lastTaggedOnActivityId,
             lastTaggedOn: $lastTaggedOn,
             intervalUnit: $intervalUnit,
             intervalValue: $intervalValue,
@@ -39,11 +35,6 @@ final readonly class ProgressCalculationContext
     public function getGearIds(): GearIds
     {
         return $this->gearIds;
-    }
-
-    public function getLastTaggedOnActivityId(): ActivityId
-    {
-        return $this->lastTaggedOnActivityId;
     }
 
     public function getLastTaggedOn(): SerializableDateTime

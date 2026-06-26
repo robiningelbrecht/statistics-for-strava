@@ -24,10 +24,9 @@ trait ProvideGearMaintenanceConfig
             key: Key::GEAR_MAINTENANCE,
             value: Value::fromString(Json::encode(Yaml::parse(<<<YML
 enabled: true
-hashtagPrefix: sfs
 ignoreRetiredGear: true
 components:
-  - tag: chain
+  - id: chain
     label: Some cool chain
     imgSrc: chain.png
     attachedTo:
@@ -38,29 +37,29 @@ components:
       amountInCents: 123456
       currency: 'EUR'
     maintenance:
-      - tag: lubed
+      - id: chain-lubed
         label: Lube
         interval:
           value: 500
           unit: km
-      - tag: replaced
+      - id: chain-replaced
         label: Replace
         interval:
           value: 1000
           unit: km
-      - tag: cleaned
+      - id: chain-cleaned
         label: Clean
         interval:
           value: 1000
           unit: km
-  - tag: di-2
+  - id: di-2
     label: DI2 Battery
     imgSrc: battery.png
     attachedTo:
       - g1233776
       - g10130856
     maintenance:
-      - tag: charged
+      - id: di-2-charged
         label: Charge
         interval:
           value: 11

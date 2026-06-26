@@ -32,13 +32,6 @@ class EnrichedActivitiesTest extends ContainerTestCase
             ['raw' => 'data']
         ));
 
-        $activity = $activity->withTags([
-            '#sfs-chain-lubed',
-            '#sfs-chain-replaced',
-            '#sfs-chain-cleaned',
-            '#sfs-di-2-charged',
-        ]);
-
         $persisted = $this->enrichedActivities->find($activity->getId());
         $this->assertEquals(
             $activity,
