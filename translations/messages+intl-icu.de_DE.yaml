@@ -33,7 +33,8 @@ All: Alle
 'All time': Gesamtzeit
 'Alpine Ski': 'Ski Alpin'
 Apr: Apr
-'Are you sure you want to delete {name}? This action cannot be undone.': 'Are you sure you want to delete {name}? This action cannot be undone.'
+'Are you sure you want to delete {name}?': 'Are you sure you want to delete {name}?'
+'Are you sure you want to delete {task} on {component} for {gear}, performed on {date}?': 'Are you sure you want to delete {task} on {component} for {gear}, performed on {date}?'
 'Ask Mark something...': 'Frag Mark etwas...'
 'Athlete profile': Sportlerprofil
 Aug: Aug
@@ -99,6 +100,7 @@ Day: Tag
 Dec: Dez
 Delete: Delete
 'Delete activity': 'Delete activity'
+'Delete maintenance log': 'Delete maintenance log'
 Deleting...: Deleting...
 Density: Dichte
 Description: Description
@@ -519,6 +521,7 @@ Tennis: Tennis
 "The name is derived from the device recorded on your activities and can't be edited.": "The name is derived from the device recorded on your activities and can't be edited."
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Diese Abzeichen sind dynamisch erstellt. Du kannst sie in allen &lt;img&gt; Tags verwenden.'
 Thinking...: Denke...
+'This action cannot be undone.': 'This action cannot be undone.'
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'Diese Grafik zeigt deinen Trainingsstil. Die Achsen stehen für verschiedene normalisierte Gewohnheiten. Höhere Werte bedeuten dabei eine stärkere Gewichtung.'
 'This component is fitted to multiple gears, pick the one you serviced.': 'This component is fitted to multiple gears, pick the one you serviced.'
 'This feature is currently disabled': 'Dieses Feature ist momentan deaktiviert'
