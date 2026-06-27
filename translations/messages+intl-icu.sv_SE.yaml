@@ -123,6 +123,7 @@ Eddington: Eddington
 Edit: Edit
 'Edit activity': 'Edit activity'
 'Edit gear': 'Edit gear'
+'Edit maintenance log': 'Edit maintenance log'
 'Edit recording device': 'Edit recording device'
 'Effort vs heart rate': 'Effort vs heart rate'
 'Elapsed time': 'Elapsed time'
@@ -378,6 +379,9 @@ Search: Sök
 'Search activity...': 'Sök aktivitet...'
 'Search segment...': 'Sök segment...'
 Segments: Segment
+'Select a component first...': 'Select a component first...'
+'Select a component…': 'Select a component…'
+'Select the serviced gear…': 'Select the serviced gear…'
 Sep: Sep
 'Show information': 'Visa information'
 'Show password': 'Show password'
@@ -516,6 +520,7 @@ Tennis: Tennis
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Dessa märken skapas dynamiskt. Du kan använda dem i vilken &lt;img&gt; tagg som helst'
 Thinking...: Tänker...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
+'This component is fitted to multiple gears, pick the one you serviced.': 'This component is fitted to multiple gears, pick the one you serviced.'
 'This feature is currently disabled': 'Den här funktionen är avstängd'
 'This month': 'This month'
 "This value is imported from Strava and can't be edited here.": "This value is imported from Strava and can't be edited here."

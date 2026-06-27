@@ -123,6 +123,7 @@ Eddington: 愛丁頓數
 Edit: Edit
 'Edit activity': 'Edit activity'
 'Edit gear': 'Edit gear'
+'Edit maintenance log': 'Edit maintenance log'
 'Edit recording device': 'Edit recording device'
 'Effort vs heart rate': 'Effort vs heart rate'
 'Elapsed time': 'Elapsed time'
@@ -378,6 +379,9 @@ Search: 搜索
 'Search activity...': 搜索活动...
 'Search segment...': 搜索路段...
 Segments: 路段
+'Select a component first...': 'Select a component first...'
+'Select a component…': 'Select a component…'
+'Select the serviced gear…': 'Select the serviced gear…'
 Sep: 九月
 'Show information': 显示信息
 'Show password': 'Show password'
@@ -516,6 +520,7 @@ Tennis: 网球
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': '徽章为动态生成，您可在任意 &lt;img&gt; 标签中使用'
 Thinking...: 思考中...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
+'This component is fitted to multiple gears, pick the one you serviced.': 'This component is fitted to multiple gears, pick the one you serviced.'
 'This feature is currently disabled': 功能当前被禁用
 'This month': 'This month'
 "This value is imported from Strava and can't be edited here.": "This value is imported from Strava and can't be edited here."

@@ -123,6 +123,7 @@ Eddington: Eddington
 Edit: Edit
 'Edit activity': 'Edit activity'
 'Edit gear': 'Edit gear'
+'Edit maintenance log': 'Edit maintenance log'
 'Edit recording device': 'Edit recording device'
 'Effort vs heart rate': 'Erőfeszítés vs pulzus'
 'Elapsed time': 'Elapsed time'
@@ -378,6 +379,9 @@ Search: Keresés
 'Search activity...': 'Tevékenység keresése...'
 'Search segment...': 'Szegmens keresése...'
 Segments: Szegmensek
+'Select a component first...': 'Select a component first...'
+'Select a component…': 'Select a component…'
+'Select the serviced gear…': 'Select the serviced gear…'
 Sep: Szept
 'Show information': 'Információ megjelenítése'
 'Show password': 'Show password'
@@ -516,6 +520,7 @@ Tennis: Tenisz
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Ezek a kitűzők dinamikusan jönnek létre. Bármely &lt;img&gt; tagben használhatod őket'
 Thinking...: Gondolkodás...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'Ez a diagram összefoglalja, hogyan edzel. Minden tengely különböző normalizált edzési szokást tükröz, így a magasabb értékek erősebb hangsúlyt jelentenek.'
+'This component is fitted to multiple gears, pick the one you serviced.': 'This component is fitted to multiple gears, pick the one you serviced.'
 'This feature is currently disabled': 'Ez a funkció jelenleg le van tiltva'
 'This month': 'This month'
 "This value is imported from Strava and can't be edited here.": "This value is imported from Strava and can't be edited here."

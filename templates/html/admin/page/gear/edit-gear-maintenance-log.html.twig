@@ -1,0 +1,96 @@
+{% extends "html/admin/page/template.html.twig" %}
+{% block main %}
+    {% autoescape false %}
+    {% set gearMaintenanceLog = gearMaintenanceLog is defined ? gearMaintenanceLog : null %}
+    {% set overviewUrl = relativeUrl(path('admin_manage_gear_maintenance_logs_overview')) %}
+    <div class="modal-like-form">
+        <div class="w-full max-w-lg overflow-y-auto p-6 bg-white border border-gray-200 rounded-lg shadow-xl">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold">
+                    {{ gearMaintenanceLog ? "Edit maintenance log"|trans : "Register maintenance"|trans }}
+                </h3>
+                <a href="{{ overviewUrl }}" aria-label="{{ "Close"|trans }}"
+                   class="grid place-items-center size-8 rounded-lg text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-900">
+                    <svg class="size-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+                    </svg>
+                </a>
+            </div>
+            <form data-dispatch-command="{{ dispatchCommand }}"
+                  data-redirect="{{ overviewUrl }}"
+                  class="flex flex-col gap-4">
+                <div data-form-error class="hidden rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert"></div>
+
+                {% if gearMaintenanceLog %}
+                    <input type="hidden" name="gearMaintenanceLogId" value="{{ gearMaintenanceLog.getId() }}">
+                    <div class="grid grid-cols-2 gap-4 rounded-lg bg-gray-50 p-3 text-sm">
+                        <div>
+                            <span class="block text-xs font-medium text-gray-500">{{ "Gear"|trans }}</span>
+                            <span class="font-medium text-gray-800">{{ gearName }}</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs font-medium text-gray-500">{{ "Component"|trans }}</span>
+                            <span class="font-medium text-gray-800">{{ componentLabel }}</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs font-medium text-gray-500">{{ "Task"|trans }}</span>
+                            <span class="font-medium text-gray-800">{{ taskLabel }}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="gml-performed-on">{{ "Performed on"|trans }}</label>
+                        <input type="date" id="gml-performed-on" name="performedOn" required
+                               value="{{ gearMaintenanceLog.getPerformedOn()|date('Y-m-d') }}">
+                    </div>
+                {% else %}
+                    <div>
+                        <label for="gml-component">{{ "Component"|trans }}</label>
+                        <select id="gml-component" required>
+                            <option value="" disabled selected>{{ "Select a component…"|trans }}</option>
+                            {% for component in components %}
+                                <option value="{{ loop.index0 }}">{{ component.label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="gml-task">{{ "Task"|trans }}</label>
+                        <select id="gml-task" name="maintenanceTaskId" data-depends-on="gml-component" required disabled>
+                            <option value="" disabled selected>{{ "Select a component first..."|trans }}</option>
+                            {% for component in components %}
+                                {% set componentIndex = loop.index0 %}
+                                {% for task in component.tasks %}
+                                    <option value="{{ task.id }}" data-when="{{ componentIndex }}">{{ task.label }}</option>
+                                {% endfor %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div data-field class="hidden">
+                        <label for="gml-gear">{{ "Gear"|trans }}</label>
+                        <select id="gml-gear" name="gearId" data-depends-on="gml-component" data-collapse-single required disabled>
+                            <option value="" disabled selected>{{ "Select the serviced gear…"|trans }}</option>
+                            {% for component in components %}
+                                {% set componentIndex = loop.index0 %}
+                                {% for gear in component.gears %}
+                                    <option value="{{ gear.id }}" data-when="{{ componentIndex }}">{{ gear.label }}</option>
+                                {% endfor %}
+                            {% endfor %}
+                        </select>
+                        <p class="mt-1 text-xxs text-gray-500">{{ "This component is fitted to multiple gears, pick the one you serviced."|trans }}</p>
+                    </div>
+                    <div>
+                        <label for="gml-performed-on">{{ "Performed on"|trans }}</label>
+                        <input type="date" id="gml-performed-on" name="performedOn" required value="{{ "now"|date('Y-m-d') }}">
+                    </div>
+                {% endif %}
+                <div class="flex justify-end gap-2 border-t border-gray-200 pt-4">
+                    <a href="{{ overviewUrl }}" type="button" class="btn--secondary">{{ "Cancel"|trans }}</a>
+                    <button type="submit" data-has-loading-state class="group btn--primary">
+                        <span class="label">{{ "Save"|trans }}</span>
+                        <span class="label--loading">{{ "Saving..."|trans }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endautoescape %}
+{% endblock main %}

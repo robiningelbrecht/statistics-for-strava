@@ -123,6 +123,7 @@ Eddington: Eddington
 Edit: Edit
 'Edit activity': 'Edit activity'
 'Edit gear': 'Edit gear'
+'Edit maintenance log': 'Edit maintenance log'
 'Edit recording device': 'Edit recording device'
 'Effort vs heart rate': 'Effort vs heart rate'
 'Elapsed time': 'Elapsed time'
@@ -378,6 +379,9 @@ Search: Search
 'Search activity...': 'Search activity...'
 'Search segment...': 'Search segment...'
 Segments: Segments
+'Select a component first...': 'Select a component first...'
+'Select a component…': 'Select a component…'
+'Select the serviced gear…': 'Select the serviced gear…'
 Sep: Sep
 'Show information': 'Show information'
 'Show password': 'Show password'
@@ -516,6 +520,7 @@ Tennis: Tennis
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'These badges are dynamically created. You can use them in any &lt;img&gt; tag'
 Thinking...: Thinking...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
+'This component is fitted to multiple gears, pick the one you serviced.': 'This component is fitted to multiple gears, pick the one you serviced.'
 'This feature is currently disabled': 'This feature is currently disabled'
 'This month': 'This month'
 "This value is imported from Strava and can't be edited here.": "This value is imported from Strava and can't be edited here."
