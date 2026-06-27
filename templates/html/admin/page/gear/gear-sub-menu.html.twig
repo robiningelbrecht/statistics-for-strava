@@ -8,6 +8,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ relativeUrl(path('admin_manage_gear_maintenance_logs_overview')) }}"
+                   class="{{ activeMenuItem == 'gearMaintenanceLogs' ? 'active' : '' }}">
+                    {{ "Maintenance"|trans }}
+                </a>
+            </li>
+            <li>
                 <a href="{{ relativeUrl(path('admin_manage_recording_devices_overview')) }}"
                    class="{{ activeMenuItem == 'recordingDevices' ? 'active' : '' }}">
                     {{ "Recording devices"|trans }}

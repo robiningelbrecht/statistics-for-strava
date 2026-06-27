@@ -6,6 +6,7 @@
 'A 6-hour week scores higher than a 5-hour week.': 'A 6-hour week scores higher than a 5-hour week.'
 'A high intensity score means a larger share of your training is hard rather than easy.': 'A high intensity score means a larger share of your training is hard rather than easy.'
 'A high score means you concentrate more training into fewer, heavier days.': 'A high score means you concentrate more training into fewer, heavier days.'
+"A log of completed maintenance. Each entry resets that task's counters from its date.": "A log of completed maintenance. Each entry resets that task's counters from its date."
 'A:C Ratio': 'Rácio A:C'
 'A:C optimal in': 'A:C optimal in'
 'ATL (Fatigue)': 'ATL (Fadiga)'
@@ -75,6 +76,7 @@ Commutes: 'Viagens Escritório'
 Compare: Comparar
 'Compare to': 'Comparar com'
 'Completed {threshold} activities': 'Completed {threshold} activities'
+Component: Component
 Components: Components
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Consider reducing load'
@@ -248,7 +250,8 @@ Low: Baixa
 'Low risk': 'Low risk'
 'Low training load': 'Low training load'
 Maintenance: Manutenção
-'Maintenance history': 'Maintenance history'
+'Maintenance log': 'Maintenance log'
+'Maintenance logs will appear here once maintenance has been registered.': 'Maintenance logs will appear here once maintenance has been registered.'
 Mar: Mar
 Max: Máx
 'Max gradient': 'Max gradient'
@@ -284,6 +287,7 @@ Night: Noite
 'No data available': 'No data available'
 'No files imported yet.': 'No files imported yet.'
 'No gears added yet.': 'No gears added yet.'
+'No maintenance logs yet.': 'No maintenance logs yet.'
 'No milestones achieved yet': 'No milestones achieved yet'
 'No other options to compare with': 'No other options to compare with'
 'No recording devices yet.': 'No recording devices yet.'
@@ -313,6 +317,7 @@ Password: Password
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 'Picos de potência'
 'Per {unit}': 'Per {unit}'
+'Performed on': 'Performed on'
 'Personal bests': 'Personal bests'
 Photo: Foto
 Photos: Fotos
@@ -343,6 +348,7 @@ Ranking: Ranking
 'Recovery Timeline': 'Recovery Timeline'
 'Recovery forecast': 'Recovery forecast'
 'Reduced carbon emission by commuting': 'Reduced carbon emission by commuting'
+'Register maintenance': 'Register maintenance'
 'Relative cost': 'Relative cost'
 'Remember me for 7 days': 'Remember me for 7 days'
 Remove: Remove
@@ -620,7 +626,6 @@ day(s): day(s)
 days: dias
 'days needed for next Eddington': 'days needed for next Eddington'
 'days to reach {n}': 'days to reach {n}'
-history: history
 hours: horas
 hrs: hrs
 'last {numberOfDays} days': 'últimos {numberOfDays} dias'

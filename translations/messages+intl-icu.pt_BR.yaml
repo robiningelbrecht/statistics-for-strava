@@ -6,6 +6,7 @@
 'A 6-hour week scores higher than a 5-hour week.': 'Uma semana de 6 horas pontua mais do que uma semana de 5 horas.'
 'A high intensity score means a larger share of your training is hard rather than easy.': 'Uma alta pontuação de intensidade significa que uma parcela maior do seu treino é intensa em vez de leve.'
 'A high score means you concentrate more training into fewer, heavier days.': 'Uma pontuação alta significa que você concentra mais treino em menos dias, porém mais pesados.'
+"A log of completed maintenance. Each entry resets that task's counters from its date.": "A log of completed maintenance. Each entry resets that task's counters from its date."
 'A:C Ratio': 'Razão A:C'
 'A:C optimal in': 'A:C ideal em'
 'ATL (Fatigue)': 'ATL (Fadiga)'
@@ -75,6 +76,7 @@ Commutes: Deslocamentos
 Compare: Comparar
 'Compare to': 'Comparar com'
 'Completed {threshold} activities': 'Completou {threshold} atividades'
+Component: Component
 Components: Componentes
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Parabéns! Você alcançou {numberOfPRs} RPs nesta atividade.'
 'Consider reducing load': 'Considere reduzir a carga'
@@ -248,7 +250,8 @@ Low: Baixa
 'Low risk': 'Baixo risco'
 'Low training load': 'Baixa carga de treino'
 Maintenance: Manutenção
-'Maintenance history': 'Histórico de manutenção'
+'Maintenance log': 'Maintenance log'
+'Maintenance logs will appear here once maintenance has been registered.': 'Maintenance logs will appear here once maintenance has been registered.'
 Mar: Mar
 Max: Máx
 'Max gradient': 'Inclinação máxima'
@@ -284,6 +287,7 @@ Night: Noite
 'No data available': 'Nenhum dado disponível'
 'No files imported yet.': 'No files imported yet.'
 'No gears added yet.': 'No gears added yet.'
+'No maintenance logs yet.': 'No maintenance logs yet.'
 'No milestones achieved yet': 'Nenhum marco alcançado ainda'
 'No other options to compare with': 'Nenhuma outra opção para comparar'
 'No recording devices yet.': 'No recording devices yet.'
@@ -313,6 +317,7 @@ Password: Password
 'Peak fresh': 'Máxima prontidão'
 'Peak power outputs': 'Picos de potência'
 'Per {unit}': 'Por {unit}'
+'Performed on': 'Performed on'
 'Personal bests': 'Recordes pessoais'
 Photo: Foto
 Photos: Fotos
@@ -343,6 +348,7 @@ Ranking: Ranking
 'Recovery Timeline': 'Linha do Tempo de Recuperação'
 'Recovery forecast': 'Previsão de recuperação'
 'Reduced carbon emission by commuting': 'Emissões de carbono reduzidas através de deslocamentos'
+'Register maintenance': 'Register maintenance'
 'Relative cost': 'Custo relativo'
 'Remember me for 7 days': 'Remember me for 7 days'
 Remove: Remove
@@ -620,7 +626,6 @@ day(s): dia(s)
 days: dias
 'days needed for next Eddington': 'dias necessários para o próximo Eddington'
 'days to reach {n}': 'dias para alcançar {n}'
-history: histórico
 hours: horas
 hrs: hrs
 'last {numberOfDays} days': 'últimos {numberOfDays} dias'

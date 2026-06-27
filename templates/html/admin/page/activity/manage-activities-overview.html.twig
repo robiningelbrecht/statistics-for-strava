@@ -14,16 +14,16 @@
                     <th scope="col" class="text-left">
                         {{ "Name"|trans }}
                     </th>
-                    <th scope="col">
+                    <th scope="col" class="text-left">
                         {{ "Sport type"|trans }}
                     </th>
-                    <th scope="col" class="narrow">
+                    <th scope="col" class="text-left">
                         {{ "Date"|trans }}
                     </th>
-                    <th scope="col" class="narrow">
+                    <th scope="col" class="text-left">
                         {{ "Gear"|trans }}
                     </th>
-                    <th scope="col" class="narrow">
+                    <th scope="col" class="text-left">
                         {{ "Device"|trans }}
                     </th>
                     <th scope="col" class="narrow">
@@ -40,20 +40,32 @@
                 <tbody>
                 {% for activity in overview %}
                     <tr class="group/row">
-                        <td class="narrow whitespace-nowrap text-left">
+                        <td class="whitespace-nowrap text-left font-medium text-gray-800">
                             {{ activity.getName() }}
                         </td>
-                        <td class="whitespace-nowrap">
+                        <td class="whitespace-nowrap text-left">
                             {{ activity.getSportType()|trans }}
                         </td>
-                        <td class="narrow whitespace-nowrap">
+                        <td class="whitespace-nowrap text-left">
                             {{ activity.getStartDate()|formatDate() }}
                         </td>
-                        <td class="narrow whitespace-nowrap">
-                            {{ activity.getGearName() ?: '-' }}
+                        <td class="whitespace-nowrap text-left">
+                            {% if activity.getGearName() %}
+                                <span class="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
+                                    {{ activity.getGearName() }}
+                                </span>
+                            {% else %}
+                                -
+                            {% endif %}
                         </td>
-                        <td class="narrow whitespace-nowrap">
-                            {{ activity.getDeviceName() ?: '-' }}
+                        <td class="whitespace-nowrap text-left">
+                            {% if activity.getDeviceName() %}
+                                <span class="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
+                                    {{ activity.getDeviceName() }}
+                                </span>
+                            {% else %}
+                                -
+                            {% endif %}
                         </td>
                         <td class="narrow whitespace-nowrap">
                             {{ (activity.isCommute() ? "Yes" : "No")|trans }}

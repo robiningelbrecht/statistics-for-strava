@@ -12,16 +12,16 @@
                     <table class="data-table">
                         <thead>
                         <tr>
-                            <th scope="col">
+                            <th scope="col" class="text-left">
                                 {{ "Imported on"|trans }}
                             </th>
-                            <th scope="col" class="narrow">
+                            <th scope="col" class="text-left">
                                 {{ "Filename"|trans }}
                             </th>
-                            <th scope="col">
+                            <th scope="col" class="text-left">
                                 {{ "Source"|trans }}
                             </th>
-                            <th scope="col">
+                            <th scope="col" class="text-left">
                                 {{ "Activity"|trans }}
                             </th>
                         </tr>
@@ -30,8 +30,8 @@
                         {% for fileImport in overview %}
                             {% set failed = fileImport.isFailed() %}
                             <tr class="group/row {{ failed ? 'bg-red-50/60' : '' }}">
-                                <td class="narrow whitespace-nowrap">
-                                    <div class="flex items-center justify-center gap-2">
+                                <td class="whitespace-nowrap text-left font-medium text-gray-800">
+                                    <div class="flex items-center justify-start gap-2">
                                         {% if failed %}
                                             <span class="grid place-items-center size-7 shrink-0 rounded-lg bg-red-100 text-red-500"
                                                   title="{{ fileImport.getErrorMessage() }}" aria-label="{{ "Failed"|trans }}">
@@ -53,13 +53,13 @@
                                         </span>
                                     </div>
                                 </td>
-                                <td class="narrow whitespace-nowrap">
+                                <td class="whitespace-nowrap text-left">
                                     {{ fileImport.getOriginalFilename() }}
                                 </td>
-                                <td class="whitespace-nowrap">
+                                <td class="whitespace-nowrap text-left">
                                     {{ fileImport.getSource().label() }}
                                 </td>
-                                <td class="whitespace-nowrap">
+                                <td class="whitespace-nowrap text-left">
                                     {% set activityId = fileImport.getActivityId() %}
                                     {% if activityId %}
                                         <a class="font-medium text-blue-600 hover:underline" href="{{ relativeUrl('/activities#/activity/' ~ activityId ~ '.html') }}">
