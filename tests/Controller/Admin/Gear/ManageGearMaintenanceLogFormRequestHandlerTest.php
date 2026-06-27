@@ -32,6 +32,60 @@ class ManageGearMaintenanceLogFormRequestHandlerTest extends AdminWebTestCase
         $this->assertResponseRedirects('/admin/login');
     }
 
+    public function testAnonymousUsersAreRedirectedToTheLoginPageOnDelete(): void
+    {
+        $this->client->request('GET', '/admin/gear/maintenance-logs/'.GearMaintenanceLogId::random().'/delete');
+
+        $this->assertResponseRedirects('/admin/login');
+    }
+
+    public function testRendersTheDeleteConfirmation(): void
+    {
+        $this->seedConfigAndGear();
+
+        $log = GearMaintenanceLog::create(
+            gearId: GearId::fromUnprefixed('g10130856'),
+            maintenanceTaskId: MaintenanceTaskId::fromUnprefixed('chain-lubed'),
+            performedOn: SerializableDateTime::fromString('2025-01-01 00:00:00'),
+        );
+        static::getContainer()->get(GearMaintenanceLogRepository::class)->add($log);
+
+        $this->client->loginUser($this->adminUser());
+
+        $crawler = $this->client->request('GET', '/admin/gear/maintenance-logs/'.$log->getId().'/delete');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertStringContainsString('Delete maintenance log', $crawler->filter('h3')->text());
+
+        $form = $crawler->filter('form[data-dispatch-command="delete-gear-maintenance-log"]');
+        $this->assertCount(1, $form);
+        $this->assertSame((string) $log->getId(), $form->filter('input[name="gearMaintenanceLogId"]')->attr('value'));
+        $this->assertCount(1, $form->filter('button.btn--danger'));
+
+        // The confirmation names the gear/component/task being deleted.
+        $formText = $form->text();
+        $this->assertStringContainsString('Race bike', $formText);
+        $this->assertStringContainsString('Some cool chain', $formText);
+        $this->assertStringContainsString('Lube', $formText);
+    }
+
+    public function testCannotDeleteALogWhoseGearWasDeleted(): void
+    {
+        $this->importGearMaintenanceConfig();
+        $log = GearMaintenanceLog::create(
+            gearId: GearId::fromUnprefixed('g999'),
+            maintenanceTaskId: MaintenanceTaskId::fromUnprefixed('chain-lubed'),
+            performedOn: SerializableDateTime::fromString('2025-01-01 00:00:00'),
+        );
+        static::getContainer()->get(GearMaintenanceLogRepository::class)->add($log);
+
+        $this->client->loginUser($this->adminUser());
+        $this->client->catchExceptions(false);
+
+        $this->expectException(EntityNotFound::class);
+        $this->client->request('GET', '/admin/gear/maintenance-logs/'.$log->getId().'/delete');
+    }
+
     public function testRendersTheRegisterForm(): void
     {
         $this->seedConfigAndGear();
