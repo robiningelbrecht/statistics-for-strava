@@ -6,6 +6,7 @@
 'A 6-hour week scores higher than a 5-hour week.': 'A 6-hour week scores higher than a 5-hour week.'
 'A high intensity score means a larger share of your training is hard rather than easy.': 'A high intensity score means a larger share of your training is hard rather than easy.'
 'A high score means you concentrate more training into fewer, heavier days.': 'A high score means you concentrate more training into fewer, heavier days.'
+"A log of completed maintenance. Each entry resets that task's counters from its date.": "A log of completed maintenance. Each entry resets that task's counters from its date."
 'A:C Ratio': 'A:C 比值'
 'A:C optimal in': 'A:C optimal in'
 'ATL (Fatigue)': 'ATL (疲劳)'
@@ -75,6 +76,7 @@ Commutes: 通勤
 Compare: 对比
 'Compare to': 对比
 'Completed {threshold} activities': 'Completed {threshold} activities'
+Component: Component
 Components: Components
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Consider reducing load'
@@ -248,7 +250,8 @@ Low: 低
 'Low risk': 'Low risk'
 'Low training load': 'Low training load'
 Maintenance: 维护
-'Maintenance history': 维护历史
+'Maintenance log': 'Maintenance log'
+'Maintenance logs will appear here once maintenance has been registered.': 'Maintenance logs will appear here once maintenance has been registered.'
 Mar: 三月
 Max: 最大
 'Max gradient': 'Max gradient'
@@ -284,6 +287,7 @@ Night: 夜晚
 'No data available': 没有可用数据
 'No files imported yet.': 'No files imported yet.'
 'No gears added yet.': 'No gears added yet.'
+'No maintenance logs yet.': 'No maintenance logs yet.'
 'No milestones achieved yet': 'No milestones achieved yet'
 'No other options to compare with': 无可供比较的其他选项
 'No recording devices yet.': 'No recording devices yet.'
@@ -313,6 +317,7 @@ Password: Password
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 峰值功率输出
 'Per {unit}': 'Per {unit}'
+'Performed on': 'Performed on'
 'Personal bests': 'Personal bests'
 Photo: 照片
 Photos: 照片
@@ -343,6 +348,7 @@ Ranking: Ranking
 'Recovery Timeline': 'Recovery Timeline'
 'Recovery forecast': 'Recovery forecast'
 'Reduced carbon emission by commuting': 通勤减少的碳排放
+'Register maintenance': 'Register maintenance'
 'Relative cost': 相对成本
 'Remember me for 7 days': 'Remember me for 7 days'
 Remove: Remove
@@ -620,7 +626,6 @@ day(s): day(s)
 days: 天
 'days needed for next Eddington': '天 - 下一个爱丁顿所需天数'
 'days to reach {n}': 'days to reach {n}'
-history: 历史
 hours: 小时
 hrs: hrs
 'last {numberOfDays} days': '最近{numberOfDays}天'

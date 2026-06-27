@@ -6,6 +6,7 @@
 'A 6-hour week scores higher than a 5-hour week.': 'Egy 6 órás hét magasabb pontszámot ér el, mint egy 5 órás.'
 'A high intensity score means a larger share of your training is hard rather than easy.': 'A magas intenzitási pontszám azt jelenti, hogy az edzéseid nagyobb része nehéz, nem könnyű.'
 'A high score means you concentrate more training into fewer, heavier days.': 'A magas pontszám azt jelenti, hogy több edzést koncentrálsz kevesebb, de nehezebb napra.'
+"A log of completed maintenance. Each entry resets that task's counters from its date.": "A log of completed maintenance. Each entry resets that task's counters from its date."
 'A:C Ratio': 'A:C arány'
 'A:C optimal in': 'A:C optimális ezután:'
 'ATL (Fatigue)': 'ATL (Fáradtság)'
@@ -75,6 +76,7 @@ Commutes: Ingázások
 Compare: Összehasonlítás
 'Compare to': 'Összehasonlítás:'
 'Completed {threshold} activities': '{threshold} tevékenység teljesítve'
+Component: Component
 Components: Components
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Fontold meg a terhelés csökkentését'
@@ -248,7 +250,8 @@ Low: Alacsony
 'Low risk': 'Alacsony kockázat'
 'Low training load': 'Alacsony edzésterhelés'
 Maintenance: Karbantartás
-'Maintenance history': 'Karbantartási előzmények'
+'Maintenance log': 'Maintenance log'
+'Maintenance logs will appear here once maintenance has been registered.': 'Maintenance logs will appear here once maintenance has been registered.'
 Mar: Már
 Max: Max
 'Max gradient': 'Max. lejtés'
@@ -284,6 +287,7 @@ Night: Éjjel
 'No data available': 'Nincs elérhető adat'
 'No files imported yet.': 'No files imported yet.'
 'No gears added yet.': 'No gears added yet.'
+'No maintenance logs yet.': 'No maintenance logs yet.'
 'No milestones achieved yet': 'Még nincsenek elért mérföldkövek'
 'No other options to compare with': 'Nincs más összehasonlítási lehetőség'
 'No recording devices yet.': 'No recording devices yet.'
@@ -313,6 +317,7 @@ Password: Password
 'Peak fresh': Csúcsfriss
 'Peak power outputs': 'Csúcsteljesítmény értékek'
 'Per {unit}': 'Per {unit}'
+'Performed on': 'Performed on'
 'Personal bests': 'Személyes csúcsok'
 Photo: Fotó
 Photos: Fotók
@@ -343,6 +348,7 @@ Ranking: Ranglista
 'Recovery Timeline': 'Regenerációs idővonal'
 'Recovery forecast': 'Regenerációs előrejelzés'
 'Reduced carbon emission by commuting': 'Csökkentett szén-dioxid kibocsátás ingázással'
+'Register maintenance': 'Register maintenance'
 'Relative cost': 'Relatív költség'
 'Remember me for 7 days': 'Remember me for 7 days'
 Remove: Remove
@@ -620,7 +626,6 @@ day(s): nap(ok)
 days: napok
 'days needed for next Eddington': 'napok a következő Eddington-számhoz'
 'days to reach {n}': 'days to reach {n}'
-history: előzmények
 hours: órák
 hrs: h
 'last {numberOfDays} days': 'utolsó {numberOfDays} nap'

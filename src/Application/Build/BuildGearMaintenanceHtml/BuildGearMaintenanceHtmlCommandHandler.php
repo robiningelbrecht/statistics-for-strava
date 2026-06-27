@@ -11,7 +11,6 @@ use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\Gears;
 use App\Domain\Gear\Maintenance\GearComponent;
 use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogRepository;
-use App\Domain\Gear\Maintenance\Task\MaintenanceTask;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\CQRS\Command\Command;
@@ -102,35 +101,5 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
                 'gearIdsThatHaveDueTasks' => $this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks(),
             ])
         );
-
-        foreach ($gearsThatAreAttachedToComponents as $gear) {
-            $logEntries = [];
-            foreach ($maintenanceLogs->filterOnGear($gear->getId())->sortOnDateDesc() as $maintenanceLog) {
-                $gearComponent = $gearMaintenanceConfig->findGearComponentForMaintenanceTask($maintenanceLog->getMaintenanceTaskId());
-                $maintenanceTask = $gearMaintenanceConfig->findMaintenanceTask($maintenanceLog->getMaintenanceTaskId());
-                if (!$gearComponent instanceof GearComponent) {
-                    // History for a task that is no longer part of the config.
-                    continue;
-                }
-                if (!$maintenanceTask instanceof MaintenanceTask) {
-                    // History for a task that is no longer part of the config.
-                    continue;
-                }
-
-                $logEntries[] = [
-                    'performedOn' => $maintenanceLog->getPerformedOn(),
-                    'component' => $gearComponent->getLabel(),
-                    'task' => $maintenanceTask->getLabel(),
-                ];
-            }
-
-            $this->buildHtmlStorage->write(
-                sprintf('gear/maintenance/history/%s.html', $gear->getId()),
-                $this->twig->load('html/gear/maintenance/gear-maintenance-history.html.twig')->render([
-                    'gear' => $gear,
-                    'logEntries' => $logEntries,
-                ])
-            );
-        }
     }
 }

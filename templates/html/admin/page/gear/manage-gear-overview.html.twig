@@ -26,7 +26,7 @@
                     <th scope="col" class="text-left">
                         {{ "Name"|trans }}
                     </th>
-                    <th scope="col" class="narrow">
+                    <th scope="col">
                         {{ "Dist."|trans }}
                     </th>
                     <th scope="col">
@@ -48,7 +48,7 @@
                                  src="{{ gear.getLocalImagePath() ?: placeholderImage() }}"
                                  alt="{{ gear.getName() }}"/>
                         </td>
-                        <td class="narrow whitespace-nowrap text-left">
+                        <td class="whitespace-nowrap text-left font-medium text-gray-800">
                            {{ gear.getOriginalName() }}
                         </td>
                         <td class="whitespace-nowrap">
