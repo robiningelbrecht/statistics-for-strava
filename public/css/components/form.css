@@ -8,7 +8,7 @@
             @apply block text-sm font-medium text-gray-700;
         }
 
-        input:where([type="text"], [type="number"]):not(.unstyled),
+        input:where([type="text"], [type="number"], [type="date"]):not(.unstyled),
         textarea:not(.unstyled),
         select:not(.unstyled) {
             @apply mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary;

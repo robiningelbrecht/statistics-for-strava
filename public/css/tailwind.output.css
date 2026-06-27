@@ -5626,7 +5626,7 @@ table.data-table {
       font-weight: var(--font-weight-medium);
       color: var(--color-gray-700);
     }
-    input:where([type="text"], [type="number"]):not(.unstyled), textarea:not(.unstyled), select:not(.unstyled) {
+    input:where([type="text"], [type="number"], [type="date"]):not(.unstyled), textarea:not(.unstyled), select:not(.unstyled) {
       margin-top: var(--spacing);
       display: block;
       width: 100%;
