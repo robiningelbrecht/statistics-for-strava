@@ -6,7 +6,6 @@
 'A 6-hour week scores higher than a 5-hour week.': 'Egy 6 órás hét magasabb pontszámot ér el, mint egy 5 órás.'
 'A high intensity score means a larger share of your training is hard rather than easy.': 'A magas intenzitási pontszám azt jelenti, hogy az edzéseid nagyobb része nehéz, nem könnyű.'
 'A high score means you concentrate more training into fewer, heavier days.': 'A magas pontszám azt jelenti, hogy több edzést koncentrálsz kevesebb, de nehezebb napra.'
-"A log of completed maintenance. Each entry resets that task's counters from its date.": "A log of completed maintenance. Each entry resets that task's counters from its date."
 'A:C Ratio': 'A:C arány'
 'A:C optimal in': 'A:C optimális ezután:'
 'ATL (Fatigue)': 'ATL (Fáradtság)'
@@ -79,6 +78,7 @@ Compare: Összehasonlítás
 'Completed {threshold} activities': '{threshold} tevékenység teljesítve'
 Component: Component
 Components: Components
+Config: Config
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Fontold meg a terhelés csökkentését'
 Consistency: Következetesség
@@ -243,6 +243,7 @@ Load: Terhelés
 'Loading data...': 'Adatok betöltése...'
 Loading...: Betöltés...
 'Locations over the globe': 'Helyszínek a Földön'
+Log: Log
 'Long run': 'Hosszú futás'
 'Longest activity': 'Leghosszabb tevékenység'
 'Longest activity (h)': 'Leghosszabb tevékenység (h)'

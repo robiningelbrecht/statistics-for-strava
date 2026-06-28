@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Controller\Admin\Gear;
+namespace App\Tests\Controller\Admin\Gear\RecordingDevice;
 
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;

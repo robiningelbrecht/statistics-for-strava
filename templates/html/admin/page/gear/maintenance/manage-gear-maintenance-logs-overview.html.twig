@@ -2,17 +2,13 @@
 {% block main %}
     {% autoescape false %}
     {% include 'html/admin/page/gear/gear-sub-menu.html.twig' with {activeMenuItem: 'gearMaintenanceLogs'} %}
+    {% include 'html/admin/page/gear/maintenance/maintenance-sub-nav.html.twig' with {activeSubNav: 'log'} %}
     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
         <div class="flex items-center justify-between mb-4">
-            <div>
-                <h3 class="text-lg font-semibold">
-                    {{ "Maintenance log"|trans }}
-                </h3>
-                <p class="mt-1 text-sm text-gray-500">
-                    {{ "A log of completed maintenance. Each entry resets that task's counters from its date."|trans }}
-                </p>
-            </div>
-            <a href="{{ relativeUrl('admin/gear/maintenance-logs/register') }}" type="button" class="btn--add">
+            <h3 class="text-lg font-semibold">
+                {{ "Maintenance log"|trans }}
+            </h3>
+            <a href="{{ relativeUrl(path('admin_register_gear_maintenance_log')) }}" type="button" class="btn--add">
                 <svg class="size-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
                 </svg>
@@ -61,7 +57,7 @@
                         </td>
                         <td class="narrow whitespace-nowrap">
                             <div class="inline-flex items-center gap-2">
-                                <a href="{{ relativeUrl('admin/gear/maintenance-logs/' ~ item.getGearMaintenanceLogId()) ~ '/edit' }}"
+                                <a href="{{ relativeUrl(path('admin_edit_gear_maintenance_log', {gearMaintenanceLogId: item.getGearMaintenanceLogId()})) }}"
                                    class="inline-flex items-center justify-center text-gray-500 transition-colors hover:text-primary"
                                    title="{{ "Edit"|trans }}">
                                     <span class="sr-only">{{ "Edit"|trans }}</span>
@@ -69,7 +65,7 @@
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
                                     </svg>
                                 </a>
-                                <a href="{{ relativeUrl('admin/gear/maintenance-logs/' ~ item.getGearMaintenanceLogId()) ~ '/delete' }}"
+                                <a href="{{ relativeUrl(path('admin_delete_gear_maintenance_log', {gearMaintenanceLogId: item.getGearMaintenanceLogId()})) }}"
                                    class="inline-flex items-center justify-center text-gray-500 transition-colors hover:text-red-600"
                                    title="{{ "Delete"|trans }}">
                                     <span class="sr-only">{{ "Delete"|trans }}</span>

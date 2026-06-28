@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Controller\Admin\Gear;
+namespace App\Tests\Controller\Admin\Gear\Maintenance;
 
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;

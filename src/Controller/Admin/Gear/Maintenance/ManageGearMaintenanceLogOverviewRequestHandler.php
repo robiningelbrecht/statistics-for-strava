@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin\Gear;
+namespace App\Controller\Admin\Gear\Maintenance;
 
 use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogOverviewRepository;
 use App\Infrastructure\Http\Request\PaginationFromRequest;
@@ -26,7 +26,7 @@ final readonly class ManageGearMaintenanceLogOverviewRequestHandler
     #[Route(path: '/admin/gear/maintenance-logs', name: 'admin_manage_gear_maintenance_logs_overview', methods: ['GET'], priority: 10)]
     public function handle(Request $request): Response
     {
-        return new Response($this->twig->render('html/admin/page/gear/manage-gear-maintenance-logs-overview.html.twig', [
+        return new Response($this->twig->render('html/admin/page/gear/maintenance/manage-gear-maintenance-logs-overview.html.twig', [
             'overview' => $this->gearMaintenanceLogOverviewRepository->find(
                 $this->paginationFromRequest($request)
             ),

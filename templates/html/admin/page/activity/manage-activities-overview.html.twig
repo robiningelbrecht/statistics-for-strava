@@ -75,7 +75,7 @@
                         </td>
                         <td class="narrow whitespace-nowrap">
                             <div class="inline-flex items-center gap-2">
-                                <a href="{{ relativeUrl('admin/activities/' ~ activity.getActivityId()) ~ '/edit' }}"
+                                <a href="{{ relativeUrl(path('admin_edit_activity', {activityId: activity.getActivityId()})) }}"
                                    class="inline-flex items-center justify-center text-gray-500 transition-colors hover:text-primary"
                                    title="{{ "Edit"|trans }}">
                                     <span class="sr-only">{{ "Edit"|trans }}</span>
@@ -84,7 +84,7 @@
                                     </svg>
                                 </a>
                                 {% if importMode.isFiles() %}
-                                    <a href="{{ relativeUrl('admin/activities/' ~ activity.getActivityId()) ~ '/delete' }}"
+                                    <a href="{{ relativeUrl(path('admin_delete_activity', {activityId: activity.getActivityId()})) }}"
                                        class="inline-flex items-center justify-center text-gray-500 transition-colors hover:text-red-600"
                                        title="{{ "Delete"|trans }}">
                                         <span class="sr-only">{{ "Delete"|trans }}</span>
