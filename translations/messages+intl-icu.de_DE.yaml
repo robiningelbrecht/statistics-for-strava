@@ -78,7 +78,6 @@ Compare: Vergleich
 'Completed {threshold} activities': '{threshold} Aktivitäten abgeschlossen'
 Component: Component
 Components: Komponenten
-Config: Config
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Glückwunsch! Du hast {numberOfPRs} PRs in der Aktivität.'
 'Consider reducing load': 'Belastungsreduzierung in Erwägung ziehen'
 Consistency: Konstanz
@@ -557,7 +556,6 @@ Tue.: Tue.
 Unspecified: 'Nicht spezifiziert'
 'Unsupported file type': 'Unsupported file type'
 'Updated on': 'Aktualisiert am'
-Upload: Upload
 'Upload activity files': 'Upload activity files'
 'Upload failed': 'Upload failed'
 'Upload files': 'Upload files'

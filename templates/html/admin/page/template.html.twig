@@ -14,21 +14,15 @@
         <link href="{{ relativeUrl(asset('css/dist/tailwind.min.css')) }}" rel="stylesheet"/>
         <script>
             document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
-            if (localStorage.getItem('sideNavCollapsed') === 'true') {
-                document.documentElement.setAttribute('data-sidebar-collapsed', '');
-            }
         </script>
     </head>
     <body class="min-h-screen bg-gray-50 text-gray-900 antialiased admin">
+        {% set hasSubNav = isActiveNavItem({'/admin/gear': false}) %}
         <!-- NAVIGATION -->
-        {% autoescape false %}
-            {% include 'html/admin/navigation/top-nav-bar.html.twig' %}
-        {% endautoescape %}
+        {% include 'html/admin/navigation/top-nav-bar.html.twig' %}
         <!-- SIDEBAR -->
-        {% autoescape false %}
-            {% include 'html/admin/navigation/side-nav-bar.html.twig' %}
-        {% endautoescape %}
-        <main class="p-4 md:ml-64 sidebar-collapsed:md:ml-16 h-auto min-h-screen pt-20 text-gray-900">
+        {% include 'html/admin/navigation/icon-rail.html.twig' %}
+        <main class="p-4 {{ hasSubNav ? 'md:ml-76' : 'md:ml-16' }} h-auto min-h-screen pt-20 text-gray-900">
             {% block main %}
             {% endblock main %}
         </main>

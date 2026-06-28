@@ -1,0 +1,43 @@
+{% autoescape false %}
+    {% if isActiveNavItem({'/admin/gear': false}) %}
+        {% set inMaintenance = isActiveNavItem({'/admin/gear/maintenance-logs': false}) %}
+        {% set inRecordingDevices = isActiveNavItem({'/admin/gear/recording-devices': false}) %}
+        {% set inGearOverview = not inMaintenance and not inRecordingDevices %}
+        <nav class="contextual-panel" aria-label="{{ "Gear"|trans }}">
+            <p class="px-2 pb-3 text-xs font-semibold uppercase tracking-wide text-gray-400">
+                {{ "Gear"|trans }}
+            </p>
+            <ul class="space-y-1">
+                <li>
+                    <a href="{{ relativeUrl(path('admin_manage_gear_overview')) }}" {{ inGearOverview ? 'aria-selected="true"' : '' }}>
+                        {{ "Gear"|trans }}
+                    </a>
+                </li>
+                <li>
+                    <button type="button"
+                            class="unstyled group w-full justify-between"
+                            data-collapse-toggle="submenu-maintenance"
+                            aria-controls="submenu-maintenance"
+                            aria-expanded="{{ inMaintenance ? 'true' : 'false' }}">
+                        <span>{{ "Maintenance"|trans }}</span>
+                        <svg class="size-3.5 shrink-0 transition-transform group-aria-expanded:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <ul id="submenu-maintenance" class="{{ inMaintenance ? '' : 'hidden' }} mt-1 space-y-1">
+                        <li>
+                            <a href="{{ relativeUrl(path('admin_manage_gear_maintenance_logs_overview')) }}" class="ps-5" {{ inMaintenance ? 'aria-selected="true"' : '' }}>
+                                {{ "Log"|trans }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="{{ relativeUrl(path('admin_manage_recording_devices_overview')) }}" {{ inRecordingDevices ? 'aria-selected="true"' : '' }}>
+                        {{ "Recording devices"|trans }}
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+{% endautoescape %}
