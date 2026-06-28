@@ -78,7 +78,6 @@ Compare: Összehasonlítás
 'Completed {threshold} activities': '{threshold} tevékenység teljesítve'
 Component: Component
 Components: Components
-Config: Config
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Fontold meg a terhelés csökkentését'
 Consistency: Következetesség
@@ -557,7 +556,6 @@ Tue.: Tue.
 Unspecified: Meghatározatlan
 'Unsupported file type': 'Unsupported file type'
 'Updated on': 'Frissítve:'
-Upload: Upload
 'Upload activity files': 'Upload activity files'
 'Upload failed': 'Upload failed'
 'Upload files': 'Upload files'

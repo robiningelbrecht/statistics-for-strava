@@ -1,0 +1,56 @@
+{% autoescape false %}
+    <aside id="drawer-navigation" class="sidebar--with-contextual-panel -translate-x-full md:translate-x-0 transition-transform" aria-label="Sidenav">
+        <div>
+            <ul class="space-y-1 pb-2">
+                <li>
+                    <a title="{{ "File upload"|trans }}" href="{{ relativeUrl(path('admin_file_upload')) }}" {{ isActiveNavItem({'/admin': true, '/admin/upload': false}) ? 'aria-selected="true"' : '' }}>
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v9m-5 0H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2M8 9l4-5 4 5m1 8h.01"/>
+                        </svg>
+                        <span>{{ "File upload"|trans }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a title="{{ "File imports"|trans }}" href="{{ relativeUrl(path('admin_file_imports')) }}" {{ isActiveNavItem({'/admin/file-imports': false}) ? 'aria-selected="true"' : '' }}>
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 2.26953V6.40007C14 6.96012 14 7.24015 14.109 7.45406C14.2049 7.64222 14.3578 7.7952 14.546 7.89108C14.7599 8.00007 15.0399 8.00007 15.6 8.00007H19.7305M9 15L12 18M12 18L15 15M12 18L12 12M14 2H8.8C7.11984 2 6.27976 2 5.63803 2.32698C5.07354 2.6146 4.6146 3.07354 4.32698 3.63803C4 4.27976 4 5.11984 4 6.8V17.2C4 18.8802 4 19.7202 4.32698 20.362C4.6146 20.9265 5.07354 21.3854 5.63803 21.673C6.27976 22 7.11984 22 8.8 22H15.2C16.8802 22 17.7202 22 18.362 21.673C18.9265 21.3854 19.3854 20.9265 19.673 20.362C20 19.7202 20 18.8802 20 17.2V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>{{ "File imports"|trans }}</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="space-y-1 py-2">
+                <li>
+                    <a title="{{ "Activities"|trans }}" href="{{ relativeUrl(path('admin_manage_activity_overview')) }}" {{ isActiveNavItem({'/admin/activities': false}) ? 'aria-selected="true"' : '' }}>
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 9h6m-6 3h6m-6 3h6M6.996 9h.01m-.01 3h.01m-.01 3h.01M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/>
+                        </svg>
+                        <span>{{ "Activities"|trans }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a title="{{ "Gear"|trans }}" href="{{ relativeUrl(path('admin_manage_gear_overview')) }}" {{ isActiveNavItem({'/admin/gear': false}) ? 'aria-selected="true"' : '' }}>
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10.051 8.102-3.778.322-1.994 1.994a.94.94 0 0 0 .533 1.6l2.698.316m8.39 1.617-.322 3.78-1.994 1.994a.94.94 0 0 1-1.595-.533l-.4-2.652m8.166-11.174a1.366 1.366 0 0 0-1.12-1.12c-1.616-.279-4.906-.623-6.38.853-1.671 1.672-5.211 8.015-6.31 10.023a.932.932 0 0 0 .162 1.111l.828.835.833.832a.932.932 0 0 0 1.111.163c2.008-1.102 8.35-4.642 10.021-6.312 1.475-1.478 1.133-4.77.855-6.385Zm-2.961 3.722a1.88 1.88 0 1 1-3.76 0 1.88 1.88 0 0 1 3.76 0Z"/>
+                        </svg>
+                        <span>{{ "Gear"|trans }}</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="space-y-1 py-2">
+                <li>
+                    <form method="post" action="{{ relativeUrl(path('admin_logout')) }}">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
+                        <button title="{{ "Sign out"|trans }}" class="text-left w-full">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2"/>
+                            </svg>
+                            <span>{{ "Sign out"|trans }}</span>
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        {% include 'html/admin/navigation/contextual-panel.html.twig' %}
+    </aside>
+{% endautoescape %}

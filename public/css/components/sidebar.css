@@ -34,4 +34,32 @@
             @apply border-t absolute p-2 flex flex-col gap-y-1 justify-center text-xs text-center text-gray-500 bottom-0 left-0 w-full bg-white z-20;
         }
     }
+
+    aside#drawer-navigation.sidebar--with-contextual-panel {
+        @apply flex w-auto;
+
+        > div:nth-child(1) {
+            @apply w-16 max-h-full;
+
+            > ul > li :is(a, button) {
+                @apply justify-center;
+
+                > span:nth-of-type(1) {
+                    @apply sr-only;
+                }
+            }
+        }
+    }
+
+    .contextual-panel {
+        @apply w-60 h-full overflow-y-auto border-l border-gray-200 py-5 px-3;
+
+        :is(a, button) {
+            @apply flex items-center gap-x-3 p-2 rounded-lg text-gray-800 text-sm font-medium;
+        }
+
+        :is(a, button) {
+            @apply cursor-pointer text-gray-800 hover:bg-primary-soft hover:text-primary aria-selected:bg-primary-soft aria-selected:text-primary;
+        }
+    }
 }

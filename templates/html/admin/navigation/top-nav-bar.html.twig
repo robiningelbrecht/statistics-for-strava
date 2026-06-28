@@ -1,16 +1,6 @@
 <nav class="text-gray-900 bg-white border-b border-gray-200 px-4 py-2.5 fixed left-0 right-0 top-0 z-1100 group">
     <div class="flex flex-wrap justify-between items-center">
         <div class="flex justify-start items-center">
-            <button id="toggle-sidebar-collapsed-state"
-                    aria-controls="drawer-navigation"
-                    class="p-1.5 mr-1.5 text-gray-600 rounded-md cursor-pointer hidden md:block hover:text-gray-900 hover:bg-gray-100">
-                <svg class="size-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="3" y="4" width="18" height="16" rx="2"/>
-                    <path d="M9 4v16"/>
-                    <path class="origin-center [transform-box:fill-box] transition-transform duration-300 ease-in-out sidebar-collapsed:rotate-180" d="M16 8l-3 4 3 4"/>
-                </svg>
-                <span class="sr-only">{{ "Toggle sidebar"|trans }}</span>
-            </button>
             <button data-drawer-target="drawer-navigation" data-drawer-toggle="drawer-navigation"
                     aria-controls="drawer-navigation"
                     class="md:hidden mr-3 inline-flex items-center justify-center text-gray-600 cursor-pointer select-none">
