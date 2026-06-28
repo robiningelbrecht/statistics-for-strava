@@ -12,8 +12,7 @@ final readonly class NavigationTwigExtension
 {
     public function __construct(
         private RequestStack $requestStack,
-    )
-    {
+    ) {
     }
 
     /**
@@ -32,7 +31,7 @@ final readonly class NavigationTwigExtension
             if ($currentPath === $path) {
                 return true;
             }
-            if (!$exact && str_starts_with($currentPath, rtrim($path, '/') . '/')) {
+            if (!$exact && str_starts_with($currentPath, rtrim($path, '/').'/')) {
                 return true;
             }
         }
