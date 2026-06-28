@@ -6,7 +6,6 @@
 'A 6-hour week scores higher than a 5-hour week.': 'A 6-hour week scores higher than a 5-hour week.'
 'A high intensity score means a larger share of your training is hard rather than easy.': 'A high intensity score means a larger share of your training is hard rather than easy.'
 'A high score means you concentrate more training into fewer, heavier days.': 'A high score means you concentrate more training into fewer, heavier days.'
-"A log of completed maintenance. Each entry resets that task's counters from its date.": "A log of completed maintenance. Each entry resets that task's counters from its date."
 'A:C Ratio': 'A:C 比值'
 'A:C optimal in': 'A:C optimal in'
 'ATL (Fatigue)': 'ATL (疲劳)'
@@ -79,6 +78,7 @@ Compare: 对比
 'Completed {threshold} activities': 'Completed {threshold} activities'
 Component: Component
 Components: Components
+Config: Config
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
@@ -243,6 +243,7 @@ Load: Load
 'Loading data...': 加载数据中...
 Loading...: 加载中...
 'Locations over the globe': 全球位置
+Log: Log
 'Long run': 长跑
 'Longest activity': 'Longest activity'
 'Longest activity (h)': '最久运动 (h)'

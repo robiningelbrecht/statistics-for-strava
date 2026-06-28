@@ -38,7 +38,7 @@
                             {% endif %}
                         </td>
                         <td class="narrow whitespace-nowrap">
-                            <a href="{{ relativeUrl('admin/gear/recording-devices/' ~ recordingDevice.getId()) ~ '/edit' }}"
+                            <a href="{{ relativeUrl(path('admin_edit_recording_device', {id: recordingDevice.getId()})) }}"
                                class="inline-flex items-center justify-center text-gray-500 transition-colors hover:text-primary"
                                title="{{ "Edit"|trans }}">
                                 <span class="sr-only">{{ "Edit"|trans }}</span>

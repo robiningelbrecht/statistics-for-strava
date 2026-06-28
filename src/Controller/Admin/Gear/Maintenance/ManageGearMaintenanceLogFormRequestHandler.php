@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin\Gear;
+namespace App\Controller\Admin\Gear\Maintenance;
 
 use App\Domain\Gear\Gear;
 use App\Domain\Gear\GearRepository;
@@ -35,7 +35,7 @@ final readonly class ManageGearMaintenanceLogFormRequestHandler
     #[Route(path: '/admin/gear/maintenance-logs/register', name: 'admin_register_gear_maintenance_log', methods: ['GET'], priority: 10)]
     public function handleAdd(): Response
     {
-        return new Response($this->twig->render('html/admin/page/gear/edit-gear-maintenance-log.html.twig', [
+        return new Response($this->twig->render('html/admin/page/gear/maintenance/edit-gear-maintenance-log.html.twig', [
             'dispatchCommand' => AddGearMaintenanceLog::NAME,
             'components' => $this->config->loadGearMaintenance()->buildComponentOptions($this->gearRepository->findAll()),
         ]));
@@ -47,7 +47,7 @@ final readonly class ManageGearMaintenanceLogFormRequestHandler
         ['log' => $gearMaintenanceLog, 'gearName' => $gearName, 'componentLabel' => $componentLabel, 'taskLabel' => $taskLabel]
             = $this->resolveActionableLog($gearMaintenanceLogId);
 
-        return new Response($this->twig->render('html/admin/page/gear/edit-gear-maintenance-log.html.twig', [
+        return new Response($this->twig->render('html/admin/page/gear/maintenance/edit-gear-maintenance-log.html.twig', [
             'dispatchCommand' => UpdateGearMaintenanceLog::NAME,
             'gearMaintenanceLog' => $gearMaintenanceLog,
             'componentLabel' => $componentLabel,
@@ -62,7 +62,7 @@ final readonly class ManageGearMaintenanceLogFormRequestHandler
         ['log' => $gearMaintenanceLog, 'gearName' => $gearName, 'componentLabel' => $componentLabel, 'taskLabel' => $taskLabel]
             = $this->resolveActionableLog($gearMaintenanceLogId);
 
-        return new Response($this->twig->render('html/admin/page/gear/delete-gear-maintenance-log.html.twig', [
+        return new Response($this->twig->render('html/admin/page/gear/maintenance/delete-gear-maintenance-log.html.twig', [
             'dispatchCommand' => DeleteGearMaintenanceLog::NAME,
             'gearMaintenanceLog' => $gearMaintenanceLog,
             'componentLabel' => $componentLabel,

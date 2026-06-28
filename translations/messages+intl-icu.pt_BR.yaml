@@ -6,7 +6,6 @@
 'A 6-hour week scores higher than a 5-hour week.': 'Uma semana de 6 horas pontua mais do que uma semana de 5 horas.'
 'A high intensity score means a larger share of your training is hard rather than easy.': 'Uma alta pontuação de intensidade significa que uma parcela maior do seu treino é intensa em vez de leve.'
 'A high score means you concentrate more training into fewer, heavier days.': 'Uma pontuação alta significa que você concentra mais treino em menos dias, porém mais pesados.'
-"A log of completed maintenance. Each entry resets that task's counters from its date.": "A log of completed maintenance. Each entry resets that task's counters from its date."
 'A:C Ratio': 'Razão A:C'
 'A:C optimal in': 'A:C ideal em'
 'ATL (Fatigue)': 'ATL (Fadiga)'
@@ -79,6 +78,7 @@ Compare: Comparar
 'Completed {threshold} activities': 'Completou {threshold} atividades'
 Component: Component
 Components: Componentes
+Config: Config
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Parabéns! Você alcançou {numberOfPRs} RPs nesta atividade.'
 'Consider reducing load': 'Considere reduzir a carga'
 Consistency: Consistência
@@ -243,6 +243,7 @@ Load: Carga
 'Loading data...': 'Carregando dados...'
 Loading...: Carregando...
 'Locations over the globe': 'Locais ao redor do globo'
+Log: Log
 'Long run': 'Corridas longas'
 'Longest activity': 'Atividade mais longa'
 'Longest activity (h)': 'Atividade mais longa (h)'
