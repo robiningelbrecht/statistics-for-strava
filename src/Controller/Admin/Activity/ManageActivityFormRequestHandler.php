@@ -31,7 +31,7 @@ final readonly class ManageActivityFormRequestHandler
     public function handleEdit(string $activityId): Response
     {
         return new Response($this->twig->render('html/admin/page/activity/edit-activity.html.twig', [
-            'dispatchCommand' => UpdateActivity::NAME,
+            'dispatchCommand' => UpdateActivity::getCommandName(),
             'activity' => $this->activityRepository->find(ActivityId::fromString($activityId)),
             'sportTypes' => SportType::cases(),
             'gears' => $this->gearRepository->findAll()->sortByIsRetired(),
@@ -43,7 +43,7 @@ final readonly class ManageActivityFormRequestHandler
     public function handleDelete(string $activityId): Response
     {
         return new Response($this->twig->render('html/admin/page/activity/delete-activity.html.twig', [
-            'dispatchCommand' => DeleteActivity::NAME,
+            'dispatchCommand' => DeleteActivity::getCommandName(),
             'activity' => $this->activityRepository->find(ActivityId::fromString($activityId)),
         ]));
     }

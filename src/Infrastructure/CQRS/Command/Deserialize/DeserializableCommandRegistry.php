@@ -7,18 +7,18 @@ namespace App\Infrastructure\CQRS\Command\Deserialize;
 final readonly class DeserializableCommandRegistry
 {
     /**
-     * @param array<string, class-string<DeserializableCommand>> $commandsById
+     * @param array<string, class-string<DeserializableCommand>> $commandsByName
      */
     public function __construct(
-        private array $commandsById = [],
+        private array $commandsByName = [],
     ) {
     }
 
     /**
      * @return class-string<DeserializableCommand>
      */
-    public function resolve(string $id): string
+    public function resolve(string $name): string
     {
-        return $this->commandsById[$id] ?? throw CouldNotDeserializeCommand::unknownCommand($id);
+        return $this->commandsByName[$name] ?? throw CouldNotDeserializeCommand::unknownCommand($name);
     }
 }

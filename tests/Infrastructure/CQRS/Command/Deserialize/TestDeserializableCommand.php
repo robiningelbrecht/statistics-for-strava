@@ -2,14 +2,15 @@
 
 namespace App\Tests\Infrastructure\CQRS\Command\Deserialize;
 
-use App\Infrastructure\CQRS\Command\Deserialize\AsDeserializableCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\DeserializableCommand;
+use App\Infrastructure\CQRS\Command\Deserialize\ProvidesCommandName;
 use App\Infrastructure\CQRS\Command\DomainCommand;
 use App\Infrastructure\ValueObject\String\Url;
 
-#[AsDeserializableCommand('test-deserializable-command')]
 final readonly class TestDeserializableCommand extends DomainCommand implements DeserializableCommand
 {
+    use ProvidesCommandName;
+
     public function __construct(
         private string $message,
         private Url $url,

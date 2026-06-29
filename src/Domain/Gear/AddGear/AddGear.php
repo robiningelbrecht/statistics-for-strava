@@ -8,18 +8,17 @@ use App\Domain\Gear\GearStatus;
 use App\Domain\Gear\ProvidePurchasePriceFromPayload;
 use App\Domain\Image\NewImage;
 use App\Domain\Image\ProvideLocalImageFromDropZonePayload;
-use App\Infrastructure\CQRS\Command\Deserialize\AsDeserializableCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\CouldNotDeserializeCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\DeserializableCommand;
+use App\Infrastructure\CQRS\Command\Deserialize\ProvidesCommandName;
 use App\Infrastructure\CQRS\Command\DomainCommand;
 use Money\Money;
 
-#[AsDeserializableCommand(AddGear::NAME)]
 final readonly class AddGear extends DomainCommand implements DeserializableCommand
 {
     use ProvidePurchasePriceFromPayload;
     use ProvideLocalImageFromDropZonePayload;
-    public const string NAME = 'add-gear';
+    use ProvidesCommandName;
 
     private function __construct(
         private string $name,

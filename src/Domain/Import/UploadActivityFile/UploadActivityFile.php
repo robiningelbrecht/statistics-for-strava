@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace App\Domain\Import\UploadActivityFile;
 
 use App\Domain\Import\SupportedFileExtension;
-use App\Infrastructure\CQRS\Command\Deserialize\AsDeserializableCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\CouldNotDeserializeCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\DeserializableCommand;
+use App\Infrastructure\CQRS\Command\Deserialize\ProvidesCommandName;
 use App\Infrastructure\CQRS\Command\DomainCommand;
 use App\Infrastructure\ValueObject\String\Path;
 
-#[AsDeserializableCommand('upload-activity-file')]
 final readonly class UploadActivityFile extends DomainCommand implements DeserializableCommand
 {
+    use ProvidesCommandName;
+
     private function __construct(
         private string $filename,
         private string $contents,

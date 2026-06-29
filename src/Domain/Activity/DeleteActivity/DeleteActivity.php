@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace App\Domain\Activity\DeleteActivity;
 
 use App\Domain\Activity\ActivityId;
-use App\Infrastructure\CQRS\Command\Deserialize\AsDeserializableCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\CouldNotDeserializeCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\DeserializableCommand;
+use App\Infrastructure\CQRS\Command\Deserialize\ProvidesCommandName;
 use App\Infrastructure\CQRS\Command\DomainCommand;
 
-#[AsDeserializableCommand(DeleteActivity::NAME)]
 final readonly class DeleteActivity extends DomainCommand implements DeserializableCommand
 {
-    public const string NAME = 'delete-activity';
+    use ProvidesCommandName;
 
     public function __construct(
         private ActivityId $activityId,

@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace App\Domain\Gear\Maintenance\Log\DeleteGearMaintenanceLog;
 
 use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogId;
-use App\Infrastructure\CQRS\Command\Deserialize\AsDeserializableCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\CouldNotDeserializeCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\DeserializableCommand;
+use App\Infrastructure\CQRS\Command\Deserialize\ProvidesCommandName;
 use App\Infrastructure\CQRS\Command\DomainCommand;
 
-#[AsDeserializableCommand(DeleteGearMaintenanceLog::NAME)]
 final readonly class DeleteGearMaintenanceLog extends DomainCommand implements DeserializableCommand
 {
-    public const string NAME = 'delete-gear-maintenance-log';
+    use ProvidesCommandName;
 
     private function __construct(
         private GearMaintenanceLogId $gearMaintenanceLogId,
