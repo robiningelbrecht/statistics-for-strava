@@ -1,0 +1,87 @@
+{% extends "html/admin/page/template.html.twig" %}
+{% block main %}
+    {% autoescape false %}
+    <div class="flex flex-col gap-4">
+        <form data-dispatch-command="{{ dispatchCommand }}" class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+            <div class="mb-5">
+                <h3 class="text-lg font-semibold">{{ "Gear maintenance"|trans }}</h3>
+                <p class="mt-1 text-sm text-gray-500 max-w-2xl">
+                    {{ "Track gear usage from your activities and stay on top of usage- and time-based maintenance."|trans }}
+                </p>
+            </div>
+            <div data-form-error class="hidden mb-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert"></div>
+            <div class="flex flex-col gap-4">
+                <div class="flex items-start gap-2">
+                    <input type="checkbox" id="enabled" name="enabled" value="true" {{ gearMaintenanceConfig.isFeatureEnabled ? 'checked' }} class="mt-0.5">
+                    <div>
+                        <label for="enabled" class="mt-0!">{{ "Enabled"|trans }}</label>
+                        <p class="mt-0.5 text-xxs text-gray-500">
+                            {{ "Turn gear maintenance tracking on or off."|trans }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-2">
+                    <input type="checkbox" id="ignoreRetiredGear" name="ignoreRetiredGear" value="true" {{ gearMaintenanceConfig.ignoreRetiredGear ? 'checked' }} class="mt-0.5">
+                    <div>
+                        <label for="ignoreRetiredGear" class="mt-0!">{{ "Ignore retired gear"|trans }}</label>
+                        <p class="mt-0.5 text-xxs text-gray-500">
+                            {{ "When enabled, gear marked as retired is skipped. Its components won't accrue usage and no maintenance is tracked for them."|trans }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 border-t border-gray-200 pt-4 mt-6">
+                <button type="submit" data-has-loading-state class="group btn--primary">
+                    <span class="label">{{ "Save settings"|trans }}</span>
+                    <span class="label--loading">{{ "Saving..."|trans }}</span>
+                </button>
+            </div>
+        </form>
+        <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h3 class="text-lg font-semibold">{{ "Components"|trans }}</h3>
+                    <p class="mt-1 text-sm text-gray-500">{{ "Parts you track maintenance for, eg: chains, cassettes, brake pads..."|trans }}</p>
+                </div>
+                <button type="button" class="btn--add">
+                    <svg class="size-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
+                    </svg>
+                    <span>{{ "Add component"|trans }}</span>
+                </button>
+            </div>
+            <div class="relative overflow-x-auto">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="text-left">{{ "Component"|trans }}</th>
+                        <th scope="col" class="text-left">{{ "Attached to"|trans }}</th>
+                        <th scope="col">{{ "Tasks"|trans }}</th>
+                        <th scope="col">{{ "Purchase price"|trans }}</th>
+                        <th scope="col" class="narrow"><span class="sr-only">{{ "Edit"|trans }}</span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td colspan="5">
+                            <div class="flex flex-col items-center justify-center gap-3 py-12 px-4 text-center">
+                                <span class="grid place-items-center size-12 rounded-full bg-gray-100 text-gray-400" aria-hidden="true">
+                                    <svg class="size-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.5 6h3m-3 12h3M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/>
+                                    </svg>
+                                </span>
+                                <div class="flex flex-col gap-1">
+                                    <span class="text-sm font-medium text-gray-800">{{ "No components yet."|trans }}</span>
+                                    <span class="text-xs text-gray-500">{{ "Add a component to start tracking maintenance."|trans }}</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endautoescape %}
+{% endblock main %}

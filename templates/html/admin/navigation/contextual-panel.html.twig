@@ -1,6 +1,8 @@
 {% autoescape false %}
     {% if isActiveNavItem({'/admin/gear': false}) %}
-        {% set inMaintenance = isActiveNavItem({'/admin/gear/maintenance-logs': false}) %}
+        {% set inMaintenanceLog = isActiveNavItem({'/admin/gear/maintenance-logs': false}) %}
+        {% set inMaintenanceConfig = isActiveNavItem({'/admin/gear/maintenance-config': false}) %}
+        {% set inMaintenance = inMaintenanceLog or inMaintenanceConfig %}
         {% set inRecordingDevices = isActiveNavItem({'/admin/gear/recording-devices': false}) %}
         {% set inGearOverview = not inMaintenance and not inRecordingDevices %}
         <nav class="contextual-panel" aria-label="{{ "Gear"|trans }}">
@@ -26,8 +28,13 @@
                     </button>
                     <ul id="submenu-maintenance" class="{{ inMaintenance ? '' : 'hidden' }} mt-1 space-y-1">
                         <li>
-                            <a href="{{ relativeUrl(path('admin_manage_gear_maintenance_logs_overview')) }}" class="ps-5" {{ inMaintenance ? 'aria-selected="true"' : '' }}>
+                            <a href="{{ relativeUrl(path('admin_manage_gear_maintenance_logs_overview')) }}" class="ps-5" {{ inMaintenanceLog ? 'aria-selected="true"' : '' }}>
                                 {{ "Log"|trans }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ relativeUrl(path('admin_manage_gear_maintenance_config')) }}" class="ps-5" {{ inMaintenanceConfig ? 'aria-selected="true"' : '' }}>
+                                {{ "Config"|trans }}
                             </a>
                         </li>
                     </ul>
