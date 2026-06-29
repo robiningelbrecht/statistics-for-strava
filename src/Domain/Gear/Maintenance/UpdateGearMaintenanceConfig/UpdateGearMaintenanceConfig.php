@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Gear\Maintenance\UpdateGearMaintenanceSettings;
+namespace App\Domain\Gear\Maintenance\UpdateGearMaintenanceConfig;
 
 use App\Infrastructure\CQRS\Command\Deserialize\AsDeserializableCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\DeserializableCommand;
 use App\Infrastructure\CQRS\Command\DomainCommand;
 
-#[AsDeserializableCommand(UpdateGearMaintenanceSettings::NAME)]
-final readonly class UpdateGearMaintenanceSettings extends DomainCommand implements DeserializableCommand
+#[AsDeserializableCommand(UpdateGearMaintenanceConfig::NAME)]
+final readonly class UpdateGearMaintenanceConfig extends DomainCommand implements DeserializableCommand
 {
-    public const string NAME = 'update-gear-maintenance-settings';
+    public const string NAME = 'update-gear-maintenance-config';
 
     private function __construct(
         private bool $isFeatureEnabled,

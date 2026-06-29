@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Gear\Maintenance\UpdateGearMaintenanceSettings;
+namespace App\Domain\Gear\Maintenance\UpdateGearMaintenanceConfig;
 
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
@@ -13,7 +13,7 @@ use App\Infrastructure\KeyValue\KeyValueStore;
 use App\Infrastructure\KeyValue\Value;
 use App\Infrastructure\Serialization\Json;
 
-final readonly class UpdateGearMaintenanceSettingsCommandHandler implements CommandHandler
+final readonly class UpdateGearMaintenanceConfigCommandHandler implements CommandHandler
 {
     public function __construct(
         private KeyValueStore $keyValueStore,
@@ -22,7 +22,7 @@ final readonly class UpdateGearMaintenanceSettingsCommandHandler implements Comm
 
     public function handle(Command $command): void
     {
-        assert($command instanceof UpdateGearMaintenanceSettings);
+        assert($command instanceof UpdateGearMaintenanceConfig);
 
         try {
             $config = Json::decode((string) $this->keyValueStore->find(Key::GEAR_MAINTENANCE));

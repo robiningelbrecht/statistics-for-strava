@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Domain\Gear\Maintenance\UpdateGearMaintenanceSettings;
+namespace App\Tests\Domain\Gear\Maintenance\UpdateGearMaintenanceConfig;
 
-use App\Domain\Gear\Maintenance\UpdateGearMaintenanceSettings\UpdateGearMaintenanceSettings;
+use App\Domain\Gear\Maintenance\UpdateGearMaintenanceConfig\UpdateGearMaintenanceConfig;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\KeyValue\Key;
 use App\Infrastructure\KeyValue\KeyValueStore;
@@ -12,7 +12,7 @@ use App\Infrastructure\Serialization\Json;
 use App\Tests\ContainerTestCase;
 use App\Tests\ProvideGearMaintenanceConfig;
 
-class UpdateGearMaintenanceSettingsCommandHandlerTest extends ContainerTestCase
+class UpdateGearMaintenanceConfigCommandHandlerTest extends ContainerTestCase
 {
     use ProvideGearMaintenanceConfig;
 
@@ -23,7 +23,7 @@ class UpdateGearMaintenanceSettingsCommandHandlerTest extends ContainerTestCase
     {
         $this->importGearMaintenanceConfig();
 
-        $this->commandBus->dispatch(UpdateGearMaintenanceSettings::fromPayload([
+        $this->commandBus->dispatch(UpdateGearMaintenanceConfig::fromPayload([
             'enabled' => 'false',
             'ignoreRetiredGear' => 'false',
         ]));
@@ -37,7 +37,7 @@ class UpdateGearMaintenanceSettingsCommandHandlerTest extends ContainerTestCase
 
     public function testItStoresSettingsWhenNoConfigExists(): void
     {
-        $this->commandBus->dispatch(UpdateGearMaintenanceSettings::fromPayload([
+        $this->commandBus->dispatch(UpdateGearMaintenanceConfig::fromPayload([
             'enabled' => '1',
             'ignoreRetiredGear' => '1',
         ]));
