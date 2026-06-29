@@ -6,16 +6,12 @@ namespace App\Controller\Admin\Gear\Maintenance;
 
 use App\Domain\Gear\Gear;
 use App\Domain\Gear\GearRepository;
-use App\Domain\Gear\Maintenance\GearComponent;
+use App\Domain\Gear\Maintenance\GearMaintenanceRepository;
 use App\Domain\Gear\Maintenance\Log\AddGearMaintenanceLog\AddGearMaintenanceLog;
 use App\Domain\Gear\Maintenance\Log\DeleteGearMaintenanceLog\DeleteGearMaintenanceLog;
-use App\Domain\Gear\Maintenance\Log\GearMaintenanceLog;
 use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogId;
-use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogRepository;
+use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogOverviewRepository;
 use App\Domain\Gear\Maintenance\Log\UpdateGearMaintenanceLog\UpdateGearMaintenanceLog;
-use App\Domain\Gear\Maintenance\Task\MaintenanceTask;
-use App\Infrastructure\Config\AppConfig;
-use App\Infrastructure\Exception\EntityNotFound;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
@@ -26,9 +22,9 @@ final readonly class ManageGearMaintenanceLogFormRequestHandler
 {
     public function __construct(
         private Environment $twig,
-        private AppConfig $config,
+        private GearMaintenanceRepository $gearMaintenanceRepository,
         private GearRepository $gearRepository,
-        private GearMaintenanceLogRepository $gearMaintenanceLogRepository,
+        private GearMaintenanceLogOverviewRepository $gearMaintenanceLogOverviewRepository,
     ) {
     }
 
@@ -37,61 +33,83 @@ final readonly class ManageGearMaintenanceLogFormRequestHandler
     {
         return new Response($this->twig->render('html/admin/page/gear/maintenance/edit-gear-maintenance-log.html.twig', [
             'dispatchCommand' => AddGearMaintenanceLog::NAME,
-            'components' => $this->config->loadGearMaintenance()->buildComponentOptions($this->gearRepository->findAll()),
+            'components' => $this->buildComponentOptions(),
         ]));
     }
 
     #[Route(path: '/admin/gear/maintenance-logs/{gearMaintenanceLogId}/edit', name: 'admin_edit_gear_maintenance_log', methods: ['GET'], priority: 10)]
     public function handleEdit(string $gearMaintenanceLogId): Response
     {
-        ['log' => $gearMaintenanceLog, 'gearName' => $gearName, 'componentLabel' => $componentLabel, 'taskLabel' => $taskLabel]
-            = $this->resolveActionableLog($gearMaintenanceLogId);
+        $gearMaintenanceLog = $this->gearMaintenanceLogOverviewRepository->findOneByGearMaintenanceLogId(
+            GearMaintenanceLogId::fromString($gearMaintenanceLogId)
+        );
 
         return new Response($this->twig->render('html/admin/page/gear/maintenance/edit-gear-maintenance-log.html.twig', [
             'dispatchCommand' => UpdateGearMaintenanceLog::NAME,
             'gearMaintenanceLog' => $gearMaintenanceLog,
-            'componentLabel' => $componentLabel,
-            'taskLabel' => $taskLabel,
-            'gearName' => $gearName,
+            'componentLabel' => $gearMaintenanceLog->getComponentLabel(),
+            'taskLabel' => $gearMaintenanceLog->getTaskLabel(),
+            'gearName' => $gearMaintenanceLog->getGearName(),
         ]));
     }
 
     #[Route(path: '/admin/gear/maintenance-logs/{gearMaintenanceLogId}/delete', name: 'admin_delete_gear_maintenance_log', methods: ['GET'], priority: 10)]
     public function handleDelete(string $gearMaintenanceLogId): Response
     {
-        ['log' => $gearMaintenanceLog, 'gearName' => $gearName, 'componentLabel' => $componentLabel, 'taskLabel' => $taskLabel]
-            = $this->resolveActionableLog($gearMaintenanceLogId);
+        $gearMaintenanceLog = $this->gearMaintenanceLogOverviewRepository->findOneByGearMaintenanceLogId(
+            GearMaintenanceLogId::fromString($gearMaintenanceLogId)
+        );
 
         return new Response($this->twig->render('html/admin/page/gear/maintenance/delete-gear-maintenance-log.html.twig', [
             'dispatchCommand' => DeleteGearMaintenanceLog::NAME,
             'gearMaintenanceLog' => $gearMaintenanceLog,
-            'componentLabel' => $componentLabel,
-            'taskLabel' => $taskLabel,
-            'gearName' => $gearName,
+            'componentLabel' => $gearMaintenanceLog->getComponentLabel(),
+            'taskLabel' => $gearMaintenanceLog->getTaskLabel(),
+            'gearName' => $gearMaintenanceLog->getGearName(),
         ]));
     }
 
     /**
-     * @return array{log: GearMaintenanceLog, gearName: string, componentLabel: string, taskLabel: string}
+     * @return list<array{label: string, tasks: list<array{id: string, label: string}>, gears: list<array{id: string, label: string}>}>
      */
-    private function resolveActionableLog(string $gearMaintenanceLogId): array
+    private function buildComponentOptions(): array
     {
-        $gearMaintenanceLog = $this->gearMaintenanceLogRepository->find(GearMaintenanceLogId::fromString($gearMaintenanceLogId));
+        $gears = $this->gearRepository->findAll();
 
-        $gearMaintenanceConfig = $this->config->loadGearMaintenance();
-        $component = $gearMaintenanceConfig->findGearComponentForMaintenanceTask($gearMaintenanceLog->getMaintenanceTaskId());
-        $task = $gearMaintenanceConfig->findMaintenanceTask($gearMaintenanceLog->getMaintenanceTaskId());
-        $gear = $this->gearRepository->findAll()->getByGearId($gearMaintenanceLog->getGearId());
+        $components = [];
+        foreach ($this->gearMaintenanceRepository->find()->getGearComponents() as $gearComponent) {
+            $tasks = [];
+            foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
+                $tasks[] = [
+                    'id' => (string) $maintenanceTask->getId(),
+                    'label' => (string) $maintenanceTask->getLabel(),
+                ];
+            }
 
-        if (!$gear instanceof Gear || !$component instanceof GearComponent || !$task instanceof MaintenanceTask) {
-            throw new EntityNotFound(sprintf('Gear maintenance log "%s" is no longer available', $gearMaintenanceLogId));
+            $componentGears = [];
+            foreach ($gearComponent->getAttachedTo() as $gearId) {
+                if (!($gear = $gears->getByGearId($gearId)) instanceof Gear) {
+                    continue;
+                }
+                $componentGears[] = [
+                    'id' => (string) $gear->getId(),
+                    'label' => $gear->getName(),
+                ];
+            }
+            if ([] === $tasks) {
+                continue;
+            }
+            if ([] === $componentGears) {
+                continue;
+            }
+
+            $components[] = [
+                'label' => (string) $gearComponent->getLabel(),
+                'tasks' => $tasks,
+                'gears' => $componentGears,
+            ];
         }
 
-        return [
-            'log' => $gearMaintenanceLog,
-            'gearName' => $gear->getName(),
-            'componentLabel' => (string) $component->getLabel(),
-            'taskLabel' => (string) $task->getLabel(),
-        ];
+        return $components;
     }
 }

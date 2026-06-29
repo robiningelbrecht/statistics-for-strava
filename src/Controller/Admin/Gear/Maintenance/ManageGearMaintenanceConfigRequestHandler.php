@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\Admin\Gear\Maintenance;
 
 use App\Domain\Gear\GearRepository;
+use App\Domain\Gear\Maintenance\GearMaintenanceRepository;
 use App\Domain\Gear\Maintenance\UpdateGearMaintenanceConfig\UpdateGearMaintenanceConfig;
-use App\Infrastructure\Config\AppConfig;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
@@ -17,7 +17,7 @@ final readonly class ManageGearMaintenanceConfigRequestHandler
 {
     public function __construct(
         private Environment $twig,
-        private AppConfig $appConfig,
+        private GearMaintenanceRepository $gearMaintenanceRepository,
         private GearRepository $gearRepository,
     ) {
     }
@@ -27,7 +27,7 @@ final readonly class ManageGearMaintenanceConfigRequestHandler
     {
         return new Response($this->twig->render('html/admin/page/gear/maintenance/config.html.twig', [
             'dispatchCommand' => UpdateGearMaintenanceConfig::NAME,
-            'gearMaintenanceConfig' => $this->appConfig->loadGearMaintenance(),
+            'gearMaintenanceConfig' => $this->gearMaintenanceRepository->find(),
             'gears' => $this->gearRepository->findAll(),
         ]));
     }

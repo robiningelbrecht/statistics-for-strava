@@ -10,9 +10,8 @@ use App\Domain\Gear\GearIds;
 use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\Gears;
 use App\Domain\Gear\Maintenance\GearComponent;
-use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogRepository;
+use App\Domain\Gear\Maintenance\GearMaintenanceRepository;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
-use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use League\Flysystem\FilesystemOperator;
@@ -22,8 +21,7 @@ use Twig\Environment;
 final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
-        private AppConfig $config,
-        private GearMaintenanceLogRepository $gearMaintenanceLogRepository,
+        private GearMaintenanceRepository $gearMaintenanceRepository,
         private GearRepository $gearRepository,
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
         private Environment $twig,
@@ -36,7 +34,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
     {
         assert($command instanceof BuildGearMaintenanceHtml);
 
-        $gearMaintenanceConfig = $this->config->loadGearMaintenance();
+        $gearMaintenanceConfig = $this->gearMaintenanceRepository->find();
         $gears = $this->gearRepository->findAll();
 
         if (!$gearMaintenanceConfig->isFeatureEnabled()) {
@@ -64,7 +62,6 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
                 ['{gearId}' => $gearIdInConfig->toUnprefixedString()]
             );
         }
-        $maintenanceLogs = $this->gearMaintenanceLogRepository->findAll();
 
         $gearsThatAreAttachedToComponents = Gears::empty();
         $gearIdsThatAreAttachedToComponents = [];
@@ -90,14 +87,12 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
             $errors[] = $this->translator->trans('It looks like no valid gear is attached to any of the components. Please check your config file.');
         }
 
-        $allGearComponents = $gearMaintenanceConfig->getEnrichedGearComponents($maintenanceLogs);
-
         $this->buildHtmlStorage->write(
             'gear/maintenance.html',
             $this->twig->load('html/gear/maintenance/gear-maintenance.html.twig')->render([
                 'errors' => $errors,
                 'gearsAttachedToComponents' => $gearsThatAreAttachedToComponents,
-                'gearComponents' => $allGearComponents,
+                'gearComponents' => $gearMaintenanceConfig->getGearComponents(),
                 'gearIdsThatHaveDueTasks' => $this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks(),
             ])
         );

@@ -6,7 +6,6 @@ use App\Application\AppUrl;
 use App\Controller\AIChatRequestHandler;
 use App\Domain\Athlete\Athlete;
 use App\Domain\Athlete\AthleteRepository;
-use App\Domain\Gear\GearRepository;
 use App\Domain\Integration\AI\Chat\AddChatMessage\AddChatMessage;
 use App\Domain\Integration\AI\Chat\ChatCommands;
 use App\Domain\Integration\AI\Chat\ChatMessage;
@@ -16,7 +15,6 @@ use App\Domain\Integration\AI\Chat\DbalChatRepository;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Config\PlatformEnvironment;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
-use App\Infrastructure\KeyValue\KeyValueStore;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
@@ -228,10 +226,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
             platformEnvironment: PlatformEnvironment::PROD,
         );
 
-        $config = new AppConfig(
-            $this->getContainer()->get(KeyValueStore::class),
-            $this->getContainer()->get(GearRepository::class),
-        );
+        $config = new AppConfig();
 
         return new AIChatRequestHandler(
             buildHtmlStorage: $this->buildStorage,
@@ -256,10 +251,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
             platformEnvironment: PlatformEnvironment::PROD,
         );
 
-        $config = new AppConfig(
-            $this->getContainer()->get(KeyValueStore::class),
-            $this->getContainer()->get(GearRepository::class),
-        );
+        $config = new AppConfig();
 
         return new AIChatRequestHandler(
             buildHtmlStorage: $this->buildStorage,

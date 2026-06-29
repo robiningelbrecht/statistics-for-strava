@@ -4,16 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Config;
 
-use App\Domain\Gear\Gear;
-use App\Domain\Gear\GearId;
-use App\Domain\Gear\GearIds;
-use App\Domain\Gear\GearRepository;
-use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Import\ImportMode;
-use App\Infrastructure\Exception\EntityNotFound;
-use App\Infrastructure\KeyValue\Key;
-use App\Infrastructure\KeyValue\KeyValueStore;
-use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
@@ -29,32 +20,9 @@ final class AppConfig
     /** @var array<string> */
     private static array $yamlConfigFiles = [];
 
-    public function __construct(
-        private readonly KeyValueStore $keyValueStore,
-        private readonly GearRepository $gearRepository,
-    ) {
-        $this->buildConfig();
-    }
-
-    public function loadGearMaintenance(): GearMaintenanceConfig
+    public function __construct()
     {
-        try {
-            /** @var array<string, mixed>|null $config */
-            $config = Json::decode((string) $this->keyValueStore->find(Key::GEAR_MAINTENANCE));
-        } catch (EntityNotFound) {
-            $config = null;
-        }
-
-        $gearMaintenanceConfig = GearMaintenanceConfig::fromArray(is_array($config) ? $config : null);
-
-        // The config references gear ids that may be unprefixed (copy-pasted from a gear URL),
-        // while the database stores them with their Strava "b"/"g" prefix. Normalize them here
-        // so every consumer works with ids that match the database.
-        $gearMaintenanceConfig->normalizeGearIds(GearIds::fromArray(
-            $this->gearRepository->findAll()->map(fn (Gear $gear): GearId => $gear->getId())
-        ));
-
-        return $gearMaintenanceConfig;
+        $this->buildConfig();
     }
 
     /**

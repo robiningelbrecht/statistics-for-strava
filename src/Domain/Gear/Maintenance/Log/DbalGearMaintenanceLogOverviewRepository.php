@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Gear\Maintenance\Log;
 
 use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
-use App\Infrastructure\Config\AppConfig;
+use App\Domain\Gear\Maintenance\GearMaintenanceRepository;
+use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Repository\Overview;
 use App\Infrastructure\Repository\Pagination;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -16,13 +17,13 @@ final readonly class DbalGearMaintenanceLogOverviewRepository implements GearMai
 {
     public function __construct(
         private Connection $connection,
-        private AppConfig $config,
+        private GearMaintenanceRepository $gearMaintenanceRepository,
     ) {
     }
 
     public function find(Pagination $pagination): Overview
     {
-        $labelsByTaskId = $this->resolveLabelsByTaskId($this->config->loadGearMaintenance());
+        $labelsByTaskId = $this->resolveLabelsByTaskId($this->gearMaintenanceRepository->find());
         if ([] === $labelsByTaskId) {
             return Overview::create(pagination: $pagination, total: 0, items: []);
         }
@@ -58,6 +59,31 @@ final readonly class DbalGearMaintenanceLogOverviewRepository implements GearMai
                 $results
             ),
         );
+    }
+
+    public function findOneByGearMaintenanceLogId(GearMaintenanceLogId $gearMaintenanceLogId): GearMaintenanceLogOverviewItem
+    {
+        $labelsByTaskId = $this->resolveLabelsByTaskId($this->gearMaintenanceRepository->find());
+
+        $result = false;
+        if ([] !== $labelsByTaskId) {
+            $result = $this->connection->createQueryBuilder()
+                ->select('gml.gearMaintenanceLogId', 'gml.maintenanceTaskId', 'gml.performedOn', 'g.name AS gearName')
+                ->from('GearMaintenanceLog', 'gml')
+                ->innerJoin('gml', 'Gear', 'g', 'g.gearId = gml.gearId')
+                ->andWhere('gml.gearMaintenanceLogId = :gearMaintenanceLogId')
+                ->andWhere('gml.maintenanceTaskId IN (:maintenanceTaskIds)')
+                ->setParameter('gearMaintenanceLogId', (string) $gearMaintenanceLogId)
+                ->setParameter('maintenanceTaskIds', array_keys($labelsByTaskId), ArrayParameterType::STRING)
+                ->executeQuery()
+                ->fetchAssociative();
+        }
+
+        if (false === $result) {
+            throw new EntityNotFound(sprintf('Gear maintenance log "%s" is no longer available', $gearMaintenanceLogId));
+        }
+
+        return $this->hydrate($result, $labelsByTaskId);
     }
 
     /**

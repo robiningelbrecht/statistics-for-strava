@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Gear\Maintenance;
 
-use App\Domain\Gear\Gear;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
-use App\Domain\Gear\Gears;
-use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogs;
 use App\Domain\Gear\Maintenance\Task\IntervalUnit;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTask;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskId;
@@ -165,84 +162,6 @@ final readonly class GearMaintenanceConfig
         return $this->gearComponents;
     }
 
-    public function getEnrichedGearComponents(GearMaintenanceLogs $maintenanceLogs): GearComponents
-    {
-        $enrichedGearComponents = GearComponents::empty();
-        foreach ($this->getGearComponents() as $gearComponent) {
-            $enrichedGearComponents->add($gearComponent->withMaintenanceLogs($maintenanceLogs));
-        }
-
-        return $enrichedGearComponents;
-    }
-
-    /**
-     * @return list<array{label: string, tasks: list<array{id: string, label: string}>, gears: list<array{id: string, label: string}>}>
-     */
-    public function buildComponentOptions(Gears $gears): array
-    {
-        $components = [];
-        foreach ($this->getGearComponents() as $gearComponent) {
-            $tasks = [];
-            foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
-                $tasks[] = [
-                    'id' => (string) $maintenanceTask->getId(),
-                    'label' => (string) $maintenanceTask->getLabel(),
-                ];
-            }
-
-            $componentGears = [];
-            foreach ($gearComponent->getAttachedTo() as $gearId) {
-                if (!($gear = $gears->getByGearId($gearId)) instanceof Gear) {
-                    continue;
-                }
-                $componentGears[] = [
-                    'id' => (string) $gear->getId(),
-                    'label' => $gear->getName(),
-                ];
-            }
-            if ([] === $tasks) {
-                continue;
-            }
-            if ([] === $componentGears) {
-                continue;
-            }
-
-            $components[] = [
-                'label' => (string) $gearComponent->getLabel(),
-                'tasks' => $tasks,
-                'gears' => $componentGears,
-            ];
-        }
-
-        return $components;
-    }
-
-    public function findGearComponentForMaintenanceTask(MaintenanceTaskId $maintenanceTaskId): ?GearComponent
-    {
-        foreach ($this->getGearComponents() as $gearComponent) {
-            foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
-                if ($maintenanceTask->getId() == $maintenanceTaskId) {
-                    return $gearComponent;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    public function findMaintenanceTask(MaintenanceTaskId $maintenanceTaskId): ?MaintenanceTask
-    {
-        foreach ($this->getGearComponents() as $gearComponent) {
-            foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
-                if ($maintenanceTask->getId() == $maintenanceTaskId) {
-                    return $maintenanceTask;
-                }
-            }
-        }
-
-        return null;
-    }
-
     public function normalizeGearIds(GearIds $gearIds): void
     {
         foreach ($this->getGearComponents() as $gearComponent) {
@@ -253,14 +172,6 @@ final readonly class GearMaintenanceConfig
     public function getAllReferencedGearIds(): GearIds
     {
         return $this->getGearComponents()->getAllReferencedGearIds()->unique();
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getAllReferencedImages(): array
-    {
-        return array_values(array_unique($this->getGearComponents()->getAllReferencedImages()));
     }
 
     public function isFeatureEnabled(): bool

@@ -62,7 +62,6 @@ class ManageGearMaintenanceLogFormRequestHandlerTest extends AdminWebTestCase
         $this->assertSame((string) $log->getId(), $form->filter('input[name="gearMaintenanceLogId"]')->attr('value'));
         $this->assertCount(1, $form->filter('button.btn--danger'));
 
-        // The confirmation names the gear/component/task being deleted.
         $formText = $form->text();
         $this->assertStringContainsString('Race bike', $formText);
         $this->assertStringContainsString('Some cool chain', $formText);
@@ -100,17 +99,14 @@ class ManageGearMaintenanceLogFormRequestHandlerTest extends AdminWebTestCase
         $form = $crawler->filter('form[data-dispatch-command="add-gear-maintenance-log"]');
         $this->assertCount(1, $form);
 
-        // The fields map onto the AddGearMaintenanceLog payload keys.
         $this->assertCount(1, $form->filter('select[name="maintenanceTaskId"]'));
         $this->assertCount(1, $form->filter('select[name="gearId"]'));
         $this->assertCount(1, $form->filter('input[name="performedOn"][type="date"]'));
 
-        // The component select drives the dependent task/gear selects (generic dependent-select component).
         $this->assertGreaterThan(1, $form->filter('select#gml-component option')->count());
         $this->assertSame('gml-component', $form->filter('select[name="maintenanceTaskId"]')->attr('data-depends-on'));
         $this->assertSame('gml-component', $form->filter('select[name="gearId"]')->attr('data-depends-on'));
 
-        // Dependent options are rendered server-side and tagged with the controlling value.
         $this->assertGreaterThan(0, $form->filter('select[name="maintenanceTaskId"] option[data-when]')->count());
         $this->assertStringContainsString('Lube', $form->filter('select[name="maintenanceTaskId"]')->text());
         $this->assertStringContainsString('Race bike', $form->filter('select[name="gearId"]')->text());
@@ -140,7 +136,6 @@ class ManageGearMaintenanceLogFormRequestHandlerTest extends AdminWebTestCase
         $this->assertSame((string) $log->getId(), $form->filter('input[name="gearMaintenanceLogId"]')->attr('value'));
         $this->assertSame('2025-01-01', $form->filter('input[name="performedOn"]')->attr('value'));
 
-        // Gear/component/task are shown read-only as context (the edit only corrects the date).
         $this->assertCount(0, $form->filter('select[name="gearId"]'));
         $this->assertCount(0, $form->filter('select[name="maintenanceTaskId"]'));
         $formText = $form->text();
@@ -151,7 +146,6 @@ class ManageGearMaintenanceLogFormRequestHandlerTest extends AdminWebTestCase
 
     public function testCannotEditALogWhoseGearWasDeleted(): void
     {
-        // Config (so the task/component resolve) but the gear is not in the database.
         $this->importGearMaintenanceConfig();
         $log = GearMaintenanceLog::create(
             gearId: GearId::fromUnprefixed('g999'),
@@ -169,7 +163,6 @@ class ManageGearMaintenanceLogFormRequestHandlerTest extends AdminWebTestCase
 
     public function testCannotEditALogWhoseMaintenanceTaskWasDeleted(): void
     {
-        // Gear exists, but the maintenance task is no longer part of the config.
         $this->seedConfigAndGear();
         $log = GearMaintenanceLog::create(
             gearId: GearId::fromUnprefixed('g10130856'),

@@ -4,18 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\Gear\Maintenance\Task;
 
-use App\Domain\Gear\Maintenance\Log\GearMaintenanceLog;
 use App\Infrastructure\ValueObject\String\Name;
 
-final class MaintenanceTask
+final readonly class MaintenanceTask
 {
-    private ?GearMaintenanceLog $mostRecentMaintenance = null;
-
     private function __construct(
-        private readonly MaintenanceTaskId $id,
-        private readonly Name $label,
-        private readonly int $intervalValue,
-        private readonly IntervalUnit $intervalUnit,
+        private MaintenanceTaskId $id,
+        private Name $label,
+        private int $intervalValue,
+        private IntervalUnit $intervalUnit,
     ) {
     }
 
@@ -51,17 +48,5 @@ final class MaintenanceTask
     public function getIntervalUnit(): IntervalUnit
     {
         return $this->intervalUnit;
-    }
-
-    public function withMostRecentMaintenance(?GearMaintenanceLog $mostRecentMaintenance): self
-    {
-        return clone ($this, [
-            'mostRecentMaintenance' => $mostRecentMaintenance,
-        ]);
-    }
-
-    public function getMostRecentMaintenance(): ?GearMaintenanceLog
-    {
-        return $this->mostRecentMaintenance;
     }
 }

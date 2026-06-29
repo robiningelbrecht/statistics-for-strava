@@ -23,6 +23,8 @@ Activity: Aktivität
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Akute Trainingsbelastung (Ermüdung) - 7-tägiger exponentiell gewichteter Durchschnitt deiner täglichen Trainingsbelastung. Stellt die kurzfristige Ermüdung dar.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Aktuelle vs. dauerhafte Trainingsbelastung - Verhältnis von ATL zu CTL. Gibt das Verletzungsrisiko an.'
 'Adaptive & Inclusive Sports': 'Adaptive & inklusive Sportarten'
+'Add a component to start tracking maintenance.': 'Add a component to start tracking maintenance.'
+'Add component': 'Add component'
 'Add gear': 'Add gear'
 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.'
 Admin: Admin
@@ -36,6 +38,7 @@ Apr: Apr
 'Are you sure you want to delete {task} on {component} for {gear}, performed on {date}?': 'Are you sure you want to delete {task} on {component} for {gear}, performed on {date}?'
 'Ask Mark something...': 'Frag Mark etwas...'
 'Athlete profile': Sportlerprofil
+'Attached to': 'Attached to'
 Aug: Aug
 Average: Average
 'Average gradient': 'Durchschnittliche Steigung'
@@ -78,6 +81,7 @@ Compare: Vergleich
 'Completed {threshold} activities': '{threshold} Aktivitäten abgeschlossen'
 Component: Component
 Components: Komponenten
+Config: Config
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Glückwunsch! Du hast {numberOfPRs} PRs in der Aktivität.'
 'Consider reducing load': 'Belastungsreduzierung in Erwägung ziehen'
 Consistency: Konstanz
@@ -133,6 +137,7 @@ Elev.: Elev.
 Elevation: Höhenmeter
 'Elevation in {unit}': 'Höhenmeter in {unit}'
 Elliptical: Crosstrainer
+Enabled: Enabled
 Energy: Energie
 'Energy burned across your activities': 'Während der Aktivitäten verbrannte Energie'
 'Enter fullscreen mode': 'Vollbildmodus aktivieren'
@@ -208,6 +213,7 @@ History: Verlauf
 'How often do you train': 'Wie oft trainierst du'
 'Ice Skate': Eislaufen
 Id: Id
+'Ignore retired gear': 'Ignore retired gear'
 Image: Image
 Images: Images
 Imperial: Imperial
@@ -287,6 +293,7 @@ Neutral: Neutral
 Night: Nacht
 'No activities': 'Keine Aktivitäten'
 'No activities imported yet.': 'No activities imported yet.'
+'No components yet.': 'No components yet.'
 'No data available': 'Keine Daten verfügbar'
 'No files imported yet.': 'No files imported yet.'
 'No gears added yet.': 'No gears added yet.'
@@ -316,6 +323,7 @@ Over-fatigued: Übermüdet
 'PET bottles produced': 'PET Flaschen hergestellt'
 Pace: Tempo
 Padel: Padel
+'Parts you track maintenance for, eg: chains, cassettes, brake pads...': 'Parts you track maintenance for, eg: chains, cassettes, brake pads...'
 Password: Password
 'Peak fresh': Topfit
 'Peak power outputs': Spitzenleistungen
@@ -375,6 +383,7 @@ Sail: Segeln
 Sat: Sa
 Sat.: Sat.
 Save: Save
+'Save settings': 'Save settings'
 Saved: Saved
 Saving...: Saving...
 Search: Suche
@@ -427,6 +436,7 @@ Swim: Schwimmen
 'Table Tennis': Tischtennis
 'Taper sweet-spot (+15)': 'Taper sweet-spot (+15)'
 Task: Task
+Tasks: Tasks
 'Team Sports': Teamsportarten
 Tennis: Tennis
 "That's 1.5 times the distance to the edge of space": 'Das ist das 1,5-fache der Entfernung bis zum Rand des Weltraums'
@@ -543,6 +553,7 @@ Title: Title
 'Total hours spent per sport type': 'Gesamtstunden pro Sportart'
 'Total moving time per month': 'Gesamte Bewegungszeit pro Monat'
 'Total size exceeds {max} MB': 'Total size exceeds {max} MB'
+'Track gear usage from your activities and stay on top of usage- and time-based maintenance.': 'Track gear usage from your activities and stay on top of usage- and time-based maintenance.'
 'Trail Runs': Trail-Läufe
 'Training 4–5 days every week scores higher than doing everything in one or two days.': '4-5 Tage Training pro Woche erzielen einen höheren Wert als alles an einem oder zwei Tagen zu erledigen.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Trainingsimpuls - Kennzahl für die Trainingsbelastung, die Intensität und Dauer berücksichtigt.'
@@ -553,6 +564,7 @@ Title: Title
 'Training load is accumulating, recovery days are important': 'Belastung steigt an. Achte auf deine Regeneration.'
 Tue: Di
 Tue.: Tue.
+'Turn gear maintenance tracking on or off.': 'Turn gear maintenance tracking on or off.'
 Unspecified: 'Nicht spezifiziert'
 'Unsupported file type': 'Unsupported file type'
 'Updated on': 'Aktualisiert am'
@@ -588,6 +600,7 @@ Weight: Gewicht
 'Weight Training': Gewichtstraining
 'Weight history': Gewichtsverlauf
 Wheelchair: Rollstuhl
+"When enabled, gear marked as retired is skipped. Its components won't accrue usage and no maintenance is tracked for them.": "When enabled, gear marked as retired is skipped. Its components won't accrue usage and no maintenance is tracked for them."
 'Wind Surf': Windsurfen
 'Winter Sports': Wintersport
 Workout: Training

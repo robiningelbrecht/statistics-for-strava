@@ -12,7 +12,6 @@ use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Athlete\KeyValueBasedAthleteRepository;
 use App\Domain\Athlete\MaxHeartRate\MaxHeartRateFormula;
 use App\Domain\Athlete\RestingHeartRate\RestingHeartRateFormula;
-use App\Domain\Gear\GearRepository;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Config\PlatformEnvironment;
 use App\Infrastructure\KeyValue\KeyValueStore;
@@ -78,10 +77,7 @@ class ImportAthleteCommandHandlerTest extends ContainerTestCase
             platformEnvironment: PlatformEnvironment::PROD,
         );
 
-        $config = new AppConfig(
-            $this->getContainer()->get(KeyValueStore::class),
-            $this->getContainer()->get(GearRepository::class),
-        );
+        $config = new AppConfig();
 
         return new ImportAthleteCommandHandler(
             AthleteBirthDate::fromString('1989-08-14'),
