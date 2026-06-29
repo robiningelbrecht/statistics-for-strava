@@ -6,7 +6,6 @@ namespace App\Domain\Gear\Maintenance;
 
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
-use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogs;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTask;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTasks;
 use App\Infrastructure\ValueObject\String\Name;
@@ -72,22 +71,6 @@ final readonly class GearComponent
     public function getMaintenanceTasks(): MaintenanceTasks
     {
         return $this->maintenanceTasks;
-    }
-
-    public function withMaintenanceLogs(GearMaintenanceLogs $maintenanceLogs): self
-    {
-        $maintenanceTasks = MaintenanceTasks::empty();
-        foreach ($this->maintenanceTasks as $maintenanceTask) {
-            $mostRecentMaintenance = $maintenanceLogs
-                ->filterOnMaintenanceTask($maintenanceTask->getId())
-                ->getMostRecent();
-
-            $maintenanceTasks->add($maintenanceTask->withMostRecentMaintenance($mostRecentMaintenance));
-        }
-
-        return clone ($this, [
-            'maintenanceTasks' => $maintenanceTasks,
-        ]);
     }
 
     public function normalizeGearIds(GearIds $normalizedGearIds): void

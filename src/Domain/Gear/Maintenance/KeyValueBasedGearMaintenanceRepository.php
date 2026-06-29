@@ -1,0 +1,94 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Domain\Gear\Maintenance;
+
+use App\Domain\Gear\Gear;
+use App\Domain\Gear\GearId;
+use App\Domain\Gear\GearIds;
+use App\Domain\Gear\GearRepository;
+use App\Domain\Gear\Maintenance\Task\MaintenanceTask;
+use App\Domain\Gear\Maintenance\Task\MaintenanceTaskId;
+use App\Infrastructure\Exception\EntityNotFound;
+use App\Infrastructure\KeyValue\Key;
+use App\Infrastructure\KeyValue\KeyValue;
+use App\Infrastructure\KeyValue\KeyValueStore;
+use App\Infrastructure\KeyValue\Value;
+use App\Infrastructure\Serialization\Json;
+
+final readonly class KeyValueBasedGearMaintenanceRepository implements GearMaintenanceRepository
+{
+    public function __construct(
+        private KeyValueStore $keyValueStore,
+        private GearRepository $gearRepository,
+    ) {
+    }
+
+    public function find(): GearMaintenanceConfig
+    {
+        try {
+            /** @var array<string, mixed>|null $config */
+            $config = Json::decode((string) $this->keyValueStore->find(Key::GEAR_MAINTENANCE));
+        } catch (EntityNotFound) {
+            $config = null;
+        }
+
+        $gearMaintenanceConfig = GearMaintenanceConfig::fromArray(is_array($config) ? $config : null);
+
+        // The config references gear ids that may be unprefixed (copy-pasted from a gear URL),
+        // while the database stores them with their Strava "b"/"g" prefix. Normalize them here
+        // so every consumer works with ids that match the database.
+        $gearMaintenanceConfig->normalizeGearIds(GearIds::fromArray(
+            $this->gearRepository->findAll()->map(fn (Gear $gear): GearId => $gear->getId())
+        ));
+
+        return $gearMaintenanceConfig;
+    }
+
+    public function findMaintenanceTask(MaintenanceTaskId $maintenanceTaskId): ?MaintenanceTask
+    {
+        foreach ($this->find()->getGearComponents() as $gearComponent) {
+            foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
+                if ($maintenanceTask->getId() == $maintenanceTaskId) {
+                    return $maintenanceTask;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public function findGearComponentForMaintenanceTask(MaintenanceTaskId $maintenanceTaskId): ?GearComponent
+    {
+        foreach ($this->find()->getGearComponents() as $gearComponent) {
+            foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
+                if ($maintenanceTask->getId() == $maintenanceTaskId) {
+                    return $gearComponent;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public function updateConfig(bool $isFeatureEnabled, bool $ignoreRetiredGear): void
+    {
+        try {
+            $config = Json::decode((string) $this->keyValueStore->find(Key::GEAR_MAINTENANCE));
+        } catch (EntityNotFound) {
+            $config = [];
+        }
+        if (!is_array($config)) {
+            $config = [];
+        }
+
+        $config['enabled'] = $isFeatureEnabled;
+        $config['ignoreRetiredGear'] = $ignoreRetiredGear;
+
+        $this->keyValueStore->save(KeyValue::fromState(
+            Key::GEAR_MAINTENANCE,
+            Value::fromString(Json::encode($config)),
+        ));
+    }
+}

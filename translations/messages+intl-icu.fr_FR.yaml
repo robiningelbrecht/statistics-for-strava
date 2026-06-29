@@ -23,6 +23,8 @@ Activity: Activité
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': "Charge d'Entraînement Aiguë (Fatigue) - Moyenne pondérée exponentiellement sur 7 jours de votre charge d'entraînement quotidienne. Représente la fatigue à court terme."
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Ratio Aiguë:Chronique (A:C) - Rapport entre ATL et CTL. Indique le risque de blessure.'
 'Adaptive & Inclusive Sports': 'Sports adaptés et inclusifs'
+'Add a component to start tracking maintenance.': 'Add a component to start tracking maintenance.'
+'Add component': 'Add component'
 'Add gear': 'Add gear'
 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.'
 Admin: Admin
@@ -36,6 +38,7 @@ Apr: Avr
 'Are you sure you want to delete {task} on {component} for {gear}, performed on {date}?': 'Are you sure you want to delete {task} on {component} for {gear}, performed on {date}?'
 'Ask Mark something...': 'Demandez quelque chose à Mark...'
 'Athlete profile': "Profil de l'athlète"
+'Attached to': 'Attached to'
 Aug: Aoû
 Average: Average
 'Average gradient': 'Average gradient'
@@ -78,6 +81,7 @@ Compare: Comparer
 'Completed {threshold} activities': '{threshold} activités réalisées'
 Component: Component
 Components: Components
+Config: Config
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Envisagez de réduire la charge'
 Consistency: Uniformité
@@ -133,6 +137,7 @@ Elev.: Elev.
 Elevation: Dénivelé
 'Elevation in {unit}': 'Dénivelé en {unit}'
 Elliptical: Elliptique
+Enabled: Enabled
 Energy: Energy
 'Energy burned across your activities': 'Energy burned across your activities'
 'Enter fullscreen mode': 'Mode plein-écran'
@@ -208,6 +213,7 @@ History: Historique
 'How often do you train': 'La fréquence de vos entraînements'
 'Ice Skate': 'Patin à glace'
 Id: Id
+'Ignore retired gear': 'Ignore retired gear'
 Image: Image
 Images: Images
 Imperial: Impérial
@@ -287,6 +293,7 @@ Neutral: Neutral
 Night: Nuit
 'No activities': 'Aucune activité'
 'No activities imported yet.': 'No activities imported yet.'
+'No components yet.': 'No components yet.'
 'No data available': 'Aucune donnée disponible'
 'No files imported yet.': 'No files imported yet.'
 'No gears added yet.': 'No gears added yet.'
@@ -316,6 +323,7 @@ Over-fatigued: Surentraîné
 'PET bottles produced': 'Bouteilles PET produites'
 Pace: Allure
 Padel: Padel
+'Parts you track maintenance for, eg: chains, cassettes, brake pads...': 'Parts you track maintenance for, eg: chains, cassettes, brake pads...'
 Password: Password
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 'Puissances maximales'
@@ -375,6 +383,7 @@ Sail: Voile
 Sat: Sam
 Sat.: Sat.
 Save: Save
+'Save settings': 'Save settings'
 Saved: Saved
 Saving...: Saving...
 Search: Rechercher
@@ -427,6 +436,7 @@ Swim: Natation
 'Table Tennis': 'Tennis de table'
 'Taper sweet-spot (+15)': "Zone optimale d'affûtage (+15)"
 Task: Task
+Tasks: Tasks
 'Team Sports': "Sports d'équipe"
 Tennis: Tennis
 "That's 1.5 times the distance to the edge of space": "That's 1.5 times the distance to the edge of space"
@@ -543,6 +553,7 @@ Title: Title
 'Total hours spent per sport type': 'Heures totales passées par type de sport'
 'Total moving time per month': 'Total moving time per month'
 'Total size exceeds {max} MB': 'Total size exceeds {max} MB'
+'Track gear usage from your activities and stay on top of usage- and time-based maintenance.': 'Track gear usage from your activities and stay on top of usage- and time-based maintenance.'
 'Trail Runs': Trail
 'Training 4–5 days every week scores higher than doing everything in one or two days.': "S'entraîner 4 à 5 jours par semaine obtient un meilleur score que de faire tout en un ou deux jours."
 'Training Impulse - Training load metric that accounts for intensity and duration.': "Impulsion d'Entraînement - Métrique de charge d'entraînement qui tient compte de l'intensité et de la durée."
@@ -553,6 +564,7 @@ Title: Title
 'Training load is accumulating, recovery days are important': "Charge d'entraînement en accumulation, les jours de récupération sont importants"
 Tue: Mar
 Tue.: Tue.
+'Turn gear maintenance tracking on or off.': 'Turn gear maintenance tracking on or off.'
 Unspecified: 'Non spécifié'
 'Unsupported file type': 'Unsupported file type'
 'Updated on': 'Mis à jour le'
@@ -588,6 +600,7 @@ Weight: Poids
 'Weight Training': 'Entraînement avec poids'
 'Weight history': 'Historique de poids'
 Wheelchair: 'Fauteuil roulant'
+"When enabled, gear marked as retired is skipped. Its components won't accrue usage and no maintenance is tracked for them.": "When enabled, gear marked as retired is skipped. Its components won't accrue usage and no maintenance is tracked for them."
 'Wind Surf': 'Planche à voile'
 'Winter Sports': "Sports d'hiver"
 Workout: Entraînement

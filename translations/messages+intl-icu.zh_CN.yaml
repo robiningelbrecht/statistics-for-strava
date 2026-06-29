@@ -23,6 +23,8 @@ Activity: 活动
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': '短期训练负荷（疲劳）– 7天每日训练负荷的指数加权平均值。代表短期疲劳。'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': '短期/长期疲劳比率 – ATL与CTL的比值。表示受伤风险。'
 'Adaptive & Inclusive Sports': 适应性和包容性运动
+'Add a component to start tracking maintenance.': 'Add a component to start tracking maintenance.'
+'Add component': 'Add component'
 'Add gear': 'Add gear'
 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.'
 Admin: Admin
@@ -36,6 +38,7 @@ Apr: 四月
 'Are you sure you want to delete {task} on {component} for {gear}, performed on {date}?': 'Are you sure you want to delete {task} on {component} for {gear}, performed on {date}?'
 'Ask Mark something...': 问问Mark...
 'Athlete profile': 'Athlete profile'
+'Attached to': 'Attached to'
 Aug: 八月
 Average: Average
 'Average gradient': 'Average gradient'
@@ -78,6 +81,7 @@ Compare: 对比
 'Completed {threshold} activities': 'Completed {threshold} activities'
 Component: Component
 Components: Components
+Config: Config
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
@@ -133,6 +137,7 @@ Elev.: Elev.
 Elevation: 海拔高度
 'Elevation in {unit}': '海拔高度（单位：{unit})'
 Elliptical: 椭圆机
+Enabled: Enabled
 Energy: Energy
 'Energy burned across your activities': 'Energy burned across your activities'
 'Enter fullscreen mode': 'Enter fullscreen mode'
@@ -208,6 +213,7 @@ History: 历史
 'How often do you train': 'How often do you train'
 'Ice Skate': 冰刀
 Id: Id
+'Ignore retired gear': 'Ignore retired gear'
 Image: Image
 Images: Images
 Imperial: Imperial
@@ -287,6 +293,7 @@ Neutral: Neutral
 Night: 夜晚
 'No activities': 没有活动
 'No activities imported yet.': 'No activities imported yet.'
+'No components yet.': 'No components yet.'
 'No data available': 没有可用数据
 'No files imported yet.': 'No files imported yet.'
 'No gears added yet.': 'No gears added yet.'
@@ -316,6 +323,7 @@ Over-fatigued: Over-fatigued
 'PET bottles produced': PET瓶量
 Pace: 步速
 Padel: Padel
+'Parts you track maintenance for, eg: chains, cassettes, brake pads...': 'Parts you track maintenance for, eg: chains, cassettes, brake pads...'
 Password: Password
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 峰值功率输出
@@ -375,6 +383,7 @@ Sail: 帆船
 Sat: 周六
 Sat.: Sat.
 Save: Save
+'Save settings': 'Save settings'
 Saved: Saved
 Saving...: Saving...
 Search: 搜索
@@ -427,6 +436,7 @@ Swim: 游泳
 'Table Tennis': 乒乓球
 'Taper sweet-spot (+15)': '最佳减量期 (+15)'
 Task: Task
+Tasks: Tasks
 'Team Sports': 'Team Sports'
 Tennis: 网球
 "That's 1.5 times the distance to the edge of space": "That's 1.5 times the distance to the edge of space"
@@ -543,6 +553,7 @@ Title: Title
 'Total hours spent per sport type': 每种运动的总时长
 'Total moving time per month': 'Total moving time per month'
 'Total size exceeds {max} MB': 'Total size exceeds {max} MB'
+'Track gear usage from your activities and stay on top of usage- and time-based maintenance.': 'Track gear usage from your activities and stay on top of usage- and time-based maintenance.'
 'Trail Runs': 越野跑
 'Training 4–5 days every week scores higher than doing everything in one or two days.': 'Training 4–5 days every week scores higher than doing everything in one or two days.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': '训练脉冲 - 训练负荷指标，综合考虑强度和持续时间。'
@@ -553,6 +564,7 @@ Title: Title
 'Training load is accumulating, recovery days are important': 'Training load is accumulating, recovery days are important'
 Tue: 周二
 Tue.: Tue.
+'Turn gear maintenance tracking on or off.': 'Turn gear maintenance tracking on or off.'
 Unspecified: 未指定
 'Unsupported file type': 'Unsupported file type'
 'Updated on': 更新于
@@ -588,6 +600,7 @@ Weight: 体重
 'Weight Training': 重量训练
 'Weight history': 历史体重
 Wheelchair: 轮椅
+"When enabled, gear marked as retired is skipped. Its components won't accrue usage and no maintenance is tracked for them.": "When enabled, gear marked as retired is skipped. Its components won't accrue usage and no maintenance is tracked for them."
 'Wind Surf': 风帆冲浪
 'Winter Sports': 冬季运动
 Workout: 锻炼

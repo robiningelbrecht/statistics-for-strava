@@ -23,6 +23,8 @@ Activity: Tevékenység
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Akut edzésterhelés (Fáradtság) – a napi edzésterhelés 7 napos exponenciálisan súlyozott átlaga. A rövid távú fáradtságot mutatja.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Akut:Krónikus arány – az ATL és CTL aránya. Sérülésveszélyt jelöl.'
 'Adaptive & Inclusive Sports': 'Adaptív és inkluzív sportok'
+'Add a component to start tracking maintenance.': 'Add a component to start tracking maintenance.'
+'Add component': 'Add component'
 'Add gear': 'Add gear'
 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.'
 Admin: Admin
@@ -36,6 +38,7 @@ Apr: Ápr
 'Are you sure you want to delete {task} on {component} for {gear}, performed on {date}?': 'Are you sure you want to delete {task} on {component} for {gear}, performed on {date}?'
 'Ask Mark something...': 'Kérdezz Marktól...'
 'Athlete profile': 'Sportoló profil'
+'Attached to': 'Attached to'
 Aug: Aug
 Average: Average
 'Average gradient': 'Átlagos lejtés'
@@ -78,6 +81,7 @@ Compare: Összehasonlítás
 'Completed {threshold} activities': '{threshold} tevékenység teljesítve'
 Component: Component
 Components: Components
+Config: Config
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Fontold meg a terhelés csökkentését'
 Consistency: Következetesség
@@ -133,6 +137,7 @@ Elev.: Elev.
 Elevation: Szintemelkedés
 'Elevation in {unit}': 'Szintemelkedés ({unit})'
 Elliptical: 'Elliptikus gép'
+Enabled: Enabled
 Energy: Energy
 'Energy burned across your activities': 'Energy burned across your activities'
 'Enter fullscreen mode': 'Teljes képernyős mód'
@@ -208,6 +213,7 @@ History: Előzmények
 'How often do you train': 'Milyen gyakran edzel'
 'Ice Skate': Jégkorcsolya
 Id: Azonosító
+'Ignore retired gear': 'Ignore retired gear'
 Image: Image
 Images: Images
 Imperial: Angolszász
@@ -287,6 +293,7 @@ Neutral: Semleges
 Night: Éjjel
 'No activities': 'Nincsenek tevékenységek'
 'No activities imported yet.': 'No activities imported yet.'
+'No components yet.': 'No components yet.'
 'No data available': 'Nincs elérhető adat'
 'No files imported yet.': 'No files imported yet.'
 'No gears added yet.': 'No gears added yet.'
@@ -316,6 +323,7 @@ Over-fatigued: Túlterhelve
 'PET bottles produced': 'Előállított PET palackok'
 Pace: Tempó
 Padel: Padel
+'Parts you track maintenance for, eg: chains, cassettes, brake pads...': 'Parts you track maintenance for, eg: chains, cassettes, brake pads...'
 Password: Password
 'Peak fresh': Csúcsfriss
 'Peak power outputs': 'Csúcsteljesítmény értékek'
@@ -375,6 +383,7 @@ Sail: Vitorlázás
 Sat: Szo
 Sat.: Sat.
 Save: Save
+'Save settings': 'Save settings'
 Saved: Saved
 Saving...: Saving...
 Search: Keresés
@@ -427,6 +436,7 @@ Swim: Úszás
 'Table Tennis': Asztalitenisz
 'Taper sweet-spot (+15)': 'Taper édes pont (+15)'
 Task: Task
+Tasks: Tasks
 'Team Sports': Csapatsportok
 Tennis: Tenisz
 "That's 1.5 times the distance to the edge of space": 'Ez 1,5-szere az űr határáig terjedő távolságnak'
@@ -543,6 +553,7 @@ Title: Title
 'Total hours spent per sport type': 'Összes óra sporttípusonként'
 'Total moving time per month': 'Total moving time per month'
 'Total size exceeds {max} MB': 'Total size exceeds {max} MB'
+'Track gear usage from your activities and stay on top of usage- and time-based maintenance.': 'Track gear usage from your activities and stay on top of usage- and time-based maintenance.'
 'Trail Runs': Terepfutások
 'Training 4–5 days every week scores higher than doing everything in one or two days.': 'A heti 4–5 napos edzés magasabb pontszámot ér el, mint ha mindent egy-két napra zsúfolnak.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Edzési impulzus – az intenzitást és az időtartamot figyelembe vevő edzésterhelési mutató.'
@@ -553,6 +564,7 @@ Title: Title
 'Training load is accumulating, recovery days are important': 'Az edzésterhelés halmozódik, a regenerációs napok fontosak'
 Tue: K
 Tue.: Tue.
+'Turn gear maintenance tracking on or off.': 'Turn gear maintenance tracking on or off.'
 Unspecified: Meghatározatlan
 'Unsupported file type': 'Unsupported file type'
 'Updated on': 'Frissítve:'
@@ -588,6 +600,7 @@ Weight: Súly
 'Weight Training': 'Súlyzós edzés'
 'Weight history': 'Súly előzmények'
 Wheelchair: Kerekesszék
+"When enabled, gear marked as retired is skipped. Its components won't accrue usage and no maintenance is tracked for them.": "When enabled, gear marked as retired is skipped. Its components won't accrue usage and no maintenance is tracked for them."
 'Wind Surf': Windsurfing
 'Winter Sports': 'Téli sportok'
 Workout: Edzés

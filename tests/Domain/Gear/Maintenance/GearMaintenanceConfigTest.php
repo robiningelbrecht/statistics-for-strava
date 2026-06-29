@@ -4,12 +4,9 @@ namespace App\Tests\Domain\Gear\Maintenance;
 
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
-use App\Domain\Gear\Gears;
 use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Gear\Maintenance\InvalidGearMaintenanceConfig;
-use App\Domain\Gear\Maintenance\Task\MaintenanceTaskId;
 use App\Tests\ContainerTestCase;
-use App\Tests\Domain\Gear\GearBuilder;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Yaml\Yaml;
@@ -43,63 +40,6 @@ class GearMaintenanceConfigTest extends ContainerTestCase
                 GearId::fromUnprefixed('bike-two-gear-id'),
             ]),
             $this->createConfig($yml)->getAllReferencedGearIds()
-        );
-    }
-
-    public function testBuildComponentOptions(): void
-    {
-        $gears = Gears::fromArray([
-            GearBuilder::fromDefaults()->withGearId(GearId::fromUnprefixed('bike-one-gear-id'))->withName('Bike one')->build(),
-            GearBuilder::fromDefaults()->withGearId(GearId::fromUnprefixed('bike-two-gear-id'))->withName('Bike two')->build(),
-        ]);
-
-        $this->assertSame(
-            [
-                [
-                    'label' => 'Some cool chain',
-                    'tasks' => [
-                        ['id' => (string) MaintenanceTaskId::fromUnprefixed('chain-lubed'), 'label' => 'Lube'],
-                        ['id' => (string) MaintenanceTaskId::fromUnprefixed('chain-cleaned'), 'label' => 'Clean'],
-                        ['id' => (string) MaintenanceTaskId::fromUnprefixed('chain-replaced'), 'label' => 'Replace'],
-                    ],
-                    'gears' => [
-                        ['id' => (string) GearId::fromUnprefixed('bike-one-gear-id'), 'label' => 'Bike one'],
-                        ['id' => (string) GearId::fromUnprefixed('bike-two-gear-id'), 'label' => 'Bike two'],
-                    ],
-                ],
-                [
-                    'label' => 'Some cool chain',
-                    'tasks' => [
-                        ['id' => (string) MaintenanceTaskId::fromUnprefixed('chain-two-lubed'), 'label' => 'Lube'],
-                    ],
-                    'gears' => [
-                        ['id' => (string) GearId::fromUnprefixed('bike-one-gear-id'), 'label' => 'Bike one'],
-                        ['id' => (string) GearId::fromUnprefixed('bike-two-gear-id'), 'label' => 'Bike two'],
-                    ],
-                ],
-            ],
-            $this->createConfig($this->getValidYml())->buildComponentOptions($gears)
-        );
-    }
-
-    public function testBuildComponentOptionsSkipsComponentsWithoutExistingGear(): void
-    {
-        // None of the configured gears exist in the database, so every component is skipped.
-        $this->assertSame(
-            [],
-            $this->createConfig($this->getValidYml())->buildComponentOptions(Gears::empty())
-        );
-    }
-
-    public function testGetAllReferencedImages(): void
-    {
-        $yml = $this->getValidYml();
-
-        $this->assertEquals(
-            [
-                'chain.png',
-            ],
-            $this->createConfig($yml)->getAllReferencedImages()
         );
     }
 

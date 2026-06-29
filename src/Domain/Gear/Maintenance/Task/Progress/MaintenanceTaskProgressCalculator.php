@@ -6,9 +6,9 @@ namespace App\Domain\Gear\Maintenance\Task\Progress;
 
 use App\Domain\Gear\GearIds;
 use App\Domain\Gear\GearRepository;
+use App\Domain\Gear\Maintenance\GearMaintenanceRepository;
 use App\Domain\Gear\Maintenance\Log\GearMaintenanceLog;
 use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogRepository;
-use App\Infrastructure\Config\AppConfig;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 final readonly class MaintenanceTaskProgressCalculator
@@ -19,7 +19,7 @@ final readonly class MaintenanceTaskProgressCalculator
     public function __construct(
         #[AutowireIterator('app.maintenance_progress_calculation')]
         private iterable $maintenanceTaskProgressCalculations,
-        private AppConfig $config,
+        private GearMaintenanceRepository $gearMaintenanceRepository,
         private GearMaintenanceLogRepository $gearMaintenanceLogRepository,
         private GearRepository $gearRepository,
     ) {
@@ -43,18 +43,16 @@ final readonly class MaintenanceTaskProgressCalculator
     public function getGearIdsThatHaveDueTasks(): GearIds
     {
         $gearIdsThatHaveDueTasks = GearIds::empty();
-        $gearMaintenanceConfig = $this->config->loadGearMaintenance();
+        $gearMaintenanceConfig = $this->gearMaintenanceRepository->find();
         if (!$gearMaintenanceConfig->isFeatureEnabled()) {
             return $gearIdsThatHaveDueTasks;
         }
 
         $allGears = $this->gearRepository->findAll();
-        $maintenanceLog = $this->gearMaintenanceLogRepository->findAll();
-        $allGearComponents = $gearMaintenanceConfig->getEnrichedGearComponents($maintenanceLog);
 
-        foreach ($allGearComponents as $gearComponent) {
+        foreach ($gearMaintenanceConfig->getGearComponents() as $gearComponent) {
             foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
-                if (!($mostRecentMaintenance = $maintenanceTask->getMostRecentMaintenance()) instanceof GearMaintenanceLog) {
+                if (!($mostRecentMaintenance = $this->gearMaintenanceLogRepository->findMostRecentForMaintenanceTask($maintenanceTask->getId())) instanceof GearMaintenanceLog) {
                     continue;
                 }
 

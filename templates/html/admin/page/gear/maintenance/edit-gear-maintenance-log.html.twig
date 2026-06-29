@@ -21,7 +21,7 @@
                   class="flex flex-col gap-4">
                 <div data-form-error class="hidden rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert"></div>
                 {% if gearMaintenanceLog %}
-                    <input type="hidden" name="gearMaintenanceLogId" value="{{ gearMaintenanceLog.getId() }}">
+                    <input type="hidden" name="gearMaintenanceLogId" value="{{ gearMaintenanceLog.getGearMaintenanceLogId() }}">
                     <div class="grid grid-cols-2 gap-4 rounded-lg bg-gray-50 p-3 text-sm">
                         <div>
                             <span class="block text-xs font-medium text-gray-500">{{ "Gear"|trans }}</span>

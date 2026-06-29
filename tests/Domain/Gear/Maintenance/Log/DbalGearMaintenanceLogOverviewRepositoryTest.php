@@ -6,13 +6,15 @@ namespace App\Tests\Domain\Gear\Maintenance\Log;
 
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;
+use App\Domain\Gear\Maintenance\GearMaintenanceRepository;
 use App\Domain\Gear\Maintenance\Log\DbalGearMaintenanceLogOverviewRepository;
 use App\Domain\Gear\Maintenance\Log\GearMaintenanceLog;
+use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogId;
 use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogOverviewItem;
 use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogOverviewRepository;
 use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogRepository;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskId;
-use App\Infrastructure\Config\AppConfig;
+use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Repository\Pagination;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
@@ -179,6 +181,67 @@ class DbalGearMaintenanceLogOverviewRepositoryTest extends ContainerTestCase
         $this->assertEquals(0, $overview->getTotal());
     }
 
+    public function testFindOneByGearMaintenanceLogIdReturnsTheItemWithResolvedLabels(): void
+    {
+        $this->seedConfigAndGear();
+
+        $log = GearMaintenanceLog::create(
+            gearId: GearId::fromUnprefixed('g10130856'),
+            maintenanceTaskId: MaintenanceTaskId::fromUnprefixed('chain-lubed'),
+            performedOn: SerializableDateTime::fromString('2025-01-01 00:00:00'),
+        );
+        $this->gearMaintenanceLogRepository->add($log);
+
+        $this->assertEquals(
+            GearMaintenanceLogOverviewItem::fromState(
+                gearMaintenanceLogId: $log->getId(),
+                gearName: 'Race bike',
+                componentLabel: 'Some cool chain',
+                taskLabel: 'Lube',
+                performedOn: SerializableDateTime::fromString('2025-01-01 00:00:00'),
+            ),
+            $this->gearMaintenanceLogOverviewRepository->findOneByGearMaintenanceLogId($log->getId())
+        );
+    }
+
+    public function testFindOneByGearMaintenanceLogIdThrowsWhenUnknown(): void
+    {
+        $this->seedConfigAndGear();
+
+        $this->expectException(EntityNotFound::class);
+        $this->gearMaintenanceLogOverviewRepository->findOneByGearMaintenanceLogId(GearMaintenanceLogId::random());
+    }
+
+    public function testFindOneByGearMaintenanceLogIdThrowsWhenGearIsAbsent(): void
+    {
+        $this->seedConfigAndGear();
+
+        $log = GearMaintenanceLog::create(
+            gearId: GearId::fromUnprefixed('g999'),
+            maintenanceTaskId: MaintenanceTaskId::fromUnprefixed('chain-lubed'),
+            performedOn: SerializableDateTime::fromString('2025-01-01 00:00:00'),
+        );
+        $this->gearMaintenanceLogRepository->add($log);
+
+        $this->expectException(EntityNotFound::class);
+        $this->gearMaintenanceLogOverviewRepository->findOneByGearMaintenanceLogId($log->getId());
+    }
+
+    public function testFindOneByGearMaintenanceLogIdThrowsWhenTaskIsNotInConfig(): void
+    {
+        $this->seedConfigAndGear();
+
+        $log = GearMaintenanceLog::create(
+            gearId: GearId::fromUnprefixed('g10130856'),
+            maintenanceTaskId: MaintenanceTaskId::fromUnprefixed('chain-removed'),
+            performedOn: SerializableDateTime::fromString('2025-01-01 00:00:00'),
+        );
+        $this->gearMaintenanceLogRepository->add($log);
+
+        $this->expectException(EntityNotFound::class);
+        $this->gearMaintenanceLogOverviewRepository->findOneByGearMaintenanceLogId($log->getId());
+    }
+
     private function seedConfigAndGear(): void
     {
         $this->importGearMaintenanceConfig();
@@ -212,7 +275,7 @@ class DbalGearMaintenanceLogOverviewRepositoryTest extends ContainerTestCase
         $this->gearMaintenanceLogRepository = $this->getContainer()->get(GearMaintenanceLogRepository::class);
         $this->gearMaintenanceLogOverviewRepository = new DbalGearMaintenanceLogOverviewRepository(
             $this->getConnection(),
-            $this->getContainer()->get(AppConfig::class),
+            $this->getContainer()->get(GearMaintenanceRepository::class),
         );
     }
 }

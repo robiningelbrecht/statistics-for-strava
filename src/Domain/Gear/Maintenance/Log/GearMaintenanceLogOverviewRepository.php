@@ -15,4 +15,6 @@ interface GearMaintenanceLogOverviewRepository
     public function find(
         Pagination $pagination,
     ): Overview;
+
+    public function findOneByGearMaintenanceLogId(GearMaintenanceLogId $gearMaintenanceLogId): GearMaintenanceLogOverviewItem;
 }

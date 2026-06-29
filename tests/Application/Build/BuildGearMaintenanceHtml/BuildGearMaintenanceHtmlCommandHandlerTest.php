@@ -9,11 +9,11 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;
+use App\Domain\Gear\Maintenance\GearMaintenanceRepository;
 use App\Domain\Gear\Maintenance\Log\GearMaintenanceLog;
 use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogRepository;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskId;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
-use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\Application\BuildAppFilesTestCase;
@@ -116,8 +116,7 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
         $fileStorage = $this->getContainer()->get('build_html.storage');
 
         new BuildGearMaintenanceHtmlCommandHandler(
-            config: $this->getContainer()->get(AppConfig::class),
-            gearMaintenanceLogRepository: $this->getContainer()->get(GearMaintenanceLogRepository::class),
+            gearMaintenanceRepository: $this->getContainer()->get(GearMaintenanceRepository::class),
             gearRepository: $this->getContainer()->get(GearRepository::class),
             maintenanceTaskProgressCalculator: $this->getContainer()->get(MaintenanceTaskProgressCalculator::class),
             twig: $this->getContainer()->get(Environment::class),

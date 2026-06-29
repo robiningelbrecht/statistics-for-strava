@@ -2,11 +2,9 @@
 
 namespace App\Tests\Infrastructure\Config;
 
-use App\Domain\Gear\GearRepository;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Config\CouldNotParseYamlConfig;
 use App\Infrastructure\Config\PlatformEnvironment;
-use App\Infrastructure\KeyValue\KeyValueStore;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use App\Tests\ContainerTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -21,10 +19,7 @@ class AppConfigTest extends ContainerTestCase
             platformEnvironment: $platformEnvironment
         );
 
-        $config = new AppConfig(
-            $this->getContainer()->get(KeyValueStore::class),
-            $this->getContainer()->get(GearRepository::class),
-        );
+        $config = new AppConfig();
 
         $this->assertEquals(
             $expectedValue,
@@ -39,10 +34,7 @@ class AppConfigTest extends ContainerTestCase
             platformEnvironment: PlatformEnvironment::DEV
         );
 
-        $config = new AppConfig(
-            $this->getContainer()->get(KeyValueStore::class),
-            $this->getContainer()->get(GearRepository::class),
-        );
+        $config = new AppConfig();
 
         $default = [];
         $this->assertEquals(
@@ -58,10 +50,7 @@ class AppConfigTest extends ContainerTestCase
             platformEnvironment: PlatformEnvironment::DEV
         );
 
-        $config = new AppConfig(
-            $this->getContainer()->get(KeyValueStore::class),
-            $this->getContainer()->get(GearRepository::class),
-        );
+        $config = new AppConfig();
 
         $this->expectExceptionObject(new \RuntimeException('Unknown configuration key "non.existent.key"'));
         $config->get('non.existent.key');
@@ -76,10 +65,7 @@ class AppConfigTest extends ContainerTestCase
             platformEnvironment: PlatformEnvironment::DEV
         );
 
-        new AppConfig(
-            $this->getContainer()->get(KeyValueStore::class),
-            $this->getContainer()->get(GearRepository::class),
-        );
+        new AppConfig();
     }
 
     public function testItThrowsExceptionWhenInvalidYmlInSubConfigFile(): void
@@ -91,10 +77,7 @@ class AppConfigTest extends ContainerTestCase
             platformEnvironment: PlatformEnvironment::DEV
         );
 
-        new AppConfig(
-            $this->getContainer()->get(KeyValueStore::class),
-            $this->getContainer()->get(GearRepository::class),
-        );
+        new AppConfig();
     }
 
     public function testItThrowsExceptionWhenFileIsMissing(): void
