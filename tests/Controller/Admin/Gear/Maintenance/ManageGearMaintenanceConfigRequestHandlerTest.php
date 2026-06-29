@@ -36,5 +36,22 @@ class ManageGearMaintenanceConfigRequestHandlerTest extends AdminWebTestCase
         $this->assertCount(1, $crawler->filter('#ignoreRetiredGear[checked]'));
 
         $this->assertCount(0, $crawler->filter('#countersResetMode'));
+
+        $this->assertCount(2, $crawler->filter('table.data-table tbody tr'));
+        $tableText = $crawler->filter('table.data-table')->text();
+        $this->assertStringContainsString('Some cool chain', $tableText);
+        $this->assertStringContainsString('DI2 Battery', $tableText);
+        $this->assertStringNotContainsString('No components yet.', $tableText);
+    }
+
+    public function testItRendersTheEmptyStateWhenThereAreNoComponents(): void
+    {
+        $this->client->loginUser($this->adminUser());
+
+        $crawler = $this->client->request('GET', '/admin/gear/maintenance-config');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertStringContainsString('No components yet.', $crawler->filter('table.data-table')->text());
+        $this->assertCount(1, $crawler->filter('table.data-table tbody td[colspan="5"]'));
     }
 }
