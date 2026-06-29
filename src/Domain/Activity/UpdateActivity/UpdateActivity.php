@@ -11,16 +11,15 @@ use App\Domain\Gear\GearId;
 use App\Domain\Image\NewImage;
 use App\Domain\Image\ProvideLocalImageFromDropZonePayload;
 use App\Domain\Image\RemovedImage;
-use App\Infrastructure\CQRS\Command\Deserialize\AsDeserializableCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\CouldNotDeserializeCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\DeserializableCommand;
+use App\Infrastructure\CQRS\Command\Deserialize\ProvidesCommandName;
 use App\Infrastructure\CQRS\Command\DomainCommand;
 
-#[AsDeserializableCommand(UpdateActivity::NAME)]
 final readonly class UpdateActivity extends DomainCommand implements DeserializableCommand
 {
     use ProvideLocalImageFromDropZonePayload;
-    public const string NAME = 'update-activity';
+    use ProvidesCommandName;
 
     /**
      * @param array<NewImage>     $newImages

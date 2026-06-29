@@ -32,7 +32,7 @@ final readonly class ManageGearMaintenanceLogFormRequestHandler
     public function handleAdd(): Response
     {
         return new Response($this->twig->render('html/admin/page/gear/maintenance/edit-gear-maintenance-log.html.twig', [
-            'dispatchCommand' => AddGearMaintenanceLog::NAME,
+            'dispatchCommand' => AddGearMaintenanceLog::getCommandName(),
             'components' => $this->buildComponentOptions(),
         ]));
     }
@@ -45,7 +45,7 @@ final readonly class ManageGearMaintenanceLogFormRequestHandler
         );
 
         return new Response($this->twig->render('html/admin/page/gear/maintenance/edit-gear-maintenance-log.html.twig', [
-            'dispatchCommand' => UpdateGearMaintenanceLog::NAME,
+            'dispatchCommand' => UpdateGearMaintenanceLog::getCommandName(),
             'gearMaintenanceLog' => $gearMaintenanceLog,
             'componentLabel' => $gearMaintenanceLog->getComponentLabel(),
             'taskLabel' => $gearMaintenanceLog->getTaskLabel(),
@@ -61,7 +61,7 @@ final readonly class ManageGearMaintenanceLogFormRequestHandler
         );
 
         return new Response($this->twig->render('html/admin/page/gear/maintenance/delete-gear-maintenance-log.html.twig', [
-            'dispatchCommand' => DeleteGearMaintenanceLog::NAME,
+            'dispatchCommand' => DeleteGearMaintenanceLog::getCommandName(),
             'gearMaintenanceLog' => $gearMaintenanceLog,
             'componentLabel' => $gearMaintenanceLog->getComponentLabel(),
             'taskLabel' => $gearMaintenanceLog->getTaskLabel(),

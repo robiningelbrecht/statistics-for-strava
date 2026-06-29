@@ -26,7 +26,7 @@ final readonly class ManageGearMaintenanceConfigRequestHandler
     public function handle(): Response
     {
         return new Response($this->twig->render('html/admin/page/gear/maintenance/config.html.twig', [
-            'dispatchCommand' => UpdateGearMaintenanceConfig::NAME,
+            'dispatchCommand' => UpdateGearMaintenanceConfig::getCommandName(),
             'gearMaintenanceConfig' => $this->gearMaintenanceRepository->find(),
             'gears' => $this->gearRepository->findAll(),
         ]));

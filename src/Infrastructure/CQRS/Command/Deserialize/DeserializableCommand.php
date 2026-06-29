@@ -8,6 +8,8 @@ use App\Infrastructure\CQRS\Command\Command;
 
 interface DeserializableCommand extends Command
 {
+    public static function getCommandName(): string;
+
     /**
      * @param array<string, mixed> $payload
      */

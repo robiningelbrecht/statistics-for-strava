@@ -10,18 +10,17 @@ use App\Domain\Gear\ProvidePurchasePriceFromPayload;
 use App\Domain\Image\NewImage;
 use App\Domain\Image\ProvideLocalImageFromDropZonePayload;
 use App\Domain\Image\RemovedImage;
-use App\Infrastructure\CQRS\Command\Deserialize\AsDeserializableCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\CouldNotDeserializeCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\DeserializableCommand;
+use App\Infrastructure\CQRS\Command\Deserialize\ProvidesCommandName;
 use App\Infrastructure\CQRS\Command\DomainCommand;
 use Money\Money;
 
-#[AsDeserializableCommand(UpdateGear::NAME)]
 final readonly class UpdateGear extends DomainCommand implements DeserializableCommand
 {
     use ProvidePurchasePriceFromPayload;
     use ProvideLocalImageFromDropZonePayload;
-    public const string NAME = 'update-gear';
+    use ProvidesCommandName;
 
     private function __construct(
         private GearId $gearId,

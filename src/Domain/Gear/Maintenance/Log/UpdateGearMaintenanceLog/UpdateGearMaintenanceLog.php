@@ -5,16 +5,15 @@ declare(strict_types=1);
 namespace App\Domain\Gear\Maintenance\Log\UpdateGearMaintenanceLog;
 
 use App\Domain\Gear\Maintenance\Log\GearMaintenanceLogId;
-use App\Infrastructure\CQRS\Command\Deserialize\AsDeserializableCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\CouldNotDeserializeCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\DeserializableCommand;
+use App\Infrastructure\CQRS\Command\Deserialize\ProvidesCommandName;
 use App\Infrastructure\CQRS\Command\DomainCommand;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
-#[AsDeserializableCommand(UpdateGearMaintenanceLog::NAME)]
 final readonly class UpdateGearMaintenanceLog extends DomainCommand implements DeserializableCommand
 {
-    public const string NAME = 'update-gear-maintenance-log';
+    use ProvidesCommandName;
 
     private function __construct(
         private GearMaintenanceLogId $gearMaintenanceLogId,

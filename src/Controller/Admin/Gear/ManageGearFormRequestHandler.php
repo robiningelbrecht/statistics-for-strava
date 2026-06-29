@@ -27,7 +27,7 @@ final readonly class ManageGearFormRequestHandler
     public function handleAdd(): Response
     {
         return new Response($this->twig->render('html/admin/page/gear/edit-gear.html.twig', [
-            'dispatchCommand' => AddGear::NAME,
+            'dispatchCommand' => AddGear::getCommandName(),
             'statuses' => GearStatus::cases(),
         ]));
     }
@@ -36,7 +36,7 @@ final readonly class ManageGearFormRequestHandler
     public function handleEdit(string $gearId): Response
     {
         return new Response($this->twig->render('html/admin/page/gear/edit-gear.html.twig', [
-            'dispatchCommand' => UpdateGear::NAME,
+            'dispatchCommand' => UpdateGear::getCommandName(),
             'gear' => $this->gearRepository->find(GearId::fromString($gearId)),
             'statuses' => GearStatus::cases(),
         ]));

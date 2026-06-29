@@ -9,7 +9,7 @@ use App\Tests\ContainerTestCase;
 
 class DeserializableCommandRegistryTest extends ContainerTestCase
 {
-    public function testItAutoDiscoversCommandsByAttributeId(): void
+    public function testItAutoDiscoversCommandsByName(): void
     {
         $registry = $this->getContainer()->get(DeserializableCommandRegistry::class);
         \assert($registry instanceof DeserializableCommandRegistry);

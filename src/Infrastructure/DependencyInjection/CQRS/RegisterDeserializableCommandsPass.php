@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\DependencyInjection\CQRS;
 
-use App\Infrastructure\CQRS\Command\Deserialize\AsDeserializableCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\DeserializableCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\DeserializableCommandRegistry;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -22,9 +21,9 @@ final class RegisterDeserializableCommandsPass implements CompilerPassInterface
             return;
         }
 
-        $commandsById = [];
+        $commandsByName = [];
         foreach (new Finder()->files()->in($srcDir)->name('*.php') as $file) {
-            if (!str_contains($file->getContents(), 'AsDeserializableCommand')) {
+            if (!str_contains($file->getContents(), 'DeserializableCommand')) {
                 continue;
             }
 
@@ -35,19 +34,17 @@ final class RegisterDeserializableCommandsPass implements CompilerPassInterface
             if (!is_a($class, DeserializableCommand::class, true)) {
                 continue;
             }
-
-            $attributes = new \ReflectionClass($class)->getAttributes(AsDeserializableCommand::class);
-            if ([] === $attributes) {
+            if (new \ReflectionClass($class)->isAbstract()) {
                 continue;
             }
 
-            $id = $attributes[0]->newInstance()->id;
-            if (isset($commandsById[$id])) {
-                throw new \LogicException(sprintf('Duplicate deserializable command id "%s" on "%s" and "%s".', $id, $commandsById[$id], $class));
+            $name = $class::getCommandName();
+            if (isset($commandsByName[$name])) {
+                throw new \LogicException(sprintf('Duplicate deserializable command name "%s" on "%s" and "%s".', $name, $commandsByName[$name], $class));
             }
-            $commandsById[$id] = $class;
+            $commandsByName[$name] = $class;
         }
 
-        $container->getDefinition(DeserializableCommandRegistry::class)->setArgument(0, $commandsById);
+        $container->getDefinition(DeserializableCommandRegistry::class)->setArgument(0, $commandsByName);
     }
 }

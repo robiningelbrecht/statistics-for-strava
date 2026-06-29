@@ -25,7 +25,7 @@ final readonly class ManageRecordingDeviceFormRequestHandler
     public function handleEdit(string $id): Response
     {
         return new Response($this->twig->render('html/admin/page/gear/recording-device/edit-recording-device.html.twig', [
-            'dispatchCommand' => UpdateRecordingDevice::NAME,
+            'dispatchCommand' => UpdateRecordingDevice::getCommandName(),
             'recordingDevice' => $this->recordingDeviceRepository->find(RecordingDeviceId::fromString($id)),
         ]));
     }
