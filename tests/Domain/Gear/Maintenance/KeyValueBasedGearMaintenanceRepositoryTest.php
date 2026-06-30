@@ -39,12 +39,12 @@ class KeyValueBasedGearMaintenanceRepositoryTest extends ContainerTestCase
         $this->assertNotNull($task);
         $this->assertSame('Lube', (string) $task->getLabel());
 
-        $component = $this->gearMaintenanceRepository->findGearComponentForMaintenanceTask(MaintenanceTaskId::fromUnprefixed('chain-lubed'));
+        $component = $this->gearMaintenanceRepository->findComponentForMaintenanceTask(MaintenanceTaskId::fromUnprefixed('chain-lubed'));
         $this->assertNotNull($component);
         $this->assertSame('Some cool chain', (string) $component->getLabel());
 
         $this->assertNull($this->gearMaintenanceRepository->findMaintenanceTask(MaintenanceTaskId::fromUnprefixed('does-not-exist')));
-        $this->assertNull($this->gearMaintenanceRepository->findGearComponentForMaintenanceTask(MaintenanceTaskId::fromUnprefixed('does-not-exist')));
+        $this->assertNull($this->gearMaintenanceRepository->findComponentForMaintenanceTask(MaintenanceTaskId::fromUnprefixed('does-not-exist')));
     }
 
     public function testUpdateConfigFlipsSettingsAndPreservesComponents(): void

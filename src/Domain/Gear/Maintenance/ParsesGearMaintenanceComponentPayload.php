@@ -53,21 +53,6 @@ trait ParsesGearMaintenanceComponentPayload
     /**
      * @param array<string, mixed> $payload
      */
-    private static function parseImgSrc(array $payload): ?string
-    {
-        if (!isset($payload['imgSrc'])) {
-            return null;
-        }
-        if (!is_string($payload['imgSrc'])) {
-            throw CouldNotDeserializeCommand::invalidPayload('The "imgSrc" must be a string.');
-        }
-
-        return '' === trim($payload['imgSrc']) ? null : trim($payload['imgSrc']);
-    }
-
-    /**
-     * @param array<string, mixed> $payload
-     */
     private static function parsePurchasePrice(array $payload): ?Money
     {
         if (!isset($payload['purchasePrice']) || !is_array($payload['purchasePrice'])) {
@@ -112,7 +97,7 @@ trait ParsesGearMaintenanceComponentPayload
                 throw CouldNotDeserializeCommand::invalidPayload('Each maintenance task requires an "interval" with "value" and "unit".');
             }
             if (!$intervalUnit = IntervalUnit::tryFrom((string) $task['interval']['unit'])) {
-                throw CouldNotDeserializeCommand::invalidPayload(sprintf('Invalid interval unit "%s".', (string) $task['interval']['unit']));
+                throw CouldNotDeserializeCommand::invalidPayload(sprintf('Invalid interval unit "%s".', $task['interval']['unit']));
             }
 
             $taskId = null;

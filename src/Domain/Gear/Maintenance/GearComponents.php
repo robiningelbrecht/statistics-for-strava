@@ -28,17 +28,4 @@ final class GearComponents extends Collection
 
         return $gearIds->unique();
     }
-
-    /**
-     * @return string[]
-     */
-    public function getAllReferencedImages(): array
-    {
-        $images = [];
-        foreach ($this as $gearComponent) {
-            $images[] = $gearComponent->getImgSrc();
-        }
-
-        return array_filter($images);
-    }
 }

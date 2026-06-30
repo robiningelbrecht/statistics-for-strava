@@ -59,13 +59,24 @@ final readonly class KeyValueBasedGearMaintenanceRepository implements GearMaint
         return null;
     }
 
-    public function findGearComponentForMaintenanceTask(MaintenanceTaskId $maintenanceTaskId): ?GearComponent
+    public function findComponentForMaintenanceTask(MaintenanceTaskId $maintenanceTaskId): ?GearComponent
     {
         foreach ($this->find()->getGearComponents() as $gearComponent) {
             foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
                 if ($maintenanceTask->getId() == $maintenanceTaskId) {
                     return $gearComponent;
                 }
+            }
+        }
+
+        return null;
+    }
+
+    public function findComponent(GearComponentId $gearComponentId): ?GearComponent
+    {
+        foreach ($this->find()->getGearComponents() as $gearComponent) {
+            if ((string) $gearComponent->getId() === (string) $gearComponentId) {
+                return $gearComponent;
             }
         }
 

@@ -17,7 +17,6 @@ class CreateGearMaintenanceComponentTest extends TestCase
         $command = CreateGearMaintenanceComponent::fromPayload([
             'label' => '  Chain  ',
             'attachedTo' => ['b1', 'g2'],
-            'imgSrc' => 'chain.png',
             'purchasePrice' => ['amountInCents' => 12345, 'currency' => 'EUR'],
             'maintenanceTasks' => [
                 ['label' => 'Lube', 'interval' => ['value' => 500, 'unit' => 'km']],
@@ -26,13 +25,47 @@ class CreateGearMaintenanceComponentTest extends TestCase
         ]);
 
         $this->assertSame('Chain', (string) $command->getLabel());
-        $this->assertSame('chain.png', $command->getImgSrc());
+        $this->assertNull($command->getNewImage());
         $this->assertEquals(Money::EUR(12345), $command->getPurchasePrice());
         $this->assertEquals(
             [GearId::fromUnprefixed('b1'), GearId::fromUnprefixed('g2')],
             $command->getAttachedTo()->toArray(),
         );
         $this->assertCount(2, $command->getMaintenanceTasks());
+    }
+
+    public function testFromPayloadWithNewImage(): void
+    {
+        $command = CreateGearMaintenanceComponent::fromPayload([
+            'label' => 'Chain',
+            'attachedTo' => ['b1'],
+            'localImagePath' => json_encode([
+                ['status' => 'new', 'filename' => 'chain.png', 'content' => base64_encode('image-content')],
+            ]),
+            'maintenanceTasks' => [
+                ['label' => 'Lube', 'interval' => ['value' => 500, 'unit' => 'km']],
+            ],
+        ]);
+
+        $this->assertNotNull($command->getNewImage());
+        $this->assertSame('chain.png', (string) $command->getNewImage()->getFilename());
+        $this->assertSame('image-content', $command->getNewImage()->getContent());
+    }
+
+    public function testFromPayloadThrowsOnUnsupportedImageType(): void
+    {
+        $this->expectExceptionObject(CouldNotDeserializeCommand::invalidPayload('Unsupported image file type.'));
+
+        CreateGearMaintenanceComponent::fromPayload([
+            'label' => 'Chain',
+            'attachedTo' => ['b1'],
+            'localImagePath' => json_encode([
+                ['status' => 'new', 'filename' => 'chain.gif', 'content' => base64_encode('image-content')],
+            ]),
+            'maintenanceTasks' => [
+                ['label' => 'Lube', 'interval' => ['value' => 500, 'unit' => 'km']],
+            ],
+        ]);
     }
 
     public function testFromPayloadThrowsOnMissingLabel(): void

@@ -66,7 +66,7 @@ final readonly class GearComponent implements \JsonSerializable
         return $this->getAttachedTo()->has($gearId);
     }
 
-    public function getImgSrc(): ?string
+    public function getLocalImagePath(): ?string
     {
         return $this->imgSrc;
     }
