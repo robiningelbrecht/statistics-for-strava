@@ -11,11 +11,12 @@ use App\Domain\Gear\Maintenance\Task\MaintenanceTasks;
 use App\Infrastructure\ValueObject\String\Name;
 use Money\Money;
 
-final readonly class GearComponent
+final readonly class GearComponent implements \JsonSerializable
 {
     private MaintenanceTasks $maintenanceTasks;
 
     private function __construct(
+        private GearComponentId $id,
         private Name $label,
         private GearIds $attachedTo,
         private ?string $imgSrc,
@@ -25,12 +26,14 @@ final readonly class GearComponent
     }
 
     public static function create(
+        GearComponentId $id,
         Name $label,
         GearIds $attachedTo,
         ?string $imgSrc,
         ?Money $purchasePrice,
     ): self {
         return new self(
+            id: $id,
             label: $label,
             attachedTo: $attachedTo,
             imgSrc: $imgSrc,
@@ -41,6 +44,11 @@ final readonly class GearComponent
     public function addMaintenanceTask(MaintenanceTask $task): void
     {
         $this->maintenanceTasks->add($task);
+    }
+
+    public function getId(): GearComponentId
+    {
+        return $this->id;
     }
 
     public function getLabel(): Name
@@ -90,5 +98,39 @@ final readonly class GearComponent
                 $this->attachedTo->replace($gearId, $normalizedGearId);
             }
         }
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function jsonSerialize(): array
+    {
+        $component = [
+            'id' => (string) $this->id,
+            'label' => (string) $this->label,
+            'imgSrc' => $this->imgSrc,
+            'attachedTo' => $this->attachedTo->map(
+                static fn (GearId $gearId): string => $gearId->toUnprefixedString(),
+            ),
+            'maintenance' => $this->maintenanceTasks->map(
+                static fn (MaintenanceTask $task): array => [
+                    'id' => $task->getId()->toUnprefixedString(),
+                    'label' => (string) $task->getLabel(),
+                    'interval' => [
+                        'value' => $task->getIntervalValue(),
+                        'unit' => $task->getIntervalUnit()->value,
+                    ],
+                ],
+            ),
+        ];
+
+        if ($this->purchasePrice instanceof Money) {
+            $component['purchasePrice'] = [
+                'amountInCents' => (int) $this->purchasePrice->getAmount(),
+                'currency' => $this->purchasePrice->getCurrency()->getCode(),
+            ];
+        }
+
+        return $component;
     }
 }
