@@ -7,6 +7,8 @@ namespace App\Domain\Gear\Maintenance\CreateGearMaintenanceComponent;
 use App\Domain\Gear\GearIds;
 use App\Domain\Gear\Maintenance\ParsesGearMaintenanceComponentPayload;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTasks;
+use App\Domain\Image\NewImage;
+use App\Domain\Image\ProvideLocalImageFromDropZonePayload;
 use App\Infrastructure\CQRS\Command\Deserialize\DeserializableCommand;
 use App\Infrastructure\CQRS\Command\Deserialize\ProvidesCommandName;
 use App\Infrastructure\CQRS\Command\DomainCommand;
@@ -17,11 +19,12 @@ final readonly class CreateGearMaintenanceComponent extends DomainCommand implem
 {
     use ProvidesCommandName;
     use ParsesGearMaintenanceComponentPayload;
+    use ProvideLocalImageFromDropZonePayload;
 
     private function __construct(
         private Name $label,
         private GearIds $attachedTo,
-        private ?string $imgSrc,
+        private ?NewImage $newImage,
         private ?Money $purchasePrice,
         private MaintenanceTasks $maintenanceTasks,
     ) {
@@ -29,10 +32,12 @@ final readonly class CreateGearMaintenanceComponent extends DomainCommand implem
 
     public static function fromPayload(array $payload): self
     {
+        [$newImages] = self::parseImages($payload, 'localImagePath');
+
         return new self(
             label: self::parseLabel($payload),
             attachedTo: self::parseAttachedTo($payload),
-            imgSrc: self::parseImgSrc($payload),
+            newImage: $newImages[0] ?? null,
             purchasePrice: self::parsePurchasePrice($payload),
             maintenanceTasks: self::parseMaintenanceTasks($payload, generateMissingIds: true),
         );
@@ -48,9 +53,9 @@ final readonly class CreateGearMaintenanceComponent extends DomainCommand implem
         return $this->attachedTo;
     }
 
-    public function getImgSrc(): ?string
+    public function getNewImage(): ?NewImage
     {
-        return $this->imgSrc;
+        return $this->newImage;
     }
 
     public function getPurchasePrice(): ?Money

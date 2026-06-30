@@ -11,6 +11,7 @@ use App\Infrastructure\KeyValue\KeyValueStore;
 use App\Infrastructure\Serialization\Json;
 use App\Tests\ContainerTestCase;
 use App\Tests\ProvideGearMaintenanceConfig;
+use League\Flysystem\FilesystemOperator;
 
 class CreateGearMaintenanceComponentCommandHandlerTest extends ContainerTestCase
 {
@@ -18,6 +19,7 @@ class CreateGearMaintenanceComponentCommandHandlerTest extends ContainerTestCase
 
     private CommandBus $commandBus;
     private KeyValueStore $keyValueStore;
+    private FilesystemOperator $fileStorage;
 
     public function testItCreatesComponentAndPreservesExistingOnes(): void
     {
@@ -26,7 +28,6 @@ class CreateGearMaintenanceComponentCommandHandlerTest extends ContainerTestCase
         $this->commandBus->dispatch(CreateGearMaintenanceComponent::fromPayload([
             'label' => 'Brake pads',
             'attachedTo' => ['b1', 'g2'],
-            'imgSrc' => 'brakes.png',
             'purchasePrice' => ['amountInCents' => 4999, 'currency' => 'EUR'],
             'maintenanceTasks' => [
                 ['label' => 'Replace', 'interval' => ['value' => 2000, 'unit' => 'km']],
@@ -41,12 +42,32 @@ class CreateGearMaintenanceComponentCommandHandlerTest extends ContainerTestCase
         $this->assertNotNull($created);
         $this->assertNotEmpty($created['id']);
         $this->assertSame(['b1', 'g2'], $created['attachedTo']);
-        $this->assertSame('brakes.png', $created['imgSrc']);
+        $this->assertNull($created['imgSrc']);
         $this->assertSame(4999, $created['purchasePrice']['amountInCents']);
         $this->assertSame('EUR', $created['purchasePrice']['currency']);
         $this->assertCount(1, $created['maintenance']);
         $this->assertSame('Replace', $created['maintenance'][0]['label']);
         $this->assertNotEmpty($created['maintenance'][0]['id']);
+    }
+
+    public function testItCreatesComponentWithImage(): void
+    {
+        $this->commandBus->dispatch(CreateGearMaintenanceComponent::fromPayload([
+            'label' => 'Brake pads',
+            'attachedTo' => ['b1'],
+            'localImagePath' => json_encode([
+                ['status' => 'new', 'filename' => 'brakes.png', 'content' => base64_encode('image-content')],
+            ]),
+            'maintenanceTasks' => [
+                ['label' => 'Replace', 'interval' => ['value' => 2000, 'unit' => 'km']],
+            ],
+        ]));
+
+        $config = Json::decode((string) $this->keyValueStore->find(Key::GEAR_MAINTENANCE));
+
+        $this->assertSame('files/gear-maintenance/0025176c-5652-11ee-923d-02424dd627d5.png', $config['components'][0]['imgSrc']);
+        $this->assertTrue($this->fileStorage->fileExists('gear-maintenance/0025176c-5652-11ee-923d-02424dd627d5.png'));
+        $this->assertSame('image-content', $this->fileStorage->read('gear-maintenance/0025176c-5652-11ee-923d-02424dd627d5.png'));
     }
 
     public function testItCreatesComponentWhenNoConfigExists(): void
@@ -90,5 +111,6 @@ class CreateGearMaintenanceComponentCommandHandlerTest extends ContainerTestCase
 
         $this->commandBus = $this->getContainer()->get(CommandBus::class);
         $this->keyValueStore = $this->getContainer()->get(KeyValueStore::class);
+        $this->fileStorage = $this->getContainer()->get('file.storage');
     }
 }

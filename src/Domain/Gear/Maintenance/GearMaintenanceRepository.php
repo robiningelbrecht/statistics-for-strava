@@ -13,7 +13,9 @@ interface GearMaintenanceRepository
 
     public function findMaintenanceTask(MaintenanceTaskId $maintenanceTaskId): ?MaintenanceTask;
 
-    public function findGearComponentForMaintenanceTask(MaintenanceTaskId $maintenanceTaskId): ?GearComponent;
+    public function findComponentForMaintenanceTask(MaintenanceTaskId $maintenanceTaskId): ?GearComponent;
+
+    public function findComponent(GearComponentId $gearComponentId): ?GearComponent;
 
     public function updateConfig(bool $isFeatureEnabled, bool $ignoreRetiredGear): void;
 
