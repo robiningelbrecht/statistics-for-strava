@@ -6,5 +6,5 @@ namespace App\Infrastructure\ValueObject\Identifier;
 
 interface UuidFactory
 {
-    public static function random(): string;
+    public function random(): string;
 }

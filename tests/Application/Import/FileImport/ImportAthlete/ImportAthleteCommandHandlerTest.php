@@ -28,7 +28,7 @@ class ImportAthleteCommandHandlerTest extends ContainerTestCase
         $this->buildHandler(__DIR__.'/app-configs/complete')->handle(new ImportAthlete());
 
         $athlete = $this->athleteRepository->find();
-        $this->assertSame(FakeUuidFactory::random(), $athlete->getAthleteId());
+        $this->assertSame((new FakeUuidFactory())->random(), $athlete->getAthleteId());
         $this->assertSame('John Doe', (string) $athlete->getName());
         $this->assertTrue($athlete->isMale());
     }
