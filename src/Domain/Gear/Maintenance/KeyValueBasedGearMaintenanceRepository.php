@@ -86,6 +86,62 @@ final readonly class KeyValueBasedGearMaintenanceRepository implements GearMaint
         $config['enabled'] = $isFeatureEnabled;
         $config['ignoreRetiredGear'] = $ignoreRetiredGear;
 
+        $this->save($config);
+    }
+
+    public function saveComponent(GearComponent $gearComponent): void
+    {
+        $config = $this->readConfig();
+
+        $components = is_array($config['components'] ?? null) ? $config['components'] : [];
+        $components = array_values(array_filter(
+            $components,
+            static fn (array $component): bool => ($component['id'] ?? null) !== (string) $gearComponent->getId(),
+        ));
+        $components[] = $gearComponent;
+
+        $config['components'] = $components;
+
+        $this->save($config);
+    }
+
+    public function deleteComponent(GearComponentId $gearComponentId): void
+    {
+        $config = $this->readConfig();
+
+        $components = is_array($config['components'] ?? null) ? $config['components'] : [];
+        $config['components'] = array_values(array_filter(
+            $components,
+            static fn (array $component): bool => ($component['id'] ?? null) !== (string) $gearComponentId,
+        ));
+
+        $this->save($config);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function readConfig(): array
+    {
+        try {
+            $config = Json::decode((string) $this->keyValueStore->find(Key::GEAR_MAINTENANCE));
+        } catch (EntityNotFound) {
+            $config = [];
+        }
+        if (!is_array($config)) {
+            $config = [];
+        }
+
+        $config['enabled'] ??= false;
+
+        return $config;
+    }
+
+    /**
+     * @param array<string, mixed> $config
+     */
+    private function save(array $config): void
+    {
         $this->keyValueStore->save(KeyValue::fromState(
             Key::GEAR_MAINTENANCE,
             Value::fromString(Json::encode($config)),

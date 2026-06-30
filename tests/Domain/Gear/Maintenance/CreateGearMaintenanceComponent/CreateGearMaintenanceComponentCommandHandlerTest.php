@@ -1,0 +1,94 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Tests\Domain\Gear\Maintenance\CreateGearMaintenanceComponent;
+
+use App\Domain\Gear\Maintenance\CreateGearMaintenanceComponent\CreateGearMaintenanceComponent;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
+use App\Infrastructure\KeyValue\Key;
+use App\Infrastructure\KeyValue\KeyValueStore;
+use App\Infrastructure\Serialization\Json;
+use App\Tests\ContainerTestCase;
+use App\Tests\ProvideGearMaintenanceConfig;
+
+class CreateGearMaintenanceComponentCommandHandlerTest extends ContainerTestCase
+{
+    use ProvideGearMaintenanceConfig;
+
+    private CommandBus $commandBus;
+    private KeyValueStore $keyValueStore;
+
+    public function testItCreatesComponentAndPreservesExistingOnes(): void
+    {
+        $this->importGearMaintenanceConfig();
+
+        $this->commandBus->dispatch(CreateGearMaintenanceComponent::fromPayload([
+            'label' => 'Brake pads',
+            'attachedTo' => ['b1', 'g2'],
+            'imgSrc' => 'brakes.png',
+            'purchasePrice' => ['amountInCents' => 4999, 'currency' => 'EUR'],
+            'maintenanceTasks' => [
+                ['label' => 'Replace', 'interval' => ['value' => 2000, 'unit' => 'km']],
+            ],
+        ]));
+
+        $config = Json::decode((string) $this->keyValueStore->find(Key::GEAR_MAINTENANCE));
+
+        $this->assertCount(3, $config['components']);
+
+        $created = $this->findComponentByLabel($config['components'], 'Brake pads');
+        $this->assertNotNull($created);
+        $this->assertNotEmpty($created['id']);
+        $this->assertSame(['b1', 'g2'], $created['attachedTo']);
+        $this->assertSame('brakes.png', $created['imgSrc']);
+        $this->assertSame(4999, $created['purchasePrice']['amountInCents']);
+        $this->assertSame('EUR', $created['purchasePrice']['currency']);
+        $this->assertCount(1, $created['maintenance']);
+        $this->assertSame('Replace', $created['maintenance'][0]['label']);
+        $this->assertNotEmpty($created['maintenance'][0]['id']);
+    }
+
+    public function testItCreatesComponentWhenNoConfigExists(): void
+    {
+        $this->commandBus->dispatch(CreateGearMaintenanceComponent::fromPayload([
+            'label' => 'Brake pads',
+            'attachedTo' => ['b1'],
+            'maintenanceTasks' => [
+                ['label' => 'Replace', 'interval' => ['value' => 2000, 'unit' => 'km']],
+            ],
+        ]));
+
+        $config = Json::decode((string) $this->keyValueStore->find(Key::GEAR_MAINTENANCE));
+
+        $this->assertCount(1, $config['components']);
+        $this->assertSame('Brake pads', $config['components'][0]['label']);
+        $this->assertNull($config['components'][0]['imgSrc']);
+        $this->assertArrayNotHasKey('purchasePrice', $config['components'][0]);
+    }
+
+    /**
+     * @param array<int, array<string, mixed>> $components
+     *
+     * @return array<string, mixed>|null
+     */
+    private function findComponentByLabel(array $components, string $label): ?array
+    {
+        foreach ($components as $component) {
+            if (($component['label'] ?? null) === $label) {
+                return $component;
+            }
+        }
+
+        return null;
+    }
+
+    #[\Override]
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->commandBus = $this->getContainer()->get(CommandBus::class);
+        $this->keyValueStore = $this->getContainer()->get(KeyValueStore::class);
+    }
+}
