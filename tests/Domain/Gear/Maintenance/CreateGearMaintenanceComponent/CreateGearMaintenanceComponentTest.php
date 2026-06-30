@@ -17,7 +17,8 @@ class CreateGearMaintenanceComponentTest extends TestCase
         $command = CreateGearMaintenanceComponent::fromPayload([
             'label' => '  Chain  ',
             'attachedTo' => ['b1', 'g2'],
-            'purchasePrice' => ['amountInCents' => 12345, 'currency' => 'EUR'],
+            'purchasePriceAmount' => '123.45',
+            'purchasePriceCurrency' => 'EUR',
             'maintenanceTasks' => [
                 ['label' => 'Lube', 'interval' => ['value' => 500, 'unit' => 'km']],
                 ['label' => 'Replace', 'interval' => ['value' => 1000, 'unit' => 'km']],

@@ -31,7 +31,7 @@ final class Version20260625171831 extends AbstractMigration
             'No gear-maintenance.yaml found, nothing to migrate'
         );
 
-        $config = $this->migrateLegacyTagsToIds(Yaml::parseFile($gearMaintenanceConfigFile));
+        $config = $this->migrateLegacyComponents(Yaml::parseFile($gearMaintenanceConfigFile));
 
         $this->connection->executeStatement(
             'REPLACE INTO KeyValue (`key`, `value`) VALUES (:key, :value)',
@@ -47,9 +47,14 @@ final class Version20260625171831 extends AbstractMigration
      *
      * @return array<string, mixed>
      */
-    private function migrateLegacyTagsToIds(array $config): array
+    private function migrateLegacyComponents(array $config): array
     {
         foreach ($config['components'] ?? [] as $i => $component) {
+            // Legacy images were referenced by paths/filenames that the new image
+            // storage can no longer resolve, so void them; they have to be re-uploaded.
+            unset($config['components'][$i]['imgSrc']);
+            $config['components'][$i]['localImagePath'] = null;
+
             $componentTag = $component['tag'] ?? $component['id'] ?? null;
             if (null === $componentTag) {
                 continue;

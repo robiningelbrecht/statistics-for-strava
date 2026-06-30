@@ -56,7 +56,7 @@ enabled: true
 components:
   - id: 'chain'
     label: 'Some cool chain'
-    imgSrc: 'chain.png'
+    localImagePath: 'chain.png'
     attachedTo:
       - 'bike-one-gear-id'
       - 'bike-two-gear-id'
@@ -78,7 +78,7 @@ components:
           unit: days
   - id: 'chain-two'
     label: 'Some cool chain'
-    imgSrc: 'chain.png'
+    localImagePath: 'chain.png'
     attachedTo:
       - 'bike-one-gear-id'
       - 'bike-two-gear-id'
@@ -99,7 +99,7 @@ enabled: true
 components:
   - id: 'chain'
     label: 'Some cool chain'
-    imgSrc: 'chain.png'
+    localImagePath: 'chain.png'
     attachedTo:
       - '123456'
     maintenance:
@@ -120,7 +120,7 @@ components:
           unit: days
   - id: 'chain-two'
     label: 'Some cool chain'
-    imgSrc: 'chain.png'
+    localImagePath: 'chain.png'
     attachedTo:
       - '123456'
     maintenance:

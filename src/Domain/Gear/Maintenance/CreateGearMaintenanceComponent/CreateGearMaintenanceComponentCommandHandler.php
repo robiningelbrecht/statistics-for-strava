@@ -25,10 +25,10 @@ final readonly class CreateGearMaintenanceComponentCommandHandler implements Com
     {
         assert($command instanceof CreateGearMaintenanceComponent);
 
-        $imgSrc = null;
+        $localImagePath = null;
         $newImage = $command->getNewImage();
         if ($newImage instanceof NewImage) {
-            $imgSrc = $this->imageStorage->store(
+            $localImagePath = $this->imageStorage->store(
                 newImage: $newImage,
                 directory: ImageDirectory::GEAR_MAINTENANCE
             )->toLocalImagePath();
@@ -38,7 +38,7 @@ final readonly class CreateGearMaintenanceComponentCommandHandler implements Com
             id: GearComponentId::random(),
             label: $command->getLabel(),
             attachedTo: $command->getAttachedTo(),
-            imgSrc: $imgSrc,
+            localImagePath: $localImagePath,
             purchasePrice: $command->getPurchasePrice(),
         );
 

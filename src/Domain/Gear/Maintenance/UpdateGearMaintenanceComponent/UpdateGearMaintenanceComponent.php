@@ -8,6 +8,7 @@ use App\Domain\Gear\GearIds;
 use App\Domain\Gear\Maintenance\GearComponentId;
 use App\Domain\Gear\Maintenance\ParsesGearMaintenanceComponentPayload;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTasks;
+use App\Domain\Gear\ProvidePurchasePriceFromPayload;
 use App\Domain\Image\NewImage;
 use App\Domain\Image\ProvideLocalImageFromDropZonePayload;
 use App\Domain\Image\RemovedImage;
@@ -22,6 +23,7 @@ final readonly class UpdateGearMaintenanceComponent extends DomainCommand implem
 {
     use ProvidesCommandName;
     use ParsesGearMaintenanceComponentPayload;
+    use ProvidePurchasePriceFromPayload;
     use ProvideLocalImageFromDropZonePayload;
 
     private function __construct(

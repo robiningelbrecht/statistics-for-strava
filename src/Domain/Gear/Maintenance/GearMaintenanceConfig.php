@@ -58,7 +58,7 @@ final readonly class GearMaintenanceConfig
                     GearId::fromUnprefixed(...),
                     $component['attachedTo']
                 )),
-                imgSrc: $component['imgSrc'] ?? null,
+                localImagePath: $component['localImagePath'] ?? null,
                 purchasePrice: $purchasePrice
             );
 

@@ -28,7 +28,8 @@ class CreateGearMaintenanceComponentCommandHandlerTest extends ContainerTestCase
         $this->commandBus->dispatch(CreateGearMaintenanceComponent::fromPayload([
             'label' => 'Brake pads',
             'attachedTo' => ['b1', 'g2'],
-            'purchasePrice' => ['amountInCents' => 4999, 'currency' => 'EUR'],
+            'purchasePriceAmount' => '49.99',
+            'purchasePriceCurrency' => 'EUR',
             'maintenanceTasks' => [
                 ['label' => 'Replace', 'interval' => ['value' => 2000, 'unit' => 'km']],
             ],
@@ -42,7 +43,7 @@ class CreateGearMaintenanceComponentCommandHandlerTest extends ContainerTestCase
         $this->assertNotNull($created);
         $this->assertNotEmpty($created['id']);
         $this->assertSame(['b1', 'g2'], $created['attachedTo']);
-        $this->assertNull($created['imgSrc']);
+        $this->assertNull($created['localImagePath']);
         $this->assertSame(4999, $created['purchasePrice']['amountInCents']);
         $this->assertSame('EUR', $created['purchasePrice']['currency']);
         $this->assertCount(1, $created['maintenance']);
@@ -65,7 +66,7 @@ class CreateGearMaintenanceComponentCommandHandlerTest extends ContainerTestCase
 
         $config = Json::decode((string) $this->keyValueStore->find(Key::GEAR_MAINTENANCE));
 
-        $this->assertSame('files/gear-maintenance/0025176c-5652-11ee-923d-02424dd627d5.png', $config['components'][0]['imgSrc']);
+        $this->assertSame('files/gear-maintenance/0025176c-5652-11ee-923d-02424dd627d5.png', $config['components'][0]['localImagePath']);
         $this->assertTrue($this->fileStorage->fileExists('gear-maintenance/0025176c-5652-11ee-923d-02424dd627d5.png'));
         $this->assertSame('image-content', $this->fileStorage->read('gear-maintenance/0025176c-5652-11ee-923d-02424dd627d5.png'));
     }
@@ -84,7 +85,7 @@ class CreateGearMaintenanceComponentCommandHandlerTest extends ContainerTestCase
 
         $this->assertCount(1, $config['components']);
         $this->assertSame('Brake pads', $config['components'][0]['label']);
-        $this->assertNull($config['components'][0]['imgSrc']);
+        $this->assertNull($config['components'][0]['localImagePath']);
         $this->assertArrayNotHasKey('purchasePrice', $config['components'][0]);
     }
 

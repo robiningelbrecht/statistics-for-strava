@@ -27,25 +27,25 @@ final readonly class UpdateGearMaintenanceComponentCommandHandler implements Com
 
         // Keep the existing image unless the dropzone explicitly added or removed one.
         $existingComponent = $this->gearMaintenanceRepository->findComponent($command->getGearComponentId());
-        $imgSrc = $existingComponent?->getLocalImagePath();
+        $localImagePath = $existingComponent?->getLocalImagePath();
 
         $newImage = $command->getNewImage();
         $removedImage = $command->getRemovedImage();
 
         if ($newImage instanceof NewImage) {
-            $imgSrc = $this->imageStorage->store(
+            $localImagePath = $this->imageStorage->store(
                 newImage: $newImage,
                 directory: ImageDirectory::GEAR_MAINTENANCE
             )->toLocalImagePath();
         } elseif ($removedImage instanceof RemovedImage) {
-            $imgSrc = null;
+            $localImagePath = null;
         }
 
         $gearComponent = GearComponent::create(
             id: $command->getGearComponentId(),
             label: $command->getLabel(),
             attachedTo: $command->getAttachedTo(),
-            imgSrc: $imgSrc,
+            localImagePath: $localImagePath,
             purchasePrice: $command->getPurchasePrice(),
         );
 

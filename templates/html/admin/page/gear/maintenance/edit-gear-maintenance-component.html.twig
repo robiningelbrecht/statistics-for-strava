@@ -1,0 +1,130 @@
+{% extends "html/admin/page/template.html.twig" %}
+{% block main %}
+    {% autoescape false %}
+    {% set component = component is defined ? component : null %}
+    {% set configUrl = relativeUrl(path('admin_manage_gear_maintenance_config')) %}
+    {% set purchasePrice = component ? component.getPurchasePrice() : null %}
+    {% set purchasePriceCurrency = purchasePrice ? purchasePrice.getCurrency().getCode() : 'EUR' %}
+    {% set existingImages = [] %}
+    {% if component and component.getLocalImagePath() %}
+        {% set imgPath = component.getLocalImagePath() %}
+        {% set existingImages = [{url: relativeUrl('/' ~ imgPath), name: imgPath|split('/')|last, path: imgPath}] %}
+    {% endif %}
+    {% set initialTasks = [] %}
+    {% if component %}
+        {% for task in component.getMaintenanceTasks() %}
+            {% set initialTasks = initialTasks|merge([{
+                id: task.getId().toUnprefixedString(),
+                label: task.getLabel(),
+                interval: {value: task.getIntervalValue(), unit: task.getIntervalUnit().value}
+            }]) %}
+        {% endfor %}
+    {% endif %}
+    <div class="modal-like-form">
+        <div class="w-full max-w-3xl overflow-y-auto p-6 bg-white border border-gray-200 rounded-lg shadow-xl">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold">
+                    {{ component ? "Edit component"|trans : "Add component"|trans }}
+                </h3>
+                <a href="{{ configUrl }}" aria-label="{{ "Close"|trans }}"
+                   class="grid place-items-center size-8 rounded-lg text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-900">
+                    <svg class="size-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+                    </svg>
+                </a>
+            </div>
+            <form data-dispatch-command="{{ dispatchCommand }}"
+                  data-redirect="{{ configUrl }}"
+                  class="flex flex-col gap-4">
+                {% if component %}
+                    <input type="hidden" name="gearComponentId" value="{{ component.getId() }}">
+                {% endif %}
+                <div data-form-error class="hidden rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert"></div>
+                <div class="grid gap-4 md:grid-cols-2">
+                    <div>
+                        <label for="component-label">{{ "Name"|trans }}</label>
+                        <input type="text" id="component-label" name="label" required value="{{ component ? component.getLabel() }}">
+                    </div>
+                    <div>
+                        <label for="component-purchase-price">{{ "Purchase price"|trans }}</label>
+                        <div class="flex gap-2">
+                            <input type="number" step="0.01" min="0" id="component-purchase-price"
+                                   name="purchasePriceAmount" value="{{ purchasePrice|formatMoneyDecimal }}"
+                                   placeholder="0.00">
+                            <select name="purchasePriceCurrency" class="w-auto">
+                                {% for currency in currencies() %}
+                                    <option value="{{ currency }}" {{ currency == purchasePriceCurrency ? 'selected' }}>{{ currency }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label>{{ "Attached to"|trans }}</label>
+                    <div class="mt-2 grid grid-cols-2 gap-x-4 gap-y-1.5 sm:grid-cols-3">
+                        {% for gear in gears %}
+                            <label class="flex items-center gap-2 text-sm cursor-pointer min-w-0">
+                                <input type="checkbox" name="attachedTo[]"
+                                       value="{{ gear.getId().toUnprefixedString() }}"
+                                       {{ component and component.isAttachedTo(gear.getId()) ? 'checked' }}>
+                                <span class="truncate min-w-0">{{ gear.getName() }}</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div>
+                    <label>{{ "Image"|trans }}</label>
+                    {% include 'html/admin/component/image-dropzone-upload.html.twig' with { name: 'localImagePath', maxImages: 1, existingImages: existingImages } %}
+                </div>
+                <div data-repeater data-repeater-min="1">
+                    <label>{{ "Maintenance tasks"|trans }}</label>
+                    <p class="mt-0.5 text-xxs text-gray-500">{{ "Define what needs doing and how often."|trans }}</p>
+                    <div class="mt-2 flex flex-col gap-2"
+                         data-repeater-list
+                         data-repeater-initial="{{ initialTasks|json_encode|e('html_attr') }}">
+                    </div>
+                    <button type="button" data-repeater-add class="mt-2 btn--secondary inline-flex items-center gap-1.5">
+                        <svg class="size-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
+                        </svg>
+                        <span>{{ "Add task"|trans }}</span>
+                    </button>
+                    <template data-repeater-template>
+                        <div class="flex flex-col gap-2 sm:flex-row sm:items-center p-3 bg-gray-50 rounded-lg border border-gray-200" data-repeater-item>
+                            <input type="hidden" name="maintenanceTasks[__index__][id]" data-repeater-field="id">
+                            <input type="text" name="maintenanceTasks[__index__][label]"
+                                   data-repeater-field="label" required
+                                   placeholder="{{ "Task name"|trans }}" class="mt-0 sm:flex-1">
+                            <input type="number" min="1" name="maintenanceTasks[__index__][interval][value]"
+                                   data-repeater-field="interval.value" required
+                                   placeholder="{{ "Every"|trans }}" class="mt-0 sm:w-24">
+                            <select name="maintenanceTasks[__index__][interval][unit]"
+                                    data-repeater-field="interval.unit" class="mt-0 sm:w-44">
+                                <option value="km">{{ "kilometers used"|trans }}</option>
+                                <option value="mi">{{ "miles used"|trans }}</option>
+                                <option value="hours">{{ "hours used"|trans }}</option>
+                                <option value="days">{{ "calendar days"|trans }}</option>
+                                <option value="daysUsed">{{ "active days"|trans }}</option>
+                            </select>
+                            <button type="button" data-repeater-remove
+                                    class="grid place-items-center size-9 shrink-0 self-end sm:self-auto rounded-lg border border-gray-200 bg-white text-gray-400 transition-colors hover:text-red-600 hover:border-red-200"
+                                    aria-label="{{ "Remove task"|trans }}">
+                                <svg class="size-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </template>
+                </div>
+                <div class="flex justify-end gap-2 border-t border-gray-200 pt-4">
+                    <a href="{{ configUrl }}" type="button" class="btn--secondary">{{ "Cancel"|trans }}</a>
+                    <button type="submit" data-has-loading-state class="group btn--primary">
+                        <span class="label">{{ "Save"|trans }}</span>
+                        <span class="label--loading">{{ "Saving..."|trans }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endautoescape %}
+{% endblock main %}

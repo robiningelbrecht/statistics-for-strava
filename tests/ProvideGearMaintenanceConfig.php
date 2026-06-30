@@ -28,7 +28,7 @@ ignoreRetiredGear: true
 components:
   - id: chain
     label: Some cool chain
-    imgSrc: files/gear-maintenance/chain.png
+    localImagePath: files/gear-maintenance/chain.png
     attachedTo:
       - g1233776
       - '10130856'
@@ -54,7 +54,7 @@ components:
           unit: km
   - id: di-2
     label: DI2 Battery
-    imgSrc: files/gear-maintenance/battery.png
+    localImagePath: files/gear-maintenance/battery.png
     attachedTo:
       - g1233776
       - g10130856

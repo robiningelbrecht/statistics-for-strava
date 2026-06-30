@@ -26,14 +26,17 @@ Activity: Activity
 'Add a component to start tracking maintenance.': 'Add a component to start tracking maintenance.'
 'Add component': 'Add component'
 'Add gear': 'Add gear'
+'Add task': 'Add task'
 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.'
 Admin: Admin
 'Admin panel': 'Admin panel'
 Afternoon: Namiddag
 All: All
+'All associated maintenance tasks and logs will be removed. This action cannot be undone.': 'All associated maintenance tasks and logs will be removed. This action cannot be undone.'
 'All time': 'All time'
 'Alpine Ski': 'Alpine Ski'
 Apr: Apr
+'Are you sure you want to delete the {component} component?': 'Are you sure you want to delete the {component} component?'
 'Are you sure you want to delete {name}?': 'Are you sure you want to delete {name}?'
 'Are you sure you want to delete {task} on {component} for {gear}, performed on {date}?': 'Are you sure you want to delete {task} on {component} for {gear}, performed on {date}?'
 'Ask Mark something...': 'Ask Mark something...'
@@ -101,8 +104,10 @@ Day: Day
 'Days needed': 'Dagen nodig'
 'Daytime stats': 'Daytime statistieken'
 Dec: Dec
+'Define what needs doing and how often.': 'Define what needs doing and how often.'
 Delete: Delete
 'Delete activity': 'Delete activity'
+'Delete component': 'Delete component'
 'Delete maintenance log': 'Delete maintenance log'
 Deleting...: Deleting...
 Density: Density
@@ -127,6 +132,7 @@ Eddington: Eddington
 'Eddington over time': 'Eddington over time'
 Edit: Edit
 'Edit activity': 'Edit activity'
+'Edit component': 'Edit component'
 'Edit gear': 'Edit gear'
 'Edit maintenance log': 'Edit maintenance log'
 'Edit recording device': 'Edit recording device'
@@ -144,6 +150,7 @@ Energy: Energy
 'Enter your password': 'Enter your password'
 'Enter your username': 'Enter your username'
 Evening: Avond
+Every: Every
 'Excludes commutes': 'Excludes commutes'
 'FTP history': 'FTP historiek'
 Failed: Failed
@@ -261,6 +268,7 @@ Low: Laag
 Maintenance: Maintenance
 'Maintenance log': 'Maintenance log'
 'Maintenance logs will appear here once maintenance has been registered.': 'Maintenance logs will appear here once maintenance has been registered.'
+'Maintenance tasks': 'Maintenance tasks'
 Mar: Mar
 Max: Max
 'Max gradient': 'Max gradient'
@@ -363,6 +371,7 @@ Ranking: Ranking
 'Relative cost': 'Relative cost'
 'Remember me for 7 days': 'Remember me for 7 days'
 Remove: Remove
+'Remove task': 'Remove task'
 'Rest Days': 'Rest Days'
 'Rest days': 'Rest days'
 'Rest days in last 7 days': 'Rest days in last 7 days'
@@ -436,6 +445,7 @@ Swim: Zwemmen
 'Table Tennis': Tafeltennis
 'Taper sweet-spot (+15)': 'Taper sweet-spot (+15)'
 Task: Task
+'Task name': 'Task name'
 Tasks: Tasks
 'Team Sports': 'Team Sports'
 Tennis: Tennis
@@ -600,7 +610,7 @@ Weight: Weight
 'Weight Training': Gewichttraining
 'Weight history': 'Weight history'
 Wheelchair: Rolstoel
-"When enabled, gear marked as retired is skipped. Its components won't accrue usage and no maintenance is tracked for them.": "When enabled, gear marked as retired is skipped. Its components won't accrue usage and no maintenance is tracked for them."
+"When enabled, gear marked as retired is skipped. Its components won't increase usage and no maintenance is tracked for them.": "When enabled, gear marked as retired is skipped. Its components won't increase usage and no maintenance is tracked for them."
 'Wind Surf': Windsurfen
 'Winter Sports': Wintersport
 Workout: Workout
@@ -634,10 +644,12 @@ Z5: Z5
 'Zwift Statistics': 'Zwift Statistics'
 'Zwift badge': 'Zwift badge'
 'Zwift stats': 'Zwift stats'
+'active days': 'active days'
 activities: activities
 and: and
 avg: avg
 bpm: bpm
+'calendar days': 'calendar days'
 challenges: challenges
 clear: clear
 compare: compare
@@ -647,10 +659,13 @@ days: days
 'days needed for next Eddington': 'days needed for next Eddington'
 'days to reach {n}': 'days to reach {n}'
 hours: hours
+'hours used': 'hours used'
 hrs: hrs
+'kilometers used': 'kilometers used'
 'last {numberOfDays} days': 'last {numberOfDays} days'
 max: max
 'max {max} MB each': 'max {max} MB each'
+'miles used': 'miles used'
 min: min
 months: months
 more: more
