@@ -12,8 +12,6 @@ use App\Domain\Gear\Maintenance\Task\MaintenanceTaskId;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTasks;
 use App\Infrastructure\CQRS\Command\Deserialize\CouldNotDeserializeCommand;
 use App\Infrastructure\ValueObject\String\Name;
-use Money\Currency;
-use Money\Money;
 
 trait ParsesGearMaintenanceComponentPayload
 {
@@ -48,32 +46,6 @@ trait ParsesGearMaintenanceComponentPayload
             },
             array_values($payload['attachedTo']),
         ));
-    }
-
-    /**
-     * @param array<string, mixed> $payload
-     */
-    private static function parsePurchasePrice(array $payload): ?Money
-    {
-        if (!isset($payload['purchasePrice']) || !is_array($payload['purchasePrice'])) {
-            return null;
-        }
-
-        $purchasePrice = $payload['purchasePrice'];
-        if (!isset($purchasePrice['amountInCents']) || '' === (string) $purchasePrice['amountInCents']) {
-            return null;
-        }
-        if (!is_numeric($purchasePrice['amountInCents'])) {
-            throw CouldNotDeserializeCommand::invalidPayload('The "purchasePrice.amountInCents" must be a numeric value.');
-        }
-        if (empty($purchasePrice['currency']) || !is_string($purchasePrice['currency'])) {
-            throw CouldNotDeserializeCommand::invalidPayload('A "purchasePrice.currency" is required.');
-        }
-
-        return new Money(
-            amount: (int) $purchasePrice['amountInCents'],
-            currency: new Currency($purchasePrice['currency']),
-        );
     }
 
     /**

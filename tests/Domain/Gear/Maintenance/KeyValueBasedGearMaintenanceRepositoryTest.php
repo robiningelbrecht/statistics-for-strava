@@ -49,7 +49,7 @@ class KeyValueBasedGearMaintenanceRepositoryTest extends ContainerTestCase
 
     public function testUpdateConfigFlipsSettingsAndPreservesComponents(): void
     {
-        $this->importGearMaintenanceConfig(); // enabled: true, ignoreRetiredGear: true, 2 components
+        $this->importGearMaintenanceConfig();
 
         $this->gearMaintenanceRepository->updateConfig(isFeatureEnabled: false, ignoreRetiredGear: false);
 

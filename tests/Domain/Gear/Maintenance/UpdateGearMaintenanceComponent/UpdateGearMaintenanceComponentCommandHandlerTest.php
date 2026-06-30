@@ -39,13 +39,14 @@ class UpdateGearMaintenanceComponentCommandHandlerTest extends ContainerTestCase
         $config = Json::decode((string) $this->keyValueStore->find(Key::GEAR_MAINTENANCE));
 
         $this->assertCount(2, $config['components']);
+        $this->assertSame('chain', $config['components'][0]['id']);
 
         $chain = $this->findComponentById($config['components'], 'chain');
         $this->assertNotNull($chain);
         $this->assertSame('Updated chain', $chain['label']);
         $this->assertSame(['b9'], $chain['attachedTo']);
-        // No image in the payload, so the existing one is preserved.
-        $this->assertSame('files/gear-maintenance/chain.png', $chain['imgSrc']);
+
+        $this->assertSame('files/gear-maintenance/chain.png', $chain['localImagePath']);
         $this->assertCount(1, $chain['maintenance']);
         $this->assertSame('chain-lubed', $chain['maintenance'][0]['id']);
         $this->assertSame(600, $chain['maintenance'][0]['interval']['value']);
@@ -60,7 +61,6 @@ class UpdateGearMaintenanceComponentCommandHandlerTest extends ContainerTestCase
         $this->seedComponentWithImage('files/gear-maintenance/old.png');
         $this->fileStorage->write('gear-maintenance/old.png', 'old-content');
 
-        // Replacing the single image: the dropzone removes the existing one before adding the new one.
         $this->commandBus->dispatch(UpdateGearMaintenanceComponent::fromPayload([
             'gearComponentId' => 'chain',
             'label' => 'Chain',
@@ -76,7 +76,7 @@ class UpdateGearMaintenanceComponentCommandHandlerTest extends ContainerTestCase
 
         $config = Json::decode((string) $this->keyValueStore->find(Key::GEAR_MAINTENANCE));
 
-        $this->assertSame('files/gear-maintenance/0025176c-5652-11ee-923d-02424dd627d5.png', $config['components'][0]['imgSrc']);
+        $this->assertSame('files/gear-maintenance/0025176c-5652-11ee-923d-02424dd627d5.png', $config['components'][0]['localImagePath']);
         $this->assertFalse($this->fileStorage->fileExists('gear-maintenance/old.png'));
         $this->assertTrue($this->fileStorage->fileExists('gear-maintenance/0025176c-5652-11ee-923d-02424dd627d5.png'));
         $this->assertSame('new-content', $this->fileStorage->read('gear-maintenance/0025176c-5652-11ee-923d-02424dd627d5.png'));
@@ -101,11 +101,11 @@ class UpdateGearMaintenanceComponentCommandHandlerTest extends ContainerTestCase
 
         $config = Json::decode((string) $this->keyValueStore->find(Key::GEAR_MAINTENANCE));
 
-        $this->assertNull($config['components'][0]['imgSrc']);
+        $this->assertNull($config['components'][0]['localImagePath']);
         $this->assertFalse($this->fileStorage->fileExists('gear-maintenance/old.png'));
     }
 
-    private function seedComponentWithImage(string $imgSrc): void
+    private function seedComponentWithImage(string $localImagePath): void
     {
         $this->keyValueStore->save(KeyValue::fromState(
             Key::GEAR_MAINTENANCE,
@@ -114,7 +114,7 @@ class UpdateGearMaintenanceComponentCommandHandlerTest extends ContainerTestCase
                 'components' => [[
                     'id' => 'chain',
                     'label' => 'Chain',
-                    'imgSrc' => $imgSrc,
+                    'localImagePath' => $localImagePath,
                     'attachedTo' => ['b1'],
                     'maintenance' => [
                         ['id' => 'chain-lubed', 'label' => 'Lube', 'interval' => ['value' => 500, 'unit' => 'km']],

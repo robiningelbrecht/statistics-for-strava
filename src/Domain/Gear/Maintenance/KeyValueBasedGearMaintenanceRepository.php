@@ -105,13 +105,18 @@ final readonly class KeyValueBasedGearMaintenanceRepository implements GearMaint
         $config = $this->readConfig();
 
         $components = is_array($config['components'] ?? null) ? $config['components'] : [];
-        $components = array_values(array_filter(
+        $index = array_find_key(
             $components,
-            static fn (array $component): bool => ($component['id'] ?? null) !== (string) $gearComponent->getId(),
-        ));
-        $components[] = $gearComponent;
+            static fn (array $component): bool => ($component['id'] ?? null) === (string) $gearComponent->getId(),
+        );
 
-        $config['components'] = $components;
+        if (null === $index) {
+            $components[] = $gearComponent;
+        } else {
+            $components[$index] = $gearComponent;
+        }
+
+        $config['components'] = array_values($components);
 
         $this->save($config);
     }

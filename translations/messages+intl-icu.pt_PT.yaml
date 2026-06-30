@@ -26,14 +26,17 @@ Activity: Activity
 'Add a component to start tracking maintenance.': 'Add a component to start tracking maintenance.'
 'Add component': 'Add component'
 'Add gear': 'Add gear'
+'Add task': 'Add task'
 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.'
 Admin: Admin
 'Admin panel': 'Admin panel'
 Afternoon: Tarde
 All: All
+'All associated maintenance tasks and logs will be removed. This action cannot be undone.': 'All associated maintenance tasks and logs will be removed. This action cannot be undone.'
 'All time': 'Desde sempre'
 'Alpine Ski': 'Esqui Alpino'
 Apr: Abr
+'Are you sure you want to delete the {component} component?': 'Are you sure you want to delete the {component} component?'
 'Are you sure you want to delete {name}?': 'Are you sure you want to delete {name}?'
 'Are you sure you want to delete {task} on {component} for {gear}, performed on {date}?': 'Are you sure you want to delete {task} on {component} for {gear}, performed on {date}?'
 'Ask Mark something...': 'Ask Mark something...'
@@ -101,8 +104,10 @@ Day: Day
 'Days needed': 'Dias necessários'
 'Daytime stats': 'Estatísticas por períodos do dia'
 Dec: Dez
+'Define what needs doing and how often.': 'Define what needs doing and how often.'
 Delete: Delete
 'Delete activity': 'Delete activity'
+'Delete component': 'Delete component'
 'Delete maintenance log': 'Delete maintenance log'
 Deleting...: Deleting...
 Density: Density
@@ -127,6 +132,7 @@ Eddington: Eddington
 'Eddington over time': 'Eddington over time'
 Edit: Edit
 'Edit activity': 'Edit activity'
+'Edit component': 'Edit component'
 'Edit gear': 'Edit gear'
 'Edit maintenance log': 'Edit maintenance log'
 'Edit recording device': 'Edit recording device'
@@ -144,6 +150,7 @@ Energy: Energy
 'Enter your password': 'Enter your password'
 'Enter your username': 'Enter your username'
 Evening: 'Fim da tarde'
+Every: Every
 'Excludes commutes': 'Exclui viagens escritório'
 'FTP history': 'Histórico de FTP'
 Failed: Failed
@@ -261,6 +268,7 @@ Low: Baixa
 Maintenance: Manutenção
 'Maintenance log': 'Maintenance log'
 'Maintenance logs will appear here once maintenance has been registered.': 'Maintenance logs will appear here once maintenance has been registered.'
+'Maintenance tasks': 'Maintenance tasks'
 Mar: Mar
 Max: Máx
 'Max gradient': 'Max gradient'
@@ -363,6 +371,7 @@ Ranking: Ranking
 'Relative cost': 'Relative cost'
 'Remember me for 7 days': 'Remember me for 7 days'
 Remove: Remove
+'Remove task': 'Remove task'
 'Rest Days': 'Dias de Descanso'
 'Rest days': 'Dias de descanso'
 'Rest days in last 7 days': 'Descanso nos últimos 7 dias'
@@ -436,6 +445,7 @@ Swim: Natação
 'Table Tennis': 'Ténis de Mesa'
 'Taper sweet-spot (+15)': 'Ponto de foco (+15)'
 Task: Task
+'Task name': 'Task name'
 Tasks: Tasks
 'Team Sports': 'Team Sports'
 Tennis: Ténis
@@ -600,7 +610,7 @@ Weight: Weight
 'Weight Training': 'Treino de Força'
 'Weight history': 'Weight history'
 Wheelchair: 'Cadeira de Rodas'
-"When enabled, gear marked as retired is skipped. Its components won't accrue usage and no maintenance is tracked for them.": "When enabled, gear marked as retired is skipped. Its components won't accrue usage and no maintenance is tracked for them."
+"When enabled, gear marked as retired is skipped. Its components won't increase usage and no maintenance is tracked for them.": "When enabled, gear marked as retired is skipped. Its components won't increase usage and no maintenance is tracked for them."
 'Wind Surf': Windsurf
 'Winter Sports': 'Desportos de Inverno'
 Workout: Treino
@@ -634,10 +644,12 @@ Z5: Z5
 'Zwift Statistics': 'Estatísticas do Zwift'
 'Zwift badge': 'Medalha Zwift'
 'Zwift stats': 'Zwift stats'
+'active days': 'active days'
 activities: actividades
 and: e
 avg: avg
 bpm: bpm
+'calendar days': 'calendar days'
 challenges: challenges
 clear: limpar
 compare: comparar
@@ -647,10 +659,13 @@ days: dias
 'days needed for next Eddington': 'days needed for next Eddington'
 'days to reach {n}': 'days to reach {n}'
 hours: horas
+'hours used': 'hours used'
 hrs: hrs
+'kilometers used': 'kilometers used'
 'last {numberOfDays} days': 'últimos {numberOfDays} dias'
 max: max
 'max {max} MB each': 'max {max} MB each'
+'miles used': 'miles used'
 min: min
 months: meses
 more: mais

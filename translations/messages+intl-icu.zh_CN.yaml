@@ -26,14 +26,17 @@ Activity: 活动
 'Add a component to start tracking maintenance.': 'Add a component to start tracking maintenance.'
 'Add component': 'Add component'
 'Add gear': 'Add gear'
+'Add task': 'Add task'
 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.'
 Admin: Admin
 'Admin panel': 'Admin panel'
 Afternoon: 下午
 All: All
+'All associated maintenance tasks and logs will be removed. This action cannot be undone.': 'All associated maintenance tasks and logs will be removed. This action cannot be undone.'
 'All time': 所有时间
 'Alpine Ski': 高山滑雪
 Apr: 四月
+'Are you sure you want to delete the {component} component?': 'Are you sure you want to delete the {component} component?'
 'Are you sure you want to delete {name}?': 'Are you sure you want to delete {name}?'
 'Are you sure you want to delete {task} on {component} for {gear}, performed on {date}?': 'Are you sure you want to delete {task} on {component} for {gear}, performed on {date}?'
 'Ask Mark something...': 问问Mark...
@@ -101,8 +104,10 @@ Day: Day
 'Days needed': 所需天数
 'Daytime stats': 白天统计
 Dec: 十二月
+'Define what needs doing and how often.': 'Define what needs doing and how often.'
 Delete: Delete
 'Delete activity': 'Delete activity'
+'Delete component': 'Delete component'
 'Delete maintenance log': 'Delete maintenance log'
 Deleting...: Deleting...
 Density: Density
@@ -127,6 +132,7 @@ Eddington: 愛丁頓數
 'Eddington over time': 'Eddington over time'
 Edit: Edit
 'Edit activity': 'Edit activity'
+'Edit component': 'Edit component'
 'Edit gear': 'Edit gear'
 'Edit maintenance log': 'Edit maintenance log'
 'Edit recording device': 'Edit recording device'
@@ -144,6 +150,7 @@ Energy: Energy
 'Enter your password': 'Enter your password'
 'Enter your username': 'Enter your username'
 Evening: 晚上
+Every: Every
 'Excludes commutes': 筛除通勤
 'FTP history': FTP历史
 Failed: Failed
@@ -261,6 +268,7 @@ Low: 低
 Maintenance: 维护
 'Maintenance log': 'Maintenance log'
 'Maintenance logs will appear here once maintenance has been registered.': 'Maintenance logs will appear here once maintenance has been registered.'
+'Maintenance tasks': 'Maintenance tasks'
 Mar: 三月
 Max: 最大
 'Max gradient': 'Max gradient'
@@ -363,6 +371,7 @@ Ranking: Ranking
 'Relative cost': 相对成本
 'Remember me for 7 days': 'Remember me for 7 days'
 Remove: Remove
+'Remove task': 'Remove task'
 'Rest Days': 休息日
 'Rest days': 休息日
 'Rest days in last 7 days': 最近7天的休息日
@@ -436,6 +445,7 @@ Swim: 游泳
 'Table Tennis': 乒乓球
 'Taper sweet-spot (+15)': '最佳减量期 (+15)'
 Task: Task
+'Task name': 'Task name'
 Tasks: Tasks
 'Team Sports': 'Team Sports'
 Tennis: 网球
@@ -600,7 +610,7 @@ Weight: 体重
 'Weight Training': 重量训练
 'Weight history': 历史体重
 Wheelchair: 轮椅
-"When enabled, gear marked as retired is skipped. Its components won't accrue usage and no maintenance is tracked for them.": "When enabled, gear marked as retired is skipped. Its components won't accrue usage and no maintenance is tracked for them."
+"When enabled, gear marked as retired is skipped. Its components won't increase usage and no maintenance is tracked for them.": "When enabled, gear marked as retired is skipped. Its components won't increase usage and no maintenance is tracked for them."
 'Wind Surf': 风帆冲浪
 'Winter Sports': 冬季运动
 Workout: 锻炼
@@ -634,10 +644,12 @@ Z5: Z5
 'Zwift Statistics': Zwift统计
 'Zwift badge': Zwift徽章
 'Zwift stats': Zwift统计
+'active days': 'active days'
 activities: 活动
 and: 和
 avg: 平均
 bpm: 拍子数
+'calendar days': 'calendar days'
 challenges: challenges
 clear: 清除
 compare: 对比
@@ -647,10 +659,13 @@ days: 天
 'days needed for next Eddington': '天 - 下一个爱丁顿所需天数'
 'days to reach {n}': 'days to reach {n}'
 hours: 小时
+'hours used': 'hours used'
 hrs: hrs
+'kilometers used': 'kilometers used'
 'last {numberOfDays} days': '最近{numberOfDays}天'
 max: max
 'max {max} MB each': 'max {max} MB each'
+'miles used': 'miles used'
 min: min
 months: 月
 more: 更多

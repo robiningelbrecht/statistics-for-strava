@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Gear\Maintenance\DeleteGearMaintenanceComponent;
 
+use App\Domain\Gear\Maintenance\GearComponent;
 use App\Domain\Gear\Maintenance\GearMaintenanceRepository;
 use App\Domain\Image\ImagePath;
 use App\Infrastructure\CQRS\Command\Command;
@@ -26,8 +27,8 @@ final readonly class DeleteGearMaintenanceComponentCommandHandler implements Com
 
         $this->gearMaintenanceRepository->deleteComponent($command->getGearComponentId());
 
-        if (null !== $gearComponent && null !== $imgSrc = $gearComponent->getLocalImagePath()) {
-            $fileSystemPath = ImagePath::fromLocalImagePath($imgSrc)->toFileSystemPath();
+        if ($gearComponent instanceof GearComponent && null !== $localImagePath = $gearComponent->getLocalImagePath()) {
+            $fileSystemPath = ImagePath::fromLocalImagePath($localImagePath)->toFileSystemPath();
             if ($this->fileStorage->fileExists($fileSystemPath)) {
                 $this->fileStorage->delete($fileSystemPath);
             }
