@@ -6,19 +6,18 @@ namespace App\Domain\Activity\UpdateActivity;
 
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
+use App\Domain\Image\ImageDirectory;
 use App\Domain\Image\ImagePath;
+use App\Domain\Image\ImageStorage;
 use App\Domain\Image\RemovedImage;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
-use App\Infrastructure\ValueObject\Identifier\UuidFactory;
-use League\Flysystem\FilesystemOperator;
 
 final readonly class UpdateActivityCommandHandler implements CommandHandler
 {
     public function __construct(
         private ActivityRepository $activityRepository,
-        private FilesystemOperator $fileStorage,
-        private UuidFactory $uuidFactory,
+        private ImageStorage $imageStorage,
     ) {
     }
 
@@ -55,15 +54,13 @@ final readonly class UpdateActivityCommandHandler implements CommandHandler
             $retainedPaths = array_values(array_filter($currentPaths, static fn (ImagePath $path): bool => !$isRemoved($path)));
 
             // Only files that were genuinely attached to this activity may be deleted from disk.
-            $imagePathsThatNeedRemoval = array_map(
-                static fn (ImagePath $path): string => $path->toFileSystemPath(),
-                array_filter($currentPaths, $isRemoved)
-            );
+            $imagePathsThatNeedRemoval = array_values(array_filter($currentPaths, $isRemoved));
 
             foreach ($newImages as $newImage) {
-                $fileSystemPath = sprintf('activities/%s.%s', $this->uuidFactory->random(), $newImage->getFilename()->getExtension());
-                $this->fileStorage->write($fileSystemPath, $newImage->getContent());
-                $retainedPaths[] = ImagePath::fromFileSystemPath($fileSystemPath);
+                $retainedPaths[] = $this->imageStorage->store(
+                    newImage: $newImage,
+                    directory: ImageDirectory::ACTIVITIES
+                );
             }
 
             $activity = $activity->withLocalImagePaths(array_map(
@@ -77,10 +74,8 @@ final readonly class UpdateActivityCommandHandler implements CommandHandler
             rawData: $activityWithRawData->getRawData(),
         ));
 
-        foreach ($imagePathsThatNeedRemoval as $fileSystemPath) {
-            if ($this->fileStorage->fileExists($fileSystemPath)) {
-                $this->fileStorage->delete($fileSystemPath);
-            }
+        foreach ($imagePathsThatNeedRemoval as $path) {
+            $this->imageStorage->remove($path);
         }
     }
 }

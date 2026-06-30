@@ -8,7 +8,7 @@ use Ramsey\Uuid\Uuid as RamseyUuid;
 
 class RandomUuidFactory implements UuidFactory
 {
-    public static function random(): string
+    public function random(): string
     {
         return RamseyUuid::uuid4()->toString();
     }
