@@ -4,6 +4,7 @@ namespace App\Tests\Console\Daemon;
 
 use App\Application\AppStatusChecker;
 use App\Application\AppUrl;
+use App\Application\RebuildStatus;
 use App\Console\Daemon\RunFileImportAndBuildAppConsoleCommand;
 use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityRepository;
@@ -116,6 +117,34 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $commandTester->execute(['command' => $command->getName()]);
 
         $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
+    }
+
+    public function testBuildsWhenForceRebuildIsSetEvenIfAlreadyBuiltToday(): void
+    {
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()->build(),
+            [],
+        ));
+
+        $this->keyValueStore->save(KeyValue::fromState(
+            key: Key::APP_LAST_BUILT_ON,
+            value: Value::fromString(self::TODAY),
+        ));
+        $this->keyValueStore->save(KeyValue::fromState(
+            key: Key::FORCE_REBUILD,
+            value: Value::fromString('1'),
+        ));
+
+        $command = $this->getCommandInApplication('app:cron:run-file-import');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute(['command' => $command->getName()]);
+
+        $this->assertStringNotContainsString('No files left to process...', $commandTester->getDisplay());
+        $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
+        $this->assertSame(self::TODAY, (string) $this->keyValueStore->find(Key::APP_LAST_BUILT_ON));
+
+        $this->expectException(EntityNotFound::class);
+        $this->keyValueStore->find(Key::FORCE_REBUILD);
     }
 
     public function testDoesNotBuildWhenNoActivitiesHaveBeenImported(): void
@@ -311,6 +340,7 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
             keyValueStore: $this->keyValueStore,
             logger: $logger,
             importMode: $importMode,
+            rebuildStatus: new RebuildStatus($this->keyValueStore),
         );
     }
 

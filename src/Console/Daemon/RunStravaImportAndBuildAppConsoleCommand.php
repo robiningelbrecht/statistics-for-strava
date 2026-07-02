@@ -45,7 +45,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: RunStravaImportAndBuildAppConsoleCommand::NAME, description: 'Run strava import')]
 final class RunStravaImportAndBuildAppConsoleCommand extends Command
 {
-    use ConfiguresImportAndBuildPhases;
+    use HandlesImportAndBuild;
 
     public const string NAME = 'app:cron:run-strava-import';
     public const string RESTRICT_TO_ACTIVITY_IDS_ARGUMENT = 'restrictToActivityIds';
@@ -101,7 +101,7 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
         }
 
         try {
-            if ($phases['import']) {
+            if ($phases[self::IMPORT_OPTION]) {
                 $this->appStatusChecker->ensureIsReadyForStravaImport();
 
                 $this->commandBus->dispatch(new ImportAthlete($output));
@@ -129,7 +129,7 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
                     ]);
                 }
             }
-            if ($phases['build']) {
+            if ($phases[self::BUILD_OPTION]) {
                 $this->appStatusChecker->ensureIsReadyForBuild();
 
                 $this->commandBus->dispatch(new RunBuild(
