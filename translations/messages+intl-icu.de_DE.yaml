@@ -157,10 +157,10 @@ Failed: Fehlgeschlagen
 Favourite: Favorit
 Feb: Feb
 'File exceeds {max} MB': 'Datei überschreitet {max} MB'
-'File imports': 'Dateiimporte'
-'File imports are only available in file import mode': 'Dateiimporte sind nur im Dateiimportmodus verfügbar.'
-'File upload': 'Datei-Upload'
-'File upload is only available in file import mode': 'Datei-Upload ist nur im Dateiimportmodus verfügbar.'
+'File imports': 'Datei Importe'
+'File imports are only available in file import mode': 'Datei Importe sind nur im Datei Import Modus verfügbar.'
+'File upload': 'Datei Upload'
+'File upload is only available in file import mode': 'Datei Upload ist nur im Datei Import Modus verfügbar.'
 Filename: Dateiname
 'Filter on KOM segments': 'Filter für KOM-Segmente'
 'Filter on country': 'Filter nach Land'
