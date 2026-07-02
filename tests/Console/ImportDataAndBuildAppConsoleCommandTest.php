@@ -141,6 +141,9 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
             ),
             appUrl: AppUrl::fromString('http://localhost'),
             importMode: ImportMode::STRAVA_API,
+            keyValueStore: $this->getContainer()->get(KeyValueStore::class),
+            rebuildStatus: $this->getContainer()->get(RebuildStatus::class),
+            clock: PausedClock::fromString(self::TODAY),
         );
     }
 

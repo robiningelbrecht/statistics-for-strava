@@ -16,6 +16,7 @@ use App\Application\Import\StravaImport\ImportChallenges\ImportChallenges;
 use App\Application\Import\StravaImport\ImportGear\ImportGear;
 use App\Application\Import\StravaImport\ImportSegments\ImportSegments;
 use App\Application\Import\StravaImport\ProcessRawActivityData\ProcessRawActivityData;
+use App\Application\RebuildStatus;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
 use App\Domain\Import\ImportMode;
@@ -25,10 +26,15 @@ use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
 use App\Infrastructure\Doctrine\Migrations\RequiresUpToDateDatabaseSchema;
+use App\Infrastructure\KeyValue\Key;
+use App\Infrastructure\KeyValue\KeyValue;
+use App\Infrastructure\KeyValue\KeyValueStore;
+use App\Infrastructure\KeyValue\Value;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use App\Infrastructure\Mutex\LockIsAlreadyAcquired;
 use App\Infrastructure\Mutex\LockName;
 use App\Infrastructure\Mutex\Mutex;
+use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
@@ -42,7 +48,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[WithMonologChannel('daemon')]
 #[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
 #[RequiresUpToDateDatabaseSchema]
-#[AsCommand(name: RunStravaImportAndBuildAppConsoleCommand::NAME, description: 'Run strava import')]
+#[AsCommand(name: RunStravaImportAndBuildAppConsoleCommand::NAME, description: 'Run Strava import')]
 final class RunStravaImportAndBuildAppConsoleCommand extends Command
 {
     use HandlesImportAndBuild;
@@ -59,6 +65,9 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
         private readonly AppStatusChecker $appStatusChecker,
         private readonly AppUrl $appUrl,
         private readonly ImportMode $importMode,
+        private readonly KeyValueStore $keyValueStore,
+        private readonly RebuildStatus $rebuildStatus,
+        private readonly Clock $clock,
     ) {
         parent::__construct();
     }
@@ -67,6 +76,7 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
     {
         $this->addArgument(self::RESTRICT_TO_ACTIVITY_IDS_ARGUMENT, InputArgument::OPTIONAL);
         $this->addImportAndBuildOptions();
+        $this->addIfRequiredOption();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -79,7 +89,20 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
             return Command::SUCCESS;
         }
 
-        $phases = $this->resolvePhases($input);
+        $shouldImport = $this->resolvePhases($input)[self::IMPORT_OPTION];
+        $today = $this->clock->getCurrentDateTimeImmutable()->format('Y-m-d');
+        $appNeedsToBeBuilt = $this->appNeedsToBeBuilt(
+            input: $input,
+            keyValueStore: $this->keyValueStore,
+            rebuildStatus: $this->rebuildStatus,
+            today: $today
+        );
+
+        if (!$shouldImport && !$appNeedsToBeBuilt) {
+            $output->writeln('Nothing to build...');
+
+            return Command::SUCCESS;
+        }
 
         $this->resourceUsage->startTimer();
 
@@ -101,7 +124,7 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
         }
 
         try {
-            if ($phases[self::IMPORT_OPTION]) {
+            if ($shouldImport) {
                 $this->appStatusChecker->ensureIsReadyForStravaImport();
 
                 $this->commandBus->dispatch(new ImportAthlete($output));
@@ -129,12 +152,18 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
                     ]);
                 }
             }
-            if ($phases[self::BUILD_OPTION]) {
+            if ($appNeedsToBeBuilt) {
                 $this->appStatusChecker->ensureIsReadyForBuild();
 
                 $this->commandBus->dispatch(new RunBuild(
                     output: $output,
                 ));
+
+                $this->keyValueStore->save(KeyValue::fromState(
+                    key: Key::APP_LAST_BUILT_ON,
+                    value: Value::fromString($today),
+                ));
+                $this->keyValueStore->clear(Key::FORCE_REBUILD);
             }
         } catch (AppIsNotReady $e) {
             $this->mutex->releaseLock();
