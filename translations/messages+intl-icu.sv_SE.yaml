@@ -70,6 +70,7 @@ Canoeing: Kanot
 'Carbon saved': 'Sparat koldioxid'
 'Challenge consistency': Utmaningsihållighet
 Challenges: Utmaningar
+'Changes still need to be processed before they appear on the app': 'Changes still need to be processed before they appear on the app'
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Kronisk träningsbelastning (Träningsform) - 42 dagars exponentiellt viktat medelvärde av din dagliga träningsbelastning. Representerar långsiktig träningsanpassning.'
 Clear: Clear
 'Clear all filters': 'Clear all filters'
@@ -359,6 +360,7 @@ Ranking: Rankning
 'Reached {threshold} hours total moving time': 'Reached {threshold} hours total moving time'
 'Reached {threshold} total distance': 'Reached {threshold} total distance'
 'Reached {threshold} total elevation': 'Reached {threshold} total elevation'
+'Rebuild pending': 'Rebuild pending'
 'Recent effort': 'Recent effort'
 'Recording device management': 'Recording device management'
 'Recording devices': 'Recording devices'

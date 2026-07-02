@@ -23,6 +23,14 @@
                 </svg>
                 {{ "Admin"|trans }}
             </span>
+            <span class="ml-2 inline-flex items-center gap-x-1.5 rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-800"
+                  title="{{ "Changes still need to be processed before they appear on the app"|trans }}">
+                <span class="relative flex size-2">
+                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-500 opacity-75"></span>
+                    <span class="relative inline-flex size-2 rounded-full bg-amber-500"></span>
+                </span>
+                {{ "Rebuild pending"|trans }}
+            </span>
         </div>
         <div class="flex items-center lg:order-2">
             <a href="{{ relativeUrl('/') }}"

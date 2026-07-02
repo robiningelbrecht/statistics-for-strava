@@ -29,6 +29,7 @@
     --color-amber-50: oklch(98.7% 0.022 95.277);
     --color-amber-100: oklch(96.2% 0.059 95.617);
     --color-amber-500: oklch(76.9% 0.188 70.08);
+    --color-amber-800: oklch(47.3% 0.137 46.201);
     --color-yellow-50: #FFFBEB;
     --color-yellow-100: #FEF3C7;
     --color-yellow-200: #FDE68A;
@@ -196,6 +197,7 @@
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --animate-spin: spin 1s linear infinite;
+    --animate-ping: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
     --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     --animate-bounce: bounce 1s infinite;
     --blur-xs: 4px;
@@ -2210,6 +2212,9 @@
   .animate-bounce {
     animation: var(--animate-bounce);
   }
+  .animate-ping {
+    animation: var(--animate-ping);
+  }
   .animate-pulse {
     animation: var(--animate-pulse);
   }
@@ -2863,6 +2868,12 @@
   }
   .bg-amber-50 {
     background-color: var(--color-amber-50);
+  }
+  .bg-amber-100 {
+    background-color: var(--color-amber-100);
+  }
+  .bg-amber-500 {
+    background-color: var(--color-amber-500);
   }
   .bg-black\/0 {
     background-color: color-mix(in srgb, #000000 0%, transparent);
@@ -3526,6 +3537,9 @@
   .text-amber-500 {
     color: var(--color-amber-500);
   }
+  .text-amber-800 {
+    color: var(--color-amber-800);
+  }
   .text-blue-600 {
     color: var(--color-blue-600);
   }
@@ -3646,6 +3660,9 @@
   }
   .opacity-60 {
     opacity: 60%;
+  }
+  .opacity-75 {
+    opacity: 75%;
   }
   .opacity-80 {
     opacity: 80%;
@@ -5364,6 +5381,9 @@
     @supports (color: color-mix(in lab, red, red)) {
       --color-primary-soft: color-mix(in oklch, var(--color-primary) 10%, transparent);
     }
+    --color-amber-100: #78350F;
+    --color-amber-800: #FDE68A;
+    --color-amber-500: #FBBF24;
     --color-blue-50: #1e3a8a;
     --color-blue-300: #1e40af;
     --color-blue-600: #478be6;
@@ -7384,6 +7404,12 @@ table.data-table {
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
   }
 }
 @keyframes pulse {
