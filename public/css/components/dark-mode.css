@@ -1,5 +1,7 @@
 @layer base {
     html[data-theme=dark] {
+        color-scheme: dark;
+
         --color-gray-50: #151b23;
         --color-gray-100: #262C36;
         --color-gray-200: #3E444D;
@@ -15,6 +17,10 @@
         --color-white: #202830;
 
         --color-primary-soft: color-mix(in oklch, var(--color-primary) 10%, transparent);
+
+        --color-amber-100: #78350F;
+        --color-amber-800: #FDE68A;
+        --color-amber-500: #FBBF24;
 
         --color-blue-50: #1e3a8a;
         --color-blue-300: #1e40af;
@@ -44,6 +50,8 @@
     }
 
     .no-dark {
+        color-scheme: light;
+
         --color-gray-50: #F9FAFB;
         --color-gray-100: #F3F4F6;
         --color-gray-200: #E5E7EB;

@@ -4,8 +4,8 @@ namespace App\Tests\Console\Daemon;
 
 use App\Application\AppStatusChecker;
 use App\Application\AppUrl;
+use App\Application\RebuildStatus;
 use App\Console\Daemon\RunFileImportAndBuildAppConsoleCommand;
-use App\Console\Daemon\RunStravaImportAndBuildAppConsoleCommand;
 use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
@@ -119,6 +119,34 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
     }
 
+    public function testBuildsWhenForceRebuildIsSetEvenIfAlreadyBuiltToday(): void
+    {
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()->build(),
+            [],
+        ));
+
+        $this->keyValueStore->save(KeyValue::fromState(
+            key: Key::APP_LAST_BUILT_ON,
+            value: Value::fromString(self::TODAY),
+        ));
+        $this->keyValueStore->save(KeyValue::fromState(
+            key: Key::FORCE_REBUILD,
+            value: Value::fromString('1'),
+        ));
+
+        $command = $this->getCommandInApplication('app:cron:run-file-import');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute(['command' => $command->getName()]);
+
+        $this->assertStringNotContainsString('No files left to process...', $commandTester->getDisplay());
+        $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
+        $this->assertSame(self::TODAY, (string) $this->keyValueStore->find(Key::APP_LAST_BUILT_ON));
+
+        $this->expectException(EntityNotFound::class);
+        $this->keyValueStore->find(Key::FORCE_REBUILD);
+    }
+
     public function testDoesNotBuildWhenNoActivitiesHaveBeenImported(): void
     {
         $command = $this->getCommandInApplication('app:cron:run-file-import');
@@ -153,7 +181,7 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         );
     }
 
-    public function testImportsButDoesNotBuildWhenSkipBuildOptionIsSet(): void
+    public function testImportsOnlyWhenImportOptionIsSet(): void
     {
         $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()->build(),
@@ -165,7 +193,7 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'command' => $command->getName(),
-            '--'.RunStravaImportAndBuildAppConsoleCommand::SKIP_BUILD_OPTION => true,
+            '--'.RunFileImportAndBuildAppConsoleCommand::IMPORT_OPTION => true,
         ]);
 
         $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
@@ -174,7 +202,7 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $this->keyValueStore->find(Key::APP_LAST_BUILT_ON);
     }
 
-    public function testBuildsButDoesNotImportWhenSkipImportOptionIsSet(): void
+    public function testBuildsOnlyWhenBuildOptionIsSet(): void
     {
         $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()->build(),
@@ -185,7 +213,7 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'command' => $command->getName(),
-            '--'.RunStravaImportAndBuildAppConsoleCommand::SKIP_IMPORT_OPTION => true,
+            '--'.RunFileImportAndBuildAppConsoleCommand::BUILD_OPTION => true,
         ]);
 
         $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
@@ -312,6 +340,7 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
             keyValueStore: $this->keyValueStore,
             logger: $logger,
             importMode: $importMode,
+            rebuildStatus: new RebuildStatus($this->keyValueStore),
         );
     }
 

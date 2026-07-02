@@ -4,6 +4,7 @@
 @import "./components/dark-mode.css";
 @import "./components/data-table.css";
 @import "./components/filter-dropdown.css";
+@import "./components/toast.css";
 @import "./components/form.css";
 @import "./components/leaflet.css";
 @import "./components/modal.css";

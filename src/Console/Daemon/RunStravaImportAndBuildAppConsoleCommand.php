@@ -16,6 +16,7 @@ use App\Application\Import\StravaImport\ImportChallenges\ImportChallenges;
 use App\Application\Import\StravaImport\ImportGear\ImportGear;
 use App\Application\Import\StravaImport\ImportSegments\ImportSegments;
 use App\Application\Import\StravaImport\ProcessRawActivityData\ProcessRawActivityData;
+use App\Application\RebuildStatus;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
 use App\Domain\Import\ImportMode;
@@ -25,10 +26,15 @@ use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
 use App\Infrastructure\Doctrine\Migrations\RequiresUpToDateDatabaseSchema;
+use App\Infrastructure\KeyValue\Key;
+use App\Infrastructure\KeyValue\KeyValue;
+use App\Infrastructure\KeyValue\KeyValueStore;
+use App\Infrastructure\KeyValue\Value;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use App\Infrastructure\Mutex\LockIsAlreadyAcquired;
 use App\Infrastructure\Mutex\LockName;
 use App\Infrastructure\Mutex\Mutex;
+use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
@@ -36,20 +42,19 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[WithMonologChannel('daemon')]
 #[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
 #[RequiresUpToDateDatabaseSchema]
-#[AsCommand(name: RunStravaImportAndBuildAppConsoleCommand::NAME, description: 'Run strava import')]
+#[AsCommand(name: RunStravaImportAndBuildAppConsoleCommand::NAME, description: 'Run Strava import')]
 final class RunStravaImportAndBuildAppConsoleCommand extends Command
 {
+    use HandlesImportAndBuild;
+
     public const string NAME = 'app:cron:run-strava-import';
     public const string RESTRICT_TO_ACTIVITY_IDS_ARGUMENT = 'restrictToActivityIds';
-    public const string SKIP_IMPORT_OPTION = 'skipImport';
-    public const string SKIP_BUILD_OPTION = 'skipBuild';
 
     public function __construct(
         private readonly CommandBus $commandBus,
@@ -60,6 +65,9 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
         private readonly AppStatusChecker $appStatusChecker,
         private readonly AppUrl $appUrl,
         private readonly ImportMode $importMode,
+        private readonly KeyValueStore $keyValueStore,
+        private readonly RebuildStatus $rebuildStatus,
+        private readonly Clock $clock,
     ) {
         parent::__construct();
     }
@@ -67,8 +75,8 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
     protected function configure(): void
     {
         $this->addArgument(self::RESTRICT_TO_ACTIVITY_IDS_ARGUMENT, InputArgument::OPTIONAL);
-        $this->addOption(self::SKIP_IMPORT_OPTION, null, InputOption::VALUE_NONE);
-        $this->addOption(self::SKIP_BUILD_OPTION, null, InputOption::VALUE_NONE);
+        $this->addImportAndBuildOptions();
+        $this->addIfRequiredOption();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -77,6 +85,21 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
 
         if (!$this->importMode->isStravaApi()) {
             $output->writeln('<comment>Cannot import files. IMPORT_MODE=files</comment>');
+
+            return Command::SUCCESS;
+        }
+
+        $shouldImport = $this->resolvePhases($input)[self::IMPORT_OPTION];
+        $today = $this->clock->getCurrentDateTimeImmutable()->format('Y-m-d');
+        $appNeedsToBeBuilt = $this->appNeedsToBeBuilt(
+            input: $input,
+            keyValueStore: $this->keyValueStore,
+            rebuildStatus: $this->rebuildStatus,
+            today: $today
+        );
+
+        if (!$shouldImport && !$appNeedsToBeBuilt) {
+            $output->writeln('Nothing to build...');
 
             return Command::SUCCESS;
         }
@@ -101,7 +124,7 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
         }
 
         try {
-            if (!$input->getOption(self::SKIP_IMPORT_OPTION)) {
+            if ($shouldImport) {
                 $this->appStatusChecker->ensureIsReadyForStravaImport();
 
                 $this->commandBus->dispatch(new ImportAthlete($output));
@@ -129,12 +152,18 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
                     ]);
                 }
             }
-            if (!$input->getOption(self::SKIP_BUILD_OPTION)) {
+            if ($appNeedsToBeBuilt) {
                 $this->appStatusChecker->ensureIsReadyForBuild();
 
                 $this->commandBus->dispatch(new RunBuild(
                     output: $output,
                 ));
+
+                $this->keyValueStore->save(KeyValue::fromState(
+                    key: Key::APP_LAST_BUILT_ON,
+                    value: Value::fromString($today),
+                ));
+                $this->keyValueStore->clear(Key::FORCE_REBUILD);
             }
         } catch (AppIsNotReady $e) {
             $this->mutex->releaseLock();

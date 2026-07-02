@@ -46,8 +46,8 @@ final class ImportDataAndBuildAppConsoleCommand extends Command
         };
 
         $optionToUse = match ($usedConsoleCommand) {
-            'app:strava:import-data', 'app:data:import' => RunStravaImportAndBuildAppConsoleCommand::SKIP_BUILD_OPTION,
-            'app:strava:build-files', 'app:data:build' => RunStravaImportAndBuildAppConsoleCommand::SKIP_IMPORT_OPTION,
+            'app:strava:import-data', 'app:data:import' => RunStravaImportAndBuildAppConsoleCommand::IMPORT_OPTION,
+            'app:strava:build-files', 'app:data:build' => RunStravaImportAndBuildAppConsoleCommand::BUILD_OPTION,
             default => throw new \RuntimeException(sprintf('Unknown command "%s"', $usedConsoleCommand)),
         };
 

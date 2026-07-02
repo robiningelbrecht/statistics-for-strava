@@ -70,6 +70,7 @@ Canoeing: Kanufahren
 'Carbon saved': 'Kohlendioxid gespart'
 'Challenge consistency': Herausforderungskonstanz
 Challenges: Herausforderungen
+'Changes still need to be processed before they appear on the app': 'Changes still need to be processed before they appear on the app'
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Langfristige Trainingsbelastung (Fitness) - 42 Tage exponentiell gewichteter Durchschnitt deiner täglichen Trainingsbelastung. Stellt die langfristige Trainingsentwicklung dar.'
 Clear: Leeren
 'Clear all filters': 'Alle Filter entfernen'
@@ -359,6 +360,7 @@ Ranking: Rangliste
 'Reached {threshold} hours total moving time': '{threshold} Stunden gesamte Bewegungszeit erreicht'
 'Reached {threshold} total distance': '{threshold} Gesamtdistanz erreicht'
 'Reached {threshold} total elevation': '{threshold} Gesamthöhenmeter erreicht'
+'Rebuild pending': 'Rebuild pending'
 'Recent effort': 'Aktuelle Leistung'
 'Recording device management': 'Verwaltung der Aufzeichnungsgeräte'
 'Recording devices': Aufzeichnungsgeräte
@@ -628,6 +630,7 @@ Yoga: Yoga
 'Your Strava badge': 'Dein Strava-Abzeichen'
 'Your Zwift badge': 'Dein Zwift-Abzeichen'
 'Your badge(s)': 'Dein(e) Abzeichen'
+'Your changes have been saved.': 'Your changes have been saved.'
 Z1: Z1
 'Z1-2 (Low)': 'Z1-2 (Niedrig)'
 Z2: Z2

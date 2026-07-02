@@ -10,4 +10,5 @@ enum Key: string
     case THEME = 'theme';
     case APP_LAST_BUILT_ON = 'appLastBuiltOn';
     case GEAR_MAINTENANCE = 'gearMaintenance';
+    case FORCE_REBUILD = 'forceRebuild';
 }

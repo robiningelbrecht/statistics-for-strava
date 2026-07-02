@@ -6,6 +6,7 @@ namespace App\Infrastructure\Daemon;
 
 use App\Console\Daemon\ProcessStravaWebhooksConsoleCommand;
 use App\Console\Daemon\RunFileImportAndBuildAppConsoleCommand;
+use App\Console\Daemon\RunStravaImportAndBuildAppConsoleCommand;
 use App\Domain\Import\ImportMode;
 use App\Domain\Strava\Webhook\WebhookConfig;
 use App\Infrastructure\Console\ConsoleOutputAware;
@@ -25,6 +26,8 @@ use function React\Promise\resolve;
 final class SystemDaemon implements Daemon
 {
     use ConsoleOutputAware;
+
+    private const string CRON_EVERY_5_MINUTES = '*/5 * * * *';
 
     public function __construct(
         private readonly Clock $clock,
@@ -75,18 +78,42 @@ final class SystemDaemon implements Daemon
         $extraConfiguredCronActionsOutput = [];
 
         if ($this->importMode->isFiles()) {
-            $cronExpression = '*/5 * * * *';
-            $extraConfiguredCronActionsOutput[] = sprintf('<info> - runFileImport: %s</info>', $cronExpression);
+            $extraConfiguredCronActionsOutput[] = sprintf('<info> - runFileImport: %s</info>', self::CRON_EVERY_5_MINUTES);
             $actions[] = new Action(
                 key: 'runFileImport',
                 mutexTtl: 300,
-                expression: $cronExpression,
+                expression: self::CRON_EVERY_5_MINUTES,
                 performer: function (): PromiseInterface {
                     $process = new CronProcess(
                         cronActionId: 'runFileImport',
                         clock: $this->clock,
                         output: $this->getConsoleOutput(),
                         command: sprintf('bin/console %s', RunFileImportAndBuildAppConsoleCommand::NAME)
+                    );
+                    $process->start();
+
+                    return resolve(true);
+                }
+            );
+        }
+
+        if ($this->importMode->isStravaApi()) {
+            $extraConfiguredCronActionsOutput[] = sprintf('<info> - buildApp: %s</info>', self::CRON_EVERY_5_MINUTES);
+            $actions[] = new Action(
+                key: 'buildApp',
+                mutexTtl: 300,
+                expression: self::CRON_EVERY_5_MINUTES,
+                performer: function (): PromiseInterface {
+                    $process = new CronProcess(
+                        cronActionId: 'buildApp',
+                        clock: $this->clock,
+                        output: $this->getConsoleOutput(),
+                        command: sprintf(
+                            'bin/console %s --%s --%s',
+                            RunStravaImportAndBuildAppConsoleCommand::NAME,
+                            RunStravaImportAndBuildAppConsoleCommand::BUILD_OPTION,
+                            RunStravaImportAndBuildAppConsoleCommand::IF_REQUIRED_OPTION,
+                        )
                     );
                     $process->start();
 
