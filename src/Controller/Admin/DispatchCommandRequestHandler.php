@@ -14,6 +14,7 @@ use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsController]
 final readonly class DispatchCommandRequestHandler
@@ -25,6 +26,7 @@ final readonly class DispatchCommandRequestHandler
         private CommandDeserializer $commandDeserializer,
         private CommandBus $commandBus,
         private CsrfTokenManagerInterface $csrfTokenManager,
+        private TranslatorInterface $translator,
     ) {
     }
 
@@ -43,6 +45,11 @@ final readonly class DispatchCommandRequestHandler
         }
 
         $this->commandBus->dispatch($command);
+
+        $request->getSession()->getFlashBag()->add(
+            type: 'success',
+            message: $this->translator->trans('Your changes have been saved.')
+        );
 
         return new JsonResponse(status: Response::HTTP_NO_CONTENT);
     }
