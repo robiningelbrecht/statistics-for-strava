@@ -70,6 +70,7 @@ Canoeing: Canoagem
 'Carbon saved': 'Carbono economizado'
 'Challenge consistency': 'Consistência nos desafios'
 Challenges: Desafios
+'Changes still need to be processed before they appear on the app': 'Changes still need to be processed before they appear on the app'
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Carga de Treinamento Crônica (Condicionamento) - Média móvel exponencial de 42 dias da sua carga de treinamento diária. Representa a adaptação ao treinamento de longo prazo.'
 Clear: Clear
 'Clear all filters': 'Limpar todos os filtros'
@@ -359,6 +360,7 @@ Ranking: Ranking
 'Reached {threshold} hours total moving time': 'Alcançou {threshold} horas de tempo total em movimento'
 'Reached {threshold} total distance': 'Alcançou {threshold} de distância total'
 'Reached {threshold} total elevation': 'Alcançou {threshold} de elevação total'
+'Rebuild pending': 'Rebuild pending'
 'Recent effort': 'Esforço recente'
 'Recording device management': 'Recording device management'
 'Recording devices': 'Dispositivos de gravação'

@@ -70,6 +70,7 @@ Canoeing: Kenuzás
 'Carbon saved': 'Megtakarított szén-dioxid'
 'Challenge consistency': 'Kihívás következetesség'
 Challenges: Kihívások
+'Changes still need to be processed before they appear on the app': 'Changes still need to be processed before they appear on the app'
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Krónikus edzésterhelés (Fitnesz) – a napi edzésterhelés 42 napos exponenciálisan súlyozott átlaga. A hosszú távú edzésadaptációt mutatja.'
 Clear: Clear
 'Clear all filters': 'Clear all filters'
@@ -359,6 +360,7 @@ Ranking: Ranglista
 'Reached {threshold} hours total moving time': '{threshold} óra összes mozgásidő elérve'
 'Reached {threshold} total distance': '{threshold} összes távolság elérve'
 'Reached {threshold} total elevation': '{threshold} összes szintemelkedés elérve'
+'Rebuild pending': 'Rebuild pending'
 'Recent effort': 'Közelmúltbeli teljesítmény'
 'Recording device management': 'Recording device management'
 'Recording devices': 'Rögzítő eszközök'
