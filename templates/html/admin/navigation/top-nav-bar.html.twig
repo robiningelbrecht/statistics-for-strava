@@ -23,6 +23,7 @@
                 </svg>
                 {{ "Admin"|trans }}
             </span>
+            {% if rebuildStatus.isPending() %}
             <span class="ml-2 inline-flex items-center gap-x-1.5 rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-800"
                   title="{{ "Changes still need to be processed before they appear on the app"|trans }}">
                 <span class="relative flex size-2">
@@ -31,6 +32,7 @@
                 </span>
                 {{ "Rebuild pending"|trans }}
             </span>
+            {% endif %}
         </div>
         <div class="flex items-center lg:order-2">
             <a href="{{ relativeUrl('/') }}"

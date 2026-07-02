@@ -5,7 +5,6 @@ namespace App\Tests\Console\Daemon;
 use App\Application\AppStatusChecker;
 use App\Application\AppUrl;
 use App\Console\Daemon\RunFileImportAndBuildAppConsoleCommand;
-use App\Console\Daemon\RunStravaImportAndBuildAppConsoleCommand;
 use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
@@ -153,7 +152,7 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         );
     }
 
-    public function testImportsButDoesNotBuildWhenSkipBuildOptionIsSet(): void
+    public function testImportsOnlyWhenImportOptionIsSet(): void
     {
         $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()->build(),
@@ -165,7 +164,7 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'command' => $command->getName(),
-            '--'.RunStravaImportAndBuildAppConsoleCommand::SKIP_BUILD_OPTION => true,
+            '--'.RunFileImportAndBuildAppConsoleCommand::IMPORT_OPTION => true,
         ]);
 
         $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
@@ -174,7 +173,7 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $this->keyValueStore->find(Key::APP_LAST_BUILT_ON);
     }
 
-    public function testBuildsButDoesNotImportWhenSkipImportOptionIsSet(): void
+    public function testBuildsOnlyWhenBuildOptionIsSet(): void
     {
         $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()->build(),
@@ -185,7 +184,7 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'command' => $command->getName(),
-            '--'.RunStravaImportAndBuildAppConsoleCommand::SKIP_IMPORT_OPTION => true,
+            '--'.RunFileImportAndBuildAppConsoleCommand::BUILD_OPTION => true,
         ]);
 
         $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
