@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Console\Daemon;
 
+use App\Application\RebuildStatus;
+use App\Infrastructure\Exception\EntityNotFound;
+use App\Infrastructure\KeyValue\Key;
+use App\Infrastructure\KeyValue\KeyValueStore;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 
-trait ConfiguresImportAndBuildPhases
+trait HandlesImportAndBuild
 {
     public const string IMPORT_OPTION = 'import';
     public const string BUILD_OPTION = 'build';
@@ -19,8 +23,7 @@ trait ConfiguresImportAndBuildPhases
     }
 
     /**
-     * @return array{import: bool, build: bool} Which phases to run.
-     *                                          Nothing specified → run everything.
+     * @return array{import: bool, build: bool}
      */
     private function resolvePhases(InputInterface $input): array
     {
@@ -31,6 +34,20 @@ trait ConfiguresImportAndBuildPhases
             $runImport = $runBuild = true;
         }
 
-        return ['import' => $runImport, 'build' => $runBuild];
+        return [self::IMPORT_OPTION => $runImport, self::BUILD_OPTION => $runBuild];
+    }
+
+    private function aRebuildIsRequired(
+        KeyValueStore $keyValueStore,
+        RebuildStatus $rebuildStatus,
+        string $today,
+    ): bool {
+        try {
+            $appLastBuiltOn = (string) $keyValueStore->find(Key::APP_LAST_BUILT_ON);
+        } catch (EntityNotFound) {
+            return true;
+        }
+
+        return $appLastBuiltOn !== $today || $rebuildStatus->isPending();
     }
 }

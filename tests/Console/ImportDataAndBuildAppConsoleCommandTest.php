@@ -4,6 +4,7 @@ namespace App\Tests\Console;
 
 use App\Application\AppStatusChecker;
 use App\Application\AppUrl;
+use App\Application\RebuildStatus;
 use App\Console\Daemon\RunFileImportAndBuildAppConsoleCommand;
 use App\Console\Daemon\RunStravaImportAndBuildAppConsoleCommand;
 use App\Console\ImportDataAndBuildAppConsoleCommand;
@@ -164,6 +165,7 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
             keyValueStore: $this->getContainer()->get(KeyValueStore::class),
             logger: new NullLogger(),
             importMode: ImportMode::FILES,
+            rebuildStatus: $this->getContainer()->get(RebuildStatus::class),
         );
     }
 
