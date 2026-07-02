@@ -8,10 +8,10 @@
             @apply block text-sm font-medium text-gray-700;
         }
 
-        input:where([type="text"], [type="number"], [type="date"]):not(.unstyled),
+        input:where([type="text"], [type="number"], [type="date"], [type="password"], [type="email"], [type="search"], [type="url"]):not(.unstyled),
         textarea:not(.unstyled),
         select:not(.unstyled) {
-            @apply mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary;
+            @apply mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary;
             @apply disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500;
         }
 
@@ -20,7 +20,7 @@
         }
 
         input:where([type="radio"], [type="checkbox"]) {
-            @apply size-4 rounded border-gray-300 text-primary focus:ring-primary/30;
+            @apply size-4 rounded border-gray-300 bg-white text-primary focus:ring-primary/30;
             @apply disabled:cursor-not-allowed disabled:bg-gray-100 disabled:border-gray-300 disabled:text-gray-400;
         }
 

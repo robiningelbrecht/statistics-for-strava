@@ -43,6 +43,11 @@ class DispatchCommandRequestHandlerTest extends AdminWebTestCase
         $dispatchedCommands = $spyCommandBus->getDispatchedCommands();
         $this->assertCount(1, $dispatchedCommands);
         $this->assertInstanceOf(UploadActivityFile::class, $dispatchedCommands[0]);
+
+        $this->assertSame(
+            ['Your changes have been saved.'],
+            $this->client->getRequest()->getSession()->getFlashBag()->peek('success'),
+        );
     }
 
     public function testHandleWithInvalidCsrfToken(): void
