@@ -60,25 +60,25 @@ class RunStravaImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCas
         $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
     }
 
-    public function testImportsButDoesNotBuildWhenSkipBuildOptionIsSet(): void
+    public function testImportsOnlyWhenImportOptionIsSet(): void
     {
         $command = $this->getCommandInApplication('app:cron:run-strava-import');
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'command' => $command->getName(),
-            '--'.RunStravaImportAndBuildAppConsoleCommand::SKIP_BUILD_OPTION => true,
+            '--'.RunStravaImportAndBuildAppConsoleCommand::IMPORT_OPTION => true,
         ]);
 
         $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
     }
 
-    public function testBuildsButDoesNotImportWhenSkipImportOptionIsSet(): void
+    public function testBuildsOnlyWhenBuildOptionIsSet(): void
     {
         $command = $this->getCommandInApplication('app:cron:run-strava-import');
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'command' => $command->getName(),
-            '--'.RunStravaImportAndBuildAppConsoleCommand::SKIP_IMPORT_OPTION => true,
+            '--'.RunStravaImportAndBuildAppConsoleCommand::BUILD_OPTION => true,
         ]);
 
         $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));

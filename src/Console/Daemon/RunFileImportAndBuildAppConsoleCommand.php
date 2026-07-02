@@ -33,7 +33,6 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -43,6 +42,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: RunFileImportAndBuildAppConsoleCommand::NAME, description: 'Run file import')]
 final class RunFileImportAndBuildAppConsoleCommand extends Command
 {
+    use ConfiguresImportAndBuildPhases;
+
     public const string NAME = 'app:cron:run-file-import';
 
     public function __construct(
@@ -62,8 +63,7 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
 
     protected function configure(): void
     {
-        $this->addOption(RunStravaImportAndBuildAppConsoleCommand::SKIP_IMPORT_OPTION, null, InputOption::VALUE_NONE);
-        $this->addOption(RunStravaImportAndBuildAppConsoleCommand::SKIP_BUILD_OPTION, null, InputOption::VALUE_NONE);
+        $this->addImportAndBuildOptions();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -76,7 +76,7 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
             return Command::SUCCESS;
         }
 
-        $skipImport = $input->getOption(RunStravaImportAndBuildAppConsoleCommand::SKIP_IMPORT_OPTION);
+        $phases = $this->resolvePhases($input);
         $today = $this->clock->getCurrentDateTimeImmutable()->format('Y-m-d');
         $watchDirectoryHasFiles = $this->watchDirectory->hasFilesThatCanBeProcessed();
 
@@ -86,7 +86,7 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
             $alreadyBuiltToday = false;
         }
 
-        if (!$skipImport && !$watchDirectoryHasFiles && $alreadyBuiltToday) {
+        if ($phases['import'] && !$watchDirectoryHasFiles && $alreadyBuiltToday) {
             $output->writeln('No files left to process...');
 
             return Command::SUCCESS;
@@ -104,14 +104,14 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
         }
 
         try {
-            if (!$skipImport && $watchDirectoryHasFiles) {
+            if ($phases['import'] && $watchDirectoryHasFiles) {
                 $this->appStatusChecker->ensureIsReadyForFileImport();
 
                 $this->commandBus->dispatch(new ImportActivityFiles($output));
                 $this->commandBus->dispatch(new CalculateActivityMetrics($output));
             }
 
-            if (!$input->getOption(RunStravaImportAndBuildAppConsoleCommand::SKIP_BUILD_OPTION)) {
+            if ($phases['build']) {
                 $this->commandBus->dispatch(new ImportAthlete());
                 $this->appStatusChecker->ensureIsReadyForBuild();
 

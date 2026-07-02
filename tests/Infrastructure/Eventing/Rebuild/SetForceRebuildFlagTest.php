@@ -2,7 +2,6 @@
 
 namespace App\Tests\Infrastructure\Eventing\Rebuild;
 
-use App\Infrastructure\Eventing\Rebuild\RebuildIsRequired;
 use App\Infrastructure\Eventing\Rebuild\SetForceRebuildFlag;
 use App\Infrastructure\KeyValue\Key;
 use App\Infrastructure\KeyValue\KeyValue;

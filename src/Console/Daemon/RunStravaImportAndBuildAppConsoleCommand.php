@@ -36,7 +36,6 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -46,10 +45,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: RunStravaImportAndBuildAppConsoleCommand::NAME, description: 'Run strava import')]
 final class RunStravaImportAndBuildAppConsoleCommand extends Command
 {
+    use ConfiguresImportAndBuildPhases;
+
     public const string NAME = 'app:cron:run-strava-import';
     public const string RESTRICT_TO_ACTIVITY_IDS_ARGUMENT = 'restrictToActivityIds';
-    public const string SKIP_IMPORT_OPTION = 'skipImport';
-    public const string SKIP_BUILD_OPTION = 'skipBuild';
 
     public function __construct(
         private readonly CommandBus $commandBus,
@@ -67,8 +66,7 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
     protected function configure(): void
     {
         $this->addArgument(self::RESTRICT_TO_ACTIVITY_IDS_ARGUMENT, InputArgument::OPTIONAL);
-        $this->addOption(self::SKIP_IMPORT_OPTION, null, InputOption::VALUE_NONE);
-        $this->addOption(self::SKIP_BUILD_OPTION, null, InputOption::VALUE_NONE);
+        $this->addImportAndBuildOptions();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -80,6 +78,8 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
 
             return Command::SUCCESS;
         }
+
+        $phases = $this->resolvePhases($input);
 
         $this->resourceUsage->startTimer();
 
@@ -101,7 +101,7 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
         }
 
         try {
-            if (!$input->getOption(self::SKIP_IMPORT_OPTION)) {
+            if ($phases['import']) {
                 $this->appStatusChecker->ensureIsReadyForStravaImport();
 
                 $this->commandBus->dispatch(new ImportAthlete($output));
@@ -129,7 +129,7 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
                     ]);
                 }
             }
-            if (!$input->getOption(self::SKIP_BUILD_OPTION)) {
+            if ($phases['build']) {
                 $this->appStatusChecker->ensureIsReadyForBuild();
 
                 $this->commandBus->dispatch(new RunBuild(
