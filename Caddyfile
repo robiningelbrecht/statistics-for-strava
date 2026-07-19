@@ -1,0 +1,12 @@
+# Keep Caddy's admin endpoint on :2019 so v4's app-container healthcheck
+# (`curl -f http://localhost:2019/metrics`) keeps passing.
+{
+	admin :2019
+}
+
+:8080 {
+	root * /srv
+	file_server
+
+	try_files {path} /index.html
+}

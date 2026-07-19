@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics for Strava is now Dreeve</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAuNDM1NTUgMTYwLjc5MTUiPjxjaXJjbGUgZmlsbD0iI2ZmZiIgY3g9IjgwLjM3NzQxMSIgY3k9IjgwLjU1MDAwMyIgcj0iODAiLz48cGF0aCBmaWxsPSIjZmM1MjAwIiBkPSJNIDgwLjI3NzgzMiwwIEEgODAuNSw4MC41IDAgMCAwIDEuODI1MTk1NCw2My4zOTk5MDIgYyAyLjEzMjE1MDcsLTEuNDgwOTY5IDQuNzA3MTU0NCwtMi4zNjQyNTcgNy40OTU2MDU0LC0yLjM2NDI1NyA3LjI5Mjk3MDIsMCAxMy4yMzA0NjgyLDUuOTMzNTg4IDEzLjIzMDQ2ODIsMTMuMjMwNDY4IDAsMS44Mzk4NCAtMC4zODI4MDYsMy41OTMyNjIgLTEuMDY2NDA2LDUuMTg3MDEyIGwgMTkuOTY1ODIxLDE2Ljk0OTcwNyBjIDIuNDE0MDYsLTMuMjEwOTQgNi4yNDU2MDgsLTUuMzAxMjY5IDEwLjU2NTkxOCwtNS4zMDEyNjkgMy45NDkyMiwwIDcuNDkyNjc3LDEuNzUwNDg0IDkuOTE4NDU3LDQuNTA0Mzk0IEwgODcuODgwMzcxLDU3Ljg1OTg2MyBjIC0yLjQ2MDkzLC0yLjQwMjM1IC0zLjk5MzE2NCwtNS43NTA5NzEgLTMuOTkzMTY0LC05LjQ1NDEwMSAwLC03LjI5Mjk3IDUuOTM0NTY5LC0xMy4yMzA0NjkgMTMuMjI3NTM5LC0xMy4yMzA0NjkgNy4yOTY4NjQsMCAxMy4yMzA0NjQsNS45Mzc0OTkgMTMuMjMwNDY0LDEzLjIzMDQ2OSAwLDAuODU5MzggLTAuMDg2OSwxLjY5NjI4MyAtMC4yNDMxNiwyLjUwNDg4MyBsIDMwLjY4NDA4LDIzLjY5MDkxOCBjIDIuNDIxODgsLTMuMTI1MDAxIDYuMTk4NzMsLTUuMTQ4OTI2IDEwLjQ0ODczLC01LjE0ODkyNiAzLjU4MTY5LDAgNi44MTgyNywxLjQ0NjQzIDkuMjAwNjgsMy43Njc1NzggQSA4MC41LDgwLjUgMCAwIDAgODAuMjc3ODMyLDAgWiBtIDE2LjgzNjkxNCw0MC41ODkzNTUgYyAtNC4zMDg2LDAgLTcuODEzNDc3LDMuNTA3ODE3IC03LjgxMzQ3Nyw3LjgxNjQwNyAwLDQuMzEyNSAzLjUwNDg3Nyw3LjgxNjQwNiA3LjgxMzQ3Nyw3LjgxNjQwNiA0LjMxMjQ5NCwwIDcuODE5MzM0LC0zLjUwMzkwNiA3LjgxOTMzNCwtNy44MTY0MDYgMCwtNC4zMDg1OSAtMy41MDY4NCwtNy44MTY0MDcgLTcuODE5MzM0LC03LjgxNjQwNyB6IG0gMTAuNzgxMjQ0LDE1LjQ1NzAzMiBjIC0yLjM5ODQ0LDMuMzc1IC02LjMzMjAzLDUuNTg5ODQzIC0xMC43ODEyNDQsNS41ODk4NDMgLTEuNjQ0NTMsMCAtMy4yMTUzMzcsLTAuMzE2NDA3IC00LjY2ODQ1NywtMC44NjcxODcgTCA2NC44MDE3NTgsMTAwLjk5MjE5IGMgMC4yNzczNCwxLjA3MDMxIDAuNDQwOTE4LDIuMTgzNTkgMC40NDA5MTgsMy4zMzk4NCAwLDcuMjkyOTcgLTUuOTMzMTA0LDEzLjIyNjA4IC0xMy4yMjYwNzQsMTMuMjI2MDggLTcuMjkyOTcxLDAgLTEzLjIzMDQ2OSwtNS45MzMxMSAtMTMuMjMwNDY5LC0xMy4yMjYwOCAwLC0wLjk2ODc1IDAuMTEyNzkxLC0xLjkxNDA2IDAuMzEyMDExLC0yLjgyNDIyIEwgMTguMzU1OTU3LDgzLjg5ODkyNiBjIC0yLjM2NzE5LDIuMjIyNjYgLTUuNTM5MDY2LDMuNTkzMjYyIC05LjAzNTE1NjIsMy41OTMyNjIgLTMuNjQ0MjkxNywwIC02LjkyNzU4MzMsLTEuNDk5MDc4IC05LjMyMDgwMDc4NzAxNDQ3NiwtMy44OTIwOSBBIDgwLjUsODAuNSAwIDAgMCAxNy40MjcyNDYsMTMwLjUyNjM3IFYgODguNzY5NTMxIGMgMC4yODkwNiwtMC4xNTIzNCA1LjczNzc5Myw0LjkyOTE5OSA1LjczNzc5Myw0LjkyOTE5OSB2IDQzLjI0MjE5IGEgODAuNSw4MC41IDAgMCAwIDI0LjIyMjY1NiwxNi45ODkyNiB2IC0zMy4wMTE3MiBjIDEuNDc2NTYsMC43MjI2NiAzLjAyNzM0NywxLjE0ODQzIDQuNjI4OTA3LDEuMTQ4NDMgMC4zOTQ1MywwIDAuNzg1MTU1LC0wLjAzMjIgMS4xNzE4NzUsLTAuMDc5MSB2IDM0LjEwNTk2IGEgODAuNSw4MC41IDAgMCAwIDI0LjE4NzUsNC42OTc3NSBWIDkxLjkxNDU1MSBsIDUuODA1MTc1LC04LjgzMzAwOCBWIDE2MC43OTE1IEEgODAuNSw4MC41IDAgMCAwIDEwNy4wMDgzLDE1Ni4yMjg1MiBWIDYxLjgzNTQ0OSBjIDAuNTE5NTMsLTAuMzUxNTYgNi41MjAwMiw0LjAxOTUzMSA2LjUyMDAyLDQuMDE5NTMxIHYgODcuOTQwNDMgYSA4MC41LDgwLjUgMCAwIDAgMjMuODMxNTQsLTE2LjgyMzczIFYgOTMuNzAzMTI1IGMgMS41NzAzMSwxLjk2ODc1IDMuNTQyOTcsMy41OTMyNjggNS44MDA3OCw0Ljc1MzQxOCB2IDMyLjAyNzM0NyBhIDgwLjUsODAuNSAwIDAgMCAxNi42MzE4NCwtMzcuNzU5MjgxIGMgLTIuMzA4NTYsMS45NzQ5MyAtNS4yODc0OSwzLjE4NjAzNiAtOC41NTc2MiwzLjE4NjAzNiAtNy4yOTI5NywwIC0xMy4yMjYwNywtNS45MzQ1OCAtMTMuMjI2MDcsLTEzLjIyNzU0IDAsLTEuMDcwMzIgMC4xNDAxMywtMi4xMDQ5NzQgMC4zODIzMiwtMy4xMDEwNzQgeiBNIDkuMzIwODAwOCw2Ni40NDUzMTMgYyAtNC4zMDg1OSwwIC03LjgxNjQwNjIsMy41MDgzIC03LjgxNjQwNjIsNy44MjA4IDAsNC4zMDg1OSAzLjUwNzgxNjIsNy44MTIwMTIgNy44MTY0MDYyLDcuODEyMDEyIDQuMzA4NTkwMiwwIDcuODE2NDA2MiwtMy41MDM0MjIgNy44MTY0MDYyLC03LjgxMjAxMiAwLC00LjMxMjUgLTMuNTA3ODE2LC03LjgyMDggLTcuODE2NDA2MiwtNy44MjA4IHogTSAxNTEuMjM0ODYsNzQuODYzNzcgYyAtNC4zMDg1OSwwIC03LjgxNjQxLDMuNTA2ODM1IC03LjgxNjQxLDcuODE5MzM1IDAsNC4zMDg1OSAzLjUwNzgyLDcuODE2NDA3IDcuODE2NDEsNy44MTY0MDcgNC4zMTI1LDAgNy44MTY0MSwtMy41MDc4MTcgNy44MTY0MSwtNy44MTY0MDcgMCwtNC4zMTI1IC0zLjUwMzkxLC03LjgxOTMzNSAtNy44MTY0MSwtNy44MTkzMzUgeiBNIDUyLjAxNjYwMiw5Ni41MTU2MjUgYyAtNC4zMTI1LDAgLTcuODE2NDA3LDMuNTAzOTA1IC03LjgxNjQwNyw3LjgxNjQwNSAwLDQuMzA4NiAzLjUwMzkwNyw3LjgxNjQxIDcuODE2NDA3LDcuODE2NDEgNC4zMDg1OTksMCA3LjgxNjQwNiwtMy41MDc4MSA3LjgxNjQwNiwtNy44MTY0MSAwLC00LjMxMjUgLTMuNTA3ODA3LC03LjgxNjQwNSAtNy44MTY0MDYsLTcuODE2NDA1IHoiLz48L3N2Zz4K">
+    <style>
+        :root {
+            color-scheme: light;
+            --primary: #F26722;
+            --primary-soft: #FFF1E9;
+            --bg: #ffffff;
+            --card: #ffffff;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --border: #e5e7eb;
+            --code-bg: #f3f4f6;
+            --code-text: #111827;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .wrap {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 48px 24px 80px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            width: 88px;
+            height: 88px;
+            margin: 0 auto 24px;
+            display: block;
+        }
+
+        h1 {
+            font-size: clamp(1.75rem, 5vw, 2.5rem);
+            line-height: 1.15;
+            margin: 0 0 12px;
+            letter-spacing: -0.02em;
+        }
+
+        h1 .brand {
+            color: var(--primary);
+        }
+
+        .subtitle {
+            font-size: 1.125rem;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-size: 1.125rem;
+            margin: 0 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h2 .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary);
+            flex: none;
+        }
+
+        .card p {
+            margin: 0 0 12px;
+        }
+
+        .card p:last-child {
+            margin-bottom: 0;
+        }
+
+        code {
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 0.875em;
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 2px 6px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            word-break: break-all;
+        }
+
+        pre {
+            background: var(--code-bg);
+            color: var(--code-text);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            overflow-x: auto;
+            margin: 12px 0 0;
+        }
+
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 0.875rem;
+            word-break: normal;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: 1px solid var(--border);
+            transition: transform 0.05s ease;
+        }
+
+        .btn:hover {
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+        }
+
+        .escape {
+            background: var(--primary-soft);
+            border-color: transparent;
+        }
+
+        .escape h2 .dot {
+            background: var(--primary);
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.875rem;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header class="hero">
+            <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160.43555 160.7915" role="img" aria-label="Dreeve logo">
+                <circle style="fill:#ffffff" cx="80.377411" cy="80.550003" r="80" />
+                <path style="fill:#fc5200"
+                    d="M 80.277832,0 A 80.5,80.5 0 0 0 1.8251954,63.399902 c 2.1321507,-1.480969 4.7071544,-2.364257 7.4956054,-2.364257 7.2929702,0 13.2304682,5.933588 13.2304682,13.230468 0,1.83984 -0.382806,3.593262 -1.066406,5.187012 l 19.965821,16.949707 c 2.41406,-3.21094 6.245608,-5.301269 10.565918,-5.301269 3.94922,0 7.492677,1.750484 9.918457,4.504394 L 87.880371,57.859863 c -2.46093,-2.40235 -3.993164,-5.750971 -3.993164,-9.454101 0,-7.29297 5.934569,-13.230469 13.227539,-13.230469 7.296864,0 13.230464,5.937499 13.230464,13.230469 0,0.85938 -0.0869,1.696283 -0.24316,2.504883 l 30.68408,23.690918 c 2.42188,-3.125001 6.19873,-5.148926 10.44873,-5.148926 3.58169,0 6.81827,1.44643 9.20068,3.767578 A 80.5,80.5 0 0 0 80.277832,0 Z m 16.836914,40.589355 c -4.3086,0 -7.813477,3.507817 -7.813477,7.816407 0,4.3125 3.504877,7.816406 7.813477,7.816406 4.312494,0 7.819334,-3.503906 7.819334,-7.816406 0,-4.30859 -3.50684,-7.816407 -7.819334,-7.816407 z m 10.781244,15.457032 c -2.39844,3.375 -6.33203,5.589843 -10.781244,5.589843 -1.64453,0 -3.215337,-0.316407 -4.668457,-0.867187 L 64.801758,100.99219 c 0.27734,1.07031 0.440918,2.18359 0.440918,3.33984 0,7.29297 -5.933104,13.22608 -13.226074,13.22608 -7.292971,0 -13.230469,-5.93311 -13.230469,-13.22608 0,-0.96875 0.112791,-1.91406 0.312011,-2.82422 L 18.355957,83.898926 c -2.36719,2.22266 -5.539066,3.593262 -9.0351562,3.593262 -3.6442917,0 -6.9275833,-1.499078 -9.320800787014476,-3.89209 A 80.5,80.5 0 0 0 17.427246,130.52637 V 88.769531 c 0.28906,-0.15234 5.737793,4.929199 5.737793,4.929199 v 43.24219 a 80.5,80.5 0 0 0 24.222656,16.98926 v -33.01172 c 1.47656,0.72266 3.027347,1.14843 4.628907,1.14843 0.39453,0 0.785155,-0.0322 1.171875,-0.0791 v 34.10596 a 80.5,80.5 0 0 0 24.1875,4.69775 V 91.914551 l 5.805175,-8.833008 V 160.7915 A 80.5,80.5 0 0 0 107.0083,156.22852 V 61.835449 c 0.51953,-0.35156 6.52002,4.019531 6.52002,4.019531 v 87.94043 a 80.5,80.5 0 0 0 23.83154,-16.82373 V 93.703125 c 1.57031,1.96875 3.54297,3.593268 5.80078,4.753418 v 32.027347 a 80.5,80.5 0 0 0 16.63184,-37.759281 c -2.30856,1.97493 -5.28749,3.186036 -8.55762,3.186036 -7.29297,0 -13.22607,-5.93458 -13.22607,-13.22754 0,-1.07032 0.14013,-2.104974 0.38232,-3.101074 z M 9.3208008,66.445313 c -4.30859,0 -7.8164062,3.5083 -7.8164062,7.8208 0,4.30859 3.5078162,7.812012 7.8164062,7.812012 4.3085902,0 7.8164062,-3.503422 7.8164062,-7.812012 0,-4.3125 -3.507816,-7.8208 -7.8164062,-7.8208 z M 151.23486,74.86377 c -4.30859,0 -7.81641,3.506835 -7.81641,7.819335 0,4.30859 3.50782,7.816407 7.81641,7.816407 4.3125,0 7.81641,-3.507817 7.81641,-7.816407 0,-4.3125 -3.50391,-7.819335 -7.81641,-7.819335 z M 52.016602,96.515625 c -4.3125,0 -7.816407,3.503905 -7.816407,7.816405 0,4.3086 3.503907,7.81641 7.816407,7.81641 4.308599,0 7.816406,-3.50781 7.816406,-7.81641 0,-4.3125 -3.507807,-7.816405 -7.816406,-7.816405 z" />
+            </svg>
+            <h1>Statistics for Strava is now <span class="brand">Dreeve</span></h1>
+            <p class="subtitle">Same app, same maintainers, a new name and a new home.</p>
+        </header>
+
+        <section class="card">
+            <h2><span class="dot"></span>Your data is safe</h2>
+            <p>
+                Nothing was deleted. The volumes on disk are untouched. Your database, activities and imported
+                history are exactly where you left them.
+            </p>
+        </section>
+        <section class="card">
+            <h2><span class="dot"></span>Where to go next</h2>
+            <p>The migration guide walks you through the changes needed to move from v4 to v5.</p>
+            <div class="links">
+                <a class="btn btn-primary" href="https://docs.dreeve.app/#/getting-started/migrating-from-v4">Migration guide &rarr;</a>
+                <a class="btn btn-secondary" href="https://github.com/dreeveapp/dreeve">New repo</a>
+            </div>
+        </section>
+        <p class="footer">Thanks for using Statistics for Strava. See you over at Dreeve. &#128075;</p>
+    </div>
+</body>
+</html>
